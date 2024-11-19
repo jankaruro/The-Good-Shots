@@ -1,0 +1,114 @@
+:root {
+  --main-bg-color: #ADD8E6; 
+ --main-text-color: #F5F5DC;
+ --second-text-color: #bbbec5;
+ --second-bg-color: #b6b6b9;
+}
+
+.primary-text {
+  color: var(--main-text-color);
+}
+
+.second-text {
+  color: var(--second-text-color);
+}
+
+.primary-bg {
+  background-color: var(--main-bg-color);
+}
+
+.secondary-bg {
+  background-color: var(--second-bg-color);
+}
+
+.rounded-full {
+  border-radius: 100%;
+}
+#wrapper {
+  overflow-x: hidden;
+    background-image: linear-gradient(to right, #F5DEB3, #F5DEB3, #F5DEB3, #F5DEB3, #F5DEB3);
+  }
+
+#sidebar-wrapper {
+  min-height: 100vh;
+  margin-left: -15rem;
+  -webkit-transition: margin 0.25s ease-out;
+  -moz-transition: margin 0.25s ease-out;
+  -o-transition: margin 0.25s ease-out;
+  transition: margin 0.25s ease-out;
+}
+
+#sidebar-wrapper .sidebar-heading {
+  padding: 0.875rem 1.25rem;
+  font-size: 1.2rem;
+}
+
+#sidebar-wrapper .list-group {
+  width: 15rem;
+}
+
+#page-content-wrapper {
+  min-width: 100vw;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+  margin-left: 0;
+}
+
+#menu-toggle {
+  cursor: pointer;
+}
+
+.list-group-item {
+  border: none;
+  padding: 20px 30px;
+}
+
+.list-group-item.active {
+  background-color: transparent;
+  
+  font-weight: bold;
+  border: none;
+}
+
+@media (min-width: 768px) {
+  #sidebar-wrapper {
+    margin-left: 0;
+  }
+
+  #page-content-wrapper {
+    min-width: 0;
+    width: 100%;
+  }
+
+  #wrapper.toggled #sidebar-wrapper {
+    margin-left: -15rem;
+  }
+}
+/* ds.css */
+#sidebar-wrapper {
+  width: 250px; /* Set the width of the sidebar */
+}
+
+#wrapper.toggled #sidebar-wrapper {
+  margin-left: -250px; /* Hide the sidebar when toggled */
+}
+
+#page-content-wrapper {
+  width: 100%; /* Ensure the main content takes the full width */
+  transition: all 0.3s ease; /* Smooth transition for content */
+}
+
+#wrapper.toggled #page-content-wrapper {
+  margin-left: 0; /* Adjust the main content when sidebar is hidden */
+}
+
+
+
+.custom-table {
+  width: 100%; /* Full width */
+  font-size: 1.2em; /* Larger font */
+}
+.custom-table th, .custom-table td {
+  padding: 15px; /* Increased padding */
+}
