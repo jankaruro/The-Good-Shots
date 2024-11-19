@@ -1,0 +1,77 @@
+body {
+    background-image: url('images/background-photo.jpg'); 
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
+  }
+.container{
+  background-color: white;
+  height: 70vh;
+  width: 700px;
+  margin-top: 70px;
+  border-radius: 10px;
+  display: flex;
+  border: 1px black solid;
+  padding: 0;
+}
+.left-container{
+  background-color: #ecd0b4;
+  border-left: 1px black solid;
+  border-radius: 4px;
+  width: 300px;
+  height: auto;
+  padding: 30px;
+}
+.right-container{
+  padding: 50px;
+}
+.login-name{
+  font-size: 30px;
+  text-align: center;
+  font-weight: 600;
+  font-family:  Arial, Helvetica, sans-serif;
+}
+.form-label{
+  font-weight: 650;
+  font-size: 20px;
+}
+.form-control{
+  font-size: 19px;
+  margin-bottom: 5px;
+  width: 300px;
+}
+.password-container {
+  position: relative;
+}
+.show-password-icon {
+  position: absolute;
+  right: 10px;
+  top: 75%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: black;
+}
+.login-logo{
+  border-radius: 50%;
+  height: 250px;
+  width: 250px;
+  margin-top: 50px;
+}
+.btn-login{
+  margin-top: 20px;
+  margin-left: 60px;
+  text-align: center;
+  width: 200px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  background-color: #D6CCC2;
+  color: black;
+  font-size: large;
+  font-weight: 600;
+}
+.btn-login:hover{
+  background-color: #83bcff;
+  border: 0.5px rgb(119, 117, 117) solid;
+}
