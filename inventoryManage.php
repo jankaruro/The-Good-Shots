@@ -99,46 +99,60 @@ include('inventory_management/header.php'); ?>
 </div>
 <!---->
 <div class="d-flex content">
-        <div id="sidebar" class = "sidebar-color">
+        <div id="sidebar" class="sidebar-color">
             <div class="sidebar-heading">
-                <img src="Images/Logo.jpg" alt="Bootstrap" class = "logo">The Good Shots 
+                <img src="Images/Logo.jpg" alt="Bootstrap" class="logo">The Good Shots
             </div>
-                <div class="list-group list-group-flush mt-0">
-                    <a href="dashboard.php" class="list-group-item">
-                        <i class="fas fa-tachometer-alt me-3"></i>Dashboard
+            <div class="list-group list-group-flush mt-0">
+                <a href="dashboard.php" class="list-group-item">
+                    <i class="fas fa-tachometer-alt me-3"></i>Dashboard
+                </a>
+                <a href="adduser.php" class="list-group-item">
+                    <i class="fas fa-project-diagram me-3"></i>User Management
+                </a>
+                <div class="product-dropdown">
+                    <a href="#" class="list-group-item" id="product-toggle">
+                        <i class="fa-solid fa-money-bill me-3"></i>Product Management
                     </a>
-                    <a href="adduser.php" class="list-group-item">
-                        <i class="fas fa-project-diagram me-3"></i>User Management
-                    </a>
-                    <a href="addproduct.php" class="list-group-item">
-                        <i class="fas fa-chart-line me-3"></i>Product Management
-                    </a> 
-                    <a href="inventoryManage.php" class="list-group-item active">
-                        <i class="fas fa-shopping-cart me-3"></i>Inventory Management
-                    </a>
-                    <a href="purchase_order.php" class="list-group-item">
+                    <div class="submenu" id="product-submenu">
+                        <a href="" class="sub-list-item"><p class = "txt-name-btn">Add Product</p></a>
+                        <a href="" class="sub-list-item"><p class = "txt-name-btn">Add Category</p></a>
+                    </div>
+                </div>
+                <a href="inventoryManage.php" class="list-group-item active">
+                    <i class="fas fa-shopping-cart me-3"></i>Inventory Management
+                </a>
+                <a href="purchase_order.php" class="list-group-item">
                     <i class="fa-solid fa-money-bill me-3"></i>Purchase Order
+                </a>
+                <div class="supplier-dropdown">
+                    <a href="#" class="list-group-item" id="supplier-toggle">
+                        <i class="fa-solid fa-money-bill me-3"></i>Supplier
                     </a>
-                    <a href="addsupplier.php" class="list-group-item">
-                    <i class="fa-solid fa-boxes-packing me-3"></i>Supplier
-                    </a>
-                    <a href="purchase_order.php" class="list-group-item">
+                    <div class="submenu" id="supplier-submenu">
+                        <a href="addsupplier.php" class="sub-list-item"><p class = "txt-name-btn">Add Supplier</p></a>
+                        <a href="" class="sub-list-item"><p class = "txt-name-btn">Suppliers Product</p></a>
+                    </div>
+                </div>
+                <a href="purchase_order.php" class="list-group-item">
                     <i class="fa-solid fa-truck me-3"></i>Delivery
+                </a>
+                <div class="reports-dropdown">
+                    <a href="#" class="list-group-item" id="reports-toggle">
+                        <i class="fa-solid fa-money-bill me-3"></i>Reports
                     </a>
-                    <a href="#" class="list-group-item btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-solid fa-flag me-3"></i>Reports 
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Weekly</a></li>
-                        <li><a class="dropdown-item" href="#">Monthly</a></li>
-                        <li><a class="dropdown-item" href="#">Yearly</a></li>
-                    </ul>
-                </div>     
+                    <div class="submenu" id="reports-submenu">
+                        <a href="" class="sub-list-item"><p class = "txt-name-btn">Weekly</p></a>
+                        <a href="" class="sub-list-item"><p class = "txt-name-btn">Monthly</p></a>
+                        <a href="" class="sub-list-item"><p class = "txt-name-btn">Yearly</p></a>
+                    </div>
+                </div>
+            </div>
         </div>
         <div id="page-content-wrapper">
             <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-4 mt-3 dashboard-nav">
                 <div class="d-flex align-items-center">
-                    <h2 class="fs-3 m-1">Inventory Management</h2>
+                    <h2 class="fs-3 m-1">Dashboard</h2>
                 </div>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -256,7 +270,6 @@ include('inventory_management/header.php'); ?>
     </div>
   </div>
 </div>
-
 
 <?php include('inventory_management/footer.php'); ?>
 <?php include('inventory_management/viewdata.js'); ?>
