@@ -1,6 +1,6 @@
 <?php
 session_start();
-$connection = mysqli_connect("localhost", "root", "", "inventory_management");
+$connection = mysqli_connect("localhost", "root", "", "tgs_inventory");
 
 //add
 if(isset($_POST['save_data']))

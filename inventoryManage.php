@@ -217,7 +217,7 @@ include('inventory_management/header.php'); ?>
 
                   <tbody>
                     <?php
-                      $connection = mysqli_connect("localhost", "root", "", "inventory_management");
+                      $connection = mysqli_connect("localhost", "root", "", "tgs_inventory");
 
                       $fetch_query = "SELECT * FROM inventory ";
                       $fetch_query_run = mysqli_query($connection, $fetch_query);
