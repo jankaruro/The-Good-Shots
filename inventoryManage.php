@@ -12,25 +12,103 @@ include('inventory_management/header.php'); ?>
       </div>
         <form action="code.php" method ="POST">
         <div class="modal-body">
-            <div class="form-group">
-              <label class="fs-5 mt-1 fw-bolder">Item Name</label>
-              <input type="text" class="form-control fw-medium" name = "itemName" placeholder = "Enter Item Name"> 
-            </div>
-            <div class="form-group">
-            <label class="fs-5 mt-1 fw-bolder">Quantity</label>
-              <input type="number" class="form-control fw-medium" name = "quantity" placeholder = "Enter Quantity"> 
-            </div>
-            <div class="form-group">
-              <label class="fs-5 mt-1 fw-bolder">Grams Per Item</label>
-              <input type="number" class="form-control fw-medium" name = "grams" placeholder = "Enter Grams per item"> 
-            </div>
-            <div class="form-group">
-              <label class="fs-5 mt-1 fw-bolder">Expiry Date</label>
-              <input type="date" class="form-control fw-medium" name = "expiryDate" placeholder = "Enter Expiry Date"> 
-            </div>
+        <div class="modal-body">
+                <div class="form-group">
+                  <input type="hidden" class="form-control fw-medium" id="itemID" name="id"> 
+                </div>
+                <div class="form-group mb-3">
+    <label for=""><b>Supplier</b></label>
+    <select class="form-control" id="supplier" name="supplier" required>
+        <option value="">-- Select Supplier --</option>
+        <?php
+        // Connect to the database
+        include('inventory_management/connection.php');
+
+        // Retrieve suppliers from the database
+        $stmt = $conn->prepare("SELECT supplier_name FROM suppliers");
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+
+        // Check if there are any suppliers
+        if (count($result) > 0) {
+            // Output the suppliers
+            foreach ($result as $row) {
+                echo "<option value='" . $row['supplier_name'] . "'>" . $row['supplier_name'] . "</option>";
+            }
+        } else {
+            echo "<option value=''>No suppliers found</option>";
+        }
+
+        // Close the database connection
+        $conn = null;
+        ?>
+    </select>
+</div>
+
+<div class="form-group mb-3">
+    <label for=""><b>Product</b></label>
+    <select class="form-control" id="product" name="product" required>
+        <option value="">-- Select Product --</option>
+    </select>
+</div>
+
+<!-- Include jQuery for AJAX functionality -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        // When the supplier is selected
+        $('#supplier').change(function() {
+            var supplier = $(this).val(); // Get the selected supplier
+
+            // If a supplier is selected
+            if(supplier) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'get_products.php', // The PHP file that will handle the AJAX request
+                    data: { supplier: supplier },
+                    success: function(response) {
+                        // Populate the product dropdown with the response (product options)
+                        $('#product').html(response);
+                    }
+                });
+            } else {
+                // If no supplier is selected, clear the product dropdown
+                $('#product').html('<option value="">-- Select Product --</option>');
+            }
+        });
+    });
+</script>
+
+                <div class="form-group">
+                  <label class="fs-5 mt-1 fw-bolder">Quantity Size</label>
+                  <input type="number" class="form-control fw-medium" id="quantity" name="quantity" placeholder="Enter Quantity"> 
+                </div>
+                <div class="form-group">
+                  <label class="fs-5 mt-1 fw-bolder">Quantity Measure</label>
+                  <input type="number" class="form-control fw-medium" id="quantity_measure" name="quantity_measure" placeholder="Enter Quantity Measure"> 
+                </div>
+                <div class="form-group">
+                  <label class="fs-5 mt-1 fw-bolder">Grams Per Item</label>
+                  <input type="number" class="form-control fw-medium" id="grams" name="grams" placeholder="Enter Grams per Item"> 
+                </div>
+                <div class="form-group">
+                  <label class="fs-5 mt-1 fw-bolder">Expiry Date</label>
+                  <input type="date" class="form-control fw-medium" id="expiry" name="expiryDate" placeholder="Enter Expiry Date"> 
+                </div><div class="form-group">
+                  <label class="fs-5 mt-1 fw-bolder">Item Name</label>
+                  <input type="text" class="form-control fw-medium" id="itemName" name="itemName" placeholder="Enter Item Name"> 
+                </div>
+                <div class="form-group">
+                  <label class="fs-5 mt-1 fw-bolder">Item Name</label>
+                  <input type="text" class="form-control fw-medium" id="itemName" name="itemName" placeholder="Enter Item Name"> 
+                </div>
+
+              </div>
+              
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary fw-medium" data-bs-dismiss="modal">Close</button>
+        <button e="button" class="btn btn-secondary fw-medium" data-bs-dismiss="modal">Close</button>
         <button type="submit" name = "save_data" class="btn btn-primary fw-medium">Add Item</button>
       </div>
       </form>
@@ -77,7 +155,7 @@ include('inventory_management/header.php'); ?>
               <input type="text" class="form-control fw-medium" id = "itemName" name = "itemName" placeholder = "Enter Item Name"> 
             </div>
             <div class="form-group">
-            <label class="fs-5 mt-1 fw-bolder">Quantity</label>
+            <label class="fs-5 mt-1 fw-bolder">Quantity </label>
               <input type="number" class="form-control fw-medium" id = "quantity" name = "quantity" placeholder = "Enter Quantity"> 
             </div>
             <div class="form-group">
@@ -208,8 +286,9 @@ include('inventory_management/header.php'); ?>
                     <tr>
                       <th scope="col">ID #</th>
                       <th scope="col">Item Name</th>
-                      <th scope="col">Quantity</th>
-                      <th scope="col">Grams Per Item</th>
+                      <th scope="col">Quantity Package</th>
+                      <th scope="col">Quantity Measure</th>
+                      <th scope="col">Unit</th>
                       <th scope="col-lg-20">Expiry Date</th>
                       <th scope="col"></th>
                     </tr>
