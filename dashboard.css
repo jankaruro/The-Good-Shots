@@ -4,14 +4,17 @@
     height: 100%;
     overflow: hidden; 
 }
-.sidebar-heading{
+.sidebar-heading {
+    position: sticky; 
+    top: 0;
     background-color: white;
     color: black;
     font-size: 18px;
     font-weight: bold;
     height: 80px;
-    border-bottom:  black 2px solid;
+    border-bottom: 2px solid black;
     text-transform: uppercase;
+    z-index: 10;
 }
 .sidebar-color {
     background-color: white;
@@ -68,6 +71,38 @@
 .list-group-item{
     background-color: white;
     color: black;
+}
+.supplier-dropdown{
+    position: relative;
+    display: inline-block;
+    background-color: #f1f1f1;
+}
+.reports-dropdown{
+    position: relative;
+    display: inline-block;
+    background-color: #f1f1f1;
+}
+.txt-name-btn{
+    margin: 10px;
+}
+.submenu.active {
+    display: block;
+}
+.sub-list-item {
+    text-decoration: none;
+    color: #333;
+    display: block;
+    font-weight: 700;
+    border-radius: 4px;
+    height: 50px;
+    padding-right: 10px;
+}
+.sub-list-item:hover{
+    background-color: #a8dadc;
+    color: white;
+}
+.submenu{
+    display: none;
 }
 .cashier-link:hover{
     background-color: #e9ecef;
