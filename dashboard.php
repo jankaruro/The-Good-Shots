@@ -64,7 +64,7 @@
             </div>
         </div>
         <div id="page-content-wrapper">
-            <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-4 mt-3 dashboard-nav">
+            <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-4 mt-2 dashboard-nav">
                 <div class="d-flex align-items-center">
                     <h2 class="fs-3 m-1">Dashboard</h2>
                 </div>
@@ -104,7 +104,7 @@
             <div class="container-fluid px-4">
                 <div class="row g-3 my-2">
                     <div class="col-md-3">
-                    <div class="p-3 bg-color shadow-sm d-flex justify-content-around align-items-center rounded border-bottom-yellow">
+                    <div class="p-3 bg-color d-flex justify-content-around align-items-center rounded border-bottom-yellow">
                             <div>
                                 <h3 class="fs-2"></h3>
                                 <p class="fs-4">Products</p>
@@ -114,7 +114,7 @@
                     </div>
 
                     <div class="col-md-3">
-                    <div class="p-3 bg-color shadow-sm d-flex justify-content-around align-items-center rounded border-bottom-green">
+                    <div class="p-3 bg-color d-flex justify-content-around align-items-center rounded border-bottom-green">
                             <div>
                                 <h3 class="fs-2"></h3>
                                 <p class="fs-4">Sales</p>
@@ -125,7 +125,7 @@
                     </div>
 
                     <div class="col-md-3">
-                    <div class="p-3 bg-color shadow-sm d-flex justify-content-around align-items-center rounded border-bottom-violet">
+                    <div class="p-3 bg-color d-flex justify-content-around align-items-center rounded border-bottom-violet">
                         <div>
                             <h3 class="fs-2"></h3>
                             <p class="fs-4">Inventory</p>
@@ -135,7 +135,7 @@
                 </div>
 
                 <div class="col-md-3">
-                    <div class="p-3 bg-color shadow-sm d-flex justify-content-around align-items-center rounded border-bottom-blue">
+                    <div class="p-3 bg-color d-flex justify-content-around align-items-center rounded border-bottom-blue">
                         <div>
                             <h3 class="fs-2"></h3>
                             <p class="fs-4">Increase</p>
@@ -150,7 +150,7 @@
                     <div class="col">
                     <div class="row">
                                     <div class="col-md-12">
-                                        <div class="card mt-4">
+                                        <div class="card mt-2 shadow">
                                             <div class="card-header">
                                                 Inventory Level
                                             </div>
@@ -174,7 +174,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    <div class="card mt-4">
+                                    <div class="card mt-4 shadow">
                                         <div class="card-header"> Top Selling Items</div>
                                         <div class="card-body body-level">
                                             <div class="chart-container pie-chart">
@@ -184,7 +184,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    <div class="card mt-4 mb-4">
+                                    <div class="card mt-4 mb-4 shadow">
 
                                         <h2 class="text-center">SALES ORDER SUMMARY (IN USD)</h2>
                                         <p class="text-center">This Month</p>

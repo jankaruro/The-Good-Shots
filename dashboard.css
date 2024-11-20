@@ -130,40 +130,48 @@
 }
 .dashboard-nav {
     position: fixed;
-    width: calc(100% - 290px);
+    width: calc(100% - 315px);
     height: 64px;
     top: 0;
-    left: 290px;
+    left: 300px;
     background-color: #f6f8ee;
-    border-bottom: 2px solid black;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
     display: flex;
     align-items: center;
     z-index: 1000;
-    border-bottom: black 2px solid;
 }
 .content{
     display: flex;
     height: 100vh;
 }
 .border-bottom-green {
-    border-bottom: 3px solid green;
+    box-shadow: 1px 2px 3px 2px rgba(0, 0, 0, 0.3);
+    border-bottom: 2px solid blue;
     background-color: #e9ecef;
     height: 150px;
+    cursor: pointer;
 }
 .border-bottom-blue {
-    border-bottom: 3px solid #007bff;
+    box-shadow: 1px 2px 3px 2px rgba(0, 0, 0, 0.3);
+    border-bottom: 2px solid yellow;
     background-color: #e9ecef;
     height: 150px;
+    cursor: pointer;
 }
 .border-bottom-yellow {
-    border-bottom: 3px solid yellow;
+    box-shadow: 1px 2px 3px 2px rgba(0, 0, 0, 0.3);
+    border-bottom: 2px solid green;
     background-color: #e9ecef;
     height: 150px;
+    cursor: pointer;
 }
 .border-bottom-violet {
-    border-bottom: 3px solid violet;
+    box-shadow: 1px 2px 3px 2px rgba(0, 0, 0, 0.3);
+    border-bottom: 2px solid orange;
     background-color: #e9ecef;
     height: 150px;
+    cursor: pointer;
 }
 .body-level{
     height: 400px;
