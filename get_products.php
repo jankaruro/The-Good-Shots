@@ -7,7 +7,7 @@ if(isset($_POST['supplier'])) {
     include('inventory_management/connection.php');
 
     // Retrieve products based on the selected supplier
-    $stmt = $conn->prepare("SELECT product_name FROM _product WHERE supplier_name = ?");
+    $stmt = $conn->prepare("SELECT product_name FROM supplier_products WHERE supplier_name = ?");
     $stmt->execute([$supplier]);
     $result = $stmt->fetchAll();
 

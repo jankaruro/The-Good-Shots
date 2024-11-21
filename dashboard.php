@@ -45,7 +45,7 @@
                     </a>
                     <div class="submenu" id="supplier-submenu">
                         <a href="addsupplier.php" class="sub-list-item"><p class = "txt-name-btn">Add Supplier</p></a>
-                        <a href="" class="sub-list-item"><p class = "txt-name-btn">Suppliers Product</p></a>
+                        <a href="addsupplier_product.php" class="sub-list-item"><p class = "txt-name-btn">Suppliers Product</p></a>
                     </div>
                 </div>
                 <a href="purchase_order.php" class="list-group-item">
