@@ -26,11 +26,11 @@
                 </a>
                 <div class="product-dropdown">
                     <a href="#" class="list-group-item" id="product-toggle">
-                        <i class="fa-solid fa-money-bill me-3"></i>Product Management
+                        <i class="fa-solid fa-money-bill me-3"></i>Product Management<i class="fa-solid fa-chevron-right toggle-arrow-product" id="product-arrow"></i>
                     </a>
                     <div class="submenu" id="product-submenu">
-                        <a href="" class="sub-list-item"><p class = "txt-name-btn">Add Product</p></a>
-                        <a href="" class="sub-list-item"><p class = "txt-name-btn">Add Category</p></a>
+                        <a href="addproduct.php" class="sub-list-item"><p class = "txt-name-btn">Add Product</p></a>
+                        <a href="addcategory.php" class="sub-list-item"><p class = "txt-name-btn">Add Category</p></a>
                     </div>
                 </div>
                 <a href="inventoryManage.php" class="list-group-item">
@@ -41,7 +41,7 @@
                 </a>
                 <div class="supplier-dropdown">
                     <a href="#" class="list-group-item" id="supplier-toggle">
-                        <i class="fa-solid fa-money-bill me-3"></i>Supplier
+                        <i class="fa-solid fa-money-bill me-3"></i>Supplier<i class="fa-solid fa-chevron-right toggle-arrow" id="supplier-arrow"></i>
                     </a>
                     <div class="submenu" id="supplier-submenu">
                         <a href="addsupplier.php" class="sub-list-item"><p class = "txt-name-btn">Add Supplier</p></a>
@@ -53,7 +53,7 @@
                 </a>
                 <div class="reports-dropdown">
                     <a href="#" class="list-group-item" id="reports-toggle">
-                        <i class="fa-solid fa-money-bill me-3"></i>Reports
+                        <i class="fa-solid fa-money-bill me-3"></i>Reports<i class="fa-solid fa-chevron-right toggle-arrow" id="reports-arrow"></i>
                     </a>
                     <div class="submenu" id="reports-submenu">
                         <a href="" class="sub-list-item"><p class = "txt-name-btn">Weekly</p></a>
@@ -77,16 +77,16 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
-                    <a class="nav-link fw-bold fs-5 cashier-link" href="order.php" style="color: black;">
+                    <a class="nav-link fw-bold fs-5 cashier-link" href="order.php" style="color: #343a40; font-weight: 500; font-size: 12px;">
                             <i class="fa-solid fa-cash-register"></i>
                             Food & Orders
                         </a>
-                        <a class="nav-link fw-bold fs-5 notification-link" href="#" style="color: black;">
+                        <a class="nav-link fw-bold fs-5 notification-link" href="#" style="color: #343a40; font-weight: 500; font-size: 12px;">
                             <i class="fa-solid fa-bell"></i>
                             Notification
                         </a>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle fw-bold fs-5 admin-link" href="#" style="color: black;" id="navbarDropdown"
+                            <a class="nav-link dropdown-toggle fw-bold fs-5 admin-link" href="#" style="color: #343a40; font-weight: 500; font-size: 12px;" id="navbarDropdown"
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fa-regular fa-circle"></i>
                                 Admin
@@ -101,7 +101,7 @@
                 </div>
             </nav>
 
-            <div class="container-fluid px-4">
+            <div class="container-fluid px-4 mt-5">
                 <div class="row g-3 my-2">
                     <div class="col-md-3">
                     <div class="p-3 bg-color d-flex justify-content-around align-items-center rounded border-bottom-yellow">
@@ -211,19 +211,37 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script>
         $(document).ready(function () {
-            $("#product-toggle").click(function (e) {
+                $("#product-toggle").click(function (e) {
                 e.preventDefault();
                 $("#product-submenu").slideToggle();
+                const productArrow = $("#product-arrow");
+                if (productArrow.hasClass("fa-chevron-right")) {
+                    productArrow.removeClass("fa-chevron-right").addClass("fa-chevron-down");
+                } else {
+                    productArrow.removeClass("fa-chevron-down").addClass("fa-chevron-right");
+                }
             });
 
             $("#supplier-toggle").click(function (e) {
                 e.preventDefault();
                 $("#supplier-submenu").slideToggle();
+                const supplierArrow = $("#supplier-arrow");
+                if (supplierArrow.hasClass("fa-chevron-right")) {
+                    supplierArrow.removeClass("fa-chevron-right").addClass("fa-chevron-down");
+                } else {
+                    supplierArrow.removeClass("fa-chevron-down").addClass("fa-chevron-right");
+                }
             });
 
             $("#reports-toggle").click(function (e) {
                 e.preventDefault();
                 $("#reports-submenu").slideToggle();
+                const reportsArrow = $("#reports-arrow");
+                if (reportsArrow.hasClass("fa-chevron-right")) {
+                    reportsArrow.removeClass("fa-chevron-right").addClass("fa-chevron-down");
+                } else {
+                    reportsArrow.removeClass("fa-chevron-down").addClass("fa-chevron-right");
+                }
             });
         });
     </script>
