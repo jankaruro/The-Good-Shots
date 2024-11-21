@@ -10,42 +10,65 @@ include('supplier_products/header.php'); ?>
         <h1 class="modal-title fs-2" id="addDataLabel">Insert Inventory</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form action="code.php" method="POST">
+        <form action="code.php" method ="POST">
         <div class="modal-body">
-          <div class="form-group mb-3">
-            <label for=""><b>Supplier</b></label>
-            <select class="form-control" id="supplier" name="supplier" required>
-              <option value="">-- Select Supplier --</option>
-              <?php
-              include('inventory_management/connection.php'); // Ensure connection is included
-              $stmt = $conn->prepare("SELECT supplier_name FROM suppliers");
-              $stmt->execute();
-              $result = $stmt->fetchAll();
+        <div class="modal-body">
+                <div class="form-group">
+                  <input type="hidden" class="form-control fw-medium" id="itemID" name="id"> 
+                </div>
+                <div class="form-group mb-3">
+    <label for=""><b>Supplier</b></label>
+    <select class="form-control" id="supplier" name="supplier" required>
+        <option value="">-- Select Supplier --</option>
+        <?php
+        // Connect to the database
+        include('supplier_products/connection.php');
 
-              foreach ($result as $row) {
-                  echo "<option value='" . htmlspecialchars($row['supplier_name'], ENT_QUOTES, 'UTF-8') . "'>" . htmlspecialchars($row['supplier_name'], ENT_QUOTES, 'UTF-8') . "</option>";
-              }
-              ?>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="fs-5 mt-1 fw-bolder">Product Name</label>
-            <input type="text" class="form-control fw-medium" id="product_name" name="product_name" placeholder="Enter Product Name" required>
-          </div>
-          <div class="form-group">
-            <label class="fs-5 mt-1 fw-bolder">Price</label>
-            <input type="number" class="form-control fw-medium" id="price" name="price" placeholder="Enter Price" required>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary fw-medium" data-bs-dismiss="modal">Close</button>
-          <button type="submit" name="save_data" class="btn btn-primary fw-medium">Add Item</button>
-        </div>
+        // Retrieve suppliers from the database
+        $stmt = $conn->prepare("SELECT supplier_name FROM suppliers");
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+
+        // Check if there are any suppliers
+        if (count($result) > 0) {
+            // Output the suppliers
+            foreach ($result as $row) {
+                echo "<option value='" . $row['supplier_name'] . "'>" . $row['supplier_name'] . "</option>";
+            }
+        } else {
+            echo "<option value=''>No suppliers found</option>";
+        }
+
+        // Close the database connection
+        $conn = null;
+        ?>
+    </select>
+</div>
+
+
+
+
+                <div class="form-group">
+                  <label class="fs-5 mt-1 fw-bolder">Product Name</label>
+                  <input type="text" class="form-control fw-medium" id="product_name" name="product_name" placeholder="Enter Product Name"> 
+                </div>
+                
+                <div class="form-group">
+                  <label class="fs-5 mt-1 fw-bolder">Price</label>
+                  <input type="number" class="form-control fw-medium" id="price" name="price" placeholder="Enter Price"> 
+                </div>
+
+              </div>
+              
+      </div>
+      <div class="modal-footer">
+        <button e="button" class="btn btn-secondary fw-medium" data-bs-dismiss="modal">Close</button>
+        <button type="submit" name = "save_data" class="btn btn-primary fw-medium">Add Item</button>
+      </div>
       </form>
     </div>
   </div>
 </div>
-
 <!---->
 <!--view-->
 <div class="modal fade" id="viewitemModal" tabindex="-1" aria-labelledby="viewitemModalLabel" aria-hidden="true">
