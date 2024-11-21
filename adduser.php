@@ -222,7 +222,7 @@
             </div>
         </div>
         <div id="page-content-wrapper">
-            <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-4 mt-3 dashboard-nav">
+            <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-4 mt-2 dashboard-nav">
                 <div class="d-flex align-items-center">
                     <h2 class="fs-3 m-1">User Management</h2>
                 </div>
@@ -303,8 +303,6 @@
                         unset($_SESSION['status']);
 
                     }
-
-
 
                     ?>
                     <div class="card">
