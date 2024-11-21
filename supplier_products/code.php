@@ -84,10 +84,10 @@ if (isset($_POST['update_data'])){
 
     if($update_query_run) {
         $_SESSION['status'] = "Data updated successfully";
-        header('location: inventoryManage.php');
+        header('location: addsupplier_product.php');
     } else {
         $_SESSION['status'] = "Data update failed";
-        header('location: inventoryManage.php');
+        header('location: addsupplier_product.php');
     }
 }
 
