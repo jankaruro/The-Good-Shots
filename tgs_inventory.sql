@@ -106,3 +106,11 @@ CREATE TABLE payments (
     payment_date DATETIME NOT NULL,
     FOREIGN KEY (order_id) REFERENCES completed_orders(order_id)
 );
+
+
+CREATE TABLE category (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(50) NOT NULL,
+  description VARCHAR(50) NOT NULL,
+  
+);
