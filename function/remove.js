@@ -5,12 +5,11 @@
         $('.delete_data').click(function (e) {
             e.preventDefault();
             var user_id = $(this).closest('tr').find('.user_id').text();
-            /* console.log('hello');*/
-
+          
 
             $.ajax({
                 method: "POST",
-                url: "addprod.php",
+                url: "code.php",
                 data: {
                     'click_delete_btn': true,
                     'user_id':user_id,
@@ -25,22 +24,20 @@
         })
 
     });
-
     
-$(document).ready(function () {
+    $(document).ready(function () {
 
-$('.delete_data').click(function (e) {
+$('.deletesupp').click(function (e) {
     e.preventDefault();
-    var user_id = $(this).closest('tr').find('.user_id').text();
-    /* console.log('hello');*/
-
+    var supplier_id = $(this).closest('tr').find('.supplier_id').text();
+  
 
     $.ajax({
         method: "POST",
-        url: "addcat.php",
+        url: "code.php",
         data: {
-            'click_delete_btn': true,
-            'user_id':user_id,
+            'click_delete_supp_btn': true,
+            'supplier_id':supplier_id,
         },
         success: function (response) {
            
@@ -52,6 +49,29 @@ $('.delete_data').click(function (e) {
 })
 
 });
-    
+$(document).ready(function () {
+
+$('.delete_category').click(function (e) {
+    e.preventDefault();
+    var category_id = $(this).closest('tr').find('.category_id').text();
+  
+
+    $.ajax({
+        method: "POST",
+        url: "code.php",
+        data: {
+            'click_delete_btn': true,
+            'category_id':category_id,
+        },
+        success: function (response) {
+           
+            window.location.reload();
+              
+        }
+    });
+
+})
+
+});
 
 </script>
