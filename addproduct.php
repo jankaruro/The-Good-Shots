@@ -163,11 +163,10 @@
         $('#registration').click(function (e) {
             e.preventDefault();
 
-            // Check form validity
             var valid = $('#registration-form')[0].checkValidity();
             if (valid) {
                 var productname = $('#productname').val();
-                var image = $('#image')[0].files[0]; // Corrected to access the first file
+                var image = $('#image')[0].files[0]; 
                 var price = $('#price').val();
                 var category = $('#category').val();
 
@@ -201,54 +200,66 @@
                     }
                 });
             } else {
-                // Handle case where form validation fails (optional)
-                // alert('Form is not valid');
             }
         });
     });
 </script>
 
 <div class="d-flex content">
-        <div id="sidebar" class = "sidebar-color">
+        <div id="sidebar" class="sidebar-color">
             <div class="sidebar-heading">
-                <img src="Images/Logo.jpg" alt="Bootstrap" class = "logo">The Good Shots 
+                <img src="Images/Logo.jpg" alt="Bootstrap" class="logo">The Good Shots
             </div>
             <div class="list-group list-group-flush mt-0">
-                    <a href="dashboard.php" class="list-group-item">
-                        <i class="fas fa-tachometer-alt me-3"></i>Dashboard
+                <a href="dashboard.php" class="list-group-item">
+                    <i class="fas fa-tachometer-alt me-3"></i>Dashboard
+                </a>
+                <a href="adduser.php" class="list-group-item">
+                    <i class="fas fa-project-diagram me-3"></i>User Management
+                </a>
+                <div class="product-dropdown">
+                    <a href="#" class="list-group-item active" id="product-toggle">
+                        <i class="fa-solid fa-money-bill me-3"></i>Product Management<i class="fa-solid fa-chevron-down toggle-arrow-product" id="product-arrow"></i>
                     </a>
-                    <a href="adduser.php" class="list-group-item">
-                        <i class="fas fa-project-diagram me-3"></i>User Management
-                    </a>
-                    <a href="addproduct.php" class="list-group-item active">
-                        <i class="fas fa-chart-line me-3"></i>Product Management
-                    </a> 
-                    <a href="inventoryManage.php" class="list-group-item">
-                        <i class="fas fa-shopping-cart me-3"></i>Inventory Management
-                    </a>
-                    <a href="purchase_order.php" class="list-group-item">
+                    <div class="product-submenu" id="product-submenu">
+                        <a href="addproduct.php" class="sub-list-item active"><p class = "txt-name-btn">Add Product</p></a>
+                        <a href="addcategory.php" class="sub-list-item"><p class = "txt-name-btn">Add Category</p></a>
+                    </div>
+                </div>
+                <a href="inventoryManage.php" class="list-group-item">
+                    <i class="fas fa-shopping-cart me-3"></i>Inventory Management
+                </a>
+                <a href="purchase_order.php" class="list-group-item">
                     <i class="fa-solid fa-money-bill me-3"></i>Purchase Order
+                </a>
+                <div class="supplier-dropdown">
+                    <a href="#" class="list-group-item" id="supplier-toggle">
+                        <i class="fa-solid fa-money-bill me-3"></i>Supplier<i class="fa-solid fa-chevron-right toggle-arrow" id="supplier-arrow"></i>
                     </a>
-                    <a href="addsupplier.php" class="list-group-item">
-                    <i class="fa-solid fa-boxes-packing me-3"></i>Supplier
-                    </a>
-                    <a href="purchase_order.php" class="list-group-item">
+                    <div class="submenu" id="supplier-submenu">
+                        <a href="addsupplier.php" class="sub-list-item"><p class = "txt-name-btn">Add Supplier</p></a>
+                        <a href="addsupplier_product.php" class="sub-list-item"><p class = "txt-name-btn">Suppliers Product</p></a>
+                    </div>
+                </div>
+                <a href="purchase_order.php" class="list-group-item">
                     <i class="fa-solid fa-truck me-3"></i>Delivery
+                </a>
+                <div class="reports-dropdown">
+                    <a href="#" class="list-group-item" id="reports-toggle">
+                        <i class="fa-solid fa-money-bill me-3"></i>Reports<i class="fa-solid fa-chevron-right toggle-arrow" id="reports-arrow"></i>
                     </a>
-                    <a href="#" class="list-group-item btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-solid fa-flag me-3"></i>Reports 
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Weekly</a></li>
-                        <li><a class="dropdown-item" href="#">Monthly</a></li>
-                        <li><a class="dropdown-item" href="#">Yearly</a></li>
-                    </ul>
-                </div>     
+                    <div class="submenu" id="reports-submenu">
+                        <a href="" class="sub-list-item"><p class = "txt-name-btn">Weekly</p></a>
+                        <a href="" class="sub-list-item"><p class = "txt-name-btn">Monthly</p></a>
+                        <a href="" class="sub-list-item"><p class = "txt-name-btn">Yearly</p></a>
+                    </div>
+                </div>
+            </div>
         </div>
         <div id="page-content-wrapper">
-            <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-4 mt-3 dashboard-nav">
+            <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-4 mt-2 dashboard-nav">
                 <div class="d-flex align-items-center">
-                    <h2 class="fs-3 m-1">Product Management</h2>
+                    <h2 class="fs-3 m-1">Add Product</h2>
                 </div>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -259,16 +270,16 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
-                    <a class="nav-link fw-bold fs-5 cashier-link" href="order.php" style="color: black;">
+                    <a class="nav-link fw-bold fs-5 cashier-link" href="order.php" style="color: #343a40; font-weight: 500; font-size: 12px;">
                             <i class="fa-solid fa-cash-register"></i>
                             Food & Orders
                         </a>
-                        <a class="nav-link fw-bold fs-5 notification-link" href="#" style="color: black;">
+                        <a class="nav-link fw-bold fs-5 notification-link" href="#" style="color: #343a40; font-weight: 500; font-size: 12px;">
                             <i class="fa-solid fa-bell"></i>
                             Notification
                         </a>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle fw-bold fs-5 admin-link" href="#" style="color: black;" id="navbarDropdown"
+                            <a class="nav-link dropdown-toggle fw-bold fs-5 admin-link" href="#" style="color: #343a40; font-weight: 500; font-size: 12px;" id="navbarDropdown"
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fa-regular fa-circle"></i>
                                 Admin
@@ -282,8 +293,6 @@
                     </ul>
                 </div>
             </nav>
-
-
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -303,7 +312,7 @@
 
 
             ?>
-            <div class="card">
+            <div class="card mt-5">
                 <div class="card-header">
                     <h4 class="text-center">PRODUCT LIST</h4>
                     <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal"
@@ -357,7 +366,7 @@
                             } else {
                                 ?>
                                 <tr>
-                                    <td colspan="5">No Record Found</td> <!-- Fix colspan to match the number of columns -->
+                                    <td colspan="5">No Record Found</td>
                                 </tr>
                                 <?php
                             }

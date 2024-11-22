@@ -315,7 +315,6 @@
         });
     });
 </script>
-
 <div class="d-flex content">
         <div id="sidebar" class="sidebar-color">
             <div class="sidebar-heading">
@@ -330,11 +329,11 @@
                 </a>
                 <div class="product-dropdown">
                     <a href="#" class="list-group-item" id="product-toggle">
-                        <i class="fa-solid fa-money-bill me-3"></i>Product Management
+                        <i class="fa-solid fa-money-bill me-3"></i>Product Management<i class="fa-solid fa-chevron-right toggle-arrow-product" id="product-arrow"></i>
                     </a>
                     <div class="submenu" id="product-submenu">
-                        <a href="" class="sub-list-item"><p class = "txt-name-btn">Add Product</p></a>
-                        <a href="" class="sub-list-item"><p class = "txt-name-btn">Add Category</p></a>
+                        <a href="addproduct.php" class="sub-list-item"><p class = "txt-name-btn">Add Product</p></a>
+                        <a href="addcategory.php" class="sub-list-item"><p class = "txt-name-btn">Add Category</p></a>
                     </div>
                 </div>
                 <a href="inventoryManage.php" class="list-group-item">
@@ -345,11 +344,11 @@
                 </a>
                 <div class="supplier-dropdown">
                     <a href="#" class="list-group-item" id="supplier-toggle">
-                        <i class="fa-solid fa-money-bill me-3"></i>Supplier
+                        <i class="fa-solid fa-money-bill me-3"></i>Supplier<i class="fa-solid fa-chevron-right toggle-arrow" id="supplier-arrow"></i>
                     </a>
                     <div class="submenu" id="supplier-submenu">
                         <a href="addsupplier.php" class="sub-list-item"><p class = "txt-name-btn">Add Supplier</p></a>
-                        <a href="" class="sub-list-item"><p class = "txt-name-btn">Suppliers Product</p></a>
+                        <a href="addsupplier_product.php" class="sub-list-item"><p class = "txt-name-btn">Suppliers Product</p></a>
                     </div>
                 </div>
                 <a href="purchase_order.php" class="list-group-item">
@@ -357,7 +356,7 @@
                 </a>
                 <div class="reports-dropdown">
                     <a href="#" class="list-group-item" id="reports-toggle">
-                        <i class="fa-solid fa-money-bill me-3"></i>Reports
+                        <i class="fa-solid fa-money-bill me-3"></i>Reports<i class="fa-solid fa-chevron-right toggle-arrow" id="reports-arrow"></i>
                     </a>
                     <div class="submenu" id="reports-submenu">
                         <a href="" class="sub-list-item"><p class = "txt-name-btn">Weekly</p></a>
@@ -368,7 +367,7 @@
             </div>
         </div>
         <div id="page-content-wrapper">
-            <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-4 mt-3 dashboard-nav">
+            <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-4 mt-2 dashboard-nav">
                 <div class="d-flex align-items-center">
                     <h2 class="fs-3 m-1">Purchase Order</h2>
                 </div>
@@ -381,16 +380,16 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
-                    <a class="nav-link fw-bold fs-5 cashier-link" href="order.php" style="color: black;">
+                    <a class="nav-link fw-bold fs-5 cashier-link" href="order.php" style="color: #343a40; font-weight: 500; font-size: 12px;">
                             <i class="fa-solid fa-cash-register"></i>
                             Food & Orders
                         </a>
-                        <a class="nav-link fw-bold fs-5 notification-link" href="#" style="color: black;">
+                        <a class="nav-link fw-bold fs-5 notification-link" href="#" style="color: #343a40; font-weight: 500; font-size: 12px;">
                             <i class="fa-solid fa-bell"></i>
                             Notification
                         </a>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle fw-bold fs-5 admin-link" href="#" style="color: black;" id="navbarDropdown"
+                            <a class="nav-link dropdown-toggle fw-bold fs-5 admin-link" href="#" style="color: #343a40; font-weight: 500; font-size: 12px;" id="navbarDropdown"
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fa-regular fa-circle"></i>
                                 Admin
@@ -423,7 +422,7 @@
 
 
             ?>
-            <div class="card">
+            <div class="card mt-5">
                 <div class="card-header">
                     <h4 class="text-center">List of Purchase Order</h4>
                     <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal"
