@@ -4,8 +4,8 @@
 
         $('.view_data').click(function (e) {
             e.preventDefault();
-            var user_id = $(this).closest('tr').find('.user_id').text();
-            /* console.log('hello');*/
+            var id = $(this).closest('tr').find('.id').text();
+           
 
 
             $.ajax({
@@ -13,12 +13,11 @@
                 url: "code.php",
                 data: {
                     'click_view_btn': true,
-                    'user_id':user_id,
+                    'id':id,
                 },
                 success: function (response) {
-                    /*console.log(response);*/
-                    $('.view_user_data').html(response);
-                    $('#viewuserModal').modal('show');    
+                    $('.view_item_data').html(response);
+                    $('#viewitemModal').modal('show');    
                 }
             });
 

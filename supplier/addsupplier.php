@@ -1,6 +1,4 @@
-<?php
-
-include('supplier_products/header.php'); ?>
+<?php include('supplier/addsupplier_header.php'); ?>
 
 <!--Add-->
 <div class="modal fade" id="addData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -17,28 +15,44 @@ include('supplier_products/header.php'); ?>
                         <div class="form-group">
                             <input type="hidden" class="form-control fw-medium" id="itemID" name="id">
                         </div>
-                        
+                       
 
-
-
+                     
                         <div class="form-group">
-                            <label class="fs-5 mt-1 fw-bolder">Product Name</label>
-                            <input type="text" class="form-control fw-medium" id="product_name" name="product_name"
-                                placeholder="Enter Product Name">
+                            <label class="fs-5 mt-1 fw-bolder">Supplier Name</label>
+                            <input type="text" class="form-control fw-medium" id="suppliername"
+                                name="suppliername" placeholder="Enter Supplier Name">
                         </div>
-
                         <div class="form-group">
-                            <label class="fs-5 mt-1 fw-bolder">Price</label>
-                            <input type="number" class="form-control fw-medium" id="price" name="price"
-                                placeholder="Enter Price">
+                            <label class="fs-5 mt-1 fw-bolder">Address</label>
+                            <input type="text" class="form-control fw-medium" id="add" name="add"
+                                placeholder="Enter Address">
                         </div>
+                        <div class="form-group">
+                            <label class="fs-5 mt-1 fw-bolder">Contact Person</label>
+                            <input type="text" class="form-control fw-medium" id="person" name="person"
+                                placeholder="Enter Contact Person">
+                        </div>
+                        <div class="form-group">
+                            <label class="fs-5 mt-1 fw-bolder">Email</label>
+                            <input type="text" class="form-control fw-medium" id="emai" name="emai"
+                                placeholder="Enter Email">
+                        </div>
+                        <div class="form-group">
+                        <label for=""><b>Status</b></label>
+                        <select class="form-control" id="status" name="status">
+                            <option value="">-- Select Status --</option>
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
+                        </select>
+                    </div>
 
                     </div>
 
                 </div>
                 <div class="modal-footer">
                     <button e="button" class="btn btn-secondary fw-medium" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" name="save_data" class="btn btn-primary fw-medium">Add Item</button>
+                    <button type="submit" name="addsupp" class="btn btn-primary fw-medium">Add Item</button>
                 </div>
             </form>
         </div>
@@ -77,28 +91,35 @@ include('supplier_products/header.php'); ?>
             </div>
             <form action="code.php" method="POST">
                 <div class="modal-body">
-                    <div class="form-group">
-                        <input type="hidden" class="form-control fw-medium" id="itemID" name="id">
-                    </div>
-                    <div class="form-group">
-                        <label class="fs-5 mt-1 fw-bolder">Item Name</label>
-                        <input type="text" class="form-control fw-medium" id="itemName" name="itemName"
-                            placeholder="Enter Item Name">
-                    </div>
-                    <div class="form-group">
-                        <label class="fs-5 mt-1 fw-bolder">Quantity </label>
-                        <input type="number" class="form-control fw-medium" id="quantity" name="quantity"
-                            placeholder="Enter Quantity">
-                    </div>
-                    <div class="form-group">
-                        <label class="fs-5 mt-1 fw-bolder">Grams Per Item</label>
-                        <input type="number" class="form-control fw-medium" id="grams" name="grams"
-                            placeholder="Enter Grams per item">
-                    </div>
-                    <div class="form-group">
-                        <label class="fs-5 mt-1 fw-bolder">Expiry Date</label>
-                        <input type="date" class="form-control fw-medium" id="expiry" name="expiryDate"
-                            placeholder="Enter Expiry Date">
+                   
+                     
+                <div class="form-group">
+                            <label class="fs-5 mt-1 fw-bolder">Supplier Name</label>
+                            <input type="text" class="form-control fw-medium" id="suppliername"
+                                name="suppliername" placeholder="Enter Supplier Name">
+                        </div>
+                        <div class="form-group">
+                            <label class="fs-5 mt-1 fw-bolder">Address</label>
+                            <input type="text" class="form-control fw-medium" id="add" name="add"
+                                placeholder="Enter Address">
+                        </div>
+                        <div class="form-group">
+                            <label class="fs-5 mt-1 fw-bolder">Contact Person</label>
+                            <input type="text" class="form-control fw-medium" id="person" name="person"
+                                placeholder="Enter Contact Person">
+                        </div>
+                        <div class="form-group">
+                            <label class="fs-5 mt-1 fw-bolder">Email</label>
+                            <input type="text" class="form-control fw-medium" id="emai" name="emai"
+                                placeholder="Enter Email">
+                        </div>
+                        <div class="form-group">
+                        <label for=""><b>Status</b></label>
+                        <select class="form-control" id="status" name="status">
+                            <option value="">-- Select Status --</option>
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
+                        </select>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -145,7 +166,6 @@ include('supplier_products/header.php'); ?>
                 <a href="#" class="list-group-item" id="supplier-toggle">
                     <i class="fa-solid fa-money-bill me-3"></i>Supplier
                 </a>
-<<<<<<< HEAD
                 <div class="submenu" id="supplier-submenu">
                     <a href="addsupplier.php" class="sub-list-item">
                         <p class="txt-name-btn">Add Supplier</p>
@@ -171,169 +191,15 @@ include('supplier_products/header.php'); ?>
                     </a>
                     <a href="" class="sub-list-item">
                         <p class="txt-name-btn">Yearly</p>
-=======
-                <a href="adduser.php" class="list-group-item">
-                    <i class="fas fa-project-diagram me-3"></i>User Management
-                </a>
-                <div class="product-dropdown">
-                    <a href="#" class="list-group-item" id="product-toggle">
-                        <i class="fa-solid fa-money-bill me-3"></i>Product Management<i class="fa-solid fa-chevron-right toggle-arrow-product" id="product-arrow"></i>
-                    </a>
-                    <div class="submenu" id="product-submenu">
-                        <a href="addproduct.php" class="sub-list-item"><p class = "txt-name-btn">Add Product</p></a>
-                        <a href="addcategory.php" class="sub-list-item"><p class = "txt-name-btn">Add Category</p></a>
-                    </div>
-                </div>
-                <a href="inventoryManage.php" class="list-group-item">
-                    <i class="fas fa-shopping-cart me-3"></i>Inventory Management
-                </a>
-                <a href="purchase_order.php" class="list-group-item">
-                    <i class="fa-solid fa-money-bill me-3"></i>Purchase Order
-                </a>
-                <div class="supplier-dropdown">
-                    <a href="#" class="list-group-item active" id="supplier-toggle">
-                        <i class="fa-solid fa-money-bill me-3"></i>Supplier<i class="fa-solid fa-chevron-right toggle-arrow" id="supplier-arrow"></i>
-                    </a>
-                    <div class="supplier-submenu" id="supplier-submenu">
-                        <a href="addsupplier.php" class="sub-list-item"><p class = "txt-name-btn">Add Supplier</p></a>
-                        <a href="addsupplier_product.php" class="sub-list-item active"><p class = "txt-name-btn">Suppliers Product</p></a>
-                    </div>
-                </div>
-                <a href="purchase_order.php" class="list-group-item">
-                    <i class="fa-solid fa-truck me-3"></i>Delivery
-                </a>
-                <div class="reports-dropdown">
-                    <a href="#" class="list-group-item" id="reports-toggle">
-                        <i class="fa-solid fa-money-bill me-3"></i>Reports<i class="fa-solid fa-chevron-right toggle-arrow" id="reports-arrow"></i>
->>>>>>> 43eb38398e0c95e00425f89c2f943120a4286b4c
                     </a>
                 </div>
             </div>
         </div>
-<<<<<<< HEAD
-=======
-        <div id="page-content-wrapper">
-            <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-4 mt-2 dashboard-nav">
-                <div class="d-flex align-items-center">
-                    <h2 class="fs-3 m-1">Add Supplier</h2>
-                </div>
-
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
-                    <a class="nav-link fw-bold fs-5 cashier-link" href="order.php" style="color: #343a40; font-weight: 500; font-size: 12px;">
-                            <i class="fa-solid fa-cash-register"></i>
-                            Food & Orders
-                        </a>
-                        <a class="nav-link fw-bold fs-5 notification-link" href="#" style="color: #343a40; font-weight: 500; font-size: 12px;">
-                            <i class="fa-solid fa-bell"></i>
-                            Notification
-                        </a>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle fw-bold fs-5 admin-link" href="#" style="color: #343a40; font-weight: 500; font-size: 12px;" id="navbarDropdown"
-                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa-regular fa-circle"></i>
-                                Admin
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Profile</a></li>
-                                <li><a class="dropdown-item" href="#">Settings</a></li>
-                                <li><a class="dropdown-item" href="#">Logout</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-<div class="container mt-3">
-  <div class="row justify-content-center">
-    <div class="col-md-12">
-
-    <?php
-      if(isset($_SESSION['status']) && $_SESSION['status'] != '')
-      {
-        ?>
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <?php  echo $_SESSION['status'];?>
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        <script>
-            const alert = document.querySelector('.alert');
-            setTimeout(() => {
-              alert.style.display = 'none';
-            }, 3000);
-        </script>
-        <?php
-        unset($_SESSION['status']);
-      }
-    
-    ?>
-      <div class="card mt-5">
-        <div class="card-header">
-          <h3 class = "text-center">Suppliers Product </h3>
-          <button type="button" class="btn btn-info float-end fw-medium" data-bs-toggle="modal" data-bs-target="#addData">
-          Add Supp Prod
-          </button>
-        </div>
-        <div class="card-body">
-          <table class="table table-bordered">
-                  <thead>
-                    <tr>
-                      <th scope="col">ID #</th>
-                      <th scope="col">Supplier</th>
-                      <th scope="col">Product Name</th>
-                      <th scope="col">Price</th>
-                      <th scope="col"></th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    <?php
-                      $connection = mysqli_connect("localhost", "root", "", "tgs_inventory");
-
-                      $fetch_query = "SELECT * FROM supplier_products";
-                      $fetch_query_run = mysqli_query($connection, $fetch_query);
-
-                      if(mysqli_num_rows($fetch_query_run)> 0)
-                      {
-                        while($row = mysqli_fetch_array($fetch_query_run))
-                        {
-                          
-                          ?>
-                            <tr>
-                              <td class="inventory_id"><?php echo $row ['ID']; ?></td>
-                              <td><?php echo $row ['supplier']; ?></td>
-                              <td><?php echo $row ['product_name']; ?></td>
-                              <td><?php echo $row ['price']; ?></td>
-                                  <td class = "btn-inventory">
-                                    <a href="" class="btn btn-success btn-base edit_data">Edit Data</a>
-                                    <a href="" class="btn btn-danger btn-base delete_data">Delete Data</a>
-                                  </td>
-                            </tr>
-                          <?php
-
-                        }
-                      }
-                      else{
-                      ?>
-                      <tr colspan = "5"> No Record Found </tr>
-                      <?php
-                      }
-                    ?>
-                  </tbody>
-          </table>
-        </div>
-      </div>
->>>>>>> 43eb38398e0c95e00425f89c2f943120a4286b4c
     </div>
     <div id="page-content-wrapper">
         <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-4 mt-3 dashboard-nav">
             <div class="d-flex align-items-center">
-                <h2 class="fs-3 m-1">SUppliers PRoduct</h2>
+                <h2 class="fs-3 m-1">Dashboard</h2>
             </div>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -391,10 +257,10 @@ include('supplier_products/header.php'); ?>
                     ?>
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="text-center">Suppliers Product </h3>
+                            <h3 class="text-center">Inventory Management</h3>
                             <button type="button" class="btn btn-info float-end fw-medium" data-bs-toggle="modal"
                                 data-bs-target="#addData">
-                                Add Supp Prod
+                                Add Inventory
                             </button>
                         </div>
                         <div class="card-body">
@@ -402,9 +268,11 @@ include('supplier_products/header.php'); ?>
                                 <thead>
                                     <tr>
                                         <th scope="col">ID #</th>
-                                        <th scope="col">Supplier</th>
-                                        <th scope="col">Product Name</th>
-                                        <th scope="col">Price</th>
+                                        <th scope="col">Supplier Name</th>
+                                        <th scope="col">Address</th>
+                                        <th scope="col">Contact Person</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Status</th>
                                         <th scope="col"></th>
                                     </tr>
                                 </thead>
@@ -413,7 +281,7 @@ include('supplier_products/header.php'); ?>
                                     <?php
                                     $connection = mysqli_connect("localhost", "root", "", "tgs_inventory");
 
-                                    $fetch_query = "SELECT * FROM supplier_products";
+                                    $fetch_query = "SELECT * FROM suppliers ";
                                     $fetch_query_run = mysqli_query($connection, $fetch_query);
 
                                     if (mysqli_num_rows($fetch_query_run) > 0) {
@@ -421,10 +289,12 @@ include('supplier_products/header.php'); ?>
 
                                             ?>
                                             <tr>
-                                                <td class="inventory_id"><?php echo $row['ID']; ?></td>
-                                                <td><?php echo $row['supplier']; ?></td>
-                                                <td><?php echo $row['product_name']; ?></td>
-                                                <td><?php echo $row['price']; ?></td>
+                                                <td class="inventory_id"><?php echo $row['id']; ?></td>
+                                                <td><?php echo $row['supplier_name']; ?></td>
+                                                <td><?php echo $row['address']; ?></td>
+                                                <td><?php echo $row['contact_person']; ?></td>
+                                                <td><?php echo $row['email']; ?></td>
+                                                <td><?php echo $row['status']; ?></td>
                                                 <td class="btn-inventory">
                                                     <a href="" class="btn btn-success btn-base edit_data">Edit Data</a>
                                                     <a href="" class="btn btn-danger btn-base delete_data">Delete Data</a>
@@ -447,7 +317,10 @@ include('supplier_products/header.php'); ?>
             </div>
         </div>
 
-        <?php include('supplier_products/footer.php'); ?>
-        <?php include('supplier_products/viewdata.js'); ?>
-        <?php include('supplier_products/editdata.js'); ?>
-        <?php include('supplier_products/remove.js'); ?>
+
+
+
+        <?php include('supplier/addsupplier_footer.php'); ?>
+        <?php include('supplier/viewsupplier.js'); ?>
+        <?php include('supplier/editsupplier.js'); ?>
+        <?php include('supplier/deletesupplier.js'); ?>
