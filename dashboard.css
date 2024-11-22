@@ -98,13 +98,18 @@
 }
 .toggle-arrow-product {
     transition: transform 0.3s ease;
-    margin-left: 28px;
-    font-size: 15px;
+    margin-left: 30px;
+    font-size: 12px;
 }
-.toggle-arrow{
+.toggle-arrow-supplier{
     transition: transform 0.3s ease;
-    margin-left: 135px;
-    font-size: 15px;
+    margin-left: 130px;
+    font-size: 12px;
+}
+.toggle-arrow-reports{
+    transition: transform 0.3s ease;
+    margin-left: 140px;
+    font-size: 12px;
 }
 .txt-name-btn{
     margin: 10px;
