@@ -125,51 +125,7 @@
     </div>
 </div>
 <!-- insert Modal -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script type="text/javascript">
-    $(function () {
-        $('#registration').click(function (e) {
-            e.preventDefault();
-            var valid = $('#registration-form')[0].checkValidity();
-            if (valid) {
 
-                var firstname = $('#firstname').val();
-                var lastname = $('#lastname').val();
-                var email = $('#email').val();
-                var password = $('#password').val();
-                var role = $('#role').val();
-                e.preventDefault();
-
-                $.ajax({
-                    type: 'POST',
-                    url: 'process.php',
-                    data: { firstname: firstname, lastname: lastname, email: email, password: password, role: role },
-                    success: function (data) {
-                        Swal.fire({
-                            title: "Successful",
-                            text: "Successfully Registered",
-                            icon: "success"
-                        }).then(function () {
-                            window.location.reload();
-                        });
-                    },
-                    error: function (data) {
-                        Swal.fire({
-                            title: "Error",
-                            text: "There were errors while saving the data",
-                            icon: "error"
-                        });
-                    }
-                });
-
-                //alert('true');
-            } else {
-                //alert('false'); 
-            }
-        });
-    });
-</script>
 <div class="d-flex content">
         <div id="sidebar" class="sidebar-color">
             <div class="sidebar-heading">
@@ -259,61 +215,30 @@
                 </div>
             </nav>
 
+   
+            <div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-sm-12 col-md-8 col-lg-20">
+
+    <?php
+      if(isset($_SESSION['status']) && $_SESSION['status'] != '')
+      {
+        ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <?php  echo $_SESSION['status'];?>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
         <script>
-        var el = document.getElementById("wrapper");
-        var toggleButton = document.getElementById("menu-toggle");
-
-        toggleButton.onclick = function () {
-            el.classList.toggle("toggled");
-        };
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <script>
-        $(document).ready(function () {
-            $("#product-toggle").click(function (e) {
-                e.preventDefault();
-                $("#product-submenu").slideToggle();
-            });
-
-            $("#supplier-toggle").click(function (e) {
-                e.preventDefault();
-                $("#supplier-submenu").slideToggle();
-            });
-
-            $("#reports-toggle").click(function (e) {
-                e.preventDefault();
-                $("#reports-submenu").slideToggle();
-            });
-        });
-    </script>
-
-        <div class="container mt-5">
-            <div class="row justify-content-center">
-                <div class="col-md-12">
-
-
-                    <?php
-                    if (isset($_SESSION['status']) && $_SESSION['status'] != '') {
-
-                        echo $_SESSION['status'];
-                        ?>
-
-                        <?php
-                        unset($_SESSION['status']);
-
-                    }
-
-                    ?>
-                    <div class="card mt-5">
-                        <div class="card-header">
-                            <h4 class="text-center">USER MANAGEMENT </h4>
-                            <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal"
-                                data-bs-target="#insertdata">
-                                Add new user
-                            </button>
-
-                        </div>
+            const alert = document.querySelector('.alert');
+            setTimeout(() => {
+              alert.style.display = 'none';
+            }, 3000);
+        </script>
+        <?php
+        unset($_SESSION['status']);
+      }
+    
+    ?>
                         <div class="card-body">
                             <table class="table table-striped table-bordered">
                                 <thead>
