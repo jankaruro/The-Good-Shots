@@ -2,8 +2,8 @@
 session_start();
 include('header.php'); ?>
 
-<!--Add-->
-<!--Add User-->
+<body>
+    <!--Add User-->
 <div class="modal fade" id="addUserData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
   aria-labelledby="addUserDataLabel" aria-hidden="true">
 
@@ -124,7 +124,7 @@ include('header.php'); ?>
 </div>
 <!---->
 
-<div class="d-flex content">
+    <div class="d-flex content">
         <div id="sidebar" class="sidebar-color">
             <div class="sidebar-heading">
                 <img src="Images/Logo.jpg" alt="Bootstrap" class="logo">The Good Shots
@@ -175,15 +175,47 @@ include('header.php'); ?>
                 </div>
             </div>
         </div>
-        <div id="page-content-wrapper">
+
+    <div id="page-content-wrapper">
             <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-4 mt-2 dashboard-nav">
                 <div class="d-flex align-items-center">
                     <h2 class="fs-3 m-1">User Management</h2>
                 </div>
 
-<div class="container mt-5">
-  <div class="row justify-content-center">
-    <div class="col-sm-12 col-md-8 col-lg-20">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
+                    <a class="nav-link fw-bold cashier-link" href="order.php" style="color: black; font-weight: 200; font-size: 17px;">
+                            <i class="fa-solid fa-cash-register me-2"></i>
+                            Food & Orders
+                        </a>
+                        <a class="nav-link fw-bold notification-link" href="#" style="color: black; font-weight: 200; font-size: 17px;">
+                            <i class="fa-solid fa-bell me-2"></i>
+                            Notification
+                        </a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle fw-bold admin-link" href="#" style="color: black; font-weight: 200; font-size: 17px;" id="navbarDropdown"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-regular fa-circle me-2"></i>
+                                Admin
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li><a class="dropdown-item" href="#">Settings</a></li>
+                                <li><a class="dropdown-item" href="#">Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+        <div class="container">
+        <div class="col-sm-12">
 
       <?php
       if (isset($_SESSION['status']) && $_SESSION['status'] != '') {
@@ -262,9 +294,8 @@ include('header.php'); ?>
         </div>
       </div>
     </div>
-  </div>
+    </div>
 </div>
-
 
 <?php include('footer.php'); ?>
 <?php include('function/viewdata.js'); ?>

@@ -50,11 +50,10 @@
 }
 .dropdown-item {
     background-color: transparent;
-    font-weight: bold;  
-    font-size: 16px;
+    font-weight: 500;  
+    font-size: 17px;
     height: 50px;
     padding: 12px 20px;
-    color: #333;
     transition: background-color 0.3s, color 0.3s;
 }
 .list-group-item:hover{
@@ -137,6 +136,9 @@
     background-color: #d8cba8;
     color: white;
 }
+.cashier-link{
+    font-size: 12px;
+}
 .cashier-link:hover{
     background-color: #e9ecef;
     border-radius: 10px;
@@ -153,7 +155,7 @@
 }
 .dashboard-nav {
     position: fixed;
-    width: calc(100% - 315px);
+    width: calc(100% - 330px);
     height: 64px;
     top: 0;
     left: 300px;
@@ -211,6 +213,9 @@
     position: fixed;
     scrollbar-width: thin;
     scrollbar-color: #888 #f1f1f1;
+}
+.container{
+    margin-top: 100px;
 }
 #page-content-wrapper::-webkit-scrollbar-track {
     background: wheat;

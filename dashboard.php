@@ -77,18 +77,18 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
-                    <a class="nav-link fw-bold fs-5 cashier-link" href="order.php" style="color: #343a40; font-weight: 500; font-size: 12px;">
-                            <i class="fa-solid fa-cash-register"></i>
+                    <a class="nav-link fw-bold cashier-link" href="order.php" style="color: black; font-weight: 200; font-size: 17px;">
+                            <i class="fa-solid fa-cash-register me-2"></i>
                             Food & Orders
                         </a>
-                        <a class="nav-link fw-bold fs-5 notification-link" href="#" style="color: #343a40; font-weight: 500; font-size: 12px;">
-                            <i class="fa-solid fa-bell"></i>
+                        <a class="nav-link fw-bold notification-link" href="#" style="color: black; font-weight: 200; font-size: 17px;">
+                            <i class="fa-solid fa-bell me-2"></i>
                             Notification
                         </a>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle fw-bold fs-5 admin-link" href="#" style="color: #343a40; font-weight: 500; font-size: 12px;" id="navbarDropdown"
+                            <a class="nav-link dropdown-toggle fw-bold admin-link" href="#" style="color: black; font-weight: 200; font-size: 17px;" id="navbarDropdown"
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa-regular fa-circle"></i>
+                                <i class="fa-regular fa-circle me-2"></i>
                                 Admin
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
