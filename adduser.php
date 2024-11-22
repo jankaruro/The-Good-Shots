@@ -140,7 +140,7 @@
                 </a>
                 <div class="product-dropdown">
                     <a href="#" class="list-group-item" id="product-toggle">
-                        <i class="fa-solid fa-money-bill me-3"></i>Product Management<i class="fa-solid fa-chevron-right toggle-arrow-product" id="product-arrow"></i>
+                        <i class="fa-brands fa-product-hunt me-3"></i></i>Product Management<i class="fa-solid fa-chevron-right toggle-arrow-product" id="product-arrow"></i>
                     </a>
                     <div class="submenu" id="product-submenu">
                         <a href="addproduct.php" class="sub-list-item"><p class = "txt-name-btn">Add Product</p></a>
@@ -155,7 +155,7 @@
                 </a>
                 <div class="supplier-dropdown">
                     <a href="#" class="list-group-item" id="supplier-toggle">
-                        <i class="fa-solid fa-money-bill me-3"></i>Supplier<i class="fa-solid fa-chevron-right toggle-arrow" id="supplier-arrow"></i>
+                    <i class="fa-solid fa-boxes-packing me-3"></i>Supplier<i class="fa-solid fa-chevron-right toggle-arrow" id="supplier-arrow"></i>
                     </a>
                     <div class="submenu" id="supplier-submenu">
                         <a href="addsupplier.php" class="sub-list-item"><p class = "txt-name-btn">Add Supplier</p></a>
@@ -167,7 +167,7 @@
                 </a>
                 <div class="reports-dropdown">
                     <a href="#" class="list-group-item" id="reports-toggle">
-                        <i class="fa-solid fa-money-bill me-3"></i>Reports<i class="fa-solid fa-chevron-right toggle-arrow" id="reports-arrow"></i>
+                    <i class="fa-solid fa-calendar-days me-3"></i></i>Reports<i class="fa-solid fa-chevron-right toggle-arrow" id="reports-arrow"></i>
                     </a>
                     <div class="submenu" id="reports-submenu">
                         <a href="" class="sub-list-item"><p class = "txt-name-btn">Weekly</p></a>

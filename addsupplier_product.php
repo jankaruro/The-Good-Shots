@@ -251,7 +251,7 @@ include('supplier_products/header.php'); ?>
             </nav>
 <div class="container mt-3">
   <div class="row justify-content-center">
-    <div class="col-sm-12">
+    <div class="col-md-12">
 
     <?php
       if(isset($_SESSION['status']) && $_SESSION['status'] != '')
