@@ -49,8 +49,10 @@ CREATE TABLE supplier_products (
 CREATE TABLE suppliers (
     id INT PRIMARY KEY AUTO_INCREMENT,
     supplier_name VARCHAR(100) NOT NULL,
-    supplier_address VARCHAR(255) NOT NULL,
+    address VARCHAR(255) NOT NULL,
+    contact_person VARCHAR(255)NOT NULL,
     email VARCHAR(100),
+    status VARCHAR(100),
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     created_by INT,

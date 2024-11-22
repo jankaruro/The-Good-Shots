@@ -4,16 +4,15 @@
 
         $('.delete_data').click(function (e) {
             e.preventDefault();
-            var user_id = $(this).closest('tr').find('.user_id').text();
-            /* console.log('hello');*/
-
+            var id = $(this).closest('tr').find('.id').text();
+          
 
             $.ajax({
                 method: "POST",
                 url: "code.php",
                 data: {
                     'click_delete_btn': true,
-                    'user_id':user_id,
+                    'id':id,
                 },
                 success: function (response) {
                    
