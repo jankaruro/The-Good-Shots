@@ -205,7 +205,7 @@ include('header.php'); ?>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle fw-bold admin-link" href="#" style="color: black; font-weight: 200; font-size: 17px;" id="navbarDropdown"
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa-regular fa-circle me-2"></i>
+                                <i class="fa-regular fa-circle-user me-2" style = "font-size: 25px"></i>
                                 Admin
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
