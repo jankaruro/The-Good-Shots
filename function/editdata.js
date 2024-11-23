@@ -136,4 +136,44 @@ $('.edit_supplier_products').click(function (e) {
 })
 
 });
+
+
+
+$(document).ready(function () {
+
+$('.edit_inventory').click(function (e) {
+    e.preventDefault();
+    var inventory_id = $(this).closest('tr').find('.inventory_id').text();
+
+
+
+    $.ajax({
+        method: "POST",
+        url: "code.php",
+        data: {
+            'click_edit_incentory_btn': true,
+            'inventory_id': inventory_id,
+        },
+        success: function (response) {
+            
+
+            $.each(response, function (Key, value) {
+                $('#id').val(value['id']);
+                $('[name="supplier"]').val(value['supplier']);
+                $('[name="product_name"]').val(value['product_name']);
+                $('[name="package_quantity"]').val(value['package_quantity']);
+                $('[name="measurement_per_package"]').val(value['measurement_per_package']);
+                $('[name="total_measurement"]').val(value['total_measurement']);
+                $('[name="unit"]').val(value['unit']);
+                $('[name="Expiry_Date"]').val(value['Expiry_Date']);
+                
+              
+            });
+            $('#editData').modal('show');
+        }
+    });
+
+})
+
+});
 </script>

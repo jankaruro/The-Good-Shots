@@ -99,4 +99,33 @@ $('.delete_supplier_products').click(function (e) {
 
 });
 
+
+
+
+
+$(document).ready(function () {
+
+$('.delete_inventory').click(function (e) {
+    e.preventDefault();
+    var inventory_id = $(this).closest('tr').find('.inventory_id').text();
+  
+
+    $.ajax({
+        method: "POST",
+        url: "code.php",
+        data: {
+            'click_delete_inventory_btn': true,
+            'inventory_id':inventory_id,
+        },
+        success: function (response) {
+           
+            window.location.reload();
+              
+        }
+    });
+
+})
+
+});
+
 </script>

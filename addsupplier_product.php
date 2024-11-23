@@ -124,12 +124,14 @@ include('header.php'); ?>
                 <h1 class="modal-title fs-2" id="editDataLabel">Edit Users</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+
             <form action="code.php" method="POST">
                 <div class="modal-body">
 
                     <div class="form-group">
                         <input type="text" class="form-control fw-medium" id="id" name="id">
                     </div>
+                    <div class="form-group">
                     <label for=""><b>Supplier</b></label>
                     <select class="form-control" id="supplier" name="supplier" required>
 

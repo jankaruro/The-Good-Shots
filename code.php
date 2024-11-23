@@ -482,5 +482,149 @@ if (isset($_POST['click_delete_supplier_product_btn'])) {
     }
 
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+//insert inventory
+if (isset($_POST['add_inventory'])) {
+    $supplier = $_POST['supplier'];
+    $product_name = $_POST['product_name'];
+    $package_quantity = $_POST['package_quantity'];
+    $measurement_per_package = $_POST['measurement_per_package'];
+    $total_measurement = $_POST['total_measurement'];
+    $category = $_POST['category'];
+    $unit = $_POST['unit'];
+    $Expiry_Date = $_POST['Expiry_Date'];
+
+    
+
+    // Check if email already exists
+    $check_product_name_query = "SELECT * FROM inventory WHERE product_name='$product_name'";
+    $check_product_name_result = mysqli_query($connection, $check_product_name_query);
+
+    if (mysqli_num_rows($check_product_name_result) > 0) {
+        $_SESSION['status'] = "Product already exists!";
+        header("Location: addsupplier_product.php"); // Redirect back to the page
+        exit();
+    } else {
+        $insert_query = "INSERT INTO supplier_products (supplier, product_name,package_quantity,measurement_per_package,
+        total_measurement,category,unit,Expiry_Date) VALUES ('$supplier', '$product_name', '$package_quantity'
+                                                                        ,'$measurement_per_package','$total_measurement','$category','$unit','$Expiry_Date')";
+        if (mysqli_query($connection, $insert_query)) {
+            $_SESSION['status'] = "Supplier Product added successfully!";
+        } else {
+            $_SESSION['status'] = "Error: " . mysqli_error($connection);
+        }
+        header("Location: inventoryManage.php"); // Redirect back to the page
+        exit();
+    }
+}
+//view inventory
+if (isset($_POST['click_view_inventory_btn'])) {
+    $id = $_POST['inventory_id'];
+
+    $fetch_query = "SELECT * FROM inventory WHERE id = '$id'";
+    $fetch_query_run = mysqli_query($connection, $fetch_query);
+
+
+    if (mysqli_num_rows($fetch_query_run) > 0) {
+
+        while ($row = mysqli_fetch_array($fetch_query_run)) {
+            echo '
+        <h6>ID: ' . $row['id'] . '</h6>
+        <h6>Supplier: ' . $row['supplier'] . '</h6>
+        <h6>Product Name: ' . $row['product_name'] . '</h6>
+        <h6>Packagge Quantity: ' . $row['package_quantity'] . '</h6>
+        <h6>Mesurement Per Package: ' . $row['measurement_per_package'] . '</h6>
+        <h6>Total Measurement: ' . $row['total_measurement'] . '</h6>
+        <h6>Category: ' . $row['category'] . '</h6>
+        <h6>Unit: ' . $row['unit'] . '</h6>
+        <h6>Expiration Date: ' . $row['Expiry_Date'] . '</h6>
+         
+        ';
+
+        }
+    } else {
+        echo '<h4>no records found</h4>';
+
+    }
+}
+
+//edit inventory
+if (isset($_POST['click_edit_incentory_btn'])) {
+    $id = $_POST['inventory_id'];
+    $arrayresult = [];
+
+    $fetch_query = "SELECT * FROM inventory WHERE id = '$id'";
+    $fetch_query_run = mysqli_query($connection, $fetch_query);
+
+
+    if (mysqli_num_rows($fetch_query_run) > 0) {
+
+        while ($row = mysqli_fetch_array($fetch_query_run)) {
+        
+            array_push($arrayresult, $row);
+            header('content-type: application/json');
+            echo json_encode($arrayresult);
+
+        }
+    } else {
+        echo '<h4>no records found</h4>';
+
+    }
+}
+
+// Update inventory
+if (isset($_POST['update_supplier_product'])) {
+    $id = $_POST['id']; // Ensure you retrieve the user ID
+    $supplier = $_POST['supplier'];
+    $product_name = $_POST['product_name'];
+    $package_quantity = $_POST['package_quantity'];
+    $measurement_per_package = $_POST['measurement_per_package'];
+    $total_measurement = $_POST['total_measurement'];
+    $category = $_POST['category'];
+    $unit = $_POST['unit'];
+    $Expiry_Date = $_POST['Expiry_Date'];
+
+
+    // Prepare the update query
+    $update_query = "UPDATE inventory SET supplier = '$supplier', product_name = '$product_name', package_quantity = '$package_quantity'
+    , measurement_per_package = '$measurement_per_package' , total_measurement = '$total_measurement'
+     , category = '$category'
+      , unit = '$unit'
+       , Expiry_Date = '$Expiry_Date' WHERE id = '$id'";
+    
+    // Execute the update query
+    $update_query_run = mysqli_query($connection, $update_query);
+
+    if ($update_query_run) {
+        $_SESSION['status'] = "Data updated successfully";
+        header('location: inventoryManage.php');
+        exit();
+    } else {
+        $_SESSION['status'] = "Data update failed: " . mysqli_error($connection);
+        header('location: inventoryManage.php');
+        exit();
+    }
+}
+
+//delete inventory
+if (isset($_POST['click_delete_inventory_btn'])) {
+    $id = $_POST['inventory_id'];
+    $delete_query = "DELETE FROM inventory WHERE id='$id'";
+    $delete_query_run = mysqli_query($connection, $delete_query);
+
+    if ($delete_query_run) {
+        $_SESSION['status'] = "Data updated successfully";
+        header('location: inventoryManage.php');
+        exit();
+    } else {
+        $_SESSION['status'] = "Data update failed: " . mysqli_error($connection);
+        header('location: inventoryManage.php');
+        exit();
+    }
+
+}
 ?>
 

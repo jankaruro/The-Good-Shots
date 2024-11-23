@@ -13,6 +13,8 @@ include('header.php'); ?>
         <h1 class="modal-title fs-2" id="addUser DataLabel">Adding New User</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+
+
       <form action="code.php" method="POST">
         <div class="modal-body">
           <div class="form-group">
@@ -40,6 +42,8 @@ include('header.php'); ?>
             </select>
           </div>
         </div>
+
+        
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary fw-medium" data-bs-dismiss="modal">Close</button>
           <button type="submit" name="save_user" class="btn btn-primary fw-medium">Add User</button>
