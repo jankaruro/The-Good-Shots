@@ -102,4 +102,38 @@ $('.edit_category').click(function (e) {
 
 });
 
+
+$(document).ready(function () {
+
+$('.edit_supplier_products').click(function (e) {
+    e.preventDefault();
+    var supplier_product_id = $(this).closest('tr').find('.supplier_product_id').text();
+
+
+
+    $.ajax({
+        method: "POST",
+        url: "code.php",
+        data: {
+            'click_edit_supplier_products_btn': true,
+            'supplier_product_id': supplier_product_id,
+        },
+        success: function (response) {
+            
+
+            $.each(response, function (Key, value) {
+                $('#id').val(value['id']);
+                $('[name="supplier"]').val(value['supplier']);
+                $('[name="product_name"]').val(value['product_name']);
+                $('[name="price"]').val(value['price']);
+                $('[name="category"]').val(value['category']);
+              
+            });
+            $('#editData').modal('show');
+        }
+    });
+
+})
+
+});
 </script>

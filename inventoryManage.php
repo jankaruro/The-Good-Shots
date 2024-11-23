@@ -16,11 +16,11 @@ include('header.php'); ?>
       <form action="code.php" method="POST">
         <div class="modal-body">
           <div class="form-group">
-            <label class="fs-5 mt-1 fw-bolder">First Name</label>
+            <label class="fs-5 mt-1 fw-bolder">Supplier</label>
             <input type="text" class="form-control fw-medium" name="first_name" placeholder="Enter First Name">
           </div>
           <div class="form-group">
-            <label class="fs-5 mt-1 fw-bolder">Last Name</label>
+            <label class="fs-5 mt-1 fw-bolder">Item Name</label>
             <input type="text" class="form-control fw-medium" name="last_name" placeholder="Enter Last Name">
           </div>
           <div class="form-group">

@@ -362,6 +362,125 @@ if (isset($_POST['click_delete_btn'])) {
     }
 
 }
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 
+//insert supplier_products
+if (isset($_POST['add_product_supplier'])) {
+    $supplier = $_POST['supplier'];
+    $product_name = $_POST['product_name'];
+    $price = $_POST['price'];
+    $category = $_POST['category'];
+
+    
+
+    // Check if email already exists
+    $check_product_name_query = "SELECT * FROM supplier_products WHERE product_name='$product_name'";
+    $check_product_name_result = mysqli_query($connection, $check_product_name_query);
+
+    if (mysqli_num_rows($check_product_name_result) > 0) {
+        $_SESSION['status'] = "Product already exists!";
+        header("Location: addsupplier_product.php"); // Redirect back to the page
+        exit();
+    } else {
+        $insert_query = "INSERT INTO supplier_products (supplier, product_name,price,category) VALUES ('$supplier', '$product_name', '$price', '$category')";
+        if (mysqli_query($connection, $insert_query)) {
+            $_SESSION['status'] = "Supplier Product added successfully!";
+        } else {
+            $_SESSION['status'] = "Error: " . mysqli_error($connection);
+        }
+        header("Location: addsupplier_product.php"); // Redirect back to the page
+        exit();
+    }
+}
+//view supplier_products
+if (isset($_POST['click_view_supplier_product_btn'])) {
+    $id = $_POST['supplier_product_id'];
+
+    $fetch_query = "SELECT * FROM supplier_products WHERE id = '$id'";
+    $fetch_query_run = mysqli_query($connection, $fetch_query);
+
+
+    if (mysqli_num_rows($fetch_query_run) > 0) {
+
+        while ($row = mysqli_fetch_array($fetch_query_run)) {
+            echo '
+        <h6>ID: ' . $row['id'] . '</h6>
+        <h6>Supplier: ' . $row['supplier'] . '</h6>
+        <h6>Product Name: ' . $row['product_name'] . '</h6>
+        <h6>Proce: ' . $row['price'] . '</h6>
+        <h6>Category: ' . $row['category'] . '</h6>
+         
+        ';
+
+        }
+    } else {
+        echo '<h4>no records found</h4>';
+
+    }
+}
+
+//edit supplier_products
+if (isset($_POST['click_edit_supplier_products_btn'])) {
+    $id = $_POST['supplier_product_id'];
+    $arrayresult = [];
+
+    $fetch_query = "SELECT * FROM supplier_products WHERE id = '$id'";
+    $fetch_query_run = mysqli_query($connection, $fetch_query);
+
+
+    if (mysqli_num_rows($fetch_query_run) > 0) {
+
+        while ($row = mysqli_fetch_array($fetch_query_run)) {
+        
+            array_push($arrayresult, $row);
+            header('content-type: application/json');
+            echo json_encode($arrayresult);
+
+        }
+    } else {
+        echo '<h4>no records found</h4>';
+
+    }
+}
+
+// Update supplier_products
+if (isset($_POST['update_supplier_product'])) {
+    $id = $_POST['id']; // Ensure you retrieve the user ID
+    $supplier = $_POST['supplier'];
+    $product_name = $_POST['product_name'];
+    $price = $_POST['price'];
+    $category = $_POST['category'];
+
+    // Prepare the update query
+    $update_query = "UPDATE supplier_products SET supplier = '$supplier', product_name = '$product_name', price = '$price', category = '$category' WHERE id = '$id'";
+    
+    // Execute the update query
+    $update_query_run = mysqli_query($connection, $update_query);
+
+    if ($update_query_run) {
+        $_SESSION['status'] = "Data updated successfully";
+        header('location: addsupplier_product.php');
+        exit();
+    } else {
+        $_SESSION['status'] = "Data update failed: " . mysqli_error($connection);
+        header('location: addsupplier_product.php');
+        exit();
+    }
+}
+
+//delete supplier_products
+if (isset($_POST['click_delete_supplier_product_btn'])) {
+    $id = $_POST['supplier_product_id'];
+    $delete_query = "DELETE FROM supplier_products WHERE id='$id'";
+    $delete_query_run = mysqli_query($connection, $delete_query);
+
+    if ($delete_query_run) {
+        echo "Category deleted successfully";
+    } else {
+
+        echo "Category deletion failed";
+    }
+
+}
 ?>
 
