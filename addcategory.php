@@ -1,15 +1,7 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=1024, initial-scale=1.0" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="dashboard.css" />
-    <title>User Management</title>
-</head>
-  <body>
+<?php
+session_start();
+include('header.php'); ?>
+
 <!--Add-->
 <!--Add User-->
 <div class="modal fade" id="addUserData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -80,10 +72,6 @@
                     <div class="form-group">
                         <input type="hidden" class="form-control fw-medium" id="id" name="id">
                     </div>
-
-
-
-
                     <div class="form-group">
                         <label class="fs-5 mt-1 fw-bolder">Category Name</label>
                         <input type="text" class="form-control fw-medium" name="name"
@@ -105,7 +93,7 @@
         </div>
     </div>
 </div>
-<!---->
+
 <div class="d-flex content">
         <div id="sidebar" class="sidebar-color">
             <div class="sidebar-heading">
@@ -157,10 +145,11 @@
                 </div>
             </div>
         </div>
-        <div id="page-content-wrapper">
+
+    <div id="page-content-wrapper">
             <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-4 mt-2 dashboard-nav">
                 <div class="d-flex align-items-center">
-                    <h2 class="fs-3 m-1">Dashboard</h2>
+                    <h2 class="fs-3 m-1">Product Management</h2>
                 </div>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -170,7 +159,7 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
+                <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
                     <a class="nav-link fw-bold cashier-link" href="order.php" style="color: black; font-weight: 200; font-size: 17px;">
                             <i class="fa-solid fa-cash-register me-2"></i>
                             Food & Orders
@@ -182,7 +171,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle fw-bold admin-link" href="#" style="color: black; font-weight: 200; font-size: 17px;" id="navbarDropdown"
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa-regular fa-circle me-2"></i>
+                                <i class="fa-regular fa-circle-user me-2" style = "font-size: 25px"></i>
                                 Admin
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -194,39 +183,38 @@
                     </ul>
                 </div>
             </nav>
-
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-sm-12 col-lg-20">
+  <div class="row justify-content-center">
+    <div class="col-sm-12 col-lg-20">
 
-            <?php
-            if (isset($_SESSION['status']) && $_SESSION['status'] != '') {
-                ?>
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <?php echo $_SESSION['status']; ?>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                <script>
-                    const alert = document.querySelector('.alert');
-                    setTimeout(() => {
-                        alert.style.display = 'none';
-                    }, 3000);
-                </script>
-                <?php
-                unset($_SESSION['status']);
-            }
+      <?php
+      if (isset($_SESSION['status']) && $_SESSION['status'] != '') {
+        ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <?php echo $_SESSION['status']; ?>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <script>
+          const alert = document.querySelector('.alert');
+          setTimeout(() => {
+            alert.style.display = 'none';
+          }, 3000);
+        </script>
+        <?php
+        unset($_SESSION['status']);
+      }
 
-            ?>
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="text-center">Category</h3>
-                    <button type="button" class="btn btn-primary float-end fw-medium" data-bs-toggle="modal"
-                        data-bs-target="#addUserData">
-                        Add New Category
-                    </button>
+      ?>
+      <div class="card">
+        <div class="card-header">
+          <h3 class="text-center">Add Category</h3>
+          <button type="button" class="btn btn-primary float-end fw-medium" data-bs-toggle="modal"
+            data-bs-target="#addUserData">
+            Add New User
+          </button>
 
-                </div>
-                <div class="card-body">
+        </div>
+        <div class="card-body">
                     <table class="table table-bordered">
                         <thead>
                             <tr>
@@ -236,87 +224,48 @@
                                 <th scope="col"></th>
                             </tr>
                         </thead>
+            <tbody>
+              <?php
+              $connection = mysqli_connect("localhost", "root", "", "tgs_inventory");
 
-                        <tbody>
-                            <?php
-                            $connection = mysqli_connect("localhost", "root", "", "tgs_inventory");
+              $fetch_query = "SELECT * FROM users ";
+              $fetch_query_run = mysqli_query($connection, $fetch_query);
 
-                            $fetch_query = "SELECT * FROM category ";
-                            $fetch_query_run = mysqli_query($connection, $fetch_query);
+              if (mysqli_num_rows($fetch_query_run) > 0) {
+                while ($row = mysqli_fetch_array($fetch_query_run)) {
 
-                            if (mysqli_num_rows($fetch_query_run) > 0) {
-                                while ($row = mysqli_fetch_array($fetch_query_run)) {
+                  ?>
+                  <tr>
+                    <td class="user_id"><?php echo $row['id']; ?></td>
+                    <td><?php echo $row['first_name']; ?></td>
+                    <td><?php echo $row['last_name']; ?></td>
+                    <td><?php echo $row['email']; ?></td>
+                    <td><?php echo $row['role']; ?></td>
+                    <td>
+                      <a href="#" class="btn btn-info btn-base view_data">View Data</a>
+                      <a href="#" class="btn btn-success btn-base edit_data">Edit Data</a>
+                      <a href="" class="btn btn-danger btn-base delete_data">Delete Data</a>
+                    </td>
+                  </tr>
+                  <?php
 
-                                    ?>
-                                    <tr>
-                                        <td class="category_id"><?php echo $row['id']; ?></td>
-                                        <td><?php echo $row['name']; ?></td>
-                                        <td><?php echo $row['description']; ?></td>
-                                      
-                                        <td>
-                                            <a href="#" class="btn btn-info btn-base view_category">View Data</a>
-                                            <a href="#" class="btn btn-success btn-base edit_category">Edit Data</a>
-                                            <a href="" class="btn btn-danger btn-base delete_category">Delete Data</a>
-                                        </td>
-                                    </tr>
-                                    <?php
-
-                                }
-                            } else {
-                                ?>
-                                <tr colspan="5"> No Record Found </tr>
-                                <?php
-                            }
-                            ?>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                }
+              } else {
+                ?>
+                <tr colspan="5"> No Record Found </tr>
+                <?php
+              }
+              ?>
+            </tbody>
+          </table>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 
+
+<?php include('footer.php'); ?>
 <?php include('function/viewdata.js'); ?>
 <?php include('function/editdata.js'); ?>
 <?php include('function/remove.js'); ?>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-<script>
-        $(document).ready(function () {
-                $("#product-toggle").click(function (e) {
-                e.preventDefault();
-                $("#product-submenu").slideToggle();
-                const productArrow = $("#product-arrow");
-                if (productArrow.hasClass("fa-chevron-right")) {
-                    productArrow.removeClass("fa-chevron-right").addClass("fa-chevron-down");
-                } else {
-                    productArrow.removeClass("fa-chevron-down").addClass("fa-chevron-right");
-                }
-            });
-
-            $("#supplier-toggle").click(function (e) {
-                e.preventDefault();
-                $("#supplier-submenu").slideToggle();
-                const supplierArrow = $("#supplier-arrow");
-                if (supplierArrow.hasClass("fa-chevron-right")) {
-                    supplierArrow.removeClass("fa-chevron-right").addClass("fa-chevron-down");
-                } else {
-                    supplierArrow.removeClass("fa-chevron-down").addClass("fa-chevron-right");
-                }
-            });
-
-            $("#reports-toggle").click(function (e) {
-                e.preventDefault();
-                $("#reports-submenu").slideToggle();
-                const reportsArrow = $("#reports-arrow");
-                if (reportsArrow.hasClass("fa-chevron-right")) {
-                    reportsArrow.removeClass("fa-chevron-right").addClass("fa-chevron-down");
-                } else {
-                    reportsArrow.removeClass("fa-chevron-down").addClass("fa-chevron-right");
-                }
-            });
-        });
-    </script>
-</body>
-</html>
