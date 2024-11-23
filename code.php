@@ -69,7 +69,7 @@ if (isset($_POST['click_edit_btn'])) {
     if (mysqli_num_rows($fetch_query_run) > 0) {
 
         while ($row = mysqli_fetch_array($fetch_query_run)) {
-        
+
             array_push($arrayresult, $row);
             header('content-type: application/json');
             echo json_encode($arrayresult);
@@ -92,7 +92,7 @@ if (isset($_POST['update_data'])) {
 
     // Prepare the update query
     $update_query = "UPDATE users SET first_name = '$first_name', last_name = '$last_name', email = '$email', password = '$password', role = '$role' WHERE id = '$id'";
-    
+
     // Execute the update query
     $update_query_run = mysqli_query($connection, $update_query);
 
@@ -193,7 +193,7 @@ if (isset($_POST['click_edit_supp_btn'])) {
     if (mysqli_num_rows($fetch_query_run) > 0) {
 
         while ($row = mysqli_fetch_array($fetch_query_run)) {
-        
+
             array_push($arrayresult, $row);
             header('content-type: application/json');
             echo json_encode($arrayresult);
@@ -216,7 +216,7 @@ if (isset($_POST['update_supplier'])) {
 
     // Prepare the update query
     $update_query = "UPDATE suppliers SET supplier_name = '$supplier_name', address = '$address', contact_person = '$contact_person', email = '$email', status = '$status' WHERE id = '$id'";
-    
+
     // Execute the update query
     $update_query_run = mysqli_query($connection, $update_query);
 
@@ -255,7 +255,7 @@ if (isset($_POST['click_delete_supp_btn'])) {
 if (isset($_POST['add_category'])) {
     $name = $_POST['name'];
     $description = $_POST['description'];
-    
+
 
     // Check if email already exists
     $check_name_query = "SELECT * FROM category WHERE name='$name'";
@@ -313,7 +313,7 @@ if (isset($_POST['click_edit_category_btn'])) {
     if (mysqli_num_rows($fetch_query_run) > 0) {
 
         while ($row = mysqli_fetch_array($fetch_query_run)) {
-        
+
             array_push($arrayresult, $row);
             header('content-type: application/json');
             echo json_encode($arrayresult);
@@ -333,7 +333,7 @@ if (isset($_POST['update_category'])) {
 
     // Prepare the update query
     $update_query = "UPDATE category SET name = '$name', description = '$description' WHERE id = '$id'";
-    
+
     // Execute the update query
     $update_query_run = mysqli_query($connection, $update_query);
 
@@ -371,7 +371,7 @@ if (isset($_POST['add_product_supplier'])) {
     $price = $_POST['price'];
     $category = $_POST['category'];
 
-    
+
 
     // Check if email already exists
     $check_product_name_query = "SELECT * FROM supplier_products WHERE product_name='$product_name'";
@@ -431,7 +431,7 @@ if (isset($_POST['click_edit_supplier_products_btn'])) {
     if (mysqli_num_rows($fetch_query_run) > 0) {
 
         while ($row = mysqli_fetch_array($fetch_query_run)) {
-        
+
             array_push($arrayresult, $row);
             header('content-type: application/json');
             echo json_encode($arrayresult);
@@ -453,7 +453,7 @@ if (isset($_POST['update_supplier_product'])) {
 
     // Prepare the update query
     $update_query = "UPDATE supplier_products SET supplier = '$supplier', product_name = '$product_name', price = '$price', category = '$category' WHERE id = '$id'";
-    
+
     // Execute the update query
     $update_query_run = mysqli_query($connection, $update_query);
 
@@ -487,36 +487,38 @@ if (isset($_POST['click_delete_supplier_product_btn'])) {
 
 
 //insert inventory
+// Insert inventory
 if (isset($_POST['add_inventory'])) {
     $supplier = $_POST['supplier'];
-    $product_name = $_POST['product_name'];
+    $products_name = $_POST['product'];
     $package_quantity = $_POST['package_quantity'];
     $measurement_per_package = $_POST['measurement_per_package'];
     $total_measurement = $_POST['total_measurement'];
-    $category = $_POST['category'];
     $unit = $_POST['unit'];
     $Expiry_Date = $_POST['Expiry_Date'];
 
-    
+    // Check if product already exists
+    $check_product_query = "SELECT * FROM inventory WHERE product = ?";
+    $stmt = $connection->prepare($check_product_query);
+    $stmt->bind_param("s", $products_name);
+    $stmt->execute();
+    $check_product_result = $stmt->get_result();
 
-    // Check if email already exists
-    $check_product_name_query = "SELECT * FROM inventory WHERE product_name='$product_name'";
-    $check_product_name_result = mysqli_query($connection, $check_product_name_query);
-
-    if (mysqli_num_rows($check_product_name_result) > 0) {
+    if ($check_product_result->num_rows > 0) {
         $_SESSION['status'] = "Product already exists!";
-        header("Location: addsupplier_product.php"); // Redirect back to the page
+        header("Location: inventoryManage.php");
         exit();
     } else {
-        $insert_query = "INSERT INTO supplier_products (supplier, product_name,package_quantity,measurement_per_package,
-        total_measurement,category,unit,Expiry_Date) VALUES ('$supplier', '$product_name', '$package_quantity'
-                                                                        ,'$measurement_per_package','$total_measurement','$category','$unit','$Expiry_Date')";
-        if (mysqli_query($connection, $insert_query)) {
+        $insert_query = "INSERT INTO inventory (supplier, product, package_quantity, measurement_per_package, total_measurement, unit, Expiry_Date) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $connection->prepare($insert_query);
+        $stmt->bind_param("ssisssss", $supplier, $products_name, $package_quantity, $measurement_per_package, $total_measurement, $unit, $Expiry_Date);
+
+        if ($stmt->execute()) {
             $_SESSION['status'] = "Supplier Product added successfully!";
         } else {
-            $_SESSION['status'] = "Error: " . mysqli_error($connection);
+            $_SESSION['status'] = "Error: " . $stmt->error;
         }
-        header("Location: inventoryManage.php"); // Redirect back to the page
+        header("Location: inventoryManage.php");
         exit();
     }
 }
@@ -538,7 +540,6 @@ if (isset($_POST['click_view_inventory_btn'])) {
         <h6>Packagge Quantity: ' . $row['package_quantity'] . '</h6>
         <h6>Mesurement Per Package: ' . $row['measurement_per_package'] . '</h6>
         <h6>Total Measurement: ' . $row['total_measurement'] . '</h6>
-        <h6>Category: ' . $row['category'] . '</h6>
         <h6>Unit: ' . $row['unit'] . '</h6>
         <h6>Expiration Date: ' . $row['Expiry_Date'] . '</h6>
          
@@ -552,7 +553,7 @@ if (isset($_POST['click_view_inventory_btn'])) {
 }
 
 //edit inventory
-if (isset($_POST['click_edit_incentory_btn'])) {
+if (isset($_POST['click_edit_inventory_btn'])) {
     $id = $_POST['inventory_id'];
     $arrayresult = [];
 
@@ -563,7 +564,7 @@ if (isset($_POST['click_edit_incentory_btn'])) {
     if (mysqli_num_rows($fetch_query_run) > 0) {
 
         while ($row = mysqli_fetch_array($fetch_query_run)) {
-        
+
             array_push($arrayresult, $row);
             header('content-type: application/json');
             echo json_encode($arrayresult);
@@ -576,7 +577,7 @@ if (isset($_POST['click_edit_incentory_btn'])) {
 }
 
 // Update inventory
-if (isset($_POST['update_supplier_product'])) {
+if (isset($_POST['update_inventory'])) {
     $id = $_POST['id']; // Ensure you retrieve the user ID
     $supplier = $_POST['supplier'];
     $product_name = $_POST['product_name'];
@@ -594,7 +595,7 @@ if (isset($_POST['update_supplier_product'])) {
      , category = '$category'
       , unit = '$unit'
        , Expiry_Date = '$Expiry_Date' WHERE id = '$id'";
-    
+
     // Execute the update query
     $update_query_run = mysqli_query($connection, $update_query);
 
@@ -626,5 +627,189 @@ if (isset($_POST['click_delete_inventory_btn'])) {
     }
 
 }
-?>
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+// Insert product
+
+if (isset($_POST['add_product'])) {
+    // Retrieve and sanitize form inputs
+    $product_name = htmlspecialchars($_POST['product_name']);
+    $price = floatval($_POST['price']);
+    $category = htmlspecialchars($_POST['category']);
+
+    // Handle image upload
+    if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+        $image = $_FILES['image'];
+        $imageName = basename($image['name']);
+        $imageTmpName = $image['tmp_name'];
+        $imageType = pathinfo($imageName, PATHINFO_EXTENSION);
+        $allowedTypes = ['jpg', 'jpeg', 'png'];
+
+        if (in_array(strtolower($imageType), $allowedTypes)) {
+            $targetDir = "images/";
+            $targetFile = $targetDir . uniqid() . '.' . $imageType;
+
+            if (move_uploaded_file($imageTmpName, $targetFile)) {
+                $stmt = $connection->prepare("INSERT INTO products (product_name, image, price, category) VALUES (?, ?, ?, ?)");
+
+                // Bind parameters (note the 's' for string, 'i' for integer, etc.)
+                $stmt->bind_param("ssss", $product_name, $targetFile, $price, $category);
+
+                if ($stmt->execute()) {
+                    $_SESSION['status'] = "Product added successfully!";
+                } else {
+                    $_SESSION['status'] = "Error: Could not add product to the database.";
+                }
+            } else {
+                $_SESSION['status'] = "Error: Could not save the uploaded image.";
+            }
+        } else {
+            $_SESSION['status'] = "Invalid image format. Only JPG, JPEG, and PNG are allowed.";
+        }
+    } else {
+        $_SESSION['status'] = "Please upload an image.";
+    }
+    header('Location: addproduct.php');
+    exit();
+}
+
+
+// View product
+if (isset($_POST['click_view_product_btn'])) {
+    $stmt = $conn->prepare("SELECT * FROM products WHERE id = :id");
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
+
+    if ($stmt->rowCount() > 0) {
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        echo json_encode([
+            'success' => true,
+            'html' => '
+        <h6>ID: ' . htmlspecialchars($row['id']) . '</h6>
+        <h6>Product: ' . htmlspecialchars($row['product_name']) . '</h6>
+        <h6>Price: ' . htmlspecialchars($row['price']) . '</h6>
+        <h6>Category: ' . htmlspecialchars($row['category']) . '</h6>
+        <h6>Image: <img src="' . htmlspecialchars($row['image']) . '" style="max-width: 100px;"></h6>
+    '
+        ]);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'No records found']);
+    }
+}
+// Edit product
+if (isset($_POST['click_edit_product_btn'])) {
+    $stmt = $conn->prepare("SELECT * FROM products WHERE id = :id");
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
+
+    if ($stmt->rowCount() > 0) {
+        $arrayresult = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        header('Content-Type: application/json');
+        echo json_encode($arrayresult);
+    } else {
+        echo json_encode(['message' => 'No records found']);
+    }
+}
+
+// Update product
+if (isset($_POST['update_product'])) {
+    // Check if a new file is uploaded
+    if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+        $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+        $fileType = mime_content_type($_FILES['image']['tmp_name']);
+
+        if (in_array($fileType, $allowedTypes)) {
+            $targetDir = "uploads/";
+            $newFileName = uniqid() . '_' . basename($_FILES["image"]["name"]);
+            $targetFilePath = $targetDir . $newFileName;
+
+            if (!move_uploaded_file($_FILES["image"]["tmp_name"], $targetFilePath)) {
+                echo "Error uploading file.";
+                exit();
+            }
+        } else {
+            echo "Invalid file type. Please upload an image.";
+            exit();
+        }
+    }
+
+    // Update the product in the database
+    try {
+        $query = "UPDATE products SET product_name = :product_name, price = :price, category = :category";
+        if ($newFileName) {
+            $query .= ", image = :image";
+        }
+        $query .= " WHERE id = :id";
+
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam(':product_name', $product_name);
+        $stmt->bindParam(':price', $price);
+        $stmt->bindParam(':category', $category);
+        if ($newFileName) {
+            $stmt->bindParam(':image', $newFileName);
+        }
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+
+        echo "Product updated successfully.";
+    } catch (PDOException $e) {
+        echo "Database Error: " . $e->getMessage();
+    }
+    // Update the product in the database
+    try {
+        $query = "UPDATE products SET product_name = :product_name, price = :price, category = :category";
+        if ($newFileName) {
+            $query .= ", image = :image";
+        }
+        $query .= " WHERE id = :id";
+
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam(':product_name', $product_name);
+        $stmt->bindParam(':price', $price);
+        $stmt->bindParam(':category', $category);
+        if ($newFileName) {
+            $stmt->bindParam(':image', $newFileName);
+        }
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+
+        echo "Product updated successfully.";
+    } catch (PDOException $e) {
+        echo "Database Error: " . $e->getMessage();
+    }
+}
+
+// Delete product
+if (isset($_POST['click_delete_product_btn'])) {
+    try {
+        $stmt = $conn->prepare("DELETE FROM products WHERE id = :id");
+        $stmt->bindParam(':id', $id);
+
+        if ($stmt->execute()) {
+            $_SESSION['status'] = "Deleted successfully";
+            header('Location: addproduct.php');
+            exit();
+        } else {
+            $_SESSION['status'] = "Delete failed";
+            header('Location: addproduct.php');
+            exit();
+        }
+    } catch (PDOException $e) {
+        $_SESSION['status'] = "Database Error: " . $e->getMessage();
+        header('Location: addproduct.php');
+        exit();
+    }
+}
+
+
+
+
+
+
+
+
+?>

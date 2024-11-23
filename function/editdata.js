@@ -151,7 +151,7 @@ $('.edit_inventory').click(function (e) {
         method: "POST",
         url: "code.php",
         data: {
-            'click_edit_incentory_btn': true,
+            'click_edit_inventory_btn': true,
             'inventory_id': inventory_id,
         },
         success: function (response) {
@@ -176,4 +176,44 @@ $('.edit_inventory').click(function (e) {
 })
 
 });
+$(document).ready(function () {
+    $('.edit_product').click(function (e) {
+        e.preventDefault();
+        
+        var product_id = $(this).closest('tr').find('.product_id').text().trim();
+
+        $.ajax({
+            method: "POST",
+            url: "code.php",
+            data: {
+                'click_edit_product_btn': true,
+                'product_id': product_id
+            },
+            success: function (response) {
+                try {
+                    const data = JSON.parse(response);
+                    if (data.message) {
+                        alert(data.message);
+                    } else if (data.length > 0) {
+                        $('#id').val(data[0].id);
+                        $('[name="product_name"]').val(data[0].product_name);
+                        $('[name="price"]').val(data[0].price);
+                        $('[name="category"]').val(data[0].category);
+                        $('#currentImage').attr('src', 'uploaded_images/' + data[0].image);
+                        $('#editData').modal('show');
+                    } else {
+                        alert('No data found.');
+                    }
+                } catch (error) {
+                    console.error("Error parsing JSON:", error);
+                    alert('An error occurred. Please try again.');
+                }
+            },
+            error: function () {
+                alert('Failed to fetch product data. Please try again.');
+            }
+        });
+    })
+});
+
 </script>

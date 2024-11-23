@@ -128,4 +128,44 @@ $('.delete_inventory').click(function (e) {
 
 });
 
+
+$(document).ready(function () {
+    $('.delete_product').click(function (e) {
+        e.preventDefault();
+        
+        var product_id = $(this).closest('tr').find('.product_id').text().trim();
+
+        if (confirm("Are you sure you want to delete this product?")) {
+            $.ajax({
+                method: "POST",
+                url: "code.php",
+                data: {
+                    'click_delete_product_btn': true,
+                    'product_id': product_id
+                },
+                success: function (response) {
+                    try {
+                        const data = JSON.parse(response);
+                        if (data.success) {
+                            alert("Product deleted successfully.");
+                            window.location.reload();
+                        } else if (data.message) {
+                            alert(data.message);
+                        } else {
+                            alert("An error occurred. Please try again.");
+                        }
+                    } catch (error) {
+                        console.error("Error parsing JSON:", error);
+                        alert("An error occurred. Please try again.");
+                    }
+                },
+                error: function () {
+                    alert("Failed to delete the product. Please try again.");
+                }
+            });
+        }
+    })
+});
+
+
 </script>
