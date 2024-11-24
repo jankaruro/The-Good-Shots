@@ -58,43 +58,6 @@
                         <div class="search-bar">
                             <input type="text" class="search-input" placeholder="Search...">
                             <button class="search-button">Search</button>
-
-                            <div>
-                            <header>
-                <div class="name-text">
-                    <span class="label-name" id="smoothies">Smoothies</span>
-                </div>
-            </header>
-
-            <?php
-            include('connection.php');
-            $sql = "SELECT * FROM products WHERE category = 'Smoothies'";
-            $stmt = $conn->prepare($sql);
-            $stmt->execute();
-            $stmt->setFetchMode(PDO::FETCH_ASSOC);
-
-            if ($stmt->rowCount() > 0) {
-            ?>
-                <div class="product-list">
-                    <?php while ($row = $stmt->fetch()) { ?>
-                        <div class="card">
-                            <div class="image">
-                                <img src="img/<?php echo $row['image']; ?>" alt="">
-                            </div>
-                            <span class="name-order"><?php echo $row['product_name']; ?></span>
-                            <span class="price-order">P<?php echo $row['price']; ?></span>
-                            <div class="button">
-                                <button type="button" class="Add">Order</button>
-                            </div>
-                        </div>
-                    <?php } ?>
-                </div>
-            <?php
-            } else {
-                echo "No smoothie products found";
-            }
-            ?>
-                            </div>
                         </div>
                     </div>
             </nav>
