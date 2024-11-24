@@ -271,12 +271,12 @@ include('header.php'); ?>
               <table class="table table-bordered">
                 <thead>
                   <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">First Name</th>
-                    <th scope="col">Last Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Role</th>
-                    <th scope="col"></th>
+                    <th scope="col" style = "width: 5px; text-align: center;">ID</th>
+                    <th scope="col" style = "width: 180px; text-align: center;">First Name</th>
+                    <th scope="col" style = "width: 120px; text-align: center;">Last Name</th>
+                    <th scope="col" style = "width: 180px; text-align: center;">Email</th>
+                    <th scope="col" style = "width: 100px; text-align: center;" >Role</th>
+                    <th scope="col" style = "width: 250px; text-align: center;">Action</th>
                   </tr>
                 </thead>
 
