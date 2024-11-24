@@ -48,7 +48,7 @@
                         <a href="addsupplier_product.php" class="sub-list-item"><p class = "txt-name-btn">Suppliers Product</p></a>
                     </div>
                 </div>
-                <a href="purchase_order.php" class="list-group-item">
+                <a href="delivery.php" class="list-group-item">
                     <i class="fa-solid fa-truck me-3"></i>Delivery
                 </a>
                 <div class="reports-dropdown">
@@ -56,9 +56,9 @@
                     <i class="fa-solid fa-calendar-days me-3"></i></i>Reports<i class="fa-solid fa-chevron-right toggle-arrow-reports" id="reports-arrow"></i>
                     </a>
                     <div class="submenu" id="reports-submenu">
-                        <a href="" class="sub-list-item"><p class = "txt-name-btn">Weekly</p></a>
-                        <a href="" class="sub-list-item"><p class = "txt-name-btn">Monthly</p></a>
-                        <a href="" class="sub-list-item"><p class = "txt-name-btn">Yearly</p></a>
+                        <a href="discrepancy.php" class="sub-list-item"><p class = "txt-name-btn">Discrepancy Report</p></a>
+                        <a href="inventoryReport.php" class="sub-list-item"><p class = "txt-name-btn">Inventory Report</p></a>
+                        <a href="salesReport.php" class="sub-list-item"><p class = "txt-name-btn">Sales Report</p></a>
                     </div>
                 </div>
             </div>
@@ -156,13 +156,13 @@
                                             </div>
                                             <div class="card-body body-level">
                                                 <div class="row">
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-6 me-5">
                                                         <div class="chart-container pie-chart">
                                                             <canvas id="doughnut_chart"></canvas>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6">
-                                                        <ul class="list-group">
+                                                    <div class="col-md-5">
+                                                        <ul class="list-group" style="">
                                                             <li class="list-group-item">Product 1</li>
                                                             <li class="list-group-item">Product 2</li>
                                                             <li class="list-group-item">Product 3</li>

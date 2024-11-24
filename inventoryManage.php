@@ -166,50 +166,50 @@ include('header.php'); ?>
       </div>
       <form action="code.php" method="POST">
 
-      <div class="form-group">
-            <label for="supplier"><b>Supplier</b></label>
-            <select class="form-control" id="supplier" name="supplier" required onchange="loadProducts()">
-              <option value="">-- Select Supplier --</option>
-              <?php
-              include('connection.php');
-              $stmt = $conn->prepare("SELECT supplier_name FROM suppliers");
-              $stmt->execute();
-              $result = $stmt->fetchAll();
+        <div class="form-group">
+          <label for="supplier"><b>Supplier</b></label>
+          <select class="form-control" id="supplier" name="supplier" required onchange="loadProducts()">
+            <option value="">-- Select Supplier --</option>
+            <?php
+            include('connection.php');
+            $stmt = $conn->prepare("SELECT supplier_name FROM suppliers");
+            $stmt->execute();
+            $result = $stmt->fetchAll();
 
-              if (count($result) > 0) {
-                foreach ($result as $row) {
-                  echo "<option value='" . $row['supplier_name'] . "'>" . $row['supplier_name'] . "</option>";
-                }
-              } else {
-                echo "<option value=''>No suppliers found</option>";
+            if (count($result) > 0) {
+              foreach ($result as $row) {
+                echo "<option value='" . $row['supplier_name'] . "'>" . $row['supplier_name'] . "</option>";
               }
-              $conn = null;
-              ?>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="product"><b>Product</b></label>
-            <select class="form-control" id="product" name="product" required>
-              <option value="">-- Select Product --</option>
-            </select>
-          </div>
-
-          <script>
-            function loadProducts() {
-              var supplier = document.getElementById("supplier").value;
-
-
-              var xhr = new XMLHttpRequest();
-              xhr.open("GET", "fetch_products.php?supplier=" + supplier, true);
-              xhr.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                  document.getElementById("product").innerHTML = this.responseText; 1
-                }
-              };
-              xhr.send();
+            } else {
+              echo "<option value=''>No suppliers found</option>";
             }
-          </script>
+            $conn = null;
+            ?>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="product"><b>Product</b></label>
+          <select class="form-control" id="product" name="product" required>
+            <option value="">-- Select Product --</option>
+          </select>
+        </div>
+
+        <script>
+          function loadProducts() {
+            var supplier = document.getElementById("supplier").value;
+
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "fetch_products.php?supplier=" + supplier, true);
+            xhr.onreadystatechange = function () {
+              if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("product").innerHTML = this.responseText; 1
+              }
+            };
+            xhr.send();
+          }
+        </script>
 
 
 
@@ -219,50 +219,50 @@ include('header.php'); ?>
 
 
 
-          <div class="form-group">
-            <label class="fs-5 mt-1 fw-bolder">Package Quantity</label>
-            <input type="number" class="form-control fw-medium" id="package_quantity" name="package_quantity"
-              placeholder="Enter quantity" step="0.01" oninput="calculateTotal()">
-          </div>
+        <div class="form-group">
+          <label class="fs-5 mt-1 fw-bolder">Package Quantity</label>
+          <input type="number" class="form-control fw-medium" id="package_quantity" name="package_quantity"
+            placeholder="Enter quantity" step="0.01" oninput="calculateTotal()">
+        </div>
 
-          <div class="form-group">
-            <label class="fs-5 mt-1 fw-bolder">Measurement per Pack</label>
-            <input type="number" class="form-control fw-medium" id="measurement_per_package"
-              name="measurement_per_package" placeholder="Enter Measurement" step="0.01" oninput="calculateTotal()">
-          </div>
+        <div class="form-group">
+          <label class="fs-5 mt-1 fw-bolder">Measurement per Pack</label>
+          <input type="number" class="form-control fw-medium" id="measurement_per_package"
+            name="measurement_per_package" placeholder="Enter Measurement" step="0.01" oninput="calculateTotal()">
+        </div>
 
-          <div class="form-group">
-            <label class="fs-5 mt-1 fw-bolder">Total Measurement</label>
-            <input type="number" class="form-control fw-medium" id="total_measurement" name="total_measurement"
-              placeholder="Enter Total" step="0.01" readonly>
-          </div>
+        <div class="form-group">
+          <label class="fs-5 mt-1 fw-bolder">Total Measurement</label>
+          <input type="number" class="form-control fw-medium" id="total_measurement" name="total_measurement"
+            placeholder="Enter Total" step="0.01" readonly>
+        </div>
 
-          <script>
-            function calculateTotal() {
-              const packageQuantity = parseFloat(document.getElementById('package_quantity').value) || 0;
-              const measurementPerPackage = parseFloat(document.getElementById('measurement_per_package').value) || 0;
-              const totalMeasurement = packageQuantity * measurementPerPackage;
+        <script>
+          function calculateTotal() {
+            const packageQuantity = parseFloat(document.getElementById('package_quantity').value) || 0;
+            const measurementPerPackage = parseFloat(document.getElementById('measurement_per_package').value) || 0;
+            const totalMeasurement = packageQuantity * measurementPerPackage;
 
-              document.getElementById('total_measurement').value = totalMeasurement.toFixed(2);
-            }
-          </script>
-
-
-
-          <div class="form-group">
-            <label class="fs-5 mt-1 fw-bolder">Unit</label>
-            <select class="form-control fw-medium" id="unit" name="unit">
-              <option value="milliliter">milliliter </option>
-              <option value="grams">grams</option>
-            </select>
-          </div>
+            document.getElementById('total_measurement').value = totalMeasurement.toFixed(2);
+          }
+        </script>
 
 
 
-          <div class="form-group">
-            <label class="fs-5 mt-1 fw-bolder">Expiration Date</label>
-            <input type="date" class="form-control fw-medium" name="Expiry_Date" placeholder="Enter Expiry Date">
-          </div>
+        <div class="form-group">
+          <label class="fs-5 mt-1 fw-bolder">Unit</label>
+          <select class="form-control fw-medium" id="unit" name="unit">
+            <option value="milliliter">milliliter </option>
+            <option value="grams">grams</option>
+          </select>
+        </div>
+
+
+
+        <div class="form-group">
+          <label class="fs-5 mt-1 fw-bolder">Expiration Date</label>
+          <input type="date" class="form-control fw-medium" name="Expiry_Date" placeholder="Enter Expiry Date">
+        </div>
 
     </div>
     <div class="modal-footer">
@@ -327,7 +327,7 @@ include('header.php'); ?>
           </a>
         </div>
       </div>
-      <a href="purchase_order.php" class="list-group-item">
+      <a href="delivery.php" class="list-group-item">
         <i class="fa-solid fa-truck me-3"></i>Delivery
       </a>
       <div class="reports-dropdown">
@@ -336,14 +336,14 @@ include('header.php'); ?>
             class="fa-solid fa-chevron-right toggle-arrow-reports" id="reports-arrow"></i>
         </a>
         <div class="submenu" id="reports-submenu">
-          <a href="" class="sub-list-item">
-            <p class="txt-name-btn">Weekly</p>
+          <a href="discrepancy.php" class="sub-list-item">
+            <p class="txt-name-btn">Discrepancy Report</p>
           </a>
-          <a href="" class="sub-list-item">
-            <p class="txt-name-btn">Monthly</p>
+          <a href="inventoryReport.php" class="sub-list-item">
+            <p class="txt-name-btn">Inventory Report</p>
           </a>
-          <a href="" class="sub-list-item">
-            <p class="txt-name-btn">Yearly</p>
+          <a href="salesReport.php" class="sub-list-item">
+            <p class="txt-name-btn">Sales Report</p>
           </a>
         </div>
       </div>
@@ -376,7 +376,7 @@ include('header.php'); ?>
             <a class="nav-link dropdown-toggle fw-bold admin-link" href="#"
               style="color: black; font-weight: 200; font-size: 17px;" id="navbarDropdown" role="button"
               data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="fa-regular fa-circle-user me-2" style = "font-size: 25px"></i>
+              <i class="fa-regular fa-circle-user me-2" style="font-size: 25px"></i>
               Admin
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -390,100 +390,104 @@ include('header.php'); ?>
     </nav>
 
 
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-sm-12 col-lg-20">
+    <div class="container-responsive" style="margin-top: 40px; padding: 25px; ">
+      <div class="col-sm-12">
 
-          <?php
-          if (isset($_SESSION['status']) && $_SESSION['status'] != '') {
-            ?>
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-              <?php echo $_SESSION['status']; ?>
-              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-            <script>
-              const alert = document.querySelector('.alert');
-              setTimeout(() => {
-                alert.style.display = 'none';
-              }, 3000);
-            </script>
-            <?php
-            unset($_SESSION['status']);
-          }
-
+        <?php
+        if (isset($_SESSION['status']) && $_SESSION['status'] != '') {
           ?>
-          <div class="card">
-            <div class="card-header">
-              <h3 class="text-center">Inventory Management</h3>
-              <button type="button" class="btn btn-primary float-end fw-medium" data-bs-toggle="modal"
-                data-bs-target="#addUserData">
-                Add New User
-              </button>
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?php echo $_SESSION['status']; ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          <script>
+            const alert = document.querySelector('.alert');
+            setTimeout(() => {
+              alert.style.display = 'none';
+            }, 3000);
+          </script>
+          <?php
+          unset($_SESSION['status']);
+        }
 
-            </div>
-            <div class="card-body">
-              <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Supplier</th>
-                    <th scope="col">Product</th>
-                    <th scope="col">Package Quantity</th>
-                    <th scope="col">Measurement Per Package</th>
-                    <th scope="col">Total_measurement</th>
-                    <th scope="col">Category</th>
-                    <th scope="col">Unit</th>
-                    <th scope="col">Expiration Date</th>
-                    <th scope="col"></th>
-                  </tr>
-                </thead>
+        ?>
+        <div class="card shadow">
+          <div class="card-header">
+            <h3 class="text-center">Inventory Management</h3>
+            <button type="button" class="btn btn-primary float-end fw-medium" data-bs-toggle="modal"
+              data-bs-target="#addUserData">
+              Add New User
+            </button>
 
-                <tbody>
-                  <?php
-                  $connection = mysqli_connect("localhost", "root", "", "tgs_inventory");
+          </div>
+          <div class="card-body">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">Supplier</th>
+                  <th scope="col">Product</th>
+                  <th scope="col">Package Quantity</th>
+                  <th scope="col">Measurement Per Package</th>
+                  <th scope="col">Total_measurement</th>
+                  <th scope="col">Category</th>
+                  <th scope="col">Unit</th>
+                  <th scope="col">Expiration Date</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
 
-                  $fetch_query = "SELECT * FROM inventory ";
-                  $fetch_query_run = mysqli_query($connection, $fetch_query);
+              <tbody>
+                <?php
+                $connection = mysqli_connect("localhost", "root", "", "tgs_inventory");
 
-                  if (mysqli_num_rows($fetch_query_run) > 0) {
-                    while ($row = mysqli_fetch_array($fetch_query_run)) {
+                $fetch_query = "SELECT * FROM inventory ";
+                $fetch_query_run = mysqli_query($connection, $fetch_query);
 
-                      ?>
-                      <tr>
-                        <td class="inventory_id"><?php echo $row['id']; ?></td>
-                        <td><?php echo $row['supplier']; ?></td>
-                        <td><?php echo $row['product_name']; ?></td>
-                        <td><?php echo $row['package_quantity']; ?></td>
-                        <td><?php echo $row['measurement_per_package']; ?></td>
-                        <td><?php echo $row['total_measurement']; ?></td>
-                        <td><?php echo $row['category']; ?></td>
-                        <td><?php echo $row['unit']; ?></td>
-                        <td><?php echo $row['Expiry_Date']; ?></td>
-                        <td>
-                          <a href="#" class="btn btn-info btn-base view_inventory">View Data</a>
-                          <a href="#" class="btn btn-success btn-base edit_inventory">Edit Data</a>
-                          <a href="" class="btn btn-danger btn-base delete_inventory">Delete Data</a>
-                        </td>
-                      </tr>
-                      <?php
+                if (mysqli_num_rows($fetch_query_run) > 0) {
+                  while ($row = mysqli_fetch_array($fetch_query_run)) {
 
-                    }
-                  } else {
                     ?>
-                    <tr colspan="5"> No Record Found </tr>
+                    <tr>
+                      <td class="inventory_id"><?php echo $row['id']; ?></td>
+                      <td><?php echo $row['supplier']; ?></td>
+                      <td><?php echo $row['product_name']; ?></td>
+                      <td><?php echo $row['package_quantity']; ?></td>
+                      <td><?php echo $row['measurement_per_package']; ?></td>
+                      <td><?php echo $row['total_measurement']; ?></td>
+                      <td><?php echo $row['category']; ?></td>
+                      <td><?php echo $row['unit']; ?></td>
+                      <td><?php echo $row['Expiry_Date']; ?></td>
+                      <td>
+                        <a href="#" class="btn btn-info btn-base view_inventory">View Data</a>
+                        <a href="#" class="btn btn-success btn-base edit_inventory">Edit Data</a>
+                        <a href="" class="btn btn-danger btn-base delete_inventory">Delete Data</a>
+                      </td>
+                    </tr>
                     <?php
+
                   }
-                  ?>
-                </tbody>
-              </table>
-            </div>
+                } else {
+                  echo "<tr><td colspan='6'></td></tr>";
+                }
+                ?>
+              </tbody>
+            </table>
+            <?php
+            if (mysqli_num_rows($fetch_query_run) == 0) {
+              echo "<p class='text-center mt-3'>No Record Found</p>";
+            }
+            ?>
+            </tbody>
+            </table>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
 
-    <?php include('footer.php'); ?>
-    <?php include('function/viewdata.js'); ?>
-    <?php include('function/editdata.js'); ?>
-    <?php include('function/remove.js'); ?>
+  <?php include('footer.php'); ?>
+  <?php include('function/viewdata.js'); ?>
+  <?php include('function/editdata.js'); ?>
+  <?php include('function/remove.js'); ?>

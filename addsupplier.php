@@ -155,7 +155,7 @@ include('header.php'); ?>
                         <a href="addsupplier_product.php" class="sub-list-item"><p class = "txt-name-btn">Suppliers Product</p></a>
                     </div>
                 </div>
-                <a href="purchase_order.php" class="list-group-item">
+                <a href="delivery.php" class="list-group-item">
                     <i class="fa-solid fa-truck me-3"></i>Delivery
                 </a>
                 <div class="reports-dropdown">
@@ -163,9 +163,9 @@ include('header.php'); ?>
                     <i class="fa-solid fa-calendar-days me-3"></i></i>Reports<i class="fa-solid fa-chevron-right toggle-arrow-reports" id="reports-arrow"></i>
                     </a>
                     <div class="submenu" id="reports-submenu">
-                        <a href="" class="sub-list-item"><p class = "txt-name-btn">Weekly</p></a>
-                        <a href="" class="sub-list-item"><p class = "txt-name-btn">Monthly</p></a>
-                        <a href="" class="sub-list-item"><p class = "txt-name-btn">Yearly</p></a>
+                        <a href="discrepancy.php" class="sub-list-item"><p class = "txt-name-btn">Discrepancy Report</p></a>
+                        <a href="inventoryReport.php" class="sub-list-item"><p class = "txt-name-btn">Inventory Report</p></a>
+                        <a href="salesReport.php" class="sub-list-item"><p class = "txt-name-btn">Sales Report</p></a>
                     </div>
                 </div>
             </div>
@@ -173,7 +173,7 @@ include('header.php'); ?>
         <div id="page-content-wrapper">
             <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-4 mt-2 dashboard-nav">
                 <div class="d-flex align-items-center">
-                    <h2 class="fs-3 m-1">Dashboard</h2>
+                    <h2 class="fs-3 m-1">Add Supplier</h2>
                 </div>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -209,8 +209,7 @@ include('header.php'); ?>
             </nav>
 
 
-<div class="container">
-  <div class="row justify-content-center">
+            <div class="container-responsive" style= "margin-top: 40px; padding: 25px">
     <div class="col-sm-12 col-lg-20">
 
       <?php
@@ -231,7 +230,7 @@ include('header.php'); ?>
       }
 
       ?>
-      <div class="card">
+      <div class="card shadow">
         <div class="card-header">
           <h3 class="text-center">Supplier Management</h3>
           <button type="button" class="btn btn-primary float-end fw-medium" data-bs-toggle="modal"
@@ -282,11 +281,16 @@ include('header.php'); ?>
 
                 }
               } else {
-                ?>
-                <tr colspan="5"> No Record Found </tr>
-                <?php
+                echo "<tr><td colspan='6'></td></tr>";
               }
               ?>
+            </tbody>
+          </table>
+          <?php
+          if (mysqli_num_rows($fetch_query_run) == 0) {
+            echo "<p class='text-center mt-3'>No Record Found</p>";
+          }
+          ?>
             </tbody>
           </table>
         </div>
