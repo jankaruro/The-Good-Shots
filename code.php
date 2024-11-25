@@ -484,9 +484,11 @@ if (isset($_POST['click_delete_supplier_product_btn'])) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//insert inventory
 if (isset($_POST['add_inventory'])) {
     $supplier = $_POST['supplier'];
-    $product_name = $_POST['product_name'];
+    $product = $_POST['product_name']; // Change this to match form field name
     $package_quantity = $_POST['package_quantity'];
     $measurement_per_package = $_POST['measurement_per_package'];
     $total_measurement = $_POST['total_measurement'];
@@ -496,7 +498,7 @@ if (isset($_POST['add_inventory'])) {
     // Check if product already exists
     $check_product_name_query = "SELECT * FROM inventory WHERE product_name = ?";
     $stmt = $connection->prepare($check_product_name_query);
-    $stmt->bind_param("s", $product_name);
+    $stmt->bind_param("s", $product);
     $stmt->execute();
     $check_product_result = $stmt->get_result();
 
@@ -507,7 +509,7 @@ if (isset($_POST['add_inventory'])) {
     } else {
         $insert_query = "INSERT INTO inventory (supplier, product_name, package_quantity, measurement_per_package, total_measurement, unit, Expiry_Date) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $connection->prepare($insert_query);
-        $stmt->bind_param("ssissss", $supplier, $product_name, $package_quantity, $measurement_per_package, $total_measurement, $unit, $Expiry_Date);
+        $stmt->bind_param("ssissss", $supplier, $product, $package_quantity, $measurement_per_package, $total_measurement, $unit, $Expiry_Date);
 
         if ($stmt->execute()) {
             $_SESSION['status'] = "Supplier Product added successfully!";
@@ -518,6 +520,7 @@ if (isset($_POST['add_inventory'])) {
         exit();
     }
 }
+
 
 
 
@@ -549,26 +552,26 @@ if (isset($_POST['click_view_inventory_btn'])) {
     }
 }
 //edit inventory
-if (isset($_POST['click_edit_inventory_btn'])) {
-    $id = $_POST['inventory_id'];
-    $arrayresult = [];
-
-    $fetch_query = "SELECT * FROM inventory WHERE id = ?";
-    $stmt = $connection->prepare($fetch_query);
-    $stmt->bind_param("i", $id);
+if (isset($_POST['supplier'])) {
+    $supplier = $_POST['supplier'];
+    $stmt = $conn->prepare("SELECT product_name FROM products WHERE supplier_name = :supplier");
+    $stmt->bindParam(':supplier', $supplier);
     $stmt->execute();
-    $fetch_query_run = $stmt->get_result();
+    $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    if ($fetch_query_run->num_rows > 0) {
-        while ($row = $fetch_query_run->fetch_assoc()) {
-            array_push($arrayresult, $row);
+    $productOptions = '';
+    if (count($products) > 0) {
+        foreach ($products as $product) {
+            $productOptions .= "<option value='" . htmlspecialchars($product['product_name'], ENT_QUOTES, 'UTF-8') . "'>" . htmlspecialchars($product['product_name'], ENT_QUOTES, 'UTF-8') . "</option>";
         }
-        header('Content-Type: application/json');
-        echo json_encode($arrayresult);
     } else {
-        echo '<h4>No records found</h4>';
+        $productOptions = "<option value=''>No products found</option>";
     }
+
+    echo $productOptions;
 }
+
+
 
 // Update inventory
 if (isset($_POST['update_inventory'])) {
