@@ -11,111 +11,291 @@
     <link rel="stylesheet" href="order.css">
     <title>Food & Orders</title>
 </head>
-
-<body>
-    <div class="d-flex content">
-        <div id="sidebar" class="sidebar-color">
-            <div class="sidebar-heading">
-                <img src="Images/Logo.jpg" alt="Bootstrap" class="logo me-3">The Good Shots
-            </div>
-            <div class="list-group list-group-flush mt-2">
-                <a href="dashboard.php" class="list-group-item">
-                    <i class="fa-solid fa-mug-hot me-3"></i></i>Espresso Base Coffee
-                </a>
-                <a href="adduser.php" class="list-group-item">
-                    <i class="fas fa-project-diagram me-3"></i>Best Selling Coffee Drinks
-                </a>
-                <a href="addproduct.php" class="list-group-item">
-                    <i class="fas fa-chart-line me-3"></i>Fruit Tea
-                </a>
-                <a href="#" class="list-group-item">
-                    <i class="fas fa-shopping-cart me-3"></i>Mocktails
-                </a>
-                <a href="purchase_order.php" class="list-group-item">
-                    <i class="fa-solid fa-money-bill me-3"></i>Smoothies
-                </a>
-                <a href="purchase_order.php" class="list-group-item">
-                    <i class="fa-solid fa-boxes-packing me-3"></i>Frappe
-                </a>
-                <a href="purchase_order.php" class="list-group-item">
-                    <i class="fa-solid fa-truck me-3"></i>Croffle
-                </a>
-                <a href="#" class="list-group-item">
-                    <i class="fa-solid fa-flag me-3"></i>Fries
-                </a>
-                <a href="#" class="list-group-item">
-                    <i class="fa-solid fa-flag me-3"></i>Cakes
-                </a>
-                <a href="#" class="list-group-item">
-                    <i class="fa-solid fa-flag me-3"></i>Sandwhich
-                </a>
-                <a href="#" class="list-group-item">
-                    <i class="fa-solid fa-flag me-3"></i>Rice Meal
-                </a>
-            </div>
+<div class="d-flex content">
+    <div id="sidebar" class="sidebar-color">
+        <div class="sidebar-heading">
+            <img src="Images/Logo.jpg" alt="Bootstrap" class="logo me-3">The Good Shots
         </div>
-        <div id="page-content-wrapper">
-            <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-4 mt-1 dashboard-nav">
+        <div class="list-group list-group-flush mt-2">
+            <a href="dashboard.php" class="list-group-item">
+                <i class="fa-solid fa-mug-hot me-3"></i></i>Espresso Base Coffee
+            </a>
+            <a href="adduser.php" class="list-group-item">
+                <i class="fas fa-project-diagram me-3"></i>Best Selling Coffee Drinks
+            </a>
+            <a href="addproduct.php" class="list-group-item">
+                <i class="fas fa-chart-line me-3"></i>Fruit Tea
+            </a>
+            <a href="#" class="list-group-item">
+                <i class="fas fa-shopping-cart me-3"></i>Mocktails
+            </a>
+            <a href="purchase_order.php" class="list-group-item">
+                <i class="fa-solid fa-money-bill me-3"></i>Smoothies
+            </a>
+            <a href="purchase_order.php" class="list-group-item">
+                <i class="fa-solid fa-boxes-packing me-3"></i>Frappe
+            </a>
+            <a href="purchase_order.php" class="list-group-item">
+                <i class="fa-solid fa-truck me-3"></i>Croffle
+            </a>
+            <a href="#" class="list-group-item">
+                <i class="fa-solid fa-flag me-3"></i>Fries
+            </a>
+            <a href="#" class="list-group-item">
+                <i class="fa-solid fa-flag me-3"></i>Cakes
+            </a>
+            <a href="#" class="list-group-item">
+                <i class="fa-solid fa-flag me-3"></i>Sandwhich
+            </a>
+            <a href="#" class="list-group-item">
+                <i class="fa-solid fa-flag me-3"></i>Rice Meal
+            </a>
+        </div>
+    </div>
+    <div id="page-content-wrapper">
+        <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-4 mt-2 dashboard-nav">
+            <div class="d-flex align-items-center">
                 <a href="dashboard.php" class="btn-back"><i class="fa-solid fa-arrow-left m-3"></i></a>
-                <div class="d-flex align-items-center top-nav">
-                    <h2 class="fs-3 m-2 ms-4 me-5" style="color: white">Food and Drinks</h2>
-                    <div class="search-bar">
-                        <input type="text" class="search-input" placeholder="Search...">
-                        <button class="search-button">Search</button>
+                <h2 class="fs-3 m-1">Food and Orders</h2>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
+                    <a class="nav-link fw-bold notification-link" href="#"
+                        style="color: black; font-weight: 200; font-size: 17px;">
+                        <i class="fa-solid fa-bell me-2"></i>
+                        Notification
+                    </a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold admin-link" href="#"
+                            style="color: black; font-weight: 200; font-size: 17px;" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-regular fa-circle-user me-2" style="font-size: 25px"></i>
+                            Admin
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li><a class="dropdown-item" href="#">Settings</a></li>
+                            <li><a class="dropdown-item" href="#">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="container-fluid">
+            <div class="order-container">
+                <header>
+                    <div class="name-text">
+                        <span class="label-name" id="espresso-based-coffee">Espresso Based Coffee</span>
+                    </div>
+                </header>
+                <div class="content">
+                    <div class="coffee-card me-3">
+                        <div class="quantity">
+                            <div class="details">
+                                <h3 class="coffee-name">Americano</h3>
+                                <span class="coffee-price">P100</span>
+                            </div>
+                            <img src="images/Americano.png" alt="Americano" />
+                            <div class="size-selection">
+                                <label class="size-option">
+                                    <input type="radio" name="size" value="small" checked />
+                                    <span>S</span>
+                                </label>
+                                <label class="size-option">
+                                    <input type="radio" name="size" value="medium" />
+                                    <span>M</span>
+                                </label>
+                                <label class="size-option">
+                                    <input type="radio" name="size" value="large" />
+                                    <span>L</span>
+                                </label>
+                            </div>
+                            <div class="quantity-container">
+                                <button class="decrease" onclick="decreaseQuantity()">-</button>
+                                <input type="number" id="quantity" value="1" min="1" />
+                                <button class="increase" onclick="increaseQuantity()">+</button>
+                            </div>
+                            <div class="addtocart">Add to Cart</div>
+                        </div>
+                    </div>
+                    <div class="coffee-card me-3">
+                        <div class="quantity">
+                            <div class="details">
+                                <h3 class="coffee-name">Americano</h3>
+                                <span class="coffee-price">P100</span>
+                            </div>
+                            <img src="images/Americano.png" alt="Americano" />
+                            <div class="size-selection">
+                                <label class="size-option">
+                                    <input type="radio" name="size" value="small" checked />
+                                    <span>S</span>
+                                </label>
+                                <label class="size-option">
+                                    <input type="radio" name="size" value="medium" />
+                                    <span>M</span>
+                                </label>
+                                <label class="size-option">
+                                    <input type="radio" name="size" value="large" />
+                                    <span>L</span>
+                                </label>
+                            </div>
+                            <div class="quantity-container">
+                                <button class="decrease" onclick="decreaseQuantity()">-</button>
+                                <input type="number" id="quantity" value="1" min="1" />
+                                <button class="increase" onclick="increaseQuantity()">+</button>
+                            </div>
+                            <div class="addtocart">Add to Cart</div>
+                        </div>
+                    </div>
+                    <div class="coffee-card me-3">
+                        <div class="quantity">
+                            <div class="details">
+                                <h3 class="coffee-name">Americano</h3>
+                                <span class="coffee-price">P100</span>
+                            </div>
+                            <img src="images/Americano.png" alt="Americano" />
+                            <div class="size-selection">
+                                <label class="size-option">
+                                    <input type="radio" name="size" value="small" checked />
+                                    <span>S</span>
+                                </label>
+                                <label class="size-option">
+                                    <input type="radio" name="size" value="medium" />
+                                    <span>M</span>
+                                </label>
+                                <label class="size-option">
+                                    <input type="radio" name="size" value="large" />
+                                    <span>L</span>
+                                </label>
+                            </div>
+                            <div class="quantity-container">
+                                <button class="decrease" onclick="decreaseQuantity()">-</button>
+                                <input type="number" id="quantity" value="1" min="1" />
+                                <button class="increase" onclick="increaseQuantity()">+</button>
+                            </div>
+                            <div class="addtocart">Add to Cart</div>
+                        </div>
+                    </div>
+                    <div class="coffee-card me-3">
+                        <div class="quantity">
+                            <div class="details">
+                                <h3 class="coffee-name">Americano</h3>
+                                <span class="coffee-price">P100</span>
+                            </div>
+                            <img src="images/Americano.png" alt="Americano" />
+                            <div class="size-selection">
+                                <label class="size-option">
+                                    <input type="radio" name="size" value="small" checked />
+                                    <span>S</span>
+                                </label>
+                                <label class="size-option">
+                                    <input type="radio" name="size" value="medium" />
+                                    <span>M</span>
+                                </label>
+                                <label class="size-option">
+                                    <input type="radio" name="size" value="large" />
+                                    <span>L</span>
+                                </label>
+                            </div>
+                            <div class="quantity-container">
+                                <button class="decrease" onclick="decreaseQuantity()">-</button>
+                                <input type="number" id="quantity" value="1" min="1" />
+                                <button class="increase" onclick="increaseQuantity()">+</button>
+                            </div>
+                            <div class="addtocart">Add to Cart</div>
+                        </div>
+                    </div>
+                    <div class="coffee-card me-3">
+                        <div class="quantity">
+                            <div class="details">
+                                <h3 class="coffee-name">Americano</h3>
+                                <span class="coffee-price">P100</span>
+                            </div>
+                            <img src="images/Americano.png" alt="Americano" />
+                            <div class="size-selection">
+                                <label class="size-option">
+                                    <input type="radio" name="size" value="small" checked />
+                                    <span>S</span>
+                                </label>
+                                <label class="size-option">
+                                    <input type="radio" name="size" value="medium" />
+                                    <span>M</span>
+                                </label>
+                                <label class="size-option">
+                                    <input type="radio" name="size" value="large" />
+                                    <span>L</span>
+                                </label>
+                            </div>
+                            <div class="quantity-container">
+                                <button class="decrease" onclick="decreaseQuantity()">-</button>
+                                <input type="number" id="quantity" value="1" min="1" />
+                                <button class="increase" onclick="increaseQuantity()">+</button>
+                            </div>
+                            <div class="addtocart">Add to Cart</div>
+                        </div>
+                    </div>
+                    <div class="coffee-card me-3">
+                        <div class="quantity">
+                            <div class="details">
+                                <h3 class="coffee-name">Americano</h3>
+                                <span class="coffee-price">P100</span>
+                            </div>
+                            <img src="images/Americano.png" alt="Americano" />
+                            <div class="size-selection">
+                                <label class="size-option">
+                                    <input type="radio" name="size" value="small" checked />
+                                    <span>S</span>
+                                </label>
+                                <label class="size-option">
+                                    <input type="radio" name="size" value="medium" />
+                                    <span>M</span>
+                                </label>
+                                <label class="size-option">
+                                    <input type="radio" name="size" value="large" />
+                                    <span>L</span>
+                                </label>
+                            </div>
+                            <div class="quantity-container">
+                                <button class="decrease" onclick="decreaseQuantity()">-</button>
+                                <input type="number" id="quantity" value="1" min="1" />
+                                <button class="increase" onclick="increaseQuantity()">+</button>
+                            </div>
+                            <div class="addtocart">Add to Cart</div>
+                        </div>
                     </div>
                 </div>
-            </nav>
-            <header>
-                <div class="name-text">
-                    <span class="label-name" id="espresso-based-coffee">Espresso Based Coffee</span>
-                </div>
-            </header>
-            <div class="coffee-card">
-                <img src="images/Americano.png" alt="Americano" />
-                <div class="quantity-container">
-                <div class="details">
-                    <h3 class = "coffee-name">Americano <span class = "coffee-price">P100</span></h3>
-                    <p>An Americano coffee is a beverage made by diluting a shot of espresso with hot water, resulting
-                        in a smoother, milder flavor compared to straight espresso.</p>
-                </div>
-                <div class="quantity-container">
-                <button class="decrease" onclick="decreaseQuantity()">-</button>
-                <input type="number" id="quantity" value="1" min="1" />
-                <button class="increase" onclick="increaseQuantity()">+</button>
-                </div>
             </div>
-
-        </div>
-        <div class="receipt">
-            <div class="business-function">
-                <header class="receipt-nav">
-                    <i class="fa-regular fa-circle-user me-3 mt-3"></i>Admin
-                </header>
+            <div class="receipt">
+                <div class = "top-cart">
+                    <h3 class = "cart-name" >Cart</h3>
+                </div>
             </div>
         </div>
     </div>
+</div>
 </body>
 <script>
     function increaseQuantity() {
-  const quantityInput = document.getElementById('quantity');
-  let currentQuantity = parseInt(quantityInput.value, 10);
-  quantityInput.value = currentQuantity + 1;
-}
+        const quantityInput = document.getElementById('quantity');
+        let currentQuantity = parseInt(quantityInput.value, 10);
+        quantityInput.value = currentQuantity + 1;
+    }
 
-function decreaseQuantity() {
-  const quantityInput = document.getElementById('quantity');
-  let currentQuantity = parseInt(quantityInput.value, 10);
-  if (currentQuantity > 1) {
-    quantityInput.value = currentQuantity - 1;
-  }
-}
+    function decreaseQuantity() {
+        const quantityInput = document.getElementById('quantity');
+        let currentQuantity = parseInt(quantityInput.value, 10);
+        if (currentQuantity > 1) {
+            quantityInput.value = currentQuantity - 1;
+        }
+    }
 
-// Optional: Validate manual input
-document.getElementById('quantity').addEventListener('input', function () {
-  const value = parseInt(this.value, 10);
-  if (isNaN(value) || value < 1) {
-    this.value = 1;
-  }
-});
+    document.getElementById('quantity').addEventListener('input', function () {
+        const value = parseInt(this.value, 10);
+        if (isNaN(value) || value < 1) {
+            this.value = 1;
+        }
+    });
 </script>
+
 </html>
