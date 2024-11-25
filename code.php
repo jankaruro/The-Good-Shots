@@ -484,13 +484,9 @@ if (isset($_POST['click_delete_supplier_product_btn'])) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-//insert inventory
-// Insert inventory
 if (isset($_POST['add_inventory'])) {
     $supplier = $_POST['supplier'];
-    $products_name = $_POST['product'];
+    $product_name = $_POST['product_name'];
     $package_quantity = $_POST['package_quantity'];
     $measurement_per_package = $_POST['measurement_per_package'];
     $total_measurement = $_POST['total_measurement'];
@@ -498,20 +494,20 @@ if (isset($_POST['add_inventory'])) {
     $Expiry_Date = $_POST['Expiry_Date'];
 
     // Check if product already exists
-    $check_product_query = "SELECT * FROM inventory WHERE product = ?";
-    $stmt = $connection->prepare($check_product_query);
-    $stmt->bind_param("s", $products_name);
+    $check_product_name_query = "SELECT * FROM inventory WHERE product_name = ?";
+    $stmt = $connection->prepare($check_product_name_query);
+    $stmt->bind_param("s", $product_name);
     $stmt->execute();
     $check_product_result = $stmt->get_result();
 
     if ($check_product_result->num_rows > 0) {
-        $_SESSION['status'] = "Product already exists!";
+        $_SESSION['status'] = "Item already exists!";
         header("Location: inventoryManage.php");
         exit();
     } else {
-        $insert_query = "INSERT INTO inventory (supplier, product, package_quantity, measurement_per_package, total_measurement, unit, Expiry_Date) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $insert_query = "INSERT INTO inventory (supplier, product_name, package_quantity, measurement_per_package, total_measurement, unit, Expiry_Date) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $connection->prepare($insert_query);
-        $stmt->bind_param("ssisssss", $supplier, $products_name, $package_quantity, $measurement_per_package, $total_measurement, $unit, $Expiry_Date);
+        $stmt->bind_param("ssissss", $supplier, $product_name, $package_quantity, $measurement_per_package, $total_measurement, $unit, $Expiry_Date);
 
         if ($stmt->execute()) {
             $_SESSION['status'] = "Supplier Product added successfully!";
@@ -522,57 +518,55 @@ if (isset($_POST['add_inventory'])) {
         exit();
     }
 }
+
+
+
 //view inventory
 if (isset($_POST['click_view_inventory_btn'])) {
     $id = $_POST['inventory_id'];
 
-    $fetch_query = "SELECT * FROM inventory WHERE id = '$id'";
-    $fetch_query_run = mysqli_query($connection, $fetch_query);
+    $fetch_query = "SELECT * FROM inventory WHERE id = ?";
+    $stmt = $connection->prepare($fetch_query);
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $fetch_query_run = $stmt->get_result();
 
-
-    if (mysqli_num_rows($fetch_query_run) > 0) {
-
-        while ($row = mysqli_fetch_array($fetch_query_run)) {
+    if ($fetch_query_run->num_rows > 0) {
+        while ($row = $fetch_query_run->fetch_assoc()) {
             echo '
-        <h6>ID: ' . $row['id'] . '</h6>
-        <h6>Supplier: ' . $row['supplier'] . '</h6>
-        <h6>Product Name: ' . $row['product_name'] . '</h6>
-        <h6>Packagge Quantity: ' . $row['package_quantity'] . '</h6>
-        <h6>Mesurement Per Package: ' . $row['measurement_per_package'] . '</h6>
-        <h6>Total Measurement: ' . $row['total_measurement'] . '</h6>
-        <h6>Unit: ' . $row['unit'] . '</h6>
-        <h6>Expiration Date: ' . $row['Expiry_Date'] . '</h6>
-         
-        ';
-
+            <h6>ID: ' . htmlspecialchars($row['id']) . '</h6>
+            <h6>Supplier: ' . htmlspecialchars($row['supplier']) . '</h6>
+            <h6>Product Name: ' . htmlspecialchars($row['product_name']) . '</h6>
+            <h6>Package Quantity: ' . htmlspecialchars($row['package_quantity']) . '</h6>
+            <h6>Measurement Per Package: ' . htmlspecialchars($row['measurement_per_package']) . '</h6>
+            <h6>Total Measurement: ' . htmlspecialchars($row['total_measurement']) . '</h6>
+            <h6>Unit: ' . htmlspecialchars($row['unit']) . '</h6>
+            <h6>Expiration Date: ' . htmlspecialchars($row['Expiry_Date']) . '</h6>
+            ';
         }
     } else {
-        echo '<h4>no records found</h4>';
-
+        echo '<h4>No records found</h4>';
     }
 }
-
 //edit inventory
 if (isset($_POST['click_edit_inventory_btn'])) {
     $id = $_POST['inventory_id'];
     $arrayresult = [];
 
-    $fetch_query = "SELECT * FROM inventory WHERE id = '$id'";
-    $fetch_query_run = mysqli_query($connection, $fetch_query);
+    $fetch_query = "SELECT * FROM inventory WHERE id = ?";
+    $stmt = $connection->prepare($fetch_query);
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $fetch_query_run = $stmt->get_result();
 
-
-    if (mysqli_num_rows($fetch_query_run) > 0) {
-
-        while ($row = mysqli_fetch_array($fetch_query_run)) {
-
+    if ($fetch_query_run->num_rows > 0) {
+        while ($row = $fetch_query_run->fetch_assoc()) {
             array_push($arrayresult, $row);
-            header('content-type: application/json');
-            echo json_encode($arrayresult);
-
         }
+        header('Content-Type: application/json');
+        echo json_encode($arrayresult);
     } else {
-        echo '<h4>no records found</h4>';
-
+        echo '<h4>No records found</h4>';
     }
 }
 
@@ -580,7 +574,7 @@ if (isset($_POST['click_edit_inventory_btn'])) {
 if (isset($_POST['update_inventory'])) {
     $id = $_POST['id']; // Ensure you retrieve the user ID
     $supplier = $_POST['supplier'];
-    $product_name = $_POST['product_name'];
+    $product = $_POST['product_name'];
     $package_quantity = $_POST['package_quantity'];
     $measurement_per_package = $_POST['measurement_per_package'];
     $total_measurement = $_POST['total_measurement'];
