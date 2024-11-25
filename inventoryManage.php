@@ -389,8 +389,7 @@ include('header.php'); ?>
       </div>
     </nav>
 
-
-    <div class="container">
+    <div class="container-responsive" style= "margin-top: 40px; padding: 25px">
       <div class="row justify-content-center">
         <div class="col-sm-12 col-lg-20">
 
