@@ -5,18 +5,15 @@ include('header.php'); ?>
 <!--Add User-->
 <div class="modal fade" id="addUserData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
   aria-labelledby="addUserDataLabel" aria-hidden="true">
-
+  
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-2" id="addUser DataLabel">Adding New Item</h1>
+        <h1 class="modal-title fs-2" id="addUserDataLabel">Adding New Item</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
-
-
-      <form action="code.php" method="POST">
-
+      <form action="code.php" method="POST" onsubmit="return validateForm()">
         <div class="modal-body">
 
           <div class="form-group">
@@ -43,7 +40,7 @@ include('header.php'); ?>
 
           <div class="form-group">
             <label for="product"><b>Product</b></label>
-            <select class="form-control" id="product" name="product" required>
+            <select class="form-control" id="product" name="product_name" required>
               <option value="">-- Select Product --</option>
             </select>
           </div>
@@ -51,43 +48,33 @@ include('header.php'); ?>
           <script>
             function loadProducts() {
               var supplier = document.getElementById("supplier").value;
-
-
               var xhr = new XMLHttpRequest();
               xhr.open("GET", "fetch_products.php?supplier=" + supplier, true);
               xhr.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
-                  document.getElementById("product").innerHTML = this.responseText; 1
+                  document.getElementById("product").innerHTML = this.responseText;
                 }
               };
               xhr.send();
             }
           </script>
 
-
-
-
-
-
-
-
-
           <div class="form-group">
             <label class="fs-5 mt-1 fw-bolder">Package Quantity</label>
             <input type="number" class="form-control fw-medium" id="package_quantity" name="package_quantity"
-              placeholder="Enter quantity" step="0.01" oninput="calculateTotal()">
+              placeholder="Enter quantity" step="0.01" oninput="calculateTotal()" required>
           </div>
 
           <div class="form-group">
             <label class="fs-5 mt-1 fw-bolder">Measurement per Pack</label>
             <input type="number" class="form-control fw-medium" id="measurement_per_package"
-              name="measurement_per_package" placeholder="Enter Measurement" step="0.01" oninput="calculateTotal()">
+              name="measurement_per_package" placeholder="Enter Measurement" step="0.01" oninput="calculateTotal()" required>
           </div>
 
           <div class="form-group">
             <label class="fs-5 mt-1 fw-bolder">Total Measurement</label>
             <input type="number" class="form-control fw-medium" id="total_measurement" name="total_measurement"
-              placeholder="Enter Total" step="0.01" readonly>
+              placeholder="Enter Total" step="0.01" readonly required>
           </div>
 
           <script>
@@ -98,43 +85,70 @@ include('header.php'); ?>
 
               document.getElementById('total_measurement').value = totalMeasurement.toFixed(2);
             }
+
+            function validateForm() {
+              const fields = ['supplier', 'product', 'package_quantity', 'measurement_per_package', 'total_measurement', 'unit', 'Expiry_Date'];
+              for (const id of fields) {
+                const element = document.getElementById(id);
+                if (!element.value) {
+                  alert(`Please fill out the ${element.name || id} field.`);
+                  element.focus();
+                  return false;
+                }
+              }
+              return true;
+            }
           </script>
-
-
 
           <div class="form-group">
             <label class="fs-5 mt-1 fw-bolder">Unit</label>
-            <select class="form-control fw-medium" id="unit" name="unit">
+            <select class="form-control fw-medium" id="unit" name="unit" required>
               <option value="milliliter">milliliter </option>
               <option value="grams">grams</option>
             </select>
           </div>
 
-
-
           <div class="form-group">
             <label class="fs-5 mt-1 fw-bolder">Expiration Date</label>
-            <input type="date" class="form-control fw-medium" name="Expiry_Date" placeholder="Enter Expiry Date">
+            <input type="date" class="form-control fw-medium" id="Expiry_Date" name="Expiry_Date" placeholder="Enter Expiry Date" required>
           </div>
 
-
-
-
-
-
-
-
+          </div>
 
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary fw-medium" data-bs-dismiss="modal">Close</button>
-            <button type="submit" name="add_inventory" class="btn btn-primary fw-medium">Add add Item</button>
+            <button type="submit" name="add_inventory" class="btn btn-primary fw-medium">Add Item</button>
           </div>
       </form>
     </div>
   </div>
 </div>
+
 <!---->
 <!--view-->
+<div class="modal fade" id="viewitemModal" tabindex="-1" aria-labelledby="viewitemModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="viewitemModalLabel">View Item</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="view_item_data">
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+<!---->
+<!--edit-->
+
+Giancarlo Ganub
 <div class="modal fade" id="viewitemModal" tabindex="-1" aria-labelledby="viewitemModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -164,122 +178,107 @@ include('header.php'); ?>
         <h1 class="modal-title fs-2" id="editDataLabel">Edit Users</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+
+      <!-- Main Form for Add User -->
       <form action="code.php" method="POST">
+        <div class="form-group">
+          <label for="supplier"><b>Supplier</b></label>
+          <select class="form-control" id="supplier" name="supplier" required onchange="loadProducts()">
+            <option value="">-- Select Supplier --</option>
+            <?php
+            include('connection.php');
+            $stmt = $conn->prepare("SELECT supplier_name FROM suppliers");
+            $stmt->execute();
+            $result = $stmt->fetchAll();
 
-      <div class="form-group">
-            <label for="supplier"><b>Supplier</b></label>
-            <select class="form-control" id="supplier" name="supplier" required onchange="loadProducts()">
-              <option value="">-- Select Supplier --</option>
-              <?php
-              include('connection.php');
-              $stmt = $conn->prepare("SELECT supplier_name FROM suppliers");
-              $stmt->execute();
-              $result = $stmt->fetchAll();
-
-              if (count($result) > 0) {
-                foreach ($result as $row) {
-                  echo "<option value='" . $row['supplier_name'] . "'>" . $row['supplier_name'] . "</option>";
-                }
-              } else {
-                echo "<option value=''>No suppliers found</option>";
+            if (count($result) > 0) {
+              foreach ($result as $row) {
+                echo "<option value='" . $row['supplier_name'] . "'>" . $row['supplier_name'] . "</option>";
               }
-              $conn = null;
-              ?>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="product"><b>Product</b></label>
-            <select class="form-control" id="product" name="product" required>
-              <option value="">-- Select Product --</option>
-            </select>
-          </div>
-
-          <script>
-            function loadProducts() {
-              var supplier = document.getElementById("supplier").value;
-
-
-              var xhr = new XMLHttpRequest();
-              xhr.open("GET", "fetch_products.php?supplier=" + supplier, true);
-              xhr.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                  document.getElementById("product").innerHTML = this.responseText; 1
-                }
-              };
-              xhr.send();
+            } else {
+              echo "<option value=''>No suppliers found</option>";
             }
-          </script>
+            $conn = null;
+            ?>
+          </select>
+        </div>
 
+        <div class="form-group">
+          <label for="product"><b>Product</b></label>
+          <select class="form-control" id="product" name="product" required>
+            <option value="">-- Select Product --</option>
+          </select>
+        </div>
 
+        <script>
+          function loadProducts() {
+            var supplier = document.getElementById("supplier").value;
 
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "fetch_products.php?supplier=" + supplier, true);
+            xhr.onreadystatechange = function () {
+              if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("product").innerHTML = this.responseText;
+              }
+            };
+            xhr.send();
+          }
+        </script>
 
+        <div class="form-group">
+          <label class="fs-5 mt-1 fw-bolder">Package Quantity</label>
+          <input type="number" class="form-control fw-medium" id="package_quantity" name="package_quantity"
+            placeholder="Enter quantity" step="0.01" oninput="calculateTotal()">
+        </div>
 
+        <div class="form-group">
+          <label class="fs-5 mt-1 fw-bolder">Measurement per Pack</label>
+          <input type="number" class="form-control fw-medium" id="measurement_per_package"
+            name="measurement_per_package" placeholder="Enter Measurement" step="0.01" oninput="calculateTotal()">
+        </div>
 
+        <div class="form-group">
+          <label class="fs-5 mt-1 fw-bolder">Total Measurement</label>
+          <input type="number" class="form-control fw-medium" id="total_measurement" name="total_measurement"
+            placeholder="Enter Total" step="0.01" readonly>
+        </div>
 
+        <script>
+          function calculateTotal() {
+            const packageQuantity = parseFloat(document.getElementById('package_quantity').value) || 0;
+            const measurementPerPackage = parseFloat(document.getElementById('measurement_per_package').value) || 0;
+            const totalMeasurement = packageQuantity * measurementPerPackage;
 
+            document.getElementById('total_measurement').value = totalMeasurement.toFixed(2);
+          }
+        </script>
 
-          <div class="form-group">
-            <label class="fs-5 mt-1 fw-bolder">Package Quantity</label>
-            <input type="number" class="form-control fw-medium" id="package_quantity" name="package_quantity"
-              placeholder="Enter quantity" step="0.01" oninput="calculateTotal()">
-          </div>
+        <div class="form-group">
+          <label class="fs-5 mt-1 fw-bolder">Unit</label>
+          <select class="form-control fw-medium" id="unit" name="unit">
+            <option value="milliliter">milliliter </option>
+            <option value="grams">grams</option>
+          </select>
+        </div>
 
-          <div class="form-group">
-            <label class="fs-5 mt-1 fw-bolder">Measurement per Pack</label>
-            <input type="number" class="form-control fw-medium" id="measurement_per_package"
-              name="measurement_per_package" placeholder="Enter Measurement" step="0.01" oninput="calculateTotal()">
-          </div>
+        <div class="form-group">
+          <label class="fs-5 mt-1 fw-bolder">Expiration Date</label>
+          <input type="date" class="form-control fw-medium" name="Expiry_Date" placeholder="Enter Expiry Date">
+        </div>
 
-          <div class="form-group">
-            <label class="fs-5 mt-1 fw-bolder">Total Measurement</label>
-            <input type="number" class="form-control fw-medium" id="total_measurement" name="total_measurement"
-              placeholder="Enter Total" step="0.01" readonly>
-          </div>
+       
 
-          <script>
-            function calculateTotal() {
-              const packageQuantity = parseFloat(document.getElementById('package_quantity').value) || 0;
-              const measurementPerPackage = parseFloat(document.getElementById('measurement_per_package').value) || 0;
-              const totalMeasurement = packageQuantity * measurementPerPackage;
-
-              document.getElementById('total_measurement').value = totalMeasurement.toFixed(2);
-            }
-          </script>
-
-
-
-          <div class="form-group">
-            <label class="fs-5 mt-1 fw-bolder">Unit</label>
-            <select class="form-control fw-medium" id="unit" name="unit">
-              <option value="milliliter">milliliter </option>
-              <option value="grams">grams</option>
-            </select>
-          </div>
-
-
-
-          <div class="form-group">
-            <label class="fs-5 mt-1 fw-bolder">Expiration Date</label>
-            <input type="date" class="form-control fw-medium" name="Expiry_Date" placeholder="Enter Expiry Date">
-          </div>
-
+      <!-- Form for Update Item (Separate Action if Needed) -->
+      <form action="update_code.php" method="POST">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary fw-medium" data-bs-dismiss="modal">Close</button>
+          <button type="submit" name="update_inventory" class="btn btn-primary fw-medium">Update Item</button>
+        </div>
+      </form>
     </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-secondary fw-medium" data-bs-dismiss="modal">Close</button>
-      <button type="submit" name="add_inventory" class="btn btn-primary fw-medium">Add User</button>
-    </div>
-    </form>
+  </div>
+</div>
 
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary fw-medium" data-bs-dismiss="modal">Close</button>
-    <button type="submit" name="update_inventory" class="btn btn-primary fw-medium">Update Item</button>
-  </div>
-  </form>
-</div>
-</div>
-</div>
 <!---->
 <div class="d-flex content">
   <div id="sidebar" class="sidebar-color">
@@ -376,7 +375,7 @@ include('header.php'); ?>
             <a class="nav-link dropdown-toggle fw-bold admin-link" href="#"
               style="color: black; font-weight: 200; font-size: 17px;" id="navbarDropdown" role="button"
               data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="fa-regular fa-circle-user me-2" style = "font-size: 25px"></i>
+              <i class="fa-regular fa-circle-user me-2" style="font-size: 25px"></i>
               Admin
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -389,7 +388,7 @@ include('header.php'); ?>
       </div>
     </nav>
 
-    <div class="container-responsive" style= "margin-top: 40px; padding: 25px">
+    <div class="container-responsive" style="margin-top: 40px; padding: 25px">
       <div class="row justify-content-center">
         <div class="col-sm-12 col-lg-20">
 
@@ -430,7 +429,6 @@ include('header.php'); ?>
                     <th scope="col">Package Quantity</th>
                     <th scope="col">Measurement Per Package</th>
                     <th scope="col">Total_measurement</th>
-                    <th scope="col">Category</th>
                     <th scope="col">Unit</th>
                     <th scope="col">Expiration Date</th>
                     <th scope="col"></th>
@@ -455,7 +453,7 @@ include('header.php'); ?>
                         <td><?php echo $row['package_quantity']; ?></td>
                         <td><?php echo $row['measurement_per_package']; ?></td>
                         <td><?php echo $row['total_measurement']; ?></td>
-                        <td><?php echo $row['category']; ?></td>
+                    
                         <td><?php echo $row['unit']; ?></td>
                         <td><?php echo $row['Expiry_Date']; ?></td>
                         <td>
