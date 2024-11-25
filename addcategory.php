@@ -110,9 +110,9 @@ include('header.php'); ?>
                     <a href="#" class="list-group-item active" id="product-toggle">
                         <i class="fa-brands fa-product-hunt me-3"></i></i>Product Management<i class="fa-solid fa-chevron-right toggle-arrow-product" id="product-arrow"></i>
                     </a>
-                    <div class="submenu" id="product-submenu">
-                        <a href="addproduct.php" class="sub-list-item active"><p class = "txt-name-btn">Add Product</p></a>
-                        <a href="addcategory.php" class="sub-list-item"><p class = "txt-name-btn">Add Category</p></a>
+                    <div class="submenu" id="product-submenu" style= "">
+                        <a href="addproduct.php" class="sub-list-item"><p class = "txt-name-btn">Add Product</p></a>
+                        <a href="addcategory.php" class="sub-list-item active"><p class = "txt-name-btn">Add Category</p></a>
                     </div>
                 </div>
                 <a href="inventoryManage.php" class="list-group-item">
@@ -130,7 +130,7 @@ include('header.php'); ?>
                         <a href="addsupplier_product.php" class="sub-list-item"><p class = "txt-name-btn">Suppliers Product</p></a>
                     </div>
                 </div>
-                <a href="purchase_order.php" class="list-group-item">
+                <a href="delivery.php" class="list-group-item">
                     <i class="fa-solid fa-truck me-3"></i>Delivery
                 </a>
                 <div class="reports-dropdown">
@@ -138,9 +138,9 @@ include('header.php'); ?>
                     <i class="fa-solid fa-calendar-days me-3"></i></i>Reports<i class="fa-solid fa-chevron-right toggle-arrow-reports" id="reports-arrow"></i>
                     </a>
                     <div class="submenu" id="reports-submenu">
-                        <a href="" class="sub-list-item"><p class = "txt-name-btn">Weekly</p></a>
-                        <a href="" class="sub-list-item"><p class = "txt-name-btn">Monthly</p></a>
-                        <a href="" class="sub-list-item"><p class = "txt-name-btn">Yearly</p></a>
+                        <a href="discrepancy.php" class="sub-list-item"><p class = "txt-name-btn">Discrepancy Report</p></a>
+                        <a href="inventoryReport.php" class="sub-list-item"><p class = "txt-name-btn">Inventory Report</p></a>
+                        <a href="salesReport.php" class="sub-list-item"><p class = "txt-name-btn">Sales Report</p></a>
                     </div>
                 </div>
             </div>
@@ -183,9 +183,8 @@ include('header.php'); ?>
                     </ul>
                 </div>
             </nav>
-<div class="container">
-  <div class="row justify-content-center">
-    <div class="col-sm-12 col-lg-20">
+            <div class="container-responsive" style= "margin-top: 40px; padding: 25px">
+            <div class="col-sm-12">
 
       <?php
       if (isset($_SESSION['status']) && $_SESSION['status'] != '') {
@@ -205,7 +204,7 @@ include('header.php'); ?>
       }
 
       ?>
-      <div class="card">
+      <div class="card shadow">
         <div class="card-header">
           <h3 class="text-center">Add Category</h3>
           <button type="button" class="btn btn-primary float-end fw-medium" data-bs-toggle="modal"
@@ -250,12 +249,17 @@ include('header.php'); ?>
                   <?php
 
                 }
-              } else {
-                ?>
-                <tr colspan="5"> No Record Found </tr>
-                <?php
-              }
-              ?>
+        } else {
+          echo "<tr><td colspan='6'></td></tr>";
+        }
+        ?>
+      </tbody>
+    </table>
+    <?php
+    if (mysqli_num_rows($fetch_query_run) == 0) {
+      echo "<p class='text-center mt-3'>No Record Found</p>";
+    }
+    ?>
             </tbody>
           </table>
         </div>

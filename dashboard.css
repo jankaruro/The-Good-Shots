@@ -200,7 +200,18 @@
     cursor: pointer;
 }
 .body-level{
-    height: 400px;
+    height: 500px;
+}
+.list-product-item{
+    height: 100px;
+    padding: 20px;
+    font-weight: 400;
+}
+.list-product-item:hover {
+    background-color:#d8cba8;
+    color: #ffffff;
+    cursor: pointer; 
+    transition: all 0.3s ease; 
 }
 #page-content-wrapper {
     margin-left: 290px;
@@ -213,9 +224,6 @@
     position: fixed;
     scrollbar-width: thin;
     scrollbar-color: #888 #f1f1f1;
-}
-.container{
-    margin-top: 100px;
 }
 #page-content-wrapper::-webkit-scrollbar-track {
     background: wheat;

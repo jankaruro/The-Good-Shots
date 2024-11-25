@@ -48,7 +48,7 @@
                         <a href="addsupplier_product.php" class="sub-list-item"><p class = "txt-name-btn">Suppliers Product</p></a>
                     </div>
                 </div>
-                <a href="purchase_order.php" class="list-group-item">
+                <a href="delivery.php" class="list-group-item">
                     <i class="fa-solid fa-truck me-3"></i>Delivery
                 </a>
                 <div class="reports-dropdown">
@@ -56,9 +56,9 @@
                     <i class="fa-solid fa-calendar-days me-3"></i></i>Reports<i class="fa-solid fa-chevron-right toggle-arrow-reports" id="reports-arrow"></i>
                     </a>
                     <div class="submenu" id="reports-submenu">
-                        <a href="" class="sub-list-item"><p class = "txt-name-btn">Weekly</p></a>
-                        <a href="" class="sub-list-item"><p class = "txt-name-btn">Monthly</p></a>
-                        <a href="" class="sub-list-item"><p class = "txt-name-btn">Yearly</p></a>
+                        <a href="discrepancy.php" class="sub-list-item"><p class = "txt-name-btn">Discrepancy Report</p></a>
+                        <a href="inventoryReport.php" class="sub-list-item"><p class = "txt-name-btn">Inventory Report</p></a>
+                        <a href="salesReport.php" class="sub-list-item"><p class = "txt-name-btn">Sales Report</p></a>
                     </div>
                 </div>
             </div>
@@ -156,16 +156,19 @@
                                             </div>
                                             <div class="card-body body-level">
                                                 <div class="row">
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-6 me-5">
                                                         <div class="chart-container pie-chart">
                                                             <canvas id="doughnut_chart"></canvas>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6">
-                                                        <ul class="list-group">
-                                                            <li class="list-group-item">Product 1</li>
-                                                            <li class="list-group-item">Product 2</li>
-                                                            <li class="list-group-item">Product 3</li>
+                                                    <div class="col-md-5">
+                                                        <p class="stock-name" style="margin-top: 50px; font-weight: 500; font-size: 24px; text-align: center">Low Stock Item</p>
+                                                        <ul class="list-group shadow" style = "margin-top: 40px; height: 200px; overflow-y: auto;  scrollbar-width: thin; scrollbar-color: #e6ccb2 #f1f1f1; background-color: white;">
+                                                            <li class="list-product-item">Product 1</li>
+                                                            <li class="list-product-item">Product 2</li>
+                                                            <li class="list-product-item">Product 3</li>
+                                                            <li class="list-product-item">Product 4</li>
+                                                            <li class="list-product-item">Product 5</li>
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -174,17 +177,32 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    <div class="card mt-4 shadow">
-                                        <div class="card-header"> Top Selling Items</div>
-                                        <div class="card-body body-level">
-                                            <div class="chart-container pie-chart">
-                                                <canvas id="pie_chart"></canvas>
+                                    <div class="card mt-5 shadow">
+                                            <div class="card-header">
+                                                Top Selling Product
+                                            </div>
+                                            <div class="card-body body-level">
+                                                <div class="row">
+                                                    <div class="col-md-6 me-5">
+                                                        <p class="stock-name" style="margin-top: 50px; font-weight: 500; font-size: 24px; text-align: center">Top 3</p>
+                                                        <ul class="list-group shadow" style = "margin-top: 40px; height: 200px; overflow-y: auto;  scrollbar-width: thin; scrollbar-color: #e6ccb2 #f1f1f1; background-color: ">
+                                                            <li class="list-product-item">Product 1</li>
+                                                            <li class="list-product-item">Product 2</li>
+                                                            <li class="list-product-item">Product 3</li>
+                                                            <li class="list-product-item">Product 4</li>
+                                                            <li class="list-product-item">Product 5</li>
+                                                        </ul>
+                                                    </div>
+                                                        <div class="chart-container pie-chart">
+                                                            <canvas id="pie-chart"></canvas>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
                                 </div>
                                 <div class="col-md-12">
-                                    <div class="card mt-4 mb-4 shadow">
+                                    <div class="card mt-5 mb-4 shadow">
 
                                         <h2 class="text-center">SALES ORDER SUMMARY (IN USD)</h2>
                                         <p class="text-center">This Month</p>
