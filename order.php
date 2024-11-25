@@ -267,9 +267,24 @@
                 </div>
             </div>
             <div class="receipt">
-                <div class = "top-cart">
-                    <h3 class = "cart-name" >Cart</h3>
+                <div class="top-cart">
+                    <h3 class="cart-name">Cart</h3>
                 </div>
+                <div class="order-list">
+                    Order List
+                </div>
+                <div class="total-price">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                        <label class="form-check-label" for="flexCheckChecked">
+                            Discount
+                        </label>
+                    </div>
+                    <div class="total-amount">
+                        Total:
+                    </div>
+                </div>
+                <button class="btn-order">Check Out</button>
             </div>
         </div>
     </div>

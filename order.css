@@ -151,6 +151,7 @@ body {
     display: flex-start;
     align-items: center;
     margin-top: 20px;
+    margin-left: 10px;
 }
 
 #quantity {
@@ -257,23 +258,59 @@ input[type="number"] {
     margin-top: 40px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     margin-left: 5px;
-    text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     overflow-y: auto;
 }
 .top-cart{
-    border: #333 1px solid;
-    background-color: #888;
-    margin: 20px;
+    border-bottom: #333 1px solid;
+    color: black;
     padding: 10px;
-    border-radius: 5px;
+    margin: 0px 20px 0px 20px;
 
 }
 .cart-name{
-    margin-top: 10px;
     font-weight: 700;
-    color: white;
+    color: black;
+    font-size: 35px;
+    text-align: center;
+}
+.order-list{
+    margin-top: 5px;
     font-size: 18px;
+    font-weight: 500;
+    width: auto;
+    height: 500px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    padding: 10px;
+    text-align: center;
+    background-color: #ccc;
+}
+.total-price{
+    margin-top: 10px;
+    padding-left: 10px;
+    padding-top: 10px;
+    height: 150px;
+    font-weight: 500;
+}
+.btn-order{
+    width: 200px;
+    height: 40px;
+    border-radius: 10px;
+    margin-top: 10px;
+    font-weight: 600;
+    text-align: center;
+    margin-left: 75px;
+}
+.form-check-input{
+    font-size: 18px;
+}
+.form-check-label{
+    font-size: 19px;
+}
+.total-amount{
+    margin-top: 10px;
+    font-size: 20px;
 }
