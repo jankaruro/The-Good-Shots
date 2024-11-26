@@ -18,37 +18,37 @@
         </div>
         <div class="list-group list-group-flush mt-2">
             <a href="dashboard.php" class="list-group-item">
-                <i class="fa-solid fa-mug-hot me-3"></i></i>Espresso Base Coffee
+                <img src="icons/espresso-svgrepo-com.svg" alt="" class = "icons me-3">Espresso Base Coffee
             </a>
             <a href="adduser.php" class="list-group-item">
-                <i class="fas fa-project-diagram me-3"></i>Best Selling Coffee Drinks
+                <img src="icons/best-practices-1-svgrepo-com.svg" alt="" class = "icons me-3">Best Selling Coffee Drinks
             </a>
             <a href="addproduct.php" class="list-group-item">
-                <i class="fas fa-chart-line me-3"></i>Fruit Tea
+                <img src="icons/fruit-svgrepo-com.svg" alt="" class = "icons me-3">Fruit Tea
             </a>
             <a href="#" class="list-group-item">
-                <i class="fas fa-shopping-cart me-3"></i>Mocktails
+                <img src="icons/cocktail-glass-svgrepo-com.svg" alt="" class = "icons me-3">Mocktails
             </a>
             <a href="purchase_order.php" class="list-group-item">
-                <i class="fa-solid fa-money-bill me-3"></i>Smoothies
+                <img src="icons/juice-svgrepo-com.svg" alt="" class = "icons me-3">Smoothies
             </a>
             <a href="purchase_order.php" class="list-group-item">
-                <i class="fa-solid fa-boxes-packing me-3"></i>Frappe
+                <img src="icons/frappe-svgrepo-com.svg" alt="" class = "icons me-3">Frappe
             </a>
             <a href="purchase_order.php" class="list-group-item">
-                <i class="fa-solid fa-truck me-3"></i>Croffle
+                <img src="icons/croisant-svgrepo-com.svg" alt="" class = "icons me-3">Croffle
             </a>
             <a href="#" class="list-group-item">
-                <i class="fa-solid fa-flag me-3"></i>Fries
+                <img src="icons/fry-svgrepo-com.svg" alt="" class = "icons me-3">Fries
             </a>
             <a href="#" class="list-group-item">
-                <i class="fa-solid fa-flag me-3"></i>Cakes
+                <img src="icons/shortcake-svgrepo-com.svg" alt="" class = "icons me-3">Cakes
             </a>
             <a href="#" class="list-group-item">
-                <i class="fa-solid fa-flag me-3"></i>Sandwhich
+                <img src="icons/sandwich-svgrepo-com.svg" alt="" class = "icons me-3">Sandwhich
             </a>
             <a href="#" class="list-group-item">
-                <i class="fa-solid fa-flag me-3"></i>Rice Meal
+                <img src="icons/rice-svgrepo-com.svg" alt="" class = "icons me-3">Rice Meal
             </a>
         </div>
     </div>
@@ -174,6 +174,7 @@
     </div>
 </div>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     function increaseQuantity() {
         const quantityInput = document.getElementById('quantity');

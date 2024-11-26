@@ -271,7 +271,7 @@ include('header.php'); ?>
               <table class="table table-bordered">
                 <thead>
                   <tr>
-                    <th scope="col" style = "width: 5px; text-align: center;">ID</th>
+                    <th scope="col" style = "width: 5px; ">ID</th>
                     <th scope="col" style = "width: 180px; text-align: center;">First Name</th>
                     <th scope="col" style = "width: 120px; text-align: center;">Last Name</th>
                     <th scope="col" style = "width: 180px; text-align: center;">Email</th>
