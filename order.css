@@ -10,7 +10,7 @@ body {
 
 .sidebar-color {
     margin: 10px;
-    background-color: #ede0d4;
+    background-color: #fff7f0;
     border-radius: 5px;
     height: 98.5vh;
     width:  340px;
@@ -23,7 +23,7 @@ body {
 }
 
 .sidebar-heading {
-    background-color: #ede0d4;
+    background-color: #fff7f0;
     color: black;
     font-size: 18px;
     font-weight: bold;
@@ -47,7 +47,7 @@ body {
 }
 
 .list-group-item {
-    background-color: #ede0d4;
+    background-color: #fff7f0;
     height: 50px;
     font-weight: 650;
     font-size: 17px;
@@ -92,7 +92,7 @@ body {
 .order-container {
     flex: 2;
     margin-top: 35px;
-    background-color: #333;
+    background-color: #b2a189;
     border-radius: 10px;
     padding: 5px;
     height: 90vh;
@@ -112,7 +112,9 @@ body {
     margin-top: 20px;
     font-size: 35px;
     font-weight: 600;
-    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #333333 ;
+    text-decoration: underline 1.5px;
 }
 
 .coffee-card {
