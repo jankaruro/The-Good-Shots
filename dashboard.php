@@ -163,7 +163,7 @@
                                                     </div>
                                                     <div class="col-md-5">
                                                         <p class="stock-name" style="margin-top: 50px; font-weight: 500; font-size: 24px; text-align: center">Low Stock Item</p>
-                                                        <ul class="list-group shadow" style = "margin-top: 40px; height: 200px; overflow-y: auto;  scrollbar-width: thin; scrollbar-color: #e6ccb2 #f1f1f1; background-color: white;">
+                                                        <ul class="list-group shadow" style = "margin-top: 40px; height: 200px; overflow-y: auto;  scrollbar-width: thin; scrollbar-color: #edc4b3 #f1f1f1; background-color: white;">
                                                             <li class="list-product-item">Product 1</li>
                                                             <li class="list-product-item">Product 2</li>
                                                             <li class="list-product-item">Product 3</li>
@@ -185,7 +185,7 @@
                                                 <div class="row">
                                                     <div class="col-md-6 me-5">
                                                         <p class="stock-name" style="margin-top: 50px; font-weight: 500; font-size: 24px; text-align: center">Top 3</p>
-                                                        <ul class="list-group shadow" style = "margin-top: 40px; height: 200px; overflow-y: auto;  scrollbar-width: thin; scrollbar-color: #e6ccb2 #f1f1f1; background-color: ">
+                                                        <ul class="list-group shadow" style = "margin-top: 40px; height: 200px; overflow-y: auto;  scrollbar-width: thin; scrollbar-color: #d69f7e #f1f1f1; background-color: ">
                                                             <li class="list-product-item">Product 1</li>
                                                             <li class="list-product-item">Product 2</li>
                                                             <li class="list-product-item">Product 3</li>
