@@ -102,8 +102,8 @@ body {
 
 .content {
     display: grid;
-    grid-template-columns: repeat(5, 1fr); /* 5 columns */
-    gap: 20px; /* Spacing between items */
+    grid-template-columns: repeat(5, 1fr); 
+    gap: 20px; 
     padding: 20px;
 }
 
@@ -125,7 +125,7 @@ body {
     border-radius: 5px;
     position: relative;
     width: 200px;
-    height: 350px;
+    height: 270px;
 }
 
 .coffee-card img {
@@ -178,54 +178,11 @@ button:hover {
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
 }
 
-button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-}
-
 input[type="number"] {
     width: 50px;
     text-align: center;
     font-size: 16px;
     margin: 0 5px;
-}
-
-.size-selection {
-    display: flex;
-    margin-bottom: 10px;
-    margin-top: 10px;
-}
-
-.size-option {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    border: 2px solid #ccc;
-    border-radius: 50px;
-    width: 40px;
-    margin-left: 20px;
-    transition: background-color 0.3s, border-color 0.3s;
-}
-
-.size-option input[type="radio"] {
-    display: none;
-}
-
-.size-option span {
-    font-weight: 400;
-}
-
-.size-option:hover {
-    background-color: #f0f0f0;
-}
-
-.size-option input[type="radio"]:checked+span {
-    background-color: #afafaf;
-    color: white;
-    border-radius: 100px;
-    width: 100px;
-    text-align: center;
 }
 
 .addtocart {
@@ -278,18 +235,25 @@ input[type="number"] {
 }
 .order-list{
     margin-top: 5px;
-    font-size: 18px;
-    font-weight: 500;
+    font-weight: 600;
     width: auto;
     height: 500px;
     overflow-y: auto;
     scrollbar-width: thin;
     padding: 10px;
-    text-align: center;
-    background-color: #ccc;
+    background-color: white;
+    display: flex;
+}
+.order-number{
+    font-size: 20px;
+    margin-top: 8px;
+    margin-left: 110px;
+}
+.order-name{
+    font-size: 20px;
 }
 .total-price{
-    margin-top: 10px;
+    margin-top: 20px;
     padding-left: 10px;
     padding-top: 10px;
     height: 150px;
@@ -304,13 +268,19 @@ input[type="number"] {
     text-align: center;
     margin-left: 75px;
 }
-.form-check-input{
-    font-size: 18px;
-}
-.form-check-label{
-    font-size: 19px;
-}
 .total-amount{
-    margin-top: 10px;
+    margin-top: 20px;
+    font-size: 22px;
+}
+.btn-discount{
+    width: 300px;
+    height: 40px;
     font-size: 20px;
+    font-weight: 400;
+}
+.btn-discount:hover{
+    background-color: #b5c99a;
+    color: black;
+    font-size: 20px;
+    font-weight: 600;
 }

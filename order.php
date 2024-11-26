@@ -97,25 +97,6 @@
                                 <span class="coffee-price">P100</span>
                             </div>
                             <img src="images/Americano.png" alt="Americano" />
-                            <div class="size-selection">
-                                <label class="size-option">
-                                    <input type="radio" name="size" value="small" checked />
-                                    <span>S</span>
-                                </label>
-                                <label class="size-option">
-                                    <input type="radio" name="size" value="medium" />
-                                    <span>M</span>
-                                </label>
-                                <label class="size-option">
-                                    <input type="radio" name="size" value="large" />
-                                    <span>L</span>
-                                </label>
-                            </div>
-                            <div class="quantity-container">
-                                <button class="decrease" onclick="decreaseQuantity()">-</button>
-                                <input type="number" id="quantity" value="1" min="1" />
-                                <button class="increase" onclick="increaseQuantity()">+</button>
-                            </div>
                             <div class="addtocart">Add to Cart</div>
                         </div>
                     </div>
@@ -126,25 +107,6 @@
                                 <span class="coffee-price">P100</span>
                             </div>
                             <img src="images/Americano.png" alt="Americano" />
-                            <div class="size-selection">
-                                <label class="size-option">
-                                    <input type="radio" name="size" value="small" checked />
-                                    <span>S</span>
-                                </label>
-                                <label class="size-option">
-                                    <input type="radio" name="size" value="medium" />
-                                    <span>M</span>
-                                </label>
-                                <label class="size-option">
-                                    <input type="radio" name="size" value="large" />
-                                    <span>L</span>
-                                </label>
-                            </div>
-                            <div class="quantity-container">
-                                <button class="decrease" onclick="decreaseQuantity()">-</button>
-                                <input type="number" id="quantity" value="1" min="1" />
-                                <button class="increase" onclick="increaseQuantity()">+</button>
-                            </div>
                             <div class="addtocart">Add to Cart</div>
                         </div>
                     </div>
@@ -155,25 +117,6 @@
                                 <span class="coffee-price">P100</span>
                             </div>
                             <img src="images/Americano.png" alt="Americano" />
-                            <div class="size-selection">
-                                <label class="size-option">
-                                    <input type="radio" name="size" value="small" checked />
-                                    <span>S</span>
-                                </label>
-                                <label class="size-option">
-                                    <input type="radio" name="size" value="medium" />
-                                    <span>M</span>
-                                </label>
-                                <label class="size-option">
-                                    <input type="radio" name="size" value="large" />
-                                    <span>L</span>
-                                </label>
-                            </div>
-                            <div class="quantity-container">
-                                <button class="decrease" onclick="decreaseQuantity()">-</button>
-                                <input type="number" id="quantity" value="1" min="1" />
-                                <button class="increase" onclick="increaseQuantity()">+</button>
-                            </div>
                             <div class="addtocart">Add to Cart</div>
                         </div>
                     </div>
@@ -184,25 +127,6 @@
                                 <span class="coffee-price">P100</span>
                             </div>
                             <img src="images/Americano.png" alt="Americano" />
-                            <div class="size-selection">
-                                <label class="size-option">
-                                    <input type="radio" name="size" value="small" checked />
-                                    <span>S</span>
-                                </label>
-                                <label class="size-option">
-                                    <input type="radio" name="size" value="medium" />
-                                    <span>M</span>
-                                </label>
-                                <label class="size-option">
-                                    <input type="radio" name="size" value="large" />
-                                    <span>L</span>
-                                </label>
-                            </div>
-                            <div class="quantity-container">
-                                <button class="decrease" onclick="decreaseQuantity()">-</button>
-                                <input type="number" id="quantity" value="1" min="1" />
-                                <button class="increase" onclick="increaseQuantity()">+</button>
-                            </div>
                             <div class="addtocart">Add to Cart</div>
                         </div>
                     </div>
@@ -213,25 +137,6 @@
                                 <span class="coffee-price">P100</span>
                             </div>
                             <img src="images/Americano.png" alt="Americano" />
-                            <div class="size-selection">
-                                <label class="size-option">
-                                    <input type="radio" name="size" value="small" checked />
-                                    <span>S</span>
-                                </label>
-                                <label class="size-option">
-                                    <input type="radio" name="size" value="medium" />
-                                    <span>M</span>
-                                </label>
-                                <label class="size-option">
-                                    <input type="radio" name="size" value="large" />
-                                    <span>L</span>
-                                </label>
-                            </div>
-                            <div class="quantity-container">
-                                <button class="decrease" onclick="decreaseQuantity()">-</button>
-                                <input type="number" id="quantity" value="1" min="1" />
-                                <button class="increase" onclick="increaseQuantity()">+</button>
-                            </div>
                             <div class="addtocart">Add to Cart</div>
                         </div>
                     </div>
@@ -242,25 +147,6 @@
                                 <span class="coffee-price">P100</span>
                             </div>
                             <img src="images/Americano.png" alt="Americano" />
-                            <div class="size-selection">
-                                <label class="size-option">
-                                    <input type="radio" name="size" value="small" checked />
-                                    <span>S</span>
-                                </label>
-                                <label class="size-option">
-                                    <input type="radio" name="size" value="medium" />
-                                    <span>M</span>
-                                </label>
-                                <label class="size-option">
-                                    <input type="radio" name="size" value="large" />
-                                    <span>L</span>
-                                </label>
-                            </div>
-                            <div class="quantity-container">
-                                <button class="decrease" onclick="decreaseQuantity()">-</button>
-                                <input type="number" id="quantity" value="1" min="1" />
-                                <button class="increase" onclick="increaseQuantity()">+</button>
-                            </div>
                             <div class="addtocart">Add to Cart</div>
                         </div>
                     </div>
@@ -271,14 +157,12 @@
                     <h3 class="cart-name">Cart</h3>
                 </div>
                 <div class="order-list">
-                    Order List
+                    <span class="order-name m-2">Order List</span>
+                    <span class = "order-number">Order: #001</span>
                 </div>
                 <div class="total-price">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-                        <label class="form-check-label" for="flexCheckChecked">
-                            Discount
-                        </label>
+                        <button class="btn-discount">Add Discount</button>
                     </div>
                     <div class="total-amount">
                         Total:
