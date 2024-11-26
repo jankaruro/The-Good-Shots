@@ -1,56 +1,7 @@
 <?php
 session_start();
 include('header.php'); ?>
-<!--Add User-->
-<div class="modal fade" id="confirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="addUserDataLabel" aria-hidden="true">
 
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-2" id="addUser DataLabel">Adding New User</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-
-
-        <form action="code.php" method="POST">
-          <div class="modal-body">
-            <div class="form-group">
-              <label class="fs-5 mt-1 fw-bolder">First Name</label>
-              <input type="text" class="form-control fw-medium" name="first_name" placeholder="Enter First Name">
-            </div>
-            <div class="form-group">
-              <label class="fs-5 mt-1 fw-bolder">Last Name</label>
-              <input type="text" class="form-control fw-medium" name="last_name" placeholder="Enter Last Name">
-            </div>
-            <div class="form-group">
-              <label class="fs-5 mt-1 fw-bolder">Email</label>
-              <input type="email" class="form-control fw-medium" name="email" placeholder="Enter Email">
-            </div>
-            <div class="form-group">
-              <label class="fs-5 mt-1 fw-bolder">Password</label>
-              <input type="password" class="form-control fw-medium" name="password" placeholder="Enter Password">
-            </div>
-            <div class="form-group">
-              <label class="fs-5 mt-1 fw-bolder">Role</label>
-              <select class="form-control fw-medium" id="role" name="role">
-                <option value="user">User </option>
-                <option value="admin">Admin</option>
-                <option value="superadmin">Super Admin</option>
-              </select>
-            </div>
-          </div>
-
-
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary fw-medium" data-bs-dismiss="modal">Close</button>
-            <button type="submit" name="save_user" class="btn btn-primary fw-medium">Add User</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-<!------>
 
 <!--Add User-->
 <div class="modal fade" id="addUserData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -298,7 +249,7 @@ include('header.php'); ?>
         setTimeout(() => {
           document.getElementById("loadingIndicator").style.display = "none"; // Hide the loading indicator
           document.getElementById("product").innerHTML = data; // Load products into dropdown
-        }, 3000); // 3000ms = 3 seconds
+        }, 1000); // 3000ms = 3 seconds
       })
       .catch(error => {
         console.error('Error fetching products:', error);
