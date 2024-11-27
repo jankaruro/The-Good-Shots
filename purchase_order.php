@@ -50,7 +50,6 @@ include('header.php'); ?>
             <div id="loadingIndicator" style="display:none;">Loading products...</div>
           </div>
 
-
           <div class="form-group">
             <label for="quantity"><b>Quantity</b></label>
             <input type="number" class="form-control" id="quantity" name="quantity" required min="1">
@@ -86,25 +85,35 @@ include('header.php'); ?>
           <div class="d-flex justify-content-between" id="btn-cancel-continue">
             <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="resetModal()">Cancel</button>
             <button type="button" id="continue-btn" class="btn btn-primary" onclick="showPopup()">Continue</button>
-
-          </div>
-
-          <!-- Popup Confirmation Form -->
-          <div class="form-group mt-3" id="popupForm" style="display:none;">
-            <div class="form-container border p-3 rounded">
-              <span class="close" id="closeForm" onclick="hidePopup()">&times;</span>
-              <h2>Confirm Purchase?</h2>
-              <label for="totalAmount">Total Amount:</label>
-              <input type="text" class="form-control mb-3" id="totalPriceInput" readonly>
-              <button type="button" class="btn btn-primary" id="confirmPurchase">Confirm</button>
-              <button type="button" class="btn btn-secondary" id="popupCancel" onclick="hidePopup()">Cancel</button>
-            </div>
           </div>
         </div>
       </form>
     </div>
   </div>
 </div>
+
+<!-- Confirmation Modal -->
+<div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmationModalLabel">Confirm Purchase</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="hidePopup()"></button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to confirm this purchase?</p>
+        <label for="totalAmount">Total Amount:</label>
+        <input type="text" class="form-control mb-3" id="totalPriceInput" readonly>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="hidePopup()">Cancel</button>
+        <button type="button" class="btn btn-primary" name="add_po" id="confirmPurchase">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
 <style>
   .custom-modal {
@@ -115,6 +124,7 @@ include('header.php'); ?>
   }
 </style>
 
+
 <script>
   let totalAmount = 0; // Initialize totalAmount outside the function
 
@@ -123,10 +133,10 @@ include('header.php'); ?>
     const productSelect = document.getElementById("product");
     const quantityInput = document.getElementById("quantity");
 
-    // Check if a supplier and a product are selected
+    
     if (supplierSelect.value === "" || productSelect.value === "") {
       alert("Please select both a supplier and a product before adding.");
-      return; // Stop the function if supplier or product is not selected
+      return; 
     }
 
     const selectedProduct = productSelect.options[productSelect.selectedIndex];
@@ -135,7 +145,7 @@ include('header.php'); ?>
     const quantity = parseInt(quantityInput.value);
     const amount = unitPrice * quantity;
 
-    // Check if quantity is valid
+    
     if (productName && quantity > 0) {
       const tableBody = document.querySelector("#display tbody");
       const existingRow = Array.from(tableBody.rows).find(row => row.cells[0].innerText === productName);
@@ -166,7 +176,7 @@ include('header.php'); ?>
         supplierSelect.disabled = true;
       }
 
-      // Clear quantity input and reset product selection
+      
       quantityInput.value = '';
       productSelect.selectedIndex = 0;
     } else {
@@ -175,34 +185,33 @@ include('header.php'); ?>
   }
 
   function resetModal() {
-    // Reset supplier selection
+    
     const supplierSelect = document.getElementById("supplier");
-    supplierSelect.selectedIndex = 0;  // Reset supplier selection
-    supplierSelect.disabled = false;  // Re-enable supplier dropdown if disabled
+    supplierSelect.selectedIndex = 0;  
+    supplierSelect.disabled = false;  
 
-    // Clear and reset the product dropdown
+   
     const productSelect = document.getElementById("product");
-    productSelect.innerHTML = '<option value="">-- Select Product --</option>';  // Clear options
+    productSelect.innerHTML = '<option value="">-- Select Product --</option>';  
 
-    // Clear quantity input
+    
     const quantityInput = document.getElementById("quantity");
-    quantityInput.value = '';  // Clear quantity input
+    quantityInput.value = '';  
 
-    // Reset total price display
+    
     const totalPriceDisplay = document.getElementById("total_price");
-    totalPriceDisplay.innerText = '0.00';  // Reset total price display
-
-    // Clear the product table
+    totalPriceDisplay.innerText = '0.00';  
+    
     const tableBody = document.querySelector("#display tbody");
     while (tableBody.rows.length > 0) {
-      tableBody.deleteRow(0);  // Remove all rows
+      tableBody.deleteRow(0);  
     }
 
-    // Reset totalAmount variable
-    totalAmount = 0;  // Reset total amount variable
+   
+    totalAmount = 0;  
 
-    // Hide popup form if it's open
-    hidePopup();  // Hide the popup if it was open
+    
+    hidePopup();  
   }
 
 
@@ -215,13 +224,23 @@ include('header.php'); ?>
     row.remove();
   }
 
-  function hidePopup() {
-    document.getElementById('popupForm').style.display = 'none';
+  function showPopup() {
+    let totalAmount = document.getElementById('total_price').innerText;
+    document.getElementById('totalPriceInput').value = totalAmount;
+
+    // Hide main modal's backdrop while showing the confirmation modal
+    let mainModal = bootstrap.Modal.getInstance(document.getElementById('addUserData'));
+    mainModal._backdrop.classList.add('d-none'); // Hide main backdrop
+    let confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
+    confirmationModal.show();
   }
 
-  function showPopup() {
-    document.getElementById('totalPriceInput').value = totalAmount.toFixed(2);
-    document.getElementById('popupForm').style.display = 'block';
+  // Hide the confirmation modal and restore the main modal backdrop
+  function hidePopup() {
+    let mainModal = bootstrap.Modal.getInstance(document.getElementById('addUserData'));
+    mainModal._backdrop.classList.remove('d-none'); // Restore main backdrop
+    let confirmationModal = bootstrap.Modal.getInstance(document.getElementById('confirmationModal'));
+    confirmationModal.hide();
   }
 
   function loadProducts() {
@@ -497,11 +516,13 @@ $conn = null;
               <table class="table table-bordered">
                 <thead>
                   <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">First Name</th>
-                    <th scope="col">Last Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Role</th>
+                    <th scope="col">PO ID</th>
+                    <th scope="col">Quantity Ordered</th>
+                    <th scope="col">Quantity Receuved  </th>
+                    <th scope="col">Supplier</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Ordered By</th>
+                    <th scope="col">PO  Date</th>
                     <th scope="col"></th>
                   </tr>
                 </thead>
