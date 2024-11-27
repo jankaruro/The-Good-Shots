@@ -275,7 +275,7 @@ include('header.php'); ?>
                       <th scope="col">Last Name</th>
                       <th scope="col">Email</th>
                       <th scope="col">Role</th>
-                      <th scope="col">Action</th>
+                      <th scope="col" class = "tbl-action">Action</th>
                   </tr>
                 </thead>
                   <tbody>

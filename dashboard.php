@@ -107,7 +107,7 @@
                     <div class="p-3 bg-color d-flex justify-content-around align-items-center rounded border-bottom-yellow">
                             <div>
                                 <h3 class="fs-2"></h3>
-                                <p class="fs-4">Products</p>
+                                <p class="fs-4">Employee</p>
                             </div>
                             <i class="fas fa-gift fs-1 p-3"></i>
                         </div>
@@ -138,7 +138,7 @@
                     <div class="p-3 bg-color d-flex justify-content-around align-items-center rounded border-bottom-blue">
                         <div>
                             <h3 class="fs-2"></h3>
-                            <p class="fs-4">Increase</p>
+                            <p class="fs-4">Discrepancy</p>
                         </div>
                         <i class="fas fa-chart-line fs-1 p-3"></i>
                     </div>

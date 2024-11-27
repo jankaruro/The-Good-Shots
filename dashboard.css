@@ -120,6 +120,12 @@
 .submenu.active {
     display: block;
 }
+.sub-list-item.active {
+        background-color: #d8cba8;
+        color: white;
+        font-weight: bold;
+        border-left: 4px solid rgb(128, 127, 127);
+}
 .sub-list-item {
     text-decoration: none;
     color: #333;
@@ -130,7 +136,6 @@
     padding: 5px 0;
     padding-right: 5px;
     margin-left: 30px;
-
 }
 .sub-list-item:hover{
     background-color: #d8cba8;
@@ -166,7 +171,6 @@
     align-items: center;
     z-index: 1000;
 }
-
 .content{
     display: flex;
     height: 100vh;
@@ -229,16 +233,33 @@
     background: wheat;
     border-radius: 10px;
 }
-.btn_add{
-    color: green;
+.tbl-action{
+    width: 350px;
+}
+.btn-excel {
+    height: 40px;
+    width: 100px;
+    background-color: darkgreen;
+    border-radius: 5px;
+    color: white;
+    font-size: 18px;
+    font-weight: 500;   
+    border: 1px solid gray;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.btn-excel:hover{
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
 }
 .btn-inventory{
     width: 300px;
 }
 .edit_data{
     background-color: rgb(219, 180, 106);
-    width: 130px;
+    width: 100px;
 }
 .delete_data{
-    width: 130px;
+    width: 120px;
+    height: 38px;
 }
