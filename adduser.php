@@ -271,15 +271,41 @@ include('header.php'); ?>
                 <thead>
                   <tr>
                     <th scope="col">ID</th>
-                    <rst scope="col">First Name</th>
+                    <th scope="col">First Name</th>
                       <th scope="col">Last Name</th>
                       <th scope="col">Email</th>
                       <th scope="col">Role</th>
                       <th scope="col">Action</th>
                   </tr>
                 </thead>
-                <tbody>
-                  
+                  <tbody>
+                  <?php
+                  $connection = mysqli_connect("localhost", "root", "", "tgs_inventory");
+
+                  $fetch_query = "SELECT * FROM users";
+                  $fetch_query_run = mysqli_query($connection, $fetch_query);
+
+                  if (mysqli_num_rows($fetch_query_run) > 0) {
+                    while ($row = mysqli_fetch_array($fetch_query_run)) {
+                      ?>
+                      <tr>
+                        <td class="user_id"><?php echo $row['id']; ?></td>
+                        <td><?php echo $row['first_name']; ?></td>
+                        <td><?php echo $row['last_name']; ?></td>
+                        <td><?php echo $row['email']; ?></td>
+                        <td><?php echo $row['role']; ?></td>
+                        <td>
+                          <a href="#" class="btn btn-info btn-base view_data">View Data</a>
+                          <a href="#" class="btn btn-success btn-base edit_data">Edit Data</a>
+                          <a href="" class="btn btn-danger btn-base delete_data">Delete Data</a>
+                        </td>
+                      </tr>
+                      <?php
+                    }
+                  } else {
+                    echo "<tr><td colspan='6'></td></tr>";
+                  }
+                  ?>
                 </tbody>
               </table>
             </div>
