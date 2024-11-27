@@ -43,6 +43,10 @@ body {
     color: black;
     font-size: 15px;
 }
+.back-icon{
+    height: 30px;
+    width: 30px;
+}
 
 .btn-back:hover {
     background-color: #b3b3b3;
@@ -71,7 +75,16 @@ body {
     position: fixed;
     display: flex;
 }
-
+.topnavbar-icons{
+    height: 24px;
+}
+.nav-link{
+    border-radius: 20px;
+}
+.nav-link:hover{
+    background-color: #d8cba8;
+    border-radius: 20px;
+}
 .dashboard-nav {
     position: fixed;
     width: calc(100% - 365px);

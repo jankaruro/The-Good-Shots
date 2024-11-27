@@ -2,6 +2,16 @@
 session_start();
 include('header.php'); ?>
 
+<style>
+ .product-submenu{
+    display: block;
+    padding-left: 10px;
+}
+.product-submenu.active {
+    display: block;
+}
+</style>
+
 <!--Add-->
 <!--Add User-->
 <div class="modal fade" id="addUserData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -112,10 +122,10 @@ include('header.php'); ?>
               class="fa-solid fa-chevron-right toggle-arrow-product" id="product-arrow"></i>
           </a>
           <div class="submenu" id="product-submenu">
-            <a href="addproduct.php" class="sub-list-item active">
+            <a href="addproduct.php" class="sub-list-item">
               <p class="txt-name-btn">Add Product</p>
             </a>
-            <a href="addcategory.php" class="sub-list-item">
+            <a href="addcategory.php" class="sub-list-item active">
               <p class="txt-name-btn">Add Category</p>
             </a>
           </div>
