@@ -109,7 +109,9 @@ include('header.php'); ?>
 <style>
   .custom-modal {
     max-width: 1000px;
+    /* Adjust the width as needed */
     width: 100%;
+    /* Ensure it takes the full width of the max-width */
   }
 </style>
 
