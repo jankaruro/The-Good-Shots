@@ -261,30 +261,28 @@ include('header.php'); ?>
           <div class="card shadow">
             <div class="card-header">
               <h3 class="text-center">User Management</h3>
-              <button type="button" class="btn btn-primary float-end fw-medium" data-bs-toggle="modal"
+              <button type="button" class="btn btn-primary float-end fw-medium btn-add" data-bs-toggle="modal"
                 data-bs-target="#addUserData">
                 Add New User
               </button>
-
             </div>
-            <div class="card-body">
-              <table class="table table-bordered">
+            <div class="card-body mt-1">
+              <table id="example" class="table table-striped" style="width:100%">
                 <thead>
                   <tr>
-                    <th scope="col" style = "width: 5px; text-align: center;">ID</th>
-                    <th scope="col" style = "width: 180px; text-align: center;">First Name</th>
-                    <th scope="col" style = "width: 120px; text-align: center;">Last Name</th>
-                    <th scope="col" style = "width: 180px; text-align: center;">Email</th>
-                    <th scope="col" style = "width: 100px; text-align: center;" >Role</th>
-                    <th scope="col" style = "width: 250px; text-align: center;">Action</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">First Name</th>
+                      <th scope="col">Last Name</th>
+                      <th scope="col">Email</th>
+                      <th scope="col">Role</th>
+                      <th scope="col">Action</th>
                   </tr>
                 </thead>
-
-                <tbody>
+                  <tbody>
                   <?php
                   $connection = mysqli_connect("localhost", "root", "", "tgs_inventory");
 
-                  $fetch_query = "SELECT * FROM users ";
+                  $fetch_query = "SELECT * FROM users";
                   $fetch_query_run = mysqli_query($connection, $fetch_query);
 
                   if (mysqli_num_rows($fetch_query_run) > 0) {
@@ -309,13 +307,6 @@ include('header.php'); ?>
                   }
                   ?>
                 </tbody>
-              </table>
-              <?php
-              if (mysqli_num_rows($fetch_query_run) == 0) {
-                echo "<p class='text-center mt-3'>No Record Found</p>";
-              }
-              ?>
-              </tbody>
               </table>
             </div>
           </div>

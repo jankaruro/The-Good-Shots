@@ -147,8 +147,6 @@ include('header.php'); ?>
 </div>
 <!---->
 <!--edit-->
-
-Giancarlo Ganub
 <div class="modal fade" id="viewitemModal" tabindex="-1" aria-labelledby="viewitemModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -410,17 +408,16 @@ Giancarlo Ganub
           }
 
           ?>
-          <div class="card">
+           <div class="card shadow">
             <div class="card-header">
               <h3 class="text-center">Inventory Management</h3>
-              <button type="button" class="btn btn-primary float-end fw-medium" data-bs-toggle="modal"
+              <button type="button" class="btn btn-primary float-end fw-medium btn-add" data-bs-toggle="modal"
                 data-bs-target="#addUserData">
                 Add New User
               </button>
-
             </div>
-            <div class="card-body">
-              <table class="table table-bordered">
+            <div class="card-body mt-1">
+            <table id="example" class="table table-striped" style="width:100%">
                 <thead>
                   <tr>
                     <th scope="col">ID</th>
@@ -436,41 +433,9 @@ Giancarlo Ganub
                 </thead>
 
                 <tbody>
-                  <?php
-                  $connection = mysqli_connect("localhost", "root", "", "tgs_inventory");
-
-                  $fetch_query = "SELECT * FROM inventory ";
-                  $fetch_query_run = mysqli_query($connection, $fetch_query);
-
-                  if (mysqli_num_rows($fetch_query_run) > 0) {
-                    while ($row = mysqli_fetch_array($fetch_query_run)) {
-
-                      ?>
-                      <tr>
-                        <td class="inventory_id"><?php echo $row['id']; ?></td>
-                        <td><?php echo $row['supplier']; ?></td>
-                        <td><?php echo $row['product_name']; ?></td>
-                        <td><?php echo $row['package_quantity']; ?></td>
-                        <td><?php echo $row['measurement_per_package']; ?></td>
-                        <td><?php echo $row['total_measurement']; ?></td>
-                    
-                        <td><?php echo $row['unit']; ?></td>
-                        <td><?php echo $row['Expiry_Date']; ?></td>
-                        <td>
-                          <a href="#" class="btn btn-info btn-base view_inventory">View Data</a>
-                          <a href="#" class="btn btn-success btn-base edit_inventory">Edit Data</a>
-                          <a href="" class="btn btn-danger btn-base delete_inventory">Delete Data</a>
-                        </td>
-                      </tr>
-                      <?php
-
-                    }
-                  } else {
-                    ?>
-                    <tr colspan="5"> No Record Found </tr>
-                    <?php
-                  }
-                  ?>
+                
+                </tbody>
+              </table>
                 </tbody>
               </table>
             </div>
@@ -478,6 +443,7 @@ Giancarlo Ganub
         </div>
       </div>
     </div>
+
 
 
     <?php include('footer.php'); ?>

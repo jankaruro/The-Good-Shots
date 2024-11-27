@@ -7,6 +7,10 @@ body {
     height: 60px;
     border-radius: 50%;
 }
+.icons{
+    width: 30px;
+    height: 30px;
+}
 
 .sidebar-color {
     margin: 10px;
