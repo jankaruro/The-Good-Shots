@@ -804,8 +804,127 @@ if (isset($_POST['click_delete_product_btn'])) {
 
 
 
+//////////////////////////////////////////////////////////////////////////////////
+//insert po
+if (isset($_POST['add_po'])) {
+    // Retrieve and validate data from POST
+    $total_amount = isset($_POST['total_amount']) ? $_POST['total_amount'] : null;
+    $products = isset($_POST['products']) ? json_decode($_POST['products'], true) : [];
+    $supplier_name = isset($_POST['supplier']) ? $_POST['supplier'] : null; 
+    $created_by = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null; // Assuming you have user sessions
 
+    // Validate the inputs
+    if (empty($supplier_name) || empty($total_amount) || empty($products)) {
+        $_SESSION['status'] = "All fields are required!";
+        header("Location: adduser.php"); // Redirect back to the page
+        exit();
+    }
 
+    try {
+        // Start a transaction
+        $conn->beginTransaction();
+
+        // Insert into purchase_orders
+        $stmt = $conn->prepare("INSERT INTO purchase_orders (created_at, total_amount, created_by) VALUES (NOW(), ?, ?)");
+        $stmt->execute([$total_amount, $created_by]);
+        $purchase_order_id = $conn->lastInsertId();
+
+        // Insert into purchase_order_details
+        foreach ($products as $product) {
+            if (isset($product['productName'], $product['unitPrice'], $product['quantity'], $product['amount'])) {
+                $stmt = $conn->prepare("INSERT INTO purchase_order_details (product_name, unit_price, quantity, supplier_name, total_amount, created_at) VALUES (?, ?, ?, ?, ?, NOW())");
+                $stmt->execute([$product['productName'], $product['unitPrice'], $product['quantity'], $supplier_name, $product['amount']]);
+            }
+        }
+
+        // Commit the transaction
+        $conn->commit();
+        $_SESSION['status'] = "Purchase order created successfully!";
+    } catch (PDOException $e) {
+        // Rollback the transaction in case of error
+        $conn->rollBack();
+        $_SESSION['status'] = "Error: " . $e->getMessage();
+    }
+
+    // Redirect back to the page (or wherever you want)
+    header("Location: adduser.php");
+    exit();
+}
+
+//edit po
+if (isset($_POST['click_edit_btn'])) {
+    $id = $_POST['user_id'];
+    $arrayresult = [];
+
+    // Prepare and execute the fetch query
+    $fetch_query = "SELECT * FROM users WHERE id = ?";
+    $stmt = $connection->prepare($fetch_query);
+    $stmt->execute([$id]);
+    $fetch_query_run = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    header('Content-Type: application/json');
+    if (count($fetch_query_run) > 0) {
+        echo json_encode($fetch_query_run);
+    } else {
+        echo json_encode(['message' => 'No records found']);
+    }
+    exit(); // Terminate the script after sending the response
+}
+
+// Update user data
+if (isset($_POST['update_data'])) {
+    $id = $_POST['id']; // Ensure you retrieve the user ID
+    $first_name = $_POST['firstname'];
+    $last_name = $_POST['lastname'];
+    $email = $_POST['email'];
+    $password = $_POST['password']; // Consider hashing the password before storing
+    $role = $_POST['role'];
+
+    // Validate inputs
+    if (empty($id) || empty($first_name) || empty($last_name) || empty($email) || empty($role)) {
+        $_SESSION['status'] = "All fields are required!";
+        header('Location: adduser.php');
+        exit();
+    }
+
+    // Prepare the update query
+    $update_query = "UPDATE users SET first_name = ?, last_name = ?, email = ?, password = ?, role = ? WHERE id = ?";
+    $stmt = $connection->prepare($update_query);
+
+    // Execute the update query
+    if ($stmt->execute([$first_name, $last_name, $email, $password, $role, $id])) {
+        $_SESSION['status'] = "Data updated successfully";
+    } else {
+        $_SESSION['status'] = "Data update failed: " . $stmt->errorInfo()[2]; // Get the error message
+    }
+
+    header('Location: adduser.php');
+    exit();
+}
+
+// Delete user
+if (isset($_POST['click_delete_btn'])) {
+    $id = $_POST['user_id'];
+
+    // Validate ID
+    if (empty($id)) {
+        echo json_encode(['message' => 'User  ID is required']);
+        exit();
+    }
+
+    // Prepare and execute the delete query
+    $delete_query = "DELETE FROM users WHERE id = ?";
+    $stmt = $connection->prepare($delete_query);
+    
+    if ($stmt->execute([$id])) {
+        echo json_encode(['message' => 'Data deleted successfully']);
+    } else {
+        echo json_encode(['message' => 'Data deletion failed']);
+    }
+    exit();
+}
+
+$connection = null;
 
 
 
