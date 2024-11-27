@@ -3,17 +3,18 @@ session_start();
 include('header.php'); ?>
 
 
-<!--Add User-->
-<div class="modal fade" id="addUserData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-  aria-labelledby="addUser DataLabel" aria-hidden="true">
 
+<!-- Add User Modal -->
+<div class="modal fade" id="addUserData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="addUserDataLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable custom-modal">
     <div class="modal-content custom-modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-2" id="addUser DataLabel">Creating Purchase Order</h1>
+        <h1 class="modal-title fs-2" id="addUserDataLabel">Creating Purchase Order</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form action="code.php" method="POST">
+
+      <form action="code.php" method="POST" id="purchaseForm">
         <div class="modal-body">
           <div class="form-group">
             <label for="supplier"><b>Supplier</b></label>
@@ -45,17 +46,17 @@ include('header.php'); ?>
             <label for="product"><b>Product</b></label>
             <select class="form-control" id="product" name="product" required>
               <option value="">-- Select Product --</option>
-              <!-- Add product options here -->
+              <!-- Product options will be loaded dynamically based on supplier -->
             </select>
             <div id="loadingIndicator" style="display:none;">Loading products...</div>
           </div>
 
           <div class="form-group">
             <label for="quantity"><b>Quantity</b></label>
-            <input type="number" class="form-control" id="quantity" name="quantity" required min="1">
+            <input type="number" class="form-control" id="quantity" name="quantity" >
           </div>
 
-          <button type="button" class="btn btn-primary" id="confirm_btn" onclick="addProduct()">Add Product</button>
+          <button type="button" class="btn btn-primary" id="add_prod">Add Product</button>
 
           <!-- Product Table -->
           <table id="display" class="table table-striped mt-3">
@@ -69,7 +70,7 @@ include('header.php'); ?>
               </tr>
             </thead>
             <tbody>
-              <!-- Rows for added products go here -->
+              <!-- Rows for added products will go here -->
             </tbody>
           </table>
 
@@ -84,7 +85,7 @@ include('header.php'); ?>
           <!-- Buttons for Cancel and Continue -->
           <div class="d-flex justify-content-between" id="btn-cancel-continue">
             <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="resetModal()">Cancel</button>
-            <button type="button" id="continue-btn" class="btn btn-primary" onclick="showPopup()">Continue</button>
+            <button type="submit" name="continue" id="continue" class="btn btn-primary">Add PO</button>
           </div>
         </div>
       </form>
@@ -93,286 +94,187 @@ include('header.php'); ?>
 </div>
 
 <!-- Confirmation Modal -->
-<div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
+<div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="confirmationModalLabel">Confirm Purchase</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="hidePopup()"></button>
+        <h5 class="modal-title" id="confirmationModalLabel">Confirm Purchase Order</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-        <p>Are you sure you want to confirm this purchase?</p>
-        <label for="totalAmount">Total Amount:</label>
-        <input type="text" class="form-control mb-3" id="totalPriceInput" readonly>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="hidePopup()">Cancel</button>
-        <button type="button" class="btn btn-primary" name="add_po" id="confirmPurchase">Confirm</button>
-      </div>
+
+      <form action="code.php" method="POST" id="confirmationForm"> <!-- This form tag should be closed here -->
+        <div class="modal-body">
+          <p>Are you sure you want to add this purchase order?</p>
+          <p><strong>Total Amount: </strong><span id="confirmationTotalAmount">0.00</span></p>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" name="" id="confirmPurchaseOrderBtn">Confirm</button>
+        </div>
+      </form> <!-- Close the form here -->
     </div>
   </div>
 </div>
 
 
 
-<style>
-  .custom-modal {
-    max-width: 1000px;
-    /* Adjust the width as needed */
-    width: 100%;
-    /* Ensure it takes the full width of the max-width */
-  }
-</style>
-
-
 <script>
-  let totalAmount = 0; // Initialize totalAmount outside the function
+let products = []; // To store added products
 
-  function addProduct() {
-    const supplierSelect = document.getElementById("supplier");
-    const productSelect = document.getElementById("product");
-    const quantityInput = document.getElementById("quantity");
-
+document.getElementById('add_prod').addEventListener('click', function () {
+    const tableBody = document.querySelector('#display tbody');
+    const row = document.createElement('tr');
     
-    if (supplierSelect.value === "" || productSelect.value === "") {
-      alert("Please select both a supplier and a product before adding.");
-      return; 
-    }
-
+    // Get selected product details from the dropdown and input fields
+    const productSelect = document.getElementById('product');  // The select element for product
     const selectedProduct = productSelect.options[productSelect.selectedIndex];
-    const productName = selectedProduct.text;
-    const unitPrice = parseFloat(selectedProduct.getAttribute("data-price")); // Assuming you set data-price attribute in options
-    const quantity = parseInt(quantityInput.value);
-    const amount = unitPrice * quantity;
-
+    const productName = selectedProduct.text;  // Product name from the select options
+    const unitPrice = parseFloat(selectedProduct.getAttribute('data-price')) || 0;  // Get the unit price (use data attribute)
+    const quantity = parseInt(document.getElementById('quantity').value) || 1;  // Quantity entered by the user
     
-    if (productName && quantity > 0) {
-      const tableBody = document.querySelector("#display tbody");
-      const existingRow = Array.from(tableBody.rows).find(row => row.cells[0].innerText === productName);
-
-      if (existingRow) {
-        const existingQuantity = parseInt(existingRow.cells[2].innerText);
-        const newQuantity = existingQuantity + quantity;
-        const newAmount = unitPrice * newQuantity;
-
-        existingRow.cells[2].innerText = newQuantity;
-        existingRow.cells[3].innerText = newAmount.toFixed(2);
-      } else {
-        const newRow = tableBody.insertRow();
-        newRow.innerHTML = `
-              <td>${productName}</td>
-              <td>${unitPrice.toFixed(2)}</td>
-              <td>${quantity}</td>
-              <td>${amount.toFixed(2)}</td>
-              <td><button type="button" class="btn btn-danger" onclick="removeProduct(this)">Remove</button></td>
-            `;
-      }
-
-      totalAmount += amount;
-      document.getElementById("total_price").innerText = totalAmount.toFixed(2);
-
-      // Disable supplier selection after the first product is added
-      if (tableBody.rows.length === 1) {
-        supplierSelect.disabled = true;
-      }
-
-      
-      quantityInput.value = '';
-      productSelect.selectedIndex = 0;
-    } else {
-      alert("Please enter a valid quantity.");
-    }
-  }
-
-  function resetModal() {
-    
-    const supplierSelect = document.getElementById("supplier");
-    supplierSelect.selectedIndex = 0;  
-    supplierSelect.disabled = false;  
-
-   
-    const productSelect = document.getElementById("product");
-    productSelect.innerHTML = '<option value="">-- Select Product --</option>';  
-
-    
-    const quantityInput = document.getElementById("quantity");
-    quantityInput.value = '';  
-
-    
-    const totalPriceDisplay = document.getElementById("total_price");
-    totalPriceDisplay.innerText = '0.00';  
-    
-    const tableBody = document.querySelector("#display tbody");
-    while (tableBody.rows.length > 0) {
-      tableBody.deleteRow(0);  
+    // Ensure valid inputs before adding
+    if (!productName || quantity <= 0) {
+        alert("Please select a product and enter a valid quantity.");
+        return;
     }
 
+    // Calculate total price for this product
+    const totalAmount = unitPrice * quantity;
+
+    // Add the row with input fields for product name, unit price, quantity, total amount, and remove button
    
-    totalAmount = 0;  
 
-    
-    hidePopup();  
-  }
+    // Clear the input fields after adding
+
+});
+
+// Function to remove a product from the table and the products array
+function removeProduct(button) {
+    const row = button.closest('tr');
+    row.remove();  // Simply remove the row from the table
+    updateTotalPrice();  // Recalculate the total after removal
+}
+
+// Function to update the total price of all products in the table
+function updateTotalPrice() {
+    const rows = document.querySelectorAll('#display tbody tr');
+    let total = 0;
+
+    rows.forEach(row => {
+        const totalAmount = parseFloat(row.querySelector('.product-total').textContent) || 0;
+        total += totalAmount;
+    });
+
+    // Update the total price displayed at the bottom
+    document.getElementById('total_price').textContent = total.toFixed(2);
+}
 
 
+// Event listener to track changes in the table (inputs for unit price and quantity)
+document.querySelector('#display tbody').addEventListener('input', function (event) {
+    if (event.target.matches('input[name="unit_price"], input[name="quantity"]')) {
+        const row = event.target.closest('tr');
+        updateProductTotal(row);
+    }
+});
 
-  function removeProduct(button) {
-    const row = button.parentNode.parentNode;
-    const amount = parseFloat(row.cells[3].innerText);
-    totalAmount -= amount;
-    document.getElementById("total_price").innerText = totalAmount.toFixed(2);
-    row.remove();
-  }
+// Event listener for submitting the form
+document.getElementById('purchaseForm').addEventListener('submit', function (event) {
+    event.preventDefault(); 
 
-  function showPopup() {
-    let totalAmount = document.getElementById('total_price').innerText;
-    document.getElementById('totalPriceInput').value = totalAmount;
+    const supplier = document.getElementById('supplier').value;
+    if (products.length === 0) {
+        alert("Please add at least one product.");
+        return;
+    }
 
-    // Hide main modal's backdrop while showing the confirmation modal
-    let mainModal = bootstrap.Modal.getInstance(document.getElementById('addUserData'));
-    mainModal._backdrop.classList.add('d-none'); // Hide main backdrop
-    let confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
-    confirmationModal.show();
-  }
-
-  // Hide the confirmation modal and restore the main modal backdrop
-  function hidePopup() {
-    let mainModal = bootstrap.Modal.getInstance(document.getElementById('addUserData'));
-    mainModal._backdrop.classList.remove('d-none'); // Restore main backdrop
-    let confirmationModal = bootstrap.Modal.getInstance(document.getElementById('confirmationModal'));
-    confirmationModal.hide();
-  }
-
-  function loadProducts() {
-    const supplier = document.getElementById("supplier").value;
-
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", "fetch_products.php?supplier=" + supplier, true);
-    xhr.onreadystatechange = function () {
-      if (this.readyState == 4 && this.status == 200) {
-        document.getElementById("product").innerHTML = this.responseText;
-      }
+    const data = {
+        products: products,
+        total_amount: parseFloat(document.getElementById('total_price').textContent),
+        supplier: supplier
     };
-    xhr.send();
-  }
-  function loadProducts() {
+
+    fetch('code.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(responseData => {
+        if (responseData.success) {
+            alert("Purchase Order added successfully!");
+            products = [];
+            document.querySelector('#display tbody').innerHTML = '';
+            document.getElementById('total_price').textContent = '0.00';
+        } else {
+            alert("Error: " + responseData.message);
+        }
+    })
+    .catch(error => {
+        alert("Error: " + error.message);
+    });
+});
+
+// Load products based on supplier
+function loadProducts() {
     const supplier = document.getElementById("supplier").value;
-
-    // Show loading indicator immediately
     document.getElementById("loadingIndicator").style.display = "block";
-
+    
     fetch("fetch_products.php?supplier=" + supplier)
-      .then(response => response.text())
-      .then(data => {
-        // Wait for 3 seconds before hiding the loading indicator and showing the products
-        setTimeout(() => {
-          document.getElementById("loadingIndicator").style.display = "none"; // Hide the loading indicator
-          document.getElementById("product").innerHTML = data; // Load products into dropdown
-        }, 1000); // 3000ms = 3 seconds
-      })
-      .catch(error => {
-        console.error('Error fetching products:', error);
-        document.getElementById("loadingIndicator").style.display = "none"; // Hide loading indicator on error
-      });
-  }
+        .then(response => response.text())
+        .then(data => {
+            setTimeout(() => {
+                document.getElementById("loadingIndicator").style.display = "none";
+                document.getElementById("product").innerHTML = data;
+            }, 1000);
+        })
+        .catch(error => {
+            console.error('Error fetching products:', error);
+            document.getElementById("loadingIndicator").style.display = "none";
+        });
+}
 
+// Attach loadProducts to supplier change event
+document.getElementById("supplier").addEventListener("change", loadProducts);
 
 </script>
 
+
+
+
+
+
+
+
 <?php
 include('connection.php');
-
 if (isset($_GET['supplier'])) {
   $supplier = $_GET['supplier'];
   try {
-    $stmt = $conn->prepare("SELECT product_name, price FROM suppliers_products WHERE supplier = ?");
+    // Fetch products based on the supplier
+    $stmt = $conn->prepare("SELECT id, product_name, price FROM supplier_products WHERE supplier = ?");
     $stmt->execute([$supplier]);
     $products = $stmt->fetchAll();
 
-    foreach ($products as $row) {
-      echo "<option value='" . htmlspecialchars($row['product_name']) . "' data-price='" . htmlspecialchars($row['price']) . "'>" . htmlspecialchars($row['product_name']) . "</option>";
+    if ($products) {
+      foreach ($products as $product) {
+        echo "<option value='" . htmlspecialchars($product['id']) . "' data-price='" . htmlspecialchars($product['price']) . "'>" . htmlspecialchars($product['product_name']) . "</option>";
+      }
+    } else {
+      echo "<option value=''>No products found</option>";
     }
   } catch (PDOException $e) {
     echo "<option value=''>Error fetching products</option>";
   }
 }
-$conn = null;
 ?>
 
 
-<!--view-->
-<div class="modal fade" id="viewitemModal" tabindex="-1" aria-labelledby="viewitemModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="viewitemModalLabel">View Item</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="view_item_data">
 
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-
-      </div>
-    </div>
-  </div>
-</div>
-<!---->
-<!--edit-->
-<div class="modal fade" id="editData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-  aria-labelledby="editDataLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-2" id="editDataLabel">Edit Users</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <form action="code.php" method="POST">
-        <div class="modal-body">
-
-          <div class="form-group">
-            <input type="text" class="form-control fw-medium" id="id" name="id">
-          </div>
-
-
-
-
-          <div class="form-group">
-            <label class="fs-5 mt-1 fw-bolder">First Name</label>
-            <input type="text" class="form-control fw-medium" name="firstname" placeholder="Enter First Name">
-          </div>
-          <div class="form-group">
-            <label class="fs-5 mt-1 fw-bolder">Last Name</label>
-            <input type="text" class="form-control fw-medium" name="lastname" placeholder="Enter Last Name">
-          </div>
-          <div class="form-group">
-            <label class="fs-5 mt-1 fw-bolder">Email</label>
-            <input type="email" class="form-control fw-medium" name="email" placeholder="Enter Email">
-          </div>
-          <div class="form-group">
-            <label class="fs-5 mt-1 fw-bolder">Password</label>
-            <input type="password" class="form-control fw-medium" name="password" placeholder="Enter Password">
-          </div>
-          <div class="form-group">
-            <label class="fs-5 mt-1 fw-bolder">Role</label>
-            <select class="form-control fw-medium" id="role" name="role">
-              <option value="user">User </option>
-              <option value="admin">Admin</option>
-              <option value="superadmin">Super Admin</option>
-            </select>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary fw-medium" data-bs-dismiss="modal">Close</button>
-          <button type="submit" name="update_data" class="btn btn-primary fw-medium">Update Item</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
 <!---->
 <div class="d-flex content">
   <div id="sidebar" class="sidebar-color">
@@ -518,18 +420,35 @@ $conn = null;
                   <tr>
                     <th scope="col">PO ID</th>
                     <th scope="col">Quantity Ordered</th>
-                    <th scope="col">Quantity Receuved  </th>
+                    <th scope="col">Quantity Received</th>
                     <th scope="col">Supplier</th>
                     <th scope="col">Status</th>
                     <th scope="col">Ordered By</th>
-                    <th scope="col">PO  Date</th>
+                    <th scope="col">PO Date</th>
                     <th scope="col"></th>
                   </tr>
                 </thead>
-
                 <tbody>
-
-
+                  <?php if (!empty($purchase_orders)): ?>
+                    <?php foreach ($purchase_orders as $order): ?>
+                      <tr>
+                        <td><?php echo htmlspecialchars($order['po_id']); ?></td>
+                        <td><?php echo htmlspecialchars($order['quantity_ordered']); ?></td>
+                        <td><?php echo htmlspecialchars($order['quantity_received']); ?></td>
+                        <td><?php echo htmlspecialchars($order['supplier_name']); ?></td>
+                        <td><?php echo htmlspecialchars($order['status']); ?></td>
+                        <td><?php echo htmlspecialchars($order['created_by']); ?></td>
+                        <td><?php echo htmlspecialchars(date('Y-m-d', strtotime($order['po_date']))); ?></td>
+                        <td>
+                          <!-- You can add action buttons here, e.g., Edit/Delete -->
+                        </td>
+                      </tr>
+                    <?php endforeach; ?>
+                  <?php else: ?>
+                    <tr>
+                      <td colspan="8">No purchase orders found.</td>
+                    </tr>
+                  <?php endif; ?>
                 </tbody>
               </table>
             </div>
