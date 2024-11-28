@@ -15,37 +15,37 @@
         </div>
         <div class="list-group list-group-flush mt-2">
             <a href="dashboard.php" class="list-group-item">
-                <img src="icons/espresso-svgrepo-com.svg" alt="" class = "icons me-3">Espresso Base Coffee
+                <img src="icons/coffee-svgrepo-com.svg" alt="" class = "icons me-3">Espresso Base Coffee
             </a>
             <a href="adduser.php" class="list-group-item">
-                <img src="icons/best-practices-1-svgrepo-com.svg" alt="" class = "icons me-3">Best Selling Coffee Drinks
+                <img src="icons/medal-ribbon-star-svgrepo-com.svg" alt="" class = "icons me-3">Best Selling Coffee Drinks
             </a>
             <a href="addproduct.php" class="list-group-item">
-                <img src="icons/fruit-svgrepo-com.svg" alt="" class = "icons me-3">Fruit Tea
+                <img src="icons/fruit-juice-orange-svgrepo-com.svg" alt="" class = "icons me-3">Fruit Tea
             </a>
             <a href="#" class="list-group-item">
-                <img src="icons/cocktail-glass-svgrepo-com.svg" alt="" class = "icons me-3">Mocktails
+                <img src="icons/cocktails-cocktail-svgrepo-com.svg" alt="" class = "icons me-3">Mocktails
             </a>
             <a href="purchase_order.php" class="list-group-item">
-                <img src="icons/juice-svgrepo-com.svg" alt="" class = "icons me-3">Smoothies
+                <img src="icons/juice-svgrepo-com (1).svg" alt="" class = "icons me-3">Smoothies
             </a>
             <a href="purchase_order.php" class="list-group-item">
-                <img src="icons/frappe-svgrepo-com.svg" alt="" class = "icons me-3">Frappe
+                <img src="icons/frappe-svgrepo-com (1).svg" alt="" class = "icons me-3">Frappe
             </a>
             <a href="purchase_order.php" class="list-group-item">
                 <img src="icons/croisant-svgrepo-com.svg" alt="" class = "icons me-3">Croffle
             </a>
             <a href="#" class="list-group-item">
-                <img src="icons/fry-svgrepo-com.svg" alt="" class = "icons me-3">Fries
+                <img src="icons/french-fries-svgrepo-com.svg" alt="" class = "icons me-3">Fries
             </a>
             <a href="#" class="list-group-item">
-                <img src="icons/shortcake-svgrepo-com.svg" alt="" class = "icons me-3">Cakes
+                <img src="icons/cake-4-svgrepo-com.svg" alt="" class = "icons me-3">Cakes
             </a>
             <a href="#" class="list-group-item">
-                <img src="icons/sandwich-svgrepo-com.svg" alt="" class = "icons me-3">Sandwhich
+                <img src="icons/sandwich-svgrepo-com (1).svg" alt="" class = "icons me-3">Sandwhich
             </a>
             <a href="#" class="list-group-item">
-                <img src="icons/rice-svgrepo-com.svg" alt="" class = "icons me-3">Rice Meal
+                <img src="icons/rice-svgrepo-com (1).svg" alt="" class = "icons me-3">Rice Meal
             </a>
         </div>
     </div>
@@ -60,7 +60,7 @@
                     <a class="nav-link fw-bold notification-link me-3" href="#"
                         style="color: black; font-weight: 200; font-size: 17px;">
                             <img src= "icons/reject-cross-delete-svgrepo-com.svg" alt="" class="topnavbar-icons">
-                        Void Transaction
+                        Transaction
                     </a>
                     <a class="nav-link fw-bold notification-link me-3" href="#"
                         style="color: black; font-weight: 200; font-size: 17px;">
@@ -71,7 +71,7 @@
                         <a class="nav-link dropdown-toggle fw-bold notification-link " href="#"
                             style="color: black; font-weight: 200; font-size: 17px;" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src= "icons/profile-round-1342-svgrepo-com.svg" alt="" class="topnavbar-icons">
+                            <img src= "icons/profile-round-1342-svgrepo-com.svg" alt="" class="user-icons">
                             Admin
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">

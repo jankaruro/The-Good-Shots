@@ -77,6 +77,15 @@ body {
 }
 .topnavbar-icons{
     height: 24px;
+    width: 24px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+.user-icons{
+    height: 22px;
+    width: 22px;
+    margin-right: 5px;
+    margin-bottom: 5px;
 }
 .nav-link{
     border-radius: 20px;
@@ -87,7 +96,7 @@ body {
 }
 .dashboard-nav {
     position: fixed;
-    width: calc(100% - 365px);
+    width: calc(100% - 360px);
     height: 64px;
     top: 5px;
     left: 360px;

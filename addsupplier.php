@@ -2,6 +2,292 @@
 session_start();
 include('header.php'); ?>
 
+<style>
+  .body{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden; 
+}
+.sidebar-heading {
+    position: sticky; 
+    top: 0;
+    background-color: #efe5dc;
+    color: black;
+    font-size: 18px;
+    font-weight: 700;
+    height: 80px;
+    border-bottom: 2px solid black;
+    text-transform: uppercase;
+    z-index: 10;
+}
+.sidebar-color {
+    background-color: #efe5dc;
+    height: 100vh;
+    width: 290px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    border-right: 1px solid rgb(197, 197, 197);
+    z-index: 1000;
+    overflow-y: auto;
+}
+.logo{
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    margin: 10px;
+}
+.list-group-item{
+    font-weight: 600;
+    font-size: 17px;
+    height: 50px;
+    background-color: #efe5dc;
+    color: black;
+}
+
+.dropdown-menu {
+    width: 100%;
+    max-width: 290px; 
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 8px;
+}
+.dropdown-item {
+    background-color: transparent;
+    font-weight: 500;  
+    font-size: 17px;
+    height: 50px;
+    padding: 12px 20px;
+    transition: background-color 0.3s, color 0.3s;
+}
+.list-group-item:hover{
+    background-color: #d8cba8;
+    color: #fff;
+}
+.list-group-item.active {
+    background-color: #d8cba8;
+    color: #ffffff;
+    border-left: 5px solid;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    border-color: rgb(128, 127, 127);
+}
+.supplier-dropdown{
+    position: relative;
+    display: inline-block;
+    background-color: #f1f1f1;
+}
+.reports-dropdown{
+    position: relative;
+    display: inline-block;
+    background-color: #f1f1f1;
+}
+.product-dropdown{
+    position: relative;
+    display: inline-block;
+    background-color: #f1f1f1;
+}
+#product-toggle{
+    display: flex;
+    align-items: center;
+}
+#supplier-toggle {
+    display: flex;
+    align-items: center;
+}
+#reports-toggle{
+    display: flex;
+    align-items: center;
+}
+.toggle-arrow-product {
+    transition: transform 0.3s ease;
+    margin-left: 30px;
+    font-size: 12px;
+}
+.toggle-arrow-supplier{
+    transition: transform 0.3s ease;
+    margin-left: 130px;
+    font-size: 12px;
+}
+.toggle-arrow-reports{
+    transition: transform 0.3s ease;
+    margin-left: 140px;
+    font-size: 12px;
+}
+.txt-name-btn{
+    margin: 10px;
+}
+#supplier-submenu{
+    display: block;
+}
+.submenu{
+    display: none;
+    padding-left: 10px;
+}
+.submenu.active {
+    display: block;
+}
+.
+.sub-list-item.active {
+        background-color: #d8cba8;
+        color: white;
+        font-weight: bold;
+        border-left: 4px solid rgb(128, 127, 127);
+}
+.sub-list-item {
+    text-decoration: none;
+    color: #333;
+    display: block;
+    font-weight: 500;
+    border-radius: 4px;
+    height: 50px;
+    padding: 5px 0;
+    padding-right: 5px;
+    margin-left: 30px;
+}
+.sub-list-item:hover{
+    background-color: #d8cba8;
+    color: white;
+}
+.cashier-link:hover{
+    background-color: #d8cba8;
+    border-radius: 20px;
+
+} .notification-link:hover{
+    background-color: #d8cba8;
+    border-radius: 20px;
+} .admin-link:hover{
+    background-color: #d8cba8;
+    border-radius: 20px;
+}
+.bg-color{
+    background-color: #f6f8ee;
+}
+.dashboard-nav {
+    position: fixed;
+    width: calc(100% - 390px);
+    height: 64px;
+    top: 0;
+    left: 335px;
+    background-color: white !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    z-index: 1000;
+}
+.topnavbar-icons{
+    height: 24px;
+    width: 24px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+.user-icons{
+    height: 22px;
+    width: 22px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+.content{
+    display: flex;
+    height: 100vh;
+}
+.border-bottom-green {
+    box-shadow: 1px 2px 3px 2px rgba(0, 0, 0, 0.3);
+    border-bottom: 2px solid blue;
+    background-color: #e9ecef;
+    height: 150px;
+    width: 355px;
+    cursor: pointer;
+}
+.border-bottom-blue {
+    box-shadow: 1px 2px 3px 2px rgba(0, 0, 0, 0.3);
+    border-bottom: 2px solid yellow;
+    background-color: #e9ecef;
+    height: 150px;
+    width: 360px;
+    cursor: pointer;
+}
+.border-bottom-yellow {
+    box-shadow: 1px 2px 3px 2px rgba(0, 0, 0, 0.3);
+    border-bottom: 2px solid green;
+    background-color: #e9ecef;
+    height: 150px;
+    width: 355px;
+    cursor: pointer;
+}
+.border-bottom-violet {
+    box-shadow: 1px 2px 3px 2px rgba(0, 0, 0, 0.3);
+    border-bottom: 2px solid orange;
+    background-color: #e9ecef;
+    height: 150px;
+    width: 355px;
+    cursor: pointer;
+}
+.body-level{
+    height: 500px;
+}
+.list-product-item{
+    height: 100px;
+    padding: 20px;
+    font-weight: 400;
+}
+.list-product-item:hover {
+    background-color:#d8cba8;
+    color: #ffffff;
+    cursor: pointer; 
+    transition: all 0.3s ease; 
+}
+#page-content-wrapper {
+    margin-left: 290px;
+    padding: 30px;
+    width: calc(100% - 290px);
+    background-color: #fffdf2;
+    overflow-y: auto;
+    height: 100vh;
+    box-sizing: border-box;
+    position: fixed;
+    scrollbar-width: thin;
+    scrollbar-color: #888 #f1f1f1;
+}
+#page-content-wrapper::-webkit-scrollbar-track {
+    background: wheat;
+    border-radius: 10px;
+}
+.tbl-action{
+    width: 350px;
+}
+.btn-excel {
+    height: 40px;
+    width: 100px;
+    background-color: darkgreen;
+    border-radius: 5px;
+    color: white;
+    font-size: 18px;
+    font-weight: 500;   
+    border: 1px solid gray;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.btn-excel:hover{
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+.btn-inventory{
+    width: 300px;
+}
+.edit_data{
+    background-color: rgb(219, 180, 106);
+    width: 100px;
+}
+.delete_data{
+    width: 120px;
+    height: 38px;
+}
+</style>
+
 <!--Add-->
 <!--Add User-->
 <div class="modal fade" id="addUserData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -120,115 +406,100 @@ include('header.php'); ?>
 </div>
 <!---->
 <div class="d-flex content">
-  <div id="sidebar" class="sidebar-color">
-    <div class="sidebar-heading">
-      <img src="Images/Logo.jpg" alt="Bootstrap" class="logo">The Good Shots
-    </div>
-    <div class="list-group list-group-flush mt-0">
-      <a href="dashboard.php" class="list-group-item">
-        <i class="fas fa-tachometer-alt me-3"></i>Dashboard
-      </a>
-      <a href="adduser.php" class="list-group-item">
-        <i class="fas fa-project-diagram me-3"></i>User Management
-      </a>
-      <div class="product-dropdown">
-        <a href="#" class="list-group-item" id="product-toggle">
-          <i class="fa-brands fa-product-hunt me-3"></i></i>Product Management<i
-            class="fa-solid fa-chevron-right toggle-arrow-product" id="product-arrow"></i>
-        </a>
-        <div class="submenu" id="product-submenu">
-          <a href="addproduct.php" class="sub-list-item">
-            <p class="txt-name-btn">Add Product</p>
-          </a>
-          <a href="addcategory.php" class="sub-list-item">
-            <p class="txt-name-btn">Add Category</p>
-          </a>
+        <div id="sidebar" class="sidebar-color">
+            <div class="sidebar-heading">
+                <img src="Images/Logo.jpg" alt="Bootstrap" class="logo">The Good Shots
+            </div>
+            <div class="list-group list-group-flush mt-0">
+                <a href="dashboard.php" class="list-group-item">
+                    <i class="fas fa-tachometer-alt me-3"></i>Dashboard
+                </a>
+                <a href="adduser.php" class="list-group-item">
+                    <i class="fas fa-project-diagram me-3"></i>User Management
+                </a>
+                <div class="product-dropdown">
+                    <a href="#" class="list-group-item" id="product-toggle">
+                        <i class="fa-brands fa-product-hunt me-3"></i>Product Management
+                    </a>
+                </div>
+                <a href="inventoryManage.php" class="list-group-item">
+                    <i class="fas fa-shopping-cart me-3"></i>Inventory Management
+                </a>
+                <a href="purchase_order.php" class="list-group-item">
+                    <i class="fa-solid fa-money-bill me-3"></i>Purchase Order
+                </a>
+                <div class="supplier-dropdown">
+                    <a href="#" class="list-group-item active" id="supplier-toggle">
+                        <i class="fa-solid fa-boxes-packing me-3"></i>Supplier<i
+                            class="fa-solid fa-chevron-down toggle-arrow-supplier" id="supplier-arrow"></i>
+                    </a>
+                    <div class="submenu" id="supplier-submenu">
+                        <a href="addsupplier.php" class="sub-list-item active">
+                            <p class="txt-name-btn">Add Supplier</p>
+                        </a>
+                        <a href="addsupplier_product.php" class="sub-list-item">
+                            <p class="txt-name-btn">Suppliers Product</p>
+                        </a>
+                    </div>
+                </div>
+                <a href="delivery.php" class="list-group-item">
+                    <i class="fa-solid fa-truck me-3"></i>Delivery
+                </a>
+                <div class="reports-dropdown">
+                    <a href="#" class="list-group-item" id="reports-toggle">
+                        <i class="fa-solid fa-calendar-days me-3"></i></i>Reports<i
+                            class="fa-solid fa-chevron-right toggle-arrow-reports" id="reports-arrow"></i>
+                    </a>
+                    <div class="submenu" id="reports-submenu">
+                        <a href="discrepancy.php" class="sub-list-item">
+                            <p class="txt-name-btn">Discrepancy Report</p>
+                        </a>
+                        <a href="inventoryReport.php" class="sub-list-item">
+                            <p class="txt-name-btn">Inventory Report</p>
+                        </a>
+                        <a href="salesReport.php" class="sub-list-item">
+                            <p class="txt-name-btn">Sales Report</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <a href="inventoryManage.php" class="list-group-item">
-        <i class="fas fa-shopping-cart me-3"></i>Inventory Management
-      </a>
-      <a href="purchase_order.php" class="list-group-item">
-        <i class="fa-solid fa-money-bill me-3"></i>Purchase Order
-      </a>
-      <div class="supplier-dropdown">
-        <a href="#" class="list-group-item active" id="supplier-toggle">
-          <i class="fa-solid fa-boxes-packing me-3"></i>Supplier<i
-            class="fa-solid fa-chevron-right toggle-arrow-supplier" id="supplier-arrow"></i>
-        </a>
-        <div class="submenu" id="supplier-submenu">
-          <a href="addsupplier.php" class="sub-list-item active">
-            <p class="txt-name-btn">Add Supplier</p>
-          </a>
-          <a href="addsupplier_product.php" class="sub-list-item">
-            <p class="txt-name-btn">Suppliers Product</p>
-          </a>
-        </div>
-      </div>
-      <a href="delivery.php" class="list-group-item">
-        <i class="fa-solid fa-truck me-3"></i>Delivery
-      </a>
-      <div class="reports-dropdown">
-        <a href="#" class="list-group-item" id="reports-toggle">
-          <i class="fa-solid fa-calendar-days me-3"></i></i>Reports<i
-            class="fa-solid fa-chevron-right toggle-arrow-reports" id="reports-arrow"></i>
-        </a>
-        <div class="submenu" id="reports-submenu">
-          <a href="discrepancy.php" class="sub-list-item">
-            <p class="txt-name-btn">Discrepancy Report</p>
-          </a>
-          <a href="inventoryReport.php" class="sub-list-item">
-            <p class="txt-name-btn">Inventory Report</p>
-          </a>
-          <a href="salesReport.php" class="sub-list-item">
-            <p class="txt-name-btn">Sales Report</p>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div id="page-content-wrapper">
-    <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-4 mt-2 dashboard-nav">
-      <div class="d-flex align-items-center">
-        <h2 class="fs-3 m-1">Supplier</h2>
-      </div>
+        <div id="page-content-wrapper">
+            <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-4 mt-2 dashboard-nav">
+                <div class="d-flex align-items-center">
+                    <h2 class="fs-3 m-1">Add Supplier</h2>
+                </div>
 
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
+                        <a class="nav-link fw-bold cashier-link me-3" href="order.php"
+                            style="color: black; font-weight: 200; font-size: 17px; border-radius: 20px; width: 120px; text-align: center;">
+                            <i class="fa-solid fa-cash-register me-2"></i>
+                            Orders
+                        </a>
+                        <a class="nav-link fw-bold notification-link me-3" href="#"
+                            style="color: black; font-weight: 200; font-size: 17px; border-radius: 20px;">
+                            <img src="icons/notifications-alert-svgrepo-com.svg" alt="" class="topnavbar-icons">
+                            Notifications
+                        </a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle fw-bold notification-link " href="#"
+                                style="color: black; font-weight: 200; font-size: 18px; border-radius: 20px;" id="navbarDropdown"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="icons/profile-round-1342-svgrepo-com.svg" alt="" class="user-icons">
+                                Admin
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li><a class="dropdown-item" href="#">Settings</a></li>
+                                <li><a class="dropdown-item" href="#">Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
 
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
-          <a class="nav-link fw-bold cashier-link" href="order.php"
-            style="color: black; font-weight: 200; font-size: 17px;">
-            <i class="fa-solid fa-cash-register me-2"></i>
-            Food & Orders
-          </a>
-          <a class="nav-link fw-bold notification-link" href="#"
-            style="color: black; font-weight: 200; font-size: 17px;">
-            <i class="fa-solid fa-bell me-2"></i>
-            Notification
-          </a>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle fw-bold admin-link" href="#"
-              style="color: black; font-weight: 200; font-size: 17px;" id="navbarDropdown" role="button"
-              data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="fa-regular fa-circle-user me-2" style="font-size: 25px"></i>
-              Admin
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Profile</a></li>
-              <li><a class="dropdown-item" href="#">Settings</a></li>
-              <li><a class="dropdown-item" href="#">Logout</a></li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-    </nav>
-
-
-    <div class="container-responsive" style="margin-top: 40px; padding: 25px">
+    <div class="container-responsive" style="margin-top: 40px; padding: 15px">
       <div class="col-sm-12 col-lg-20">
 
         <?php
@@ -249,9 +520,8 @@ include('header.php'); ?>
         }
 
         ?>
-        <div class="card shadow">
+         <div class="card shadow" style="width: 95.5rem">
             <div class="card-header">
-              <h3 class="text-center">Add Supplier</h3>
               <button type="button" class="btn btn-primary float-end fw-medium btn-add" data-bs-toggle="modal"
                 data-bs-target="#addUserData">
                 Add New User
@@ -285,7 +555,21 @@ include('header.php'); ?>
     </div>
   </div>
 
+  <script>
+    $(document).ready(function () {
 
+        $("#supplier-toggle").click(function (e) {
+            e.preventDefault();
+            $("#supplier-submenu").slideToggle();
+            const supplierArrow = $("#supplier-arrow");
+            if (supplierArrow.hasClass("fa-chevron-right")) {
+                supplierArrow.removeClass("fa-chevron-right").addClass("fa-chevron-down");
+            } else {
+                supplierArrow.removeClass("fa-chevron-down").addClass("fa-chevron-right");
+            }
+        });
+      });
+</script>
   <?php include('footer.php'); ?>
   <?php include('function/viewdata.js'); ?>
   <?php include('function/editdata.js'); ?>

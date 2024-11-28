@@ -40,6 +40,7 @@
     background-color: #efe5dc;
     color: black;
 }
+
 .dropdown-menu {
     width: 100%;
     max-width: 290px; 
@@ -113,10 +114,11 @@
 .txt-name-btn{
     margin: 10px;
 }
-.submenu{
+.submenu {
     display: none;
     padding-left: 10px;
 }
+
 .submenu.active {
     display: block;
 }
@@ -141,35 +143,44 @@
     background-color: #d8cba8;
     color: white;
 }
-.cashier-link{
-    font-size: 12px;
-}
 .cashier-link:hover{
-    background-color: #e9ecef;
-    border-radius: 10px;
+    background-color: #d8cba8;
+    border-radius: 20px;
 
 } .notification-link:hover{
-    background-color: #e9ecef;
-    border-radius: 10px;
+    background-color: #d8cba8;
+    border-radius: 20px;
 } .admin-link:hover{
-    background-color: #e9ecef;
-    border-radius: 10px;
+    background-color: #d8cba8;
+    border-radius: 20px;
 }
 .bg-color{
     background-color: #f6f8ee;
 }
 .dashboard-nav {
     position: fixed;
-    width: calc(100% - 330px);
+    width: calc(100% - 390px);
     height: 64px;
     top: 0;
-    left: 300px;
+    left: 335px;
     background-color: white !important;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     border-radius: 5px;
     display: flex;
     align-items: center;
     z-index: 1000;
+}
+.topnavbar-icons{
+    height: 24px;
+    width: 24px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+.user-icons{
+    height: 22px;
+    width: 22px;
+    margin-right: 5px;
+    margin-bottom: 5px;
 }
 .content{
     display: flex;
@@ -180,6 +191,7 @@
     border-bottom: 2px solid blue;
     background-color: #e9ecef;
     height: 150px;
+    width: 355px;
     cursor: pointer;
 }
 .border-bottom-blue {
@@ -187,6 +199,7 @@
     border-bottom: 2px solid yellow;
     background-color: #e9ecef;
     height: 150px;
+    width: 360px;
     cursor: pointer;
 }
 .border-bottom-yellow {
@@ -194,6 +207,7 @@
     border-bottom: 2px solid green;
     background-color: #e9ecef;
     height: 150px;
+    width: 355px;
     cursor: pointer;
 }
 .border-bottom-violet {
@@ -201,6 +215,7 @@
     border-bottom: 2px solid orange;
     background-color: #e9ecef;
     height: 150px;
+    width: 355px;
     cursor: pointer;
 }
 .body-level{

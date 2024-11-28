@@ -292,17 +292,8 @@ include('header.php'); ?>
       </a>
       <div class="product-dropdown">
         <a href="#" class="list-group-item" id="product-toggle">
-          <i class="fa-brands fa-product-hunt me-3"></i></i>Product Management<i
-            class="fa-solid fa-chevron-right toggle-arrow-product" id="product-arrow"></i>
+          <i class="fa-brands fa-product-hunt me-3"></i></i>Product Management
         </a>
-        <div class="submenu" id="product-submenu">
-          <a href="addproduct.php" class="sub-list-item">
-            <p class="txt-name-btn">Add Product</p>
-          </a>
-          <a href="addcategory.php" class="sub-list-item">
-            <p class="txt-name-btn">Add Category</p>
-          </a>
-        </div>
       </div>
       <a href="inventoryManage.php" class="list-group-item active">
         <i class="fas fa-shopping-cart me-3"></i>Inventory Management
@@ -358,37 +349,36 @@ include('header.php'); ?>
       </button>
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
-          <a class="nav-link fw-bold cashier-link" href="order.php"
-            style="color: black; font-weight: 200; font-size: 17px;">
-            <i class="fa-solid fa-cash-register me-2"></i>
-            Food & Orders
-          </a>
-          <a class="nav-link fw-bold notification-link" href="#"
-            style="color: black; font-weight: 200; font-size: 17px;">
-            <i class="fa-solid fa-bell me-2"></i>
-            Notification
-          </a>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle fw-bold admin-link" href="#"
-              style="color: black; font-weight: 200; font-size: 17px;" id="navbarDropdown" role="button"
-              data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="fa-regular fa-circle-user me-2" style="font-size: 25px"></i>
-              Admin
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Profile</a></li>
-              <li><a class="dropdown-item" href="#">Settings</a></li>
-              <li><a class="dropdown-item" href="#">Logout</a></li>
-            </ul>
-          </li>
-        </ul>
-      </div>
+                    <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
+                        <a class="nav-link fw-bold cashier-link me-3" href="order.php"
+                            style="color: black; font-weight: 200; font-size: 17px; border-radius: 20px; width: 120px; text-align: center;">
+                            <i class="fa-solid fa-cash-register me-2"></i>
+                            Orders
+                        </a>
+                        <a class="nav-link fw-bold notification-link me-3" href="#"
+                            style="color: black; font-weight: 200; font-size: 17px; border-radius: 20px;">
+                            <img src="icons/notifications-alert-svgrepo-com.svg" alt="" class="topnavbar-icons">
+                            Notifications
+                        </a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle fw-bold notification-link " href="#"
+                                style="color: black; font-weight: 200; font-size: 18px; border-radius: 20px;" id="navbarDropdown"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="icons/profile-round-1342-svgrepo-com.svg" alt="" class="user-icons">
+                                Admin
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li><a class="dropdown-item" href="#">Settings</a></li>
+                                <li><a class="dropdown-item" href="#">Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
     </nav>
 
-    <div class="container-responsive" style="margin-top: 40px; padding: 25px">
-      <div class="row justify-content-center">
-        <div class="col-sm-12 col-lg-20">
+    <div class="container-responsive" style="margin-top: 60px; padding-left: 15px;">
+    <div class="col-sm-12">
 
           <?php
           if (isset($_SESSION['status']) && $_SESSION['status'] != '') {
@@ -408,9 +398,8 @@ include('header.php'); ?>
           }
 
           ?>
-           <div class="card shadow">
+           <div class="card shadow" style="width: 95.5rem">
             <div class="card-header">
-              <h3 class="text-center">Inventory Management</h3>
               <button type="button" class="btn btn-primary float-end fw-medium btn-add" data-bs-toggle="modal"
                 data-bs-target="#addUserData">
                 Add New User
