@@ -81,7 +81,7 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
-                        <a class="nav-link fw-bold cashier-link me-3" href="order.php"
+                        <a class="nav-link fw-bold cashier-link me-2" href="order.php"
                             style="color: black; font-weight: 200; font-size: 17px; border-radius: 20px; width: 120px; text-align: center;">
                             <i class="fa-solid fa-cash-register me-2"></i>
                             Orders
