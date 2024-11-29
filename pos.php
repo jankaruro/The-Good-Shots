@@ -116,65 +116,321 @@
             </nav>
 
             <div class="container-fluid">
-                <div class="order-container">
-                    <header>
-                        <div class="name-text">
-                            <span class="label-name" id="best-seller">Best Seller Coffee Drinks</span>
-                        </div>
-                    </header>
-                    <div class="content flex">
-                        <div class="coffee-card me-3">
-                            <div class="quantity">
-                                <div class="details">
-                                    <h3 class="coffee-name">Americano</h3>
-                                    <span class="coffee-price">P100</span>
-                                </div>
-                                <img src="images/Americano.png" alt="Americano" />
-                                <div class="addtocart">Add to Cart</div>
+            <div class="order-container">
+                <header>
+                    <div class="name-text">
+                        <span class="label-name" id="best-seller">Best Seller Coffee Drinks</span>
+                    </div>
+                </header>
+                <div class="content flex">
+                    <div class="coffee-card me-3">
+                        <div class="quantity">
+                            <div class="details">
+                                <h3 class="coffee-name">Americano</h3>
+                                <span class="coffee-price">P100</span>
                             </div>
+                            <img src="images/Americano.png" alt="Americano" />
+                            <div class="addtocart">Add to Cart</div>
                         </div>
-                        <!-- Repeat coffee-card for other items -->
                     </div>
-                    <header>
-                        <div class="name-text">
-                            <span class="label-name" id="espresso-coffee">Espresso Based Coffee</span>
-                        </div>
-                    </header>
-                    <div class="content">
-                        <div class="coffee-card me-3">
-                            <div class="quantity">
-                                <div class="details">
-                                    <h3 class="coffee-name">Americano</h3>
-                                    <span class="coffee-price">P100</span>
-                                </div>
-                                <img src="images/Americano.png" alt="Americano" />
-                                <div class="addtocart">Add to Cart</div>
+                    <div class="coffee-card me-3">
+                        <div class="quantity">
+                            <div class="details">
+                                <h3 class="coffee-name">Americano</h3>
+                                <span class="coffee-price">P100</span>
                             </div>
+                            <img src="images/Americano.png" alt="Americano" />
+                            <div class="addtocart">Add to Cart</div>
                         </div>
                     </div>
-                    <!-- Repeat for other categories like Fruit Tea, Mocktails, etc. -->
-                </div>
-                <div class="receipt receipt-fluid">
-                    <div class="top-cart">
-                        <h3 class="cart-name">Cart</h3>
-                    </div>
-                    <h3 class="order-name">Order Items</h3>
-                    <div class="order-list"></div>
-                    <div class="total-price">
-                        <div class="form-check">
-                            <button class="btn-discount">Add Discount</button>
+                    <div class="coffee-card me-3">
+                        <div class="quantity">
+                            <div class="details">
+                                <h3 class="coffee-name">Americano</h3>
+                                <span class="coffee-price">P100</span>
+                            </div>
+                            <img src="images/Americano.png" alt="Americano" />
+                            <div class="addtocart">Add to Cart</div>
                         </div>
-                        <div class="total-amount">Total:</div>
                     </div>
-                    <button type="button" class="btn-order" data-bs-toggle="modal" data-bs-target="#checkoutModal" id="checkoutButton">
-                        Checkout
-                    </button>
+                    <div class="coffee-card me-3">
+                        <div class="quantity">
+                            <div class="details">
+                                <h3 class="coffee-name">Americano</h3>
+                                <span class="coffee-price">P100</span>
+                            </div>
+                            <img src="images/Americano.png" alt="Americano" />
+                            <div class="addtocart">Add to Cart</div>
+                        </div>
+                    </div>
+                    <div class="coffee-card me-3">
+                        <div class="quantity">
+                            <div class="details">
+                                <h3 class="coffee-name">Americano</h3>
+                                <span class="coffee-price">P100</span>
+                            </div>
+                            <img src="images/Americano.png" alt="Americano" />
+                            <div class="addtocart">Add to Cart</div>
+                        </div>
+                    </div>
+                    <div class="coffee-card me-3">
+                        <div class="quantity">
+                            <div class="details">
+                                <h3 class="coffee-name">Americano</h3>
+                                <span class="coffee-price">P100</span>
+                            </div>
+                            <img src="images/Americano.png" alt="Americano" />
+                            <div class="addtocart">Add to Cart</div>
+                        </div>
+                    </div>
+                    <div class="coffee-card me-3">
+                        <div class="quantity">
+                            <div class="details">
+                                <h3 class="coffee-name">Americano</h3>
+                                <span class="coffee-price">P100</span>
+                            </div>
+                            <img src="images/Americano.png" alt="Americano" />
+                            <div class="addtocart">Add to Cart</div>
+                        </div>
+                    </div>
+                    <div class="coffee-card me-3">
+                        <div class="quantity">
+                            <div class="details">
+                                <h3 class="coffee-name">Americano</h3>
+                                <span class="coffee-price">P100</span>
+                            </div>
+                            <img src="images/Americano.png" alt="Americano" />
+                            <div class="addtocart">Add to Cart</div>
+                        </div>
+                    </div>
+                    <div class="coffee-card me-3">
+                        <div class="quantity">
+                            <div class="details">
+                                <h3 class="coffee-name">Americano</h3>
+                                <span class="coffee-price">P100</span>
+                            </div>
+                            <img src="images/Americano.png" alt="Americano" />
+                            <div class="addtocart">Add to Cart</div>
+                        </div>
+                    </div>
+                    <div class="coffee-card me-3">
+                        <div class="quantity">
+                            <div class="details">
+                                <h3 class="coffee-name">Americano</h3>
+                                <span class="coffee-price">P100</span>
+                            </div>
+                            <img src="images/Americano.png" alt="Americano" />
+                            <div class="addtocart">Add to Cart</div>
+                        </div>
+                    </div>
                 </div>
+                <header>
+                    <div class="name-text">
+                        <span class="label-name" id="espresso-coffee">Espresso Based Coffee</span>
+                    </div>
+                </header>
+                <div class="content">
+                    <div class="coffee-card me-3">
+                        <div class="quantity">
+                            <div class="details">
+                                <h3 class="coffee-name">Americano</h3>
+                                <span class="coffee-price">P100</span>
+                            </div>
+                            <img src="images/Americano.png" alt="Americano" />
+                            <div class="addtocart">Add to Cart</div>
+                        </div>
+                    </div>
+                </div>
+                <header>
+                    <div class="name-text">
+                        <span class="label-name" id="fruit-tea">Fruit Tea</span>
+                    </div>
+                </header>
+                <div class="content">
+                    <div class="coffee-card me-3">
+                        <div class="quantity">
+                            <div class="details">
+                                <h3 class="coffee-name">Americano</h3>
+                                <span class="coffee-price">P100</span>
+                            </div>
+                            <img src="images/Americano.png" alt="Americano" />
+                            <div class="addtocart">Add to Cart</div>
+                        </div>
+                    </div>
+                </div>
+                <header>
+                    <div class="name-text">
+                        <span class="label-name" id="mocktails">Mocktails</span>
+                    </div>
+                </header>
+                <div class="content">
+                    <div class="coffee-card me-3">
+                        <div class="quantity">
+                            <div class="details">
+                                <h3 class="coffee-name">Americano</h3>
+                                <span class="coffee-price">P100</span>
+                            </div>
+                            <img src="images/Americano.png" alt="Americano" />
+                            <div class="addtocart">Add to Cart</div>
+                        </div>
+                    </div>
+                </div>
+                <header>
+                    <div class="name-text">
+                        <span class="label-name" id="smoothies">Smoothies</span>
+                    </div>
+                </header>
+                <div class="content">
+                    <div class="coffee-card me-3">
+                        <div class="quantity">
+                            <div class="details">
+                                <h3 class="coffee-name">Americano</h3>
+                                <span class="coffee-price">P100</span>
+                            </div>
+                            <img src="images/Americano.png" alt="Americano" />
+                            <div class="addtocart">Add to Cart</div>
+                        </div>
+                    </div>
+                </div>
+                <header>
+                    <div class="name-text">
+                        <span class="label-name" id="frappe">Frappe</span>
+                    </div>
+                </header>
+                <div class="content">
+                    <div class="coffee-card me-3">
+                        <div class="quantity">
+                            <div class="details">
+                                <h3 class="coffee-name">Americano</h3>
+                                <span class="coffee-price">P100</span>
+                            </div>
+                            <img src="images/Americano.png" alt="Americano" />
+                            <div class="addtocart">Add to Cart</div>
+                        </div>
+                    </div>
+                </div>
+                <header>
+                    <div class="name-text">
+                        <span class="label-name" id="croffle">Croffle</span>
+                    </div>
+                </header>
+                <div class="content">
+                    <div class="coffee-card me-3">
+                        <div class="quantity">
+                            <div class="details">
+                                <h3 class="coffee-name">Americano</h3>
+                                <span class="coffee-price">P100</span>
+                            </div>
+                            <img src="images/Americano.png" alt="Americano" />
+                            <div class="addtocart">Add to Cart</div>
+                        </div>
+                    </div>
+                </div>
+                <header>
+                    <div class="name-text">
+                        <span class="label-name" id="fries">Fries</span>
+                    </div>
+                </header>
+                <div class="content">
+                    <div class="coffee-card me-3">
+                        <div class="quantity">
+                            <div class="details">
+                                <h3 class="coffee-name">Americano</h3>
+                                <span class="coffee-price">P100</span>
+                            </div>
+                            <img src="images/Americano.png" alt="Americano" />
+                            <div class="addtocart">Add to Cart</div>
+                        </div>
+                    </div>
+                    <div class="coffee-card me-3">
+                        <div class="quantity">
+                            <div class="details">
+                                <h3 class="coffee-name">Latte</h3>
+                                <span class="coffee-price">P150</span>
+                            </div>
+                            <img src="images/Americano.png" alt="Americano" />
+                            <div class="addtocart">Add to Cart</div>
+                        </div>
+                    </div>
+                </div>
+                <header>
+                    <div class="name-text">
+                        <span class="label-name" id="cakes">Cakes</span>
+                    </div>
+                </header>
+                <div class="content">
+                    <div class="coffee-card me-3">
+                        <div class="quantity">
+                            <div class="details">
+                                <h3 class="coffee-name">Americano</h3>
+                                <span class="coffee-price">P100</span>
+                            </div>
+                            <img src="images/Americano.png" alt="Americano" />
+                            <div class="addtocart">Add to Cart</div>
+                        </div>
+                    </div>
+                </div>
+                <header>
+                    <div class="name-text">
+                        <span class="label-name" id="sandwich">Sandwich</span>
+                    </div>
+                </header>
+                <div class="content">
+                    <div class="coffee-card me-3">
+                        <div class="quantity">
+                            <div class="details">
+                                <h3 class="coffee-name">Americano</h3>
+                                <span class="coffee-price">P100</span>
+                            </div>
+                            <img src="images/Americano.png" alt="Americano" />
+                            <div class="addtocart">Add to Cart</div>
+                        </div>
+                    </div>
+                </div>
+                <header>
+                    <div class="name-text">
+                        <span class="label-name" id="rice">Rice Meal</span>
+                    </div>
+                </header>
+                <div class="content">
+                    <div class="coffee-card me-3">
+                        <div class="quantity">
+                            <div class="details">
+                                <h3 class="coffee-name">Americano</h3>
+                                <span class="coffee-price">P100</span>
+                            </div>
+                            <img src="images/Americano.png" alt="Americano" />
+                            <div class="addtocart">Add to Cart</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="receipt receipt-fluid">
+                <div class="top-cart">
+                    <h3 class="cart-name">Cart</h3>
+                </div>
+                <h3 class="order-name">Order Items</h3>
+                <div class="order-list">
+                </div>
+                <div class="total-price">
+                    <div class="form-check">
+                        <button class="btn-discount">Add Discount</button>
+                    </div>
+                    <div class="total-amount">
+                        Total:
+                    </div>
+                </div>
+                <button type="button" class="btn-order" data-bs-toggle="modal" data-bs-target="#checkoutModal" id="checkoutButton">
+                    Checkout
+                </button>
             </div>
         </div>
     </div>
+</div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5 .0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        
         document.addEventListener("DOMContentLoaded", function () {
             const addToCartButtons = document.querySelectorAll(".addtocart");
             const orderList = document.querySelector(".order-list");
