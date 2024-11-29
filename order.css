@@ -352,20 +352,26 @@ input[type="number"] {
     justify-content: space-between;
 }
 .modal-dialog {
-    width: 600px;
+    width: 510px;
 }
 .modal-body {
-    height: 400px; 
+    height: 600px; 
     width: 200px;
     overflow-y: auto;
 }
+.modal-footer{
+    padding: 0;
+    align-items: center;
+    gap: 10px;
+}
 .btn-cash{
-    width: 100px;
+    width: 210px;
     height: 40px;
     background-color: green;
 }
 .btn-epayment{
-    width: 100px;
+    width: 210px;
     height: 40px;
     background-color: rgb(60, 134, 245);
+    margin-right: 28px;
 }

@@ -1,14 +1,30 @@
 <?php
 session_start();
-include('header.php');
-include('connection.php'); // Ensure connection is included at the beginning
-
-// Fetch suppliers for the dropdown
-
-
+include('connection.php');
 ?>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=1024, initial-scale=1.0" />
 
-<!-- Add User Modal -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.css">
+
+    <script src = "https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src = "https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+    <script src = "https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
+
+    <script src = "js/datatable.js"></script>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="purchase_order.css" />
+    <title>The Good Shots</title>
+</head>
+<body>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="function/po_database.js"></script>
@@ -33,14 +49,12 @@ include('connection.php'); // Ensure connection is included at the beginning
         <p>Purchase Order Number: <span id="transactionNumber"></span></p>
         <hr>
 
-        <!-- Supplier Selection -->
         <div class="form-group">
           <label for="supplier"><b>Supplier</b></label>
           <select class="form-control" id="supplier" name="supplier" required onchange="loadProducts()">
             <option value="">-- Select Supplier --</option>
             <?php
-            // Sample PHP code to fetch suppliers
-            // Replace with your actual database connection and query
+        
             $suppliers = $conn->query("SELECT supplier_name FROM suppliers")->fetchAll(PDO::FETCH_ASSOC);
             foreach ($suppliers as $row) {
               echo '<option value="' . htmlspecialchars($row['supplier_name']) . '">' . htmlspecialchars($row['supplier_name']) . '</option>';
@@ -94,7 +108,6 @@ include('connection.php'); // Ensure connection is included at the beginning
   </div>
 </div>
 
-<!-- Confirmation Modal -->
 <div id="popupForm" class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -118,58 +131,99 @@ include('connection.php'); // Ensure connection is included at the beginning
   </div>
 </div>
 
-<div class="d-flex content">
-  <div id="sidebar" class="sidebar-color">
-    <div class="sidebar-heading">
-      <img src="Images/Logo.jpg" alt="Bootstrap" class="logo">The Good Shots
-    </div>
-    <div class="list-group list-group-flush mt-0">
-      <a href="dashboard.php" class="list-group-item">
-        <i class="fas fa-tachometer-alt me-3"></i>Dashboard
-      </a>
-      <a href="adduser.php" class="list-group-item">
-        <i class="fas fa-project-diagram me-3"></i>User Management
-      </a>
-      <a href="inventoryManage.php" class="list-group-item">
-        <i class="fas fa-shopping-cart me-3"></i>Inventory Management
-      </a>
-      <a href="purchase_order.php" class="list-group-item active">
-        <i class="fa-solid fa-money-bill me-3"></i>Purchase Order
-      </a>
-      <a href="addsupplier.php" class="list-group-item">
-        <i class="fa-solid fa-boxes-packing me-3"></i>Supplier
-      </a>
-      <a href="delivery.php" class="list-group-item">
-        <i class="fa-solid fa-truck me-3"></i>Delivery
-      </a>
-    </div>
-  </div>
-  <div id="page-content-wrapper">
-    <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-4 mt-2 dashboard-nav">
-      <div class="d-flex align-items-center">
-        <h2 class="fs-3 m-1">Purchase Order</h2>
-      </div>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
-          <a class="nav-link fw-bold cashier-link" href="order.php"
-            style="color: black; font-weight: 200; font-size: 17px;">
-            <i class="fa-solid fa-cash-register me-2"></i>Food & Orders
-          </a>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle fw-bold admin-link" href="#"
-              style="color: black; font-weight: 200; font-size: 17px;" id="navbarDropdown" role="button"
-              data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="fa-regular fa-circle-user me-2" style="font-size: 25px"></i>Admin
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Profile</a></li>
-              <li><a class="dropdown-item" href="#">Settings</a></li>
-              <li><a class="dropdown-item" href="#">Logout</a></li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-    </nav>
+<div class="d-flex content-purchase-order">
+        <div id="sidebar" class="sidebar-color">
+            <div class="sidebar-heading">
+                <img src="Images/Logo.jpg" alt="Bootstrap" class="logo">The Good Shots
+            </div>
+            <div class="list-group list-group-flush mt-0">
+                <a href="dashboard.php" class="list-group-item">
+                    <i class="fas fa-tachometer-alt me-3"></i>Dashboard
+                </a>
+                <a href="adduser.php" class="list-group-item">
+                    <i class="fas fa-project-diagram me-3"></i>User Management
+                </a>
+                <div class="product-dropdown">
+                    <a href="#" class="list-group-item" id="product-toggle">
+                        <i class="fa-brands fa-product-hunt me-3"></i>Product Management
+                    </a>
+                </div>
+                <a href="inventoryManage.php" class="list-group-item">
+                    <i class="fas fa-shopping-cart me-3"></i>Inventory Management
+                </a>
+                <a href="purchase_order.php" class="list-group-item">
+                    <i class="fa-solid fa-money-bill me-3"></i>Purchase Order
+                </a>
+                <div class="supplier-dropdown">
+                    <a href="#" class="list-group-item" id="supplier-toggle">
+                        <i class="fa-solid fa-boxes-packing me-3"></i>Supplier<i
+                            class="fa-solid fa-chevron-right toggle-arrow-supplier" id="supplier-arrow"></i>
+                    </a>
+                    <div class="submenu" id="supplier-submenu">
+                        <a href="addsupplier.php" class="sub-list-item">
+                            <p class="txt-name-btn">Add Supplier</p>
+                        </a>
+                        <a href="addsupplier_product.php" class="sub-list-item">
+                            <p class="txt-name-btn">Suppliers Product</p>
+                        </a>
+                    </div>
+                </div>
+                <a href="delivery.php" class="list-group-item">
+                    <i class="fa-solid fa-truck me-3"></i>Delivery
+                </a>
+                <div class="reports-dropdown">
+                    <a href="#" class="list-group-item" id="reports-toggle">
+                        <i class="fa-solid fa-calendar-days me-3"></i></i>Reports<i
+                            class="fa-solid fa-chevron-right toggle-arrow-reports" id="reports-arrow"></i>
+                    </a>
+                    <div class="submenu" id="reports-submenu">
+                        <a href="discrepancy.php" class="sub-list-item">
+                            <p class="txt-name-btn">Discrepancy Report</p>
+                        </a>
+                        <a href="inventoryReport.php" class="sub-list-item">
+                            <p class="txt-name-btn">Inventory Report</p>
+                        </a>
+                        <a href="salesReport.php" class="sub-list-item">
+                            <p class="txt-name-btn">Sales Report</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="page-content-wrapper">
+            <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-4 mt-2 dashboard-nav">
+                <div class="d-flex align-items-center">
+                    <h2 class="fs-3 m-1">Dashboard</h2>
+                </div>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
+                        <a class="nav-link fw-bold cashier-link me-2" href="order.php"
+                            style="color: black; font-weight: 200; font-size: 17px; border-radius: 20px; width: 120px; text-align: center;">
+                            <i class="fa-solid fa-cash-register me-2"></i>
+                            Orders
+                        </a>
+                        <a class="nav-link fw-bold notification-link me-3" href="#"
+                            style="color: black; font-weight: 200; font-size: 17px; border-radius: 20px;">
+                            <img src="icons/notifications-alert-svgrepo-com.svg" alt="" class="topnavbar-icons">
+                            Notifications
+                        </a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle fw-bold notification-link " href="#"
+                                style="color: black; font-weight: 200; font-size: 18px; border-radius: 20px;" id="navbarDropdown"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="icons/profile-round-1342-svgrepo-com.svg" alt="" class="user-icons">
+                                Admin
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li><a class="dropdown-item" href="#">Settings</a></li>
+                                <li><a class="dropdown-item" href="#">Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
     <div class="container-responsive" style="margin-top: 40px; padding: 25px">
       <div class="row justify-content-center">
         <div class="col-sm-12 col-lg-20">
@@ -300,10 +354,9 @@ try {
     </div>
   </div>
 </div>
+  
 
 <?php include('footer.php'); ?>
 <?php include('function/viewdata.js'); ?>
 <?php include('function/editdata.js'); ?>
 <?php include('function/remove.js'); ?>
-</div>
-</div>

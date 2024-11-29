@@ -20,7 +20,6 @@
                   
                 </div>
                 <div class="modal-footer">
-                    <span>Payment Method:</span>
                     <button type="button" class="btn-cash">Cash</button>
                     <button type="button" class="btn-epayment">E-Payment</button>
                 </div>
@@ -471,14 +470,7 @@
                 document.querySelector(".order-number").innerText = `Order: #${orderNumber}`;
             });
         });
-
-        /*const checkOutButton = document.querySelector(".btn-order");
-        checkOutButton.addEventListener("click", function () {
-            alert("Order checked out!");
-            orderNumber++;
-
-            orderList.innerHTML = ``;
-        });*/
+            
     });
 
 </script>
