@@ -1,16 +1,62 @@
 <?php
 session_start();
+<<<<<<< HEAD
 include('headers.php');
 include('connection.php'); // Ensure connection is included at the beginning
 
 // Fetch suppliers for the dropdown
 
 
+=======
+include('connection.php');
+>>>>>>> 68b333eff3e524c1cfeb6252da4f79753b02b722
 ?>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=1024, initial-scale=1.0" />
 
+<<<<<<< HEAD
 <!-- Add User Modal -->
+=======
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.css">
+
+    <script src = "https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src = "https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+    <script src = "https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
+
+    <script src = "js/datatable.js"></script>
+    <script src="function/po_database.js"></script>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="dashboard.css" />
+    <title>The Good Shots</title>
+</head>
+<body>
+>>>>>>> 68b333eff3e524c1cfeb6252da4f79753b02b722
 
 
+<<<<<<< HEAD
+=======
+        <div class="form-group">
+          <label for="supplier"><b>Supplier</b></label>
+          <select class="form-control" id="supplier" name="supplier" required onchange="loadProducts()">
+            <option value="">-- Select Supplier --</option>
+            <?php
+        
+            $suppliers = $conn->query("SELECT supplier_name FROM suppliers")->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($suppliers as $row) {
+              echo '<option value="' . htmlspecialchars($row['supplier_name']) . '">' . htmlspecialchars($row['supplier_name']) . '</option>';
+            }
+            ?>
+          </select>
+        </div>
+>>>>>>> 68b333eff3e524c1cfeb6252da4f79753b02b722
 
   <!--Add User-->
     <div class="modal fade" id="addUserData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -95,6 +141,7 @@ include('connection.php'); // Ensure connection is included at the beginning
         <form action="code.php" method="POST">
           <div class="modal-body">
 
+<<<<<<< HEAD
             <div class="form-group">
               <input type="text" class="form-control fw-medium" id="id" name="id">
             </div>
@@ -130,6 +177,24 @@ include('connection.php'); // Ensure connection is included at the beginning
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary fw-medium" data-bs-dismiss="modal">Close</button>
             <button type="submit" name="update_data" class="btn btn-primary fw-medium">Update Item</button>
+=======
+<div id="popupForm" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirm Purchase</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <label for="totalPriceInput">Total Amount:</label>
+          <input type="text" class="form-control" id="totalPriceInput" readonly>
+          <div class="mt-3">
+            <button type="button" class="btn btn-primary" onclick="saveTransaction()">Confirm</button>
+            <button type="button" class="btn btn-secondary fw-medium" data-bs-dismiss="modal">Cancel</button>
+>>>>>>> 68b333eff3e524c1cfeb6252da4f79753b02b722
           </div>
         </form>
       </div>
@@ -137,7 +202,11 @@ include('connection.php'); // Ensure connection is included at the beginning
   </div>
   <!---->
 
+<<<<<<< HEAD
   <div class="d-flex content">
+=======
+<div class="d-flex content-purchase-order">
+>>>>>>> 68b333eff3e524c1cfeb6252da4f79753b02b722
         <div id="sidebar" class="sidebar-color">
             <div class="sidebar-heading">
                 <img src="Images/Logo.jpg" alt="Bootstrap" class="logo">The Good Shots
@@ -146,7 +215,11 @@ include('connection.php'); // Ensure connection is included at the beginning
                 <a href="dashboard.php" class="list-group-item">
                     <i class="fas fa-tachometer-alt me-3"></i>Dashboard
                 </a>
+<<<<<<< HEAD
                 <a href="adduser.php" class="list-group-item active">
+=======
+                <a href="adduser.php" class="list-group-item">
+>>>>>>> 68b333eff3e524c1cfeb6252da4f79753b02b722
                     <i class="fas fa-project-diagram me-3"></i>User Management
                 </a>
                 <div class="product-dropdown">
@@ -199,8 +272,45 @@ include('connection.php'); // Ensure connection is included at the beginning
         <div id="page-content-wrapper">
             <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-4 mt-2 dashboard-nav">
                 <div class="d-flex align-items-center">
+<<<<<<< HEAD
                     <h2 class="fs-3 m-1">Purchase order</h2>
                 </div>
+=======
+                    <h2 class="fs-3 m-1">Purchase Order</h2>
+                </div>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
+                        <a class="nav-link fw-bold cashier-link me-2" href="order.php"
+                            style="color: black; font-weight: 200; font-size: 17px; border-radius: 20px; width: 120px; text-align: center;">
+                            <i class="fa-solid fa-cash-register me-2"></i>
+                            Orders
+                        </a>
+                        <a class="nav-link fw-bold notification-link me-3" href="#"
+                            style="color: black; font-weight: 200; font-size: 17px; border-radius: 20px;">
+                            <img src="icons/notifications-alert-svgrepo-com.svg" alt="" class="topnavbar-icons">
+                            Notifications
+                        </a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle fw-bold notification-link " href="#"
+                                style="color: black; font-weight: 200; font-size: 18px; border-radius: 20px;" id="navbarDropdown"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="icons/profile-round-1342-svgrepo-com.svg" alt="" class="user-icons">
+                                Admin
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li><a class="dropdown-item" href="#">Settings</a></li>
+                                <li><a class="dropdown-item" href="#">Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+    <div class="container-responsive" style="margin-top: 40px; padding: 25px">
+      <div class="row justify-content-center">
+        <div class="col-sm-12 col-lg-20">
+>>>>>>> 68b333eff3e524c1cfeb6252da4f79753b02b722
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
@@ -254,9 +364,15 @@ include('connection.php'); // Ensure connection is included at the beginning
           ?>
            <div class="card shadow" style="width: 95.5rem">
             <div class="card-header">
+<<<<<<< HEAD
               <button type="button" class="btn btn-primary float-end fw-medium btn-add" data-bs-toggle="modal"
                 data-bs-target="#addUserData">
                 Add New User
+=======
+              <button type="button" class="btn btn-primary float-end fw-medium" data-bs-toggle="modal"
+                data-bs-target="#purchaseOrderModal">
+                Add New Order
+>>>>>>> 68b333eff3e524c1cfeb6252da4f79753b02b722
               </button>
             </div>
             <div class="card-body mt-1">
@@ -306,6 +422,7 @@ include('connection.php'); // Ensure connection is included at the beginning
         </div>
       </div>
     </div>
+<<<<<<< HEAD
 
     <?php include('footer.php'); ?>
     <?php include('function/viewdata.js'); ?>
@@ -323,3 +440,13 @@ include('connection.php'); // Ensure connection is included at the beginning
 
 
     
+=======
+  </div>
+</div>
+  
+
+<?php include('footer.php'); ?>
+<?php include('function/viewdata.js'); ?>
+<?php include('function/editdata.js'); ?>
+<?php include('function/remove.js'); ?>
+>>>>>>> 68b333eff3e524c1cfeb6252da4f79753b02b722

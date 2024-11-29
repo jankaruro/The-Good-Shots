@@ -398,7 +398,6 @@ include('header.php'); ?>
           }
 
           ?>
-           <div class="card shadow" style="width: 95.5rem">
             <div class="card-header">
               <button type="button" class="btn btn-primary float-end fw-medium btn-add" data-bs-toggle="modal"
                 data-bs-target="#addUserData">
