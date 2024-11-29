@@ -365,33 +365,7 @@ if (isset($_POST['click_delete_btn'])) {
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //insert supplier_products
-if (isset($_POST['add_product_supplier'])) {
-    $supplier = $_POST['supplier'];
-    $product_name = $_POST['product_name'];
-    $price = $_POST['price'];
-    $category = $_POST['category'];
-
-
-
-    // Check if email already exists
-    $check_product_name_query = "SELECT * FROM supplier_products WHERE product_name='$product_name'";
-    $check_product_name_result = mysqli_query($connection, $check_product_name_query);
-
-    if (mysqli_num_rows($check_product_name_result) > 0) {
-        $_SESSION['status'] = "Product already exists!";
-        header("Location: addsupplier_product.php"); // Redirect back to the page
-        exit();
-    } else {
-        $insert_query = "INSERT INTO supplier_products (supplier, product_name,price,category) VALUES ('$supplier', '$product_name', '$price', '$category')";
-        if (mysqli_query($connection, $insert_query)) {
-            $_SESSION['status'] = "Supplier Product added successfully!";
-        } else {
-            $_SESSION['status'] = "Error: " . mysqli_error($connection);
-        }
-        header("Location: addsupplier_product.php"); // Redirect back to the page
-        exit();
-    }
-}
+ 
 //view supplier_products
 if (isset($_POST['click_view_supplier_product_btn'])) {
     $id = $_POST['supplier_product_id'];
@@ -812,49 +786,6 @@ if (isset($_POST['click_delete_product_btn'])) {
 
 // Assuming the database connection is already included and initialized
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $input = file_get_contents('php://input');
-error_log("Raw input: " . $input); // Log raw input
-
-$data = json_decode($input, true);
-if (json_last_error() !== JSON_ERROR_NONE) {
-    echo json_encode(['success' => false, 'message' => 'JSON decoding error: ' . json_last_error_msg()]);
-    exit;
-}
-
-error_log("Decoded data: " . print_r($data, true)); // Log decoded data
-
-if (!isset($data['products'], $data['total_amount'], $data['supplier'])) {
-    echo json_encode(['success' => false, 'message' => 'Invalid data received.']);
-    exit;
-}
-
-// Insert into purchase_orders table
-$stmt = $connection->prepare("INSERT INTO purchase_orders (created_at, total_amount) VALUES (NOW(), ?)");
-$stmt->bind_param('d', $data['total_amount']);
-if (!$stmt->execute()) {
-    error_log("Error inserting purchase order: " . $stmt->error);
-    echo json_encode(['success' => false, 'message' => 'Error inserting purchase order.']);
-    exit;
-}
-
-$purchaseOrderId = $connection->insert_id;
-
-// Insert into purchase_order_details table
-$stmt = $connection->prepare("INSERT INTO purchase_order_details (product_name, unit_price, quantity, quantity_received, status, supplier_name, total_amount, purchase_order_id) VALUES (?, ?, ?, 0, ?, ?, ?, ?)");
-foreach ($data['products'] as $product) {
-    $unitPrice = $product['unit_price'];
-    $stmt->bind_param('sddssdi', $product['product_name'], $unitPrice, $product['quantity'], 'pending', $data['supplier'], $product['total_amount'], $purchaseOrderId);
-    if (!$stmt->execute()) {
-        error_log("Error inserting product: " . $stmt->error);
-    }
-}
-
-$connection->commit();
-echo json_encode(['success' => true]);
-
-}
-?>
 
 
 
