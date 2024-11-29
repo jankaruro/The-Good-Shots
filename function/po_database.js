@@ -6,19 +6,32 @@ $(document).ready(function() {
 
 function fetchLastTransactionNumber() {
   fetch('get_last_transaction_number.php')
-  .then(response => response.json())
-  .then(data => {
-      const lastNumber = data.last_number;
-      document.getElementById('transactionNumber').textContent = generateNextTransactionNumber(lastNumber);
-  })
-  .catch(error => {
-      console.error('Error fetching last transaction number:', error);
-  });
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Network response was not ok');
+          }
+          return response.json();
+      })
+      .then(data => {
+          console.log('Data received:', data); // Log the received data
+          const lastNumber = data.last_number;
+          console.log('Last Number:', lastNumber); // Log the last number
+          document.getElementById('transactionNumber').textContent = generateNextTransactionNumber(lastNumber);
+      })
+      .catch(error => {
+          console.error('Error fetching last transaction number:', error);
+      });
 }
 
 function generateNextTransactionNumber(lastNumber) {
-  const numberPart = parseInt(lastNumber.replace('PORD', '')) + 1;
-  return `PORD${String(numberPart).padStart(4, '0')}`; // Format to PORD0001, PORD0002, ...
+  if (!lastNumber.startsWith('PORD')) {
+      console.error(' Invalid last number format:', lastNumber);
+      return 'PORD0001'; // Fallback if format is unexpected
+  }
+  const numberPart = parseInt(lastNumber.replace('PORD', '')) + 1; // Remove 'PORD' and increment
+  const nextNumber = `PORD${String(numberPart).padStart(4, '0')}`; // Format to PORD0001, PORD0002, ...
+  console.log('Generated Transaction Number:', nextNumber); // Log the generated transaction number
+  return nextNumber;
 }
 
 function loadProducts() {
