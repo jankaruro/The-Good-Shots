@@ -18,21 +18,14 @@ include('connection.php');
     <script src = "https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
 
     <script src = "js/datatable.js"></script>
+    <script src="function/po_database.js"></script>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="purchase_order.css" />
+    <link rel="stylesheet" href="dashboard.css" />
     <title>The Good Shots</title>
 </head>
 <body>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="function/po_database.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="function/po_database.js"></script>
 
 <div class="modal fade" id="purchaseOrderModal" tabindex="-1" role="dialog" aria-labelledby="purchaseOrderLabel"
   aria-hidden="true">
@@ -193,7 +186,7 @@ include('connection.php');
         <div id="page-content-wrapper">
             <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-4 mt-2 dashboard-nav">
                 <div class="d-flex align-items-center">
-                    <h2 class="fs-3 m-1">Dashboard</h2>
+                    <h2 class="fs-3 m-1">Purchase Order</h2>
                 </div>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -247,7 +240,6 @@ include('connection.php');
 
 
             <div class="card-header">
-              <h3 class="text-center">Purchase Order</h3>
               <button type="button" class="btn btn-primary float-end fw-medium" data-bs-toggle="modal"
                 data-bs-target="#purchaseOrderModal">
                 Add New Order
