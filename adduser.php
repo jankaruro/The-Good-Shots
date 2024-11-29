@@ -302,3 +302,14 @@ include('header.php'); ?>
     <?php include('function/viewdata.js'); ?>
     <?php include('function/editdata.js'); ?>
     <?php include('function/remove.js'); ?>
+
+
+
+
+
+
+
+
+
+
+    
