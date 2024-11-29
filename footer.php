@@ -3,16 +3,7 @@
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 <script>
     $(document).ready(function () {
-        $("#product-toggle").click(function (e) {
-            e.preventDefault();
-            $("#product-submenu").slideToggle();
-            const productArrow = $("#product-arrow");
-            if (productArrow.hasClass("fa-chevron-right")) {
-                productArrow.removeClass("fa-chevron-right").addClass("fa-chevron-down");
-            } else {
-                productArrow.removeClass("fa-chevron-down").addClass("fa-chevron-right");
-            }
-        });
+
 
         $("#supplier-toggle").click(function (e) {
             e.preventDefault();
