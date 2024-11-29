@@ -37,7 +37,7 @@ ini_set('display_errors', 1);
                         <label for="category" class="form-label">Category</label>
                         <select class="form-select" id="category" name="category" required>
                             <option value="">-- Select Category --</option>
-                            <!-- Populate categories dynamically -->
+                            
                         </select>
                     </div>
             </div>

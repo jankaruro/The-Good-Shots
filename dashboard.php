@@ -6,15 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=1024, initial-scale=1.0" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="dashboard.css" />
-    <title>Dashboard</title>
+    <title>The Good Shots</title>
 </head>
 
 <body>
-    <div class="d-flex content">
+<div class="d-flex content">
         <div id="sidebar" class="sidebar-color">
             <div class="sidebar-heading">
                 <img src="Images/Logo.jpg" alt="Bootstrap" class="logo">The Good Shots
@@ -26,7 +24,8 @@
                 <a href="adduser.php" class="list-group-item">
                     <i class="fas fa-project-diagram me-3"></i>User Management
                 </a>
-                    <a href="addproduct.php" class="list-group-item" >
+                <div class="product-dropdown">
+                    <a href="addproduct.php" class="list-group-item" id="product-toggle">
                         <i class="fa-brands fa-product-hunt me-3"></i>Product Management
                     </a>
                 </div>
@@ -80,7 +79,7 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
-                        <a class="nav-link fw-bold cashier-link me-2" href="order.php"
+                        <a class="nav-link fw-bold cashier-link me-3" href="order.php"
                             style="color: black; font-weight: 200; font-size: 17px; border-radius: 20px; width: 120px; text-align: center;">
                             <i class="fa-solid fa-cash-register me-2"></i>
                             Orders
