@@ -7,10 +7,10 @@ include('connection.php'); // Ensure connection is included at the beginning
 $query = "SELECT po.po_number, 
                  po.created_at, 
                  po.qty_received, 
-                 pod.quantity AS total_quantity, 
+                 pod.quantity , 
                  pod.product_name, 
                  pod.unit_price, 
-                 pod.amount,
+                 pod.amount, 
                  pod.supplier_name,
                  pod.status  
           FROM purchase_orders po
@@ -18,6 +18,7 @@ $query = "SELECT po.po_number,
 
 $query_run = $conn->query($query);
 ?>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="function/po_database.js"> </script>
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -237,7 +238,7 @@ $query_run = $conn->query($query);
                     ?>
                     <tr class="<?php echo htmlspecialchars($rowColorClass); ?>">
                       <td><?php echo htmlspecialchars($row['po_number']); ?></td>
-                      <td><?php echo htmlspecialchars($row['total_quantity']); ?></td>
+                      <td><?php echo htmlspecialchars($row['quantity']); ?></td>
                       <td><?php echo htmlspecialchars($row['qty_received']); ?></td>
                       <td><?php echo htmlspecialchars($row['supplier_name']); ?></td>
                       <td><?php echo htmlspecialchars(date('Y-m-d', strtotime($row['created_at']))); ?></td>

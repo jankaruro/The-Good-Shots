@@ -24,16 +24,16 @@ function fetchLastTransactionNumber() {
 }
 
 function generateNextTransactionNumber(lastNumber) {
-  if (!lastNumber.startsWith('PORD')) {
-      console.error(' Invalid last number format:', lastNumber);
-      return 'PORD0001'; // Fallback if format is unexpected
+    console.log('Generating next transaction number from:', lastNumber);
+    if (!lastNumber.startsWith('PORD')) {
+        console.error('Invalid last number format:', lastNumber);
+        return 'PORD0001'; // Fallback if format is unexpected
+    }
+    const numberPart = parseInt(lastNumber.replace('PORD', '')) + 1;
+    const nextNumber = `PORD${String(numberPart).padStart(4, '0')}`;
+    console.log('Generated Transaction Number:', nextNumber);
+    return nextNumber;
   }
-  const numberPart = parseInt(lastNumber.replace('PORD', '')) + 1; // Remove 'PORD' and increment
-  const nextNumber = `PORD${String(numberPart).padStart(4, '0')}`; // Format to PORD0001, PORD0002, ...
-  console.log('Generated Transaction Number:', nextNumber); // Log the generated transaction number
-  return nextNumber;
-}
-
 function loadProducts() {
   const supplierName = document.getElementById("supplier").value;
   if (supplierName) {
