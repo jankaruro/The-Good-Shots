@@ -26,12 +26,7 @@
                 <a href="adduser.php" class="list-group-item">
                     <i class="fas fa-project-diagram me-3"></i>User Management
                 </a>
-                <div class="product-dropdown">
-<<<<<<< HEAD
-                <a href="addproduct.php" class="list-group-item">
-=======
                     <a href="addproduct.php" class="list-group-item" >
->>>>>>> 8e30287f22b09c5930ba1252637ec178c98521d5
                         <i class="fa-brands fa-product-hunt me-3"></i>Product Management
                     </a>
                 </div>
