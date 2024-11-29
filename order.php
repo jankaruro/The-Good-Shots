@@ -26,6 +26,28 @@
             </div>
         </div>
     </div>
+<!-- Discount -->
+    <div class="modal fade" id="discountModal" tabindex="-1" aria-labelledby="discountModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="discountModalLabel">Apply Discount</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="discountCodeInput" class="form-label">Enter Discount Code</label>
+                    <input type="text" class="form-control" id="discountCodeInput" placeholder="Enter code here">
+                </div>
+                <p class="text-danger" id="discountError" style="display:none;">Invalid code or already applied!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="applyDiscountButton">Apply Discount</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="d-flex content">
     <div id="sidebar" class="sidebar-color">
@@ -117,96 +139,6 @@
                     </div>
                 </header>
                 <div class="content flex">
-                    <div class="coffee-card me-3">
-                        <div class="quantity">
-                            <div class="details">
-                                <h3 class="coffee-name">Americano</h3>
-                                <span class="coffee-price">P100</span>
-                            </div>
-                            <img src="images/Americano.png" alt="Americano" />
-                            <div class="addtocart">Add to Cart</div>
-                        </div>
-                    </div>
-                    <div class="coffee-card me-3">
-                        <div class="quantity">
-                            <div class="details">
-                                <h3 class="coffee-name">Americano</h3>
-                                <span class="coffee-price">P100</span>
-                            </div>
-                            <img src="images/Americano.png" alt="Americano" />
-                            <div class="addtocart">Add to Cart</div>
-                        </div>
-                    </div>
-                    <div class="coffee-card me-3">
-                        <div class="quantity">
-                            <div class="details">
-                                <h3 class="coffee-name">Americano</h3>
-                                <span class="coffee-price">P100</span>
-                            </div>
-                            <img src="images/Americano.png" alt="Americano" />
-                            <div class="addtocart">Add to Cart</div>
-                        </div>
-                    </div>
-                    <div class="coffee-card me-3">
-                        <div class="quantity">
-                            <div class="details">
-                                <h3 class="coffee-name">Americano</h3>
-                                <span class="coffee-price">P100</span>
-                            </div>
-                            <img src="images/Americano.png" alt="Americano" />
-                            <div class="addtocart">Add to Cart</div>
-                        </div>
-                    </div>
-                    <div class="coffee-card me-3">
-                        <div class="quantity">
-                            <div class="details">
-                                <h3 class="coffee-name">Americano</h3>
-                                <span class="coffee-price">P100</span>
-                            </div>
-                            <img src="images/Americano.png" alt="Americano" />
-                            <div class="addtocart">Add to Cart</div>
-                        </div>
-                    </div>
-                    <div class="coffee-card me-3">
-                        <div class="quantity">
-                            <div class="details">
-                                <h3 class="coffee-name">Americano</h3>
-                                <span class="coffee-price">P100</span>
-                            </div>
-                            <img src="images/Americano.png" alt="Americano" />
-                            <div class="addtocart">Add to Cart</div>
-                        </div>
-                    </div>
-                    <div class="coffee-card me-3">
-                        <div class="quantity">
-                            <div class="details">
-                                <h3 class="coffee-name">Americano</h3>
-                                <span class="coffee-price">P100</span>
-                            </div>
-                            <img src="images/Americano.png" alt="Americano" />
-                            <div class="addtocart">Add to Cart</div>
-                        </div>
-                    </div>
-                    <div class="coffee-card me-3">
-                        <div class="quantity">
-                            <div class="details">
-                                <h3 class="coffee-name">Americano</h3>
-                                <span class="coffee-price">P100</span>
-                            </div>
-                            <img src="images/Americano.png" alt="Americano" />
-                            <div class="addtocart">Add to Cart</div>
-                        </div>
-                    </div>
-                    <div class="coffee-card me-3">
-                        <div class="quantity">
-                            <div class="details">
-                                <h3 class="coffee-name">Americano</h3>
-                                <span class="coffee-price">P100</span>
-                            </div>
-                            <img src="images/Americano.png" alt="Americano" />
-                            <div class="addtocart">Add to Cart</div>
-                        </div>
-                    </div>
                     <div class="coffee-card me-3">
                         <div class="quantity">
                             <div class="details">
@@ -408,10 +340,10 @@
                 </div>
                 <div class="total-price">
                     <div class="form-check">
-                        <button class="btn-discount">Add Discount</button>
+                        <button class="btn-discount" data-bs-toggle="discount" data-bs-target="#discountModal">Add Discount</button>
                     </div>
                     <div class="total-amount">
-                        Total:
+                        Subtotal:
                     </div>
                 </div>
                 <button class="btn-order" data-bs-toggle="modal" data-bs-target="#checkoutModal">Check Out</button>
@@ -428,50 +360,86 @@
         });
     });
     document.addEventListener("DOMContentLoaded", function () {
-        const addToCartButtons = document.querySelectorAll(".addtocart");
+    const addToCartButtons = document.querySelectorAll(".addtocart");
+    const orderList = document.querySelector(".order-list");
+    const totalAmountElement = document.querySelector(".total-amount");
+    const applyDiscountButton = document.getElementById("applyDiscountButton");
+    const discountCodeInput = document.getElementById("discountCodeInput");
+    const discountError = document.getElementById("discountError");
+    let orderNumber = 1;
+    let isDiscountApplied = false;
+    const validDiscountCode = "SAVE20"; // Example discount code
 
-        const orderList = document.querySelector(".order-list");
+    const updateTotalPrice = () => {
+        let total = 0;
 
-        let orderNumber = 1;
+        document.querySelectorAll(".order-item").forEach((item) => {
+            const priceElement = item.querySelector(".price-item").innerText;
+            const quantityInput = item.querySelector(".quantity-input");
+            const price = parseFloat(priceElement.replace(/[^\d.-]/g, ''));
+            const quantity = parseInt(quantityInput.value, 10);
 
-
-        addToCartButtons.forEach((button) => {
-            button.addEventListener("click", function () {
-                const coffeeCard = this.closest(".coffee-card");
-                const coffeeName = coffeeCard.querySelector(".coffee-name").innerText;
-                const coffeePrice = coffeeCard.querySelector(".coffee-price").innerText;
-
-
-                const orderItem = document.createElement("div");
-                orderItem.classList.add("order-item");
-
-                orderItem.innerHTML = `
-                <img src="images/Americano.png" alt="Americano" class = "order-img"/>
-                <span class = "me-3 name-item">${coffeeName}</span>
-                <span class = "me-2 price-item">${coffeePrice}</span>
-                <input type="number" class="quantity-input" value="1" min="1" />
-                <img src="icons/trash-alt-svgrepo-com.svg" alt="trash" class ="remove remove-item"/>
-            `;
-                const quantityInput = orderItem.querySelector('.quantity-input');
-                quantityInput.addEventListener('input', function () {
-                    const quantity = parseInt(quantityInput.value, 10);
-                    const price = parseFloat(coffeePrice.replace(/[^\d.-]/g, '')); 
-                    const totalPrice = (quantity * price).toFixed(2);
-                    orderItem.querySelector('.total-price').textContent = totalPrice;
-                });
-
-                orderList.appendChild(orderItem);
-
-                const removeButton = orderItem.querySelector(".remove-item");
-                removeButton.addEventListener("click", function () {
-                    orderItem.remove();
-                });
-
-                document.querySelector(".order-number").innerText = `Order: #${orderNumber}`;
-            });
+            total += price * quantity;
         });
-            
+
+        // Apply discount if it has been triggered
+        if (isDiscountApplied) {
+            total *= 0.8; // Apply 20% discount
+        }
+
+        totalAmountElement.innerHTML = `Total: P${total.toFixed(2)}`;
+    };
+
+    addToCartButtons.forEach((button) => {
+        button.addEventListener("click", function () {
+            const coffeeCard = this.closest(".coffee-card");
+            const coffeeName = coffeeCard.querySelector(".coffee-name").innerText;
+            const coffeePrice = coffeeCard.querySelector(".coffee-price").innerText;
+
+            const orderItem = document.createElement("div");
+            orderItem.classList.add("order-item");
+
+            orderItem.innerHTML = `
+                <img src="images/Americano.png" alt="Americano" class="order-img" />
+                <span class="me-3 name-item">${coffeeName}</span>
+                <span class="me-2 price-item">${coffeePrice}</span>
+                <input type="number" class="quantity-input" value="1" min="1" />
+                <img src="icons/trash-alt-svgrepo-com.svg" alt="trash" class="remove remove-item" />
+            `;
+
+            // Handle quantity change
+            const quantityInput = orderItem.querySelector(".quantity-input");
+            quantityInput.addEventListener("input", updateTotalPrice);
+
+            // Handle item removal
+            const removeButton = orderItem.querySelector(".remove-item");
+            removeButton.addEventListener("click", function () {
+                orderItem.remove();
+                updateTotalPrice();
+            });
+
+            orderList.appendChild(orderItem);
+            updateTotalPrice();
+
+            document.querySelector(".order-number").innerText = `Order: #${orderNumber}`;
+        });
     });
+
+    applyDiscountButton.addEventListener("click", function () {
+        const enteredCode = discountCodeInput.value.trim();
+
+        if (enteredCode === validDiscountCode && !isDiscountApplied) {
+            isDiscountApplied = true;
+            discountError.style.display = "none";
+            updateTotalPrice();
+            alert("Discount applied successfully!");
+            const discountModal = bootstrap.Modal.getInstance(document.getElementById("discountModal"));
+            discountModal.hide();
+        } else {
+            discountError.style.display = "block";
+        }
+    });
+});
 
 </script>
     

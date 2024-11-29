@@ -159,7 +159,7 @@
                     <i class="fas fa-project-diagram me-3"></i>User Management
                 </a>
                 <div class="product-dropdown">
-                    <a href="#" class="list-group-item" id="product-toggle">
+                    <a href="addproduct.php" class="list-group-item" id="product-toggle">
                         <i class="fa-brands fa-product-hunt me-3"></i></i>Product Management
                     </a>
                 </div>

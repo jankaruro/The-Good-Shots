@@ -227,7 +227,7 @@ include('header.php'); ?>
     <div id="page-content-wrapper">
             <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-4 mt-2 dashboard-nav">
                 <div class="d-flex align-items-center">
-                    <h2 class="fs-3 m-1">User Management</h2>
+                    <h2 class="fs-3 m-1">Product Maaa</h2>
                 </div>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
