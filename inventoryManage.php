@@ -1,6 +1,29 @@
-<?php
-session_start();
-include('header.php'); ?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=1024, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.css">
+
+    <script src = "https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src = "https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+    <script src = "https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
+
+    <script>
+      $(document).ready(function(){
+    $('#user-management').DataTable();
+    });
+    </script>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="dashboard.css" />
+    <title>The Good Shots</title>
+</head>
 
 <!--Add User-->
 <div class="modal fade" id="addUserData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -324,14 +347,14 @@ include('header.php'); ?>
             class="fa-solid fa-chevron-right toggle-arrow-reports" id="reports-arrow"></i>
         </a>
         <div class="submenu" id="reports-submenu">
-          <a href="" class="sub-list-item">
-            <p class="txt-name-btn">Weekly</p>
+          <a href="discrepancy.php" class="sub-list-item">
+            <p class="txt-name-btn">Discrepancy Report</p>
           </a>
           <a href="" class="sub-list-item">
-            <p class="txt-name-btn">Monthly</p>
+            <p class="txt-name-btn">Inventory Report</p>
           </a>
           <a href="" class="sub-list-item">
-            <p class="txt-name-btn">Yearly</p>
+            <p class="txt-name-btn">Sales Report</p>
           </a>
         </div>
       </div>
@@ -377,8 +400,8 @@ include('header.php'); ?>
                 </div>
     </nav>
 
-    <div class="container-responsive" style="margin-top: 60px; padding-left: 15px;">
-    <div class="col-sm-12">
+    <div class="container-responsive" style="margin-top: 40px; padding: 15px;">
+        <div class="col-lg-12">
 
           <?php
           if (isset($_SESSION['status']) && $_SESSION['status'] != '') {
@@ -398,6 +421,7 @@ include('header.php'); ?>
           }
 
           ?>
+           <div class="card shadow">
             <div class="card-header">
               <button type="button" class="btn btn-primary float-end fw-medium btn-add" data-bs-toggle="modal"
                 data-bs-target="#addUserData">
@@ -405,25 +429,59 @@ include('header.php'); ?>
               </button>
             </div>
             <div class="card-body mt-1">
-            <table id="example" class="table table-striped" style="width:100%">
+              <table id="user-management" class="table table-striped">
                 <thead>
                   <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Supplier</th>
-                    <th scope="col">Product</th>
-                    <th scope="col">Package Quantity</th>
-                    <th scope="col">Measurement Per Package</th>
-                    <th scope="col">Total_measurement</th>
-                    <th scope="col">Unit</th>
-                    <th scope="col">Expiration Date</th>
-                    <th scope="col"></th>
+                      <th scope="col">Product Name</th>
+                      <th scope="col">Package Quantity</th>
+                      <th scope="col">Measurement Per Package</th>
+                      <th scope="col">Total Measurement</th>
+                      <th scope="col">Category</th>
+                      <th scope="col">Unit</th>
+                      <th scope="col">Expiry Date</th>
+                      <th scope="col">Created At</th>
+                      <th scope="col">Updated At</th>
+                      <th scope="col">Created By</th>       
+                      <th scope="col" class = "size-table">Action</th>
                   </tr>
                 </thead>
+                  <tbody>
+                  <?php
+                  $connection = mysqli_connect("localhost", "root", "", "tgs_inventory");
 
-                <tbody>
-                
-                </tbody>
-              </table>
+                  $fetch_query = "SELECT * FROM users";
+                  $fetch_query_run = mysqli_query($connection, $fetch_query);
+
+                  if (mysqli_num_rows($fetch_query_run) > 0) {
+                    while ($row = mysqli_fetch_array($fetch_query_run)) {
+                      ?>
+                      <tr>
+                        <td class="user_id"><?php echo $row['id']; ?></td>
+                        <td><?php echo $row['first_name']; ?></td>
+                        <td><?php echo $row['last_name']; ?></td>
+                        <td><?php echo $row['email']; ?></td>
+                        <td><?php echo $row['role']; ?></td>
+                        <td><?php echo $row['role']; ?></td>
+                        <td><?php echo $row['role']; ?></td>
+                        <td><?php echo $row['role']; ?></td>
+                        <td><?php echo $row['role']; ?></td>
+                        <td><?php echo $row['role']; ?></td>
+                        <td><?php echo $row['role']; ?></td>
+                        <td><?php echo $row['role']; ?></td>
+                        <td>
+                          <a href="#" class="btn btn-info btn-base view_data">View Data</a>
+                          <a href="#" class="btn btn-success btn-base edit_data">Edit Data</a>
+                          <a href="" class="btn btn-danger btn-base delete_data">Delete Data</a>
+                        </td>
+                      </tr>
+                      <?php
+                    }
+                  } else {
+                    echo "<tr><td colspan='6'></td></tr>";
+                  }
+                  ?>
                 </tbody>
               </table>
             </div>
@@ -432,9 +490,46 @@ include('header.php'); ?>
       </div>
     </div>
 
+    <script>
+        $(document).ready(function () {
+                $("#product-toggle").click(function (e) {
+                e.preventDefault();
+                $("#product-submenu").slideToggle();
+                const productArrow = $("#product-arrow");
+                if (productArrow.hasClass("fa-chevron-right")) {
+                    productArrow.removeClass("fa-chevron-right").addClass("fa-chevron-down");
+                } else {
+                    productArrow.removeClass("fa-chevron-down").addClass("fa-chevron-right");
+                }
+            });
 
+            $("#supplier-toggle").click(function (e) {
+                e.preventDefault();
+                $("#supplier-submenu").slideToggle();
+                const supplierArrow = $("#supplier-arrow");
+                if (supplierArrow.hasClass("fa-chevron-right")) {
+                    supplierArrow.removeClass("fa-chevron-right").addClass("fa-chevron-down");
+                } else {
+                    supplierArrow.removeClass("fa-chevron-down").addClass("fa-chevron-right");
+                }
+            });
 
-    <?php include('footer.php'); ?>
-    <?php include('function/viewdata.js'); ?>
-    <?php include('function/editdata.js'); ?>
-    <?php include('function/remove.js'); ?>
+            $("#reports-toggle").click(function (e) {
+                e.preventDefault();
+                $("#reports-submenu").slideToggle();
+                const reportsArrow = $("#reports-arrow");
+                if (reportsArrow.hasClass("fa-chevron-right")) {
+                    reportsArrow.removeClass("fa-chevron-right").addClass("fa-chevron-down");
+                } else {
+                    reportsArrow.removeClass("fa-chevron-down").addClass("fa-chevron-right");
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
+
+<?php include('function/viewdata.js'); ?>
+<?php include('function/editdata.js'); ?>
+<?php include('function/remove.js'); ?>

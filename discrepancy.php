@@ -133,7 +133,6 @@
           ?>
           <div class="card shadow">
             <div class="card-header">
-              <h3 class="text-center">Discrepancy Report</h3>
                 <form action="reportcsv.php" method="post">
                     <button type="submit" class="float-end fw-medium me-2 btn-excel">Excel</button>
                 </form>

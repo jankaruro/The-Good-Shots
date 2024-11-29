@@ -110,10 +110,10 @@
 
             <div class="container-responsive" style="margin-top: 40px; padding: 15px;">
                 <div class="row justify-content-center">
-                    <div class="col-md-3">
+                    <div class="col-lg-3">
                         <div
                             class="p-3 bg-color d-flex justify-content-around align-items-center rounded border-bottom-yellow">
-                            <div>
+                            <div class="responsive">
                                 <h3 class="fs-2"></h3>
                                 <p class="fs-4">Employee</p>
                             </div>
@@ -121,7 +121,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-3">
                         <div
                             class="p-3 bg-color d-flex justify-content-around align-items-center rounded border-bottom-green">
                             <div>
@@ -132,7 +132,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-3">
                         <div
                             class="p-3 bg-color d-flex justify-content-around align-items-center rounded border-bottom-violet">
                             <div>
@@ -143,7 +143,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-3">
                         <div
                             class="p-3 bg-color d-flex justify-content-around align-items-center rounded border-bottom-blue">
                             <div>

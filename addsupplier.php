@@ -167,7 +167,7 @@ include('header.php'); ?>
 }
 .dashboard-nav {
     position: fixed;
-    width: calc(100% - 390px);
+    width: calc(100% - 380px);
     height: 64px;
     top: 0;
     left: 335px;
@@ -520,7 +520,7 @@ include('header.php'); ?>
         }
 
         ?>
-         <div class="card shadow" style="width: 95.5rem">
+         <div class="card shadow">
             <div class="card-header">
               <button type="button" class="btn btn-primary float-end fw-medium btn-add" data-bs-toggle="modal"
                 data-bs-target="#addUserData">
