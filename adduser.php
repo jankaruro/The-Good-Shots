@@ -287,9 +287,9 @@
                         <td><?php echo $row['email']; ?></td>
                         <td><?php echo $row['role']; ?></td>
                         <td>
-                          <a href="#" class="btn btn-info btn-base view_data">View Data</a>
-                          <a href="#" class="btn btn-success btn-base edit_data">Edit Data</a>
-                          <a href="" class="btn btn-danger btn-base delete_data">Delete Data</a>
+                          <a href="#" class="btn btn-info btn-base view_data">View </a>
+                          <a href="#" class="btn btn-success btn-base edit_data">Edit </a>
+                          <a href="" class="btn btn-danger btn-base delete_user">Delete </a>
                         </td>
                       </tr>
                       <?php
