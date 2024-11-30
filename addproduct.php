@@ -79,13 +79,12 @@
         <a href="dashboard.php" class="list-group-item">
           <i class="fas fa-tachometer-alt me-3"></i>Dashboard
         </a>
-        <a href="adduser.php" class="list-group-item active">
+        <a href="adduser.php" class="list-group-item">
           <i class="fas fa-project-diagram me-3"></i>User Management
         </a>
         <div class="product-dropdown">
-          <a href="#" class="list-group-item" id="product-toggle">
-            <i class="fa-brands fa-product-hunt me-3"></i>Product Management<i
-              class="fa-solid fa-chevron-right toggle-arrow-product" id="product-arrow"></i>
+          <a href="#" class="list-group-item active">
+            <i class="fa-brands fa-product-hunt me-3"></i>Product Management
           </a>
           <div class="submenu" id="product-submenu">
             <a href="addproduct.php" class="sub-list-item">
@@ -142,7 +141,7 @@
     <div id="page-content-wrapper">
       <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-4 mt-2 dashboard-nav">
         <div class="d-flex align-items-center">
-          <h2 class="fs-3 m-1">User Management</h2>
+          <h2 class="fs-3 m-1">Product Management</h2>
         </div>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -176,10 +175,9 @@
         </div>
       </nav>
 
-      <!-- Product Management Table -->
-      <div class="container">
+      <div class="container responsive" style="margin-top: 60px">
         <div class="row justify-content-center">
-          <div class="col-sm-12 col-lg-20">
+          <div class="col-lg-20">
             <?php
             if (isset($_SESSION['status']) && $_SESSION['status'] != '') {
               ?>
