@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+< lang="en">
 
 <head>
   <meta charset="UTF-8" />
@@ -17,7 +17,10 @@
 <body>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-
+</body>
+<?php 
+include('add.php');
+?>
   <!-- Add Product Modal -->
   <div class="modal fade" id="insertdata" tabindex="-1" aria-labelledby="insertdataLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -28,7 +31,7 @@
             </div>
             <div class="modal-body">
                 <form id="registration-form" method="POST" action="code.php" enctype="multipart/form-data">
-                    <div class="mb-3"> <!-- Fixed this line -->
+                    <div class="mb-3">
                         <label for="productname" class="form-label">Product Name</label>
                         <input type="text" class="form-control" id="productname" name="productname" required>
                     </div>
@@ -227,7 +230,7 @@
                       <th scope="col">Product Name</th>
                       <th scope="col">Price</th>
                       <th scope="col">Category</th>
-                      <th scope="col">Image</th>
+                      
                        <th scope="col">Actions</th>
                     </tr>
                   </thead>
@@ -252,8 +255,7 @@
                           <td><?php echo $row['product_name']; ?></td>
                           <td><?php echo $row['price']; ?></td>
                           <td><?php echo $row['category']; ?></td>
-                          <td><img src="images/<?php echo $row["image"]; ?>" width="200"
-                              title="<?php echo $row['image']; ?>"></td>
+                          
                           <td>
                             <a href="#" class="btn btn-info btn-base view_product">View Data</a>
                             <a href="#" class="btn btn-success btn-base edit_product">Edit Data</a>

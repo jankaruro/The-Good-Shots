@@ -441,9 +441,7 @@
                       <th scope="col">Category</th>
                       <th scope="col">Unit</th>
                       <th scope="col">Expiry Date</th>
-                      <th scope="col">Created At</th>
-                      <th scope="col">Updated At</th>
-                      <th scope="col">Created By</th>       
+                        
                       <th scope="col" class = "size-table">Action</th>
                   </tr>
                 </thead>
@@ -451,7 +449,7 @@
                   <?php
                   $connection = mysqli_connect("localhost", "root", "", "tgs_inventory");
 
-                  $fetch_query = "SELECT * FROM users";
+                  $fetch_query = "SELECT * FROM inventory";
                   $fetch_query_run = mysqli_query($connection, $fetch_query);
 
                   if (mysqli_num_rows($fetch_query_run) > 0) {
@@ -459,17 +457,14 @@
                       ?>
                       <tr>
                         <td class="user_id"><?php echo $row['id']; ?></td>
-                        <td><?php echo $row['first_name']; ?></td>
-                        <td><?php echo $row['last_name']; ?></td>
-                        <td><?php echo $row['email']; ?></td>
-                        <td><?php echo $row['role']; ?></td>
-                        <td><?php echo $row['role']; ?></td>
-                        <td><?php echo $row['role']; ?></td>
-                        <td><?php echo $row['role']; ?></td>
-                        <td><?php echo $row['role']; ?></td>
-                        <td><?php echo $row['role']; ?></td>
-                        <td><?php echo $row['role']; ?></td>
-                        <td><?php echo $row['role']; ?></td>
+                        <td><?php echo $row['supplier']; ?></td>
+                <td><?php echo $row['product_name']; ?></td>
+                <td><?php echo $row['package_quantity']; ?></td>
+                <td><?php echo $row['measurement_per_package']; ?></td>
+                <td><?php echo $row['total_measurement']; ?></td>
+                <td><?php echo $row['category']; ?></td>
+                <td><?php echo $row['unit']; ?></td>
+                <td><?php echo $row['Expiry_Date']; ?></td>
                         <td>
                           <a href="#" class="btn btn-info btn-base view_data">View Data</a>
                           <a href="#" class="btn btn-success btn-base edit_data">Edit Data</a>
