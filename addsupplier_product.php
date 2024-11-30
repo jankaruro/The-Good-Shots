@@ -20,15 +20,15 @@ include('header.php'); ?>
                         <select class="form-control" id="supplier" name="supplier" required>
                             <option value="">-- Select Supplier --</option>
                             <?php
-                            // Connect to the database
+                            /
                             include('connection.php');
 
-                            // Retrieve categories from the database
+                       
                             $stmt = $conn->prepare("SELECT supplier_name FROM suppliers");
                             $stmt->execute();
                             $result = $stmt->fetchAll();
 
-                            // Check if there are any categories
+                            
                             if (count($result) > 0) {
                                 // Output the categories
                                 foreach ($result as $row) {
@@ -60,17 +60,17 @@ include('header.php'); ?>
                         <select class="form-control" id="category" name="category" required>
                             <option value="">-- Select Category --</option>
                             <?php
-                            // Connect to the database
+                    
                             include('connection.php');
 
-                            // Retrieve categories from the database
+                            
                             $stmt = $conn->prepare("SELECT name FROM category");
                             $stmt->execute();
                             $result = $stmt->fetchAll();
 
-                            // Check if there are any categories
+                         
                             if (count($result) > 0) {
-                                // Output the categories
+                              
                                 foreach ($result as $row) {
                                     echo "<option value='" . $row['name'] . "'>" . $row['name'] . "</option>";
                                 }
@@ -78,7 +78,6 @@ include('header.php'); ?>
                                 echo "<option value=''>No categories found</option>";
                             }
 
-                            // Close the database connection
                             $conn = null;
                             ?>
                         </select>

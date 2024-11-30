@@ -411,14 +411,14 @@ include('header.php'); ?>
                 <img src="Images/Logo.jpg" alt="Bootstrap" class="logo">The Good Shots
             </div>
             <div class="list-group list-group-flush mt-0">
-                <a href="dashboard.php" class="list-group-item">
+                <a href="dashboard.php" class="list-group-item active">
                     <i class="fas fa-tachometer-alt me-3"></i>Dashboard
                 </a>
                 <a href="adduser.php" class="list-group-item">
                     <i class="fas fa-project-diagram me-3"></i>User Management
                 </a>
                 <div class="product-dropdown">
-                    <a href="#" class="list-group-item" id="product-toggle">
+                    <a href="addproduct.php" class="list-group-item" id="product-toggle">
                         <i class="fa-brands fa-product-hunt me-3"></i>Product Management
                     </a>
                 </div>
@@ -429,12 +429,12 @@ include('header.php'); ?>
                     <i class="fa-solid fa-money-bill me-3"></i>Purchase Order
                 </a>
                 <div class="supplier-dropdown">
-                    <a href="#" class="list-group-item active" id="supplier-toggle">
+                    <a href="#" class="list-group-item" id="supplier-toggle">
                         <i class="fa-solid fa-boxes-packing me-3"></i>Supplier<i
-                            class="fa-solid fa-chevron-down toggle-arrow-supplier" id="supplier-arrow"></i>
+                            class="fa-solid fa-chevron-right toggle-arrow-supplier" id="supplier-arrow"></i>
                     </a>
                     <div class="submenu" id="supplier-submenu">
-                        <a href="addsupplier.php" class="sub-list-item active">
+                        <a href="addsupplier.php" class="sub-list-item">
                             <p class="txt-name-btn">Add Supplier</p>
                         </a>
                         <a href="addsupplier_product.php" class="sub-list-item">
@@ -467,7 +467,7 @@ include('header.php'); ?>
         <div id="page-content-wrapper">
             <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-4 mt-2 dashboard-nav">
                 <div class="d-flex align-items-center">
-                    <h2 class="fs-3 m-1">Add Supplier</h2>
+                    <h2 class="fs-3 m-1">Dashboard</h2>
                 </div>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">

@@ -1,5 +1,5 @@
 <?php
-// Assume you have a database connection and a query to retrieve the 10 products
+
 $product_list = array();
 while ($row = mysqli_fetch_assoc($result)) {
     $product_list[] = array(
@@ -9,7 +9,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     );
 }
 
-// Generate the HTML code for each product
+
 $html = '';
 foreach ($product_list as $product) {
     $html .= '<div class="card">';

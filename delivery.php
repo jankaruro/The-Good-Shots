@@ -18,14 +18,14 @@
                 <img src="Images/Logo.jpg" alt="Bootstrap" class="logo">The Good Shots
             </div>
             <div class="list-group list-group-flush mt-0">
-                <a href="dashboard.php" class="list-group-item">
+                <a href="dashboard.php" class="list-group-item active">
                     <i class="fas fa-tachometer-alt me-3"></i>Dashboard
                 </a>
                 <a href="adduser.php" class="list-group-item">
                     <i class="fas fa-project-diagram me-3"></i>User Management
                 </a>
                 <div class="product-dropdown">
-                    <a href="#" class="list-group-item" id="product-toggle">
+                    <a href="addproduct.php" class="list-group-item" id="product-toggle">
                         <i class="fa-brands fa-product-hunt me-3"></i>Product Management
                     </a>
                 </div>
@@ -49,7 +49,7 @@
                         </a>
                     </div>
                 </div>
-                <a href="delivery.php" class="list-group-item active">
+                <a href="delivery.php" class="list-group-item">
                     <i class="fa-solid fa-truck me-3"></i>Delivery
                 </a>
                 <div class="reports-dropdown">
@@ -74,7 +74,7 @@
         <div id="page-content-wrapper">
             <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-4 mt-2 dashboard-nav">
                 <div class="d-flex align-items-center">
-                    <h2 class="fs-3 m-1">Delivery</h2>
+                    <h2 class="fs-3 m-1">Dashboard</h2>
                 </div>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -105,7 +105,6 @@
                     </ul>
                 </div>
             </nav>
-
             <div class="container-fluid px-4 mt-5">
     </div>
     </div>

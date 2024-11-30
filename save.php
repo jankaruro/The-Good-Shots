@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $products = json_decode($_POST['products'], true);
 
     try {
-        // Ensure the column names are correct
+       
         $stmt = $conn->prepare("INSERT INTO purchase_orders (po_number, created_at,total_amount) VALUES (:transactionNumber, NOW(),  :totalAmount)");
         $stmt->bindParam(':transactionNumber', $transactionNumber);
         //$stmt->bindParam(':supplierName', $supplierName);
