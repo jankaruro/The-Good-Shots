@@ -4,45 +4,13 @@ include('header.php'); ?>
 
 <!--Add-->
 <!--Add User-->
-<div class="modal fade" id="addUserData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="addUserDataLabel" aria-hidden="true">
-
+<div class="modal fade" id="addUserData" tabindex="-1" aria-labelledby="viewitemModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-2" id="addUser DataLabel">Adding Supplier Product</h1>
+        <div class="modal-header">
+                <h1 class="modal-title fs-5" id="viewitemModalLabel">Add supplier Products</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="code.php" method="POST">
-                <div class="modal-body">
-                    <div class="form-group mb-3">
-                        <label for=""><b>Supplier</b></label>
-                        <select class="form-control" id="supplier" name="supplier" required>
-                            <option value="">-- Select Supplier --</option>
-                            <?php
-                            /
-                            include('connection.php');
-
-                       
-                            $stmt = $conn->prepare("SELECT supplier_name FROM suppliers");
-                            $stmt->execute();
-                            $result = $stmt->fetchAll();
-
-                            
-                            if (count($result) > 0) {
-                                // Output the categories
-                                foreach ($result as $row) {
-                                    echo "<option value='" . $row['supplier_name'] . "'>" . $row['supplier_name'] . "</option>";
-                                }
-                            } else {
-                                echo "<option value=''>No categories found</option>";
-                            }
-
-                            // Close the database connection
-                            $conn = null;
-                            ?>
-                        </select>
-                    </div>
 
                     <div class="form-group">
                         <label class="fs-5 mt-1 fw-bolder">Product Name</label>
@@ -280,7 +248,7 @@ include('header.php'); ?>
     <div id="page-content-wrapper">
         <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-4 mt-2 dashboard-nav">
             <div class="d-flex align-items-center">
-                <h2 class="fs-3 m-1">Dashboard</h2>
+                <h2 class="fs-3 m-1">Supplier Products</h2>
             </div>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -340,12 +308,12 @@ include('header.php'); ?>
                     }
 
                     ?>
-                    <div class="card">
+                    <div class="card" style = "margin-top: 60px;">
                         <div class="card-header">
                             <h3 class="text-center">Supplier Products</h3>
                             <button type="button" class="btn btn-primary float-end fw-medium" data-bs-toggle="modal"
                                 data-bs-target="#addUserData">
-                                Add New User
+                                Add Supplier Products
                             </button>
 
                         </div>
