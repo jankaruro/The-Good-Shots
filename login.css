@@ -1,35 +1,25 @@
-/* Base styles (default for large screens) */
+
 body {
   width: 100vw;
   background-image: url('images/background-photo.jpg'); 
   background-repeat: no-repeat;
   background-size: cover;
+  box-sizing: border-box;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  margin: 0;
-}
-
-.container {
-  background-color: white;
   height: 50vh;
-  width: 35vw;
-  border-radius: 10px;
-  display: flex;
-  border: 1px black solid;
-  padding: 0;
+  min-height: 100vh;
 }
 
-.left-container {
-  background-color: #ecd0b4;
-  border-left: 1px black solid;
-  border-radius: 4px;
-  width: 50%;
-  padding: 100px 100px 20px 50px;
+.custom-container {
+  width: 45rem;
+  padding: 0;
+  border-radius: 5px;
 }
-.right-container {
-  padding: 50px;
+.custom-left-box{
+  background-color: #F5F0E6;
+  height: 29rem;
 }
 
 .login-name {
@@ -47,7 +37,7 @@ body {
 .form-control {
   font-size: 19px;
   margin-bottom: 5px;
-  width: 100%; 
+  width: 90%; 
 }
 
 .password-container {
@@ -56,36 +46,39 @@ body {
 
 .show-password-icon {
   position: absolute;
-  right: 10px;
+  right: 50px;
   top: 70%;
-  transform: translateY(-50%);
+  transform: translateY(-30%);
   cursor: pointer;
   color: black;
 }
 
 .login-logo {
+  height: auto;
+  max-height: 80%;
+  width: 200px;
+  max-width: 90%;
   border-radius: 50%;
-  height: 250px;
-  width: 250px;
-  margin: auto;
 }
 
-.btn-login {
-  margin: 20px auto;
+.custom-btn-login{
+  margin-left: 80px;
   text-align: center;
-  width: 80%;
+  width: 50%;
   border-radius: 20px;
+  border: none;
   display: flex;
   justify-content: center;
   background-color: #D6CCC2;
   color: black;
   font-size: large;
   font-weight: 600;
+  border: 1px solid gray;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
-.btn-login:hover {
-  background-color: #83bcff;
-  border: 0.5px rgb(119, 117, 117) solid;
+.custom-btn-login:hover{
+  transform: translateY(-3px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
 }
 
 
