@@ -109,7 +109,7 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-3">
                         <div
-                            class="p-3 bg-white d-flex justify-content-around align-items-center rounded border-5 custom-border-employee h-100 mt-1">
+                            class="p-3 bg-white d-flex justify-content-around align-items-center rounded border-5 custom-employee mt-1 shadow">
                             <div class="responsive">
                                 <h3 class="fs-2"></h3>
                                 <p class="fs-4">Employee</p>
@@ -120,7 +120,7 @@
 
                     <div class="col-lg-3">
                         <div
-                            class="p-3 bg-white d-flex justify-content-around align-items-center rounded border-5 custom-border-sales h-100 mt-1">
+                            class="p-3 bg-white d-flex justify-content-around align-items-center rounded border-5 custom-sales mt-1 shadow">
                             <div class="responsive">
                                 <h3 class="fs-2"></h3>
                                 <p class="fs-4">Sales</p>
@@ -131,7 +131,7 @@
 
                     <div class="col-lg-3">
                         <div
-                            class="p-3 bg-white d-flex justify-content-around align-items-center rounded border-5 custom-border-inventory h-100 mt-1">
+                            class="p-3 bg-white d-flex justify-content-around align-items-center rounded border-5 custom-inventory mt-1 shadow">
                             <div class="responsive">
                                 <h3 class="fs-2"></h3>
                                 <p class="fs-4">Inventory</p>
@@ -142,7 +142,7 @@
 
                     <div class="col-lg-3">
                         <div
-                            class="p-3 bg-white d-flex justify-content-around align-items-center rounded custom-border-discrepancy border-5 h-100 mt-1">
+                            class="p-3 bg-white d-flex justify-content-around align-items-center rounded custom-discrepancy border-5 mt-1 shadow">
                             <div class="responsive">
                                 <h3 class="fs-2"></h3>
                                 <p class="fs-4">Discrepancy</p>

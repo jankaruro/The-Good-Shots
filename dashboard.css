@@ -175,21 +175,25 @@
 .bg-color{
     background-color: #f6f8ee;
 }
-.custom-border-employee{
+.custom-employee{
     border-left: 1px solid blue;
     cursor: pointer;
+    height: 190px;
 }
-.custom-border-sales{
+.custom-sales{
     border-left: 1px solid green;
     cursor: pointer;
+    height: 190px;
 }
-.custom-border-inventory{
+.custom-inventory{
     border-left: 1px solid violet;
     cursor: pointer;
+    height: 190px;
 }
-.custom-border-discrepancy{
+.custom-discrepancy{
     border-left: 1px solid red;
     cursor: pointer;
+    height: 190px;
 }
 .dashboard-nav {
     position: fixed;

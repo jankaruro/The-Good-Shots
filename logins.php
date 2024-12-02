@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 
@@ -38,14 +37,14 @@ if ($_POST) {
 
         $userRole = $user['role'];
         if ($userRole == 'user') {
-        header('location: dashboard_user.php');
-	    } elseif ($userRole == 'admin') {
-	        header('location: dashboard_admin.php');
-	    } elseif ($userRole == 'superadmin') {
-	        header('location: dashboard.php');
-	    } else {
-	        header('location: dashboard.php');
-	    }
+            header('location: dashboard_user.php');
+        } elseif ($userRole == 'admin') {
+            header('location: dashboard_admin.php');
+        } elseif ($userRole == 'superadmin') {
+            header('location: dashboard.php');
+        } else {
+            header('location: dashboard.php');
+        }
 
         exit();
     } else {
@@ -55,6 +54,7 @@ if ($_POST) {
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -65,18 +65,19 @@ if ($_POST) {
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" type="text/css" href="login.css">
 </head>
+
 <body>
     <?php if (!empty($error_message)) { ?>
         <div id="errorMessage" class="alert alert-danger">
             <strong>ERROR:</strong> <?= htmlspecialchars($error_message) ?>
         </div>
     <?php } ?>
-    <div class="container">
-        <div class="left-container">
+    <div class="container d-flex justify-content-center align-items-center shadow bg-light custom-container h-90">
+        <div class="col-md-6 left-box rounded-4 d-flex justify-content-center align-items-center custom-left-box me-3">
             <img src="images/Logo.jpg" alt="" class="login-logo">
         </div>
-        <div class="right-container">
-            <header>
+        <div class="col-md-6 right-box justify-content-center align-items-center">
+            <header class="mt-1">
                 <p class="login-name">Login</p>
             </header>
             <form action="login.php" method="POST">
@@ -84,27 +85,30 @@ if ($_POST) {
                     <label class="form-label">Email</label>
                     <input type="text" class="form-control" name="email" placeholder="Enter email" required>
                 </div>
-
                 <div class="password-container">
                     <label class="form-label">Password</label>
                     <input type="password" class="form-control" name="password" placeholder="Enter Password" required>
                     <i class="fas fa-eye show-password-icon" id="togglePassword"></i>
                 </div>
-                <div class="mt-3">
-                    <button type="submit" class="btn btn-primary">Login</butto>
+                <div class="submit-btn mt-5">
+                    <button type="submit" class="btn custom-btn-login">Login</button>
                 </div>
             </form>
         </div>
     </div>
     <script>
-        // Toggle password visibility
         const togglePassword = document.getElementById('togglePassword');
         const passwordInput = document.querySelector('input[name="password"]');
+
         togglePassword.addEventListener('click', function () {
-            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
-            this.classList.toggle('fa-eye-slash');
+        
+            const isPassword = passwordInput.getAttribute('type') === 'password';
+            passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash'); 
         });
     </script>
 </body>
+
 </html>
