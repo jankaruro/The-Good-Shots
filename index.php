@@ -20,17 +20,15 @@
                 <img src="Images/Logo.jpg" alt="Bootstrap" class="logo">The Good Shots
             </div>
             <div class="list-group list-group-flush mt-0">
-                <a href="dashboard.php" class="list-group-item active">
+                <a href="index.php" class="list-group-item active">
                     <i class="fas fa-tachometer-alt me-3"></i>Dashboard
                 </a>
                 <a href="adduser.php" class="list-group-item">
                     <i class="fas fa-project-diagram me-3"></i>User Management
                 </a>
-                <div class="product-dropdown">
-                    <a href="addproduct.php" class="list-group-item" id="product-toggle">
-                        <i class="fa-brands fa-product-hunt me-3"></i>Product Management
-                    </a>
-                </div>
+                <a href="addproduct.php" class="list-group-item">
+                    <i class="fa-brands fa-product-hunt me-3"></i>Product Management
+                </a>
                 <a href="inventoryManage.php" class="list-group-item">
                     <i class="fas fa-shopping-cart me-3"></i>Inventory Management
                 </a>

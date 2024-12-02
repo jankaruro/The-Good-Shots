@@ -28,7 +28,7 @@
                 <img src="Images/Logo.jpg" alt="Bootstrap" class="logo">The Good Shots
             </div>
             <div class="list-group list-group-flush mt-0">
-                <a href="dashboard.php" class="list-group-item active">
+                <a href="index.php" class="list-group-item">
                     <i class="fas fa-tachometer-alt me-3"></i>Dashboard
                 </a>
                 <a href="adduser.php" class="list-group-item">
@@ -63,12 +63,12 @@
                     <i class="fa-solid fa-truck me-3"></i>Delivery
                 </a>
                 <div class="reports-dropdown">
-                    <a href="#" class="list-group-item" id="reports-toggle">
+                    <a href="#" class="list-group-item active" id="reports-toggle">
                         <i class="fa-solid fa-calendar-days me-3"></i></i>Reports<i
                             class="fa-solid fa-chevron-right toggle-arrow-reports" id="reports-arrow"></i>
                     </a>
                     <div class="submenu" id="reports-submenu">
-                        <a href="discrepancy.php" class="sub-list-item">
+                        <a href="discrepancy.php" class="sub-list-item active">
                             <p class="txt-name-btn">Discrepancy Report</p>
                         </a>
                         <a href="inventoryReport.php" class="sub-list-item">
@@ -84,7 +84,7 @@
         <div id="page-content-wrapper">
             <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-4 mt-2 dashboard-nav">
                 <div class="d-flex align-items-center">
-                    <h2 class="fs-3 m-1">Dashboard</h2>
+                    <h2 class="fs-3 m-1">Discrepancy</h2>
                 </div>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -115,7 +115,7 @@
                     </ul>
                 </div>
             </nav>
-            <div class="container-responsive" style="margin-top: 40px; padding: 25px;">
+            <div class="container-responsive mt-5" >
         <div class="col-sm-12">
 
           <?php

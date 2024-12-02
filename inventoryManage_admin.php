@@ -2,33 +2,35 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=1024, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.css">
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=1024, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.css">
 
-    <script src = "https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src = "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <script src = "https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
-    <script src = "https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+  <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
 
-    <script>
-      $(document).ready(function(){
-    $('#user-management').DataTable();
+  <script>
+    $(document).ready(function () {
+      $('#inventoryManagement').DataTable();
     });
-    </script>
-    
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="dashboard.css" />
-    <title>The Good Shots</title>
+  </script>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="dashboard.css" />
+  <title>The Good Shots</title>
 </head>
 
 <!--Add User-->
 <div class="modal fade" id="addUserData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
   aria-labelledby="addUserDataLabel" aria-hidden="true">
-  
+
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -91,7 +93,8 @@
           <div class="form-group">
             <label class="fs-5 mt-1 fw-bolder">Measurement per Pack</label>
             <input type="number" class="form-control fw-medium" id="measurement_per_package"
-              name="measurement_per_package" placeholder="Enter Measurement" step="0.01" oninput="calculateTotal()" required>
+              name="measurement_per_package" placeholder="Enter Measurement" step="0.01" oninput="calculateTotal()"
+              required>
           </div>
 
           <div class="form-group">
@@ -133,15 +136,16 @@
 
           <div class="form-group">
             <label class="fs-5 mt-1 fw-bolder">Expiration Date</label>
-            <input type="date" class="form-control fw-medium" id="Expiry_Date" name="Expiry_Date" placeholder="Enter Expiry Date" required>
+            <input type="date" class="form-control fw-medium" id="Expiry_Date" name="Expiry_Date"
+              placeholder="Enter Expiry Date" required>
           </div>
 
-          </div>
+        </div>
 
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary fw-medium" data-bs-dismiss="modal">Close</button>
-            <button type="submit" name="add_inventory" class="btn btn-primary fw-medium">Add Item</button>
-          </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary fw-medium" data-bs-dismiss="modal">Close</button>
+          <button type="submit" name="add_inventory" class="btn btn-primary fw-medium">Add Item</button>
+        </div>
       </form>
     </div>
   </div>
@@ -287,62 +291,60 @@
           <input type="date" class="form-control fw-medium" name="Expiry_Date" placeholder="Enter Expiry Date">
         </div>
 
-       
 
-      
-      <form action="update_code.php" method="POST">
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary fw-medium" data-bs-dismiss="modal">Close</button>
-          <button type="submit" name="update_inventory" class="btn btn-primary fw-medium">Update Item</button>
-        </div>
-      </form>
+
+
+        <form action="update_code.php" method="POST">
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary fw-medium" data-bs-dismiss="modal">Close</button>
+            <button type="submit" name="update_inventory" class="btn btn-primary fw-medium">Update Item</button>
+          </div>
+        </form>
     </div>
   </div>
 </div>
 
 <!---->
 <div class="d-flex content">
-<div id="sidebar" class="sidebar-color">
-            <div class="sidebar-heading">
-                <img src="Images/Logo.jpg" alt="Bootstrap" class="logo">The Good Shots
-            </div>
-            <div class="list-group list-group-flush mt-0">
-                <a href="dashboard.php" class="list-group-item active">
-                    <i class="fas fa-tachometer-alt me-3"></i>Dashboard
-                <div class="product-dropdown">
-                    <a href="addproduct.php" class="list-group-item" id="product-toggle">
-                        <i class="fa-brands fa-product-hunt me-3"></i>Product Management
-                    </a>
-                </div>
-                <a href="inventoryManage.php" class="list-group-item">
-                    <i class="fas fa-shopping-cart me-3"></i>Inventory Management
-                </a>
-                <a href="purchase_order.php" class="list-group-item">
-                    <i class="fa-solid fa-money-bill me-3"></i>Purchase Order
-                </a>
-                
-                <a href="delivery.php" class="list-group-item">
-                    <i class="fa-solid fa-truck me-3"></i>Delivery
-                </a>
-                <div class="reports-dropdown">
-                    <a href="#" class="list-group-item" id="reports-toggle">
-                        <i class="fa-solid fa-calendar-days me-3"></i></i>Reports<i
-                            class="fa-solid fa-chevron-right toggle-arrow-reports" id="reports-arrow"></i>
-                    </a>
-                    <div class="submenu" id="reports-submenu">
-                        <a href="discrepancy.php" class="sub-list-item">
-                            <p class="txt-name-btn">Discrepancy Report</p>
-                        </a>
-                        <a href="inventoryReport.php" class="sub-list-item">
-                            <p class="txt-name-btn">Inventory Report</p>
-                        </a>
-                        <a href="salesReport.php" class="sub-list-item">
-                            <p class="txt-name-btn">Sales Report</p>
-                        </a>
-                    </div>
-                </div>
-            </div>
+  <div id="sidebar" class="sidebar-color">
+    <div class="sidebar-heading">
+      <img src="Images/Logo.jpg" alt="Bootstrap" class="logo">The Good Shots
+    </div>
+    <div class="list-group list-group-flush mt-0">
+      <a href="index.php" class="list-group-item">
+        <i class="fas fa-tachometer-alt me-3"></i>Dashboard
+        <a href="addprouct.php" class="list-group-item">
+          Product Management
+        </a>
+        <a href="inventoryManage.php" class="list-group-item active">
+          <i class="fas fa-shopping-cart me-3"></i>Inventory Management
+        </a>
+        <a href="purchase_order.php" class="list-group-item">
+          <i class="fa-solid fa-money-bill me-3"></i>Purchase Order
+        </a>
+
+        <a href="delivery.php" class="list-group-item">
+          <i class="fa-solid fa-truck me-3"></i>Delivery
+        </a>
+        <div class="reports-dropdown">
+          <a href="#" class="list-group-item" id="reports-toggle">
+            <i class="fa-solid fa-calendar-days me-3"></i></i>Reports<i
+              class="fa-solid fa-chevron-right toggle-arrow-reports" id="reports-arrow"></i>
+          </a>
+          <div class="submenu" id="reports-submenu">
+            <a href="discrepancy.php" class="sub-list-item">
+              <p class="txt-name-btn">Discrepancy Report</p>
+            </a>
+            <a href="inventoryReport.php" class="sub-list-item">
+              <p class="txt-name-btn">Inventory Report</p>
+            </a>
+            <a href="salesReport.php" class="sub-list-item">
+              <p class="txt-name-btn">Sales Report</p>
+            </a>
+          </div>
         </div>
+    </div>
+  </div>
   <div id="page-content-wrapper">
     <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-4 mt-2 dashboard-nav">
       <div class="d-flex align-items-center">
@@ -355,156 +357,156 @@
       </button>
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
-                        <a class="nav-link fw-bold cashier-link me-3" href="order.php"
-                            style="color: black; font-weight: 200; font-size: 17px; border-radius: 20px; width: 120px; text-align: center;">
-                            <i class="fa-solid fa-cash-register me-2"></i>
-                            Orders
-                        </a>
-                        <a class="nav-link fw-bold notification-link me-3" href="#"
-                            style="color: black; font-weight: 200; font-size: 17px; border-radius: 20px;">
-                            <img src="icons/notifications-alert-svgrepo-com.svg" alt="" class="topnavbar-icons">
-                            Notifications
-                        </a>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle fw-bold notification-link " href="#"
-                                style="color: black; font-weight: 200; font-size: 18px; border-radius: 20px;" id="navbarDropdown"
-                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="icons/profile-round-1342-svgrepo-com.svg" alt="" class="user-icons">
-                                Admin
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Profile</a></li>
-                                <li><a class="dropdown-item" href="#">Settings</a></li>
-                                <li><a class="dropdown-item" href="#">Logout</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
+        <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
+          <a class="nav-link fw-bold cashier-link me-3" href="order.php"
+            style="color: black; font-weight: 200; font-size: 17px; border-radius: 20px; width: 120px; text-align: center;">
+            <i class="fa-solid fa-cash-register me-2"></i>
+            Orders
+          </a>
+          <a class="nav-link fw-bold notification-link me-3" href="#"
+            style="color: black; font-weight: 200; font-size: 17px; border-radius: 20px;">
+            <img src="icons/notifications-alert-svgrepo-com.svg" alt="" class="topnavbar-icons">
+            Notifications
+          </a>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle fw-bold notification-link " href="#"
+              style="color: black; font-weight: 200; font-size: 18px; border-radius: 20px;" id="navbarDropdown"
+              role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="icons/profile-round-1342-svgrepo-com.svg" alt="" class="user-icons">
+              Admin
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="#">Profile</a></li>
+              <li><a class="dropdown-item" href="#">Settings</a></li>
+              <li><a class="dropdown-item" href="#">Logout</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
     </nav>
 
     <div class="container-responsive" style="margin-top: 40px; padding: 15px;">
-        <div class="col-lg-12">
+      <div class="col-lg-12">
 
-          <?php
-          if (isset($_SESSION['status']) && $_SESSION['status'] != '') {
-            ?>
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-              <?php echo $_SESSION['status']; ?>
-              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-            <script>
-              const alert = document.querySelector('.alert');
-              setTimeout(() => {
-                alert.style.display = 'none';
-              }, 3000);
-            </script>
-            <?php
-            unset($_SESSION['status']);
-          }
-
+        <?php
+        if (isset($_SESSION['status']) && $_SESSION['status'] != '') {
           ?>
-           <div class="card shadow">
-            <div class="card-header">
-              <button type="button" class="btn btn-primary float-end fw-medium btn-add" data-bs-toggle="modal"
-                data-bs-target="#addUserData">
-                Add New User
-              </button>
-            </div>
-            <div class="card-body mt-1">
-              <table id="user-management" class="table table-striped">
-                <thead>
-                  <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Supplier</th>
-                      <th scope="col">Product Name</th>
-                      <th scope="col">Package Quantity</th>
-                      <th scope="col">Measurement Per Package</th>
-                      <th scope="col">Total Measurement</th>
-                      <th scope="col">Category</th>
-                      <th scope="col">Unit</th>
-                      <th scope="col">Expiry Date</th>
-                        
-                      <th scope="col" class = "size-table">Action</th>
-                  </tr>
-                </thead>
-                  <tbody>
-                  <?php
-                  $connection = mysqli_connect("localhost", "root", "", "tgs_inventory");
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?php echo $_SESSION['status']; ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          <script>
+            const alert = document.querySelector('.alert');
+            setTimeout(() => {
+              alert.style.display = 'none';
+            }, 3000);
+          </script>
+          <?php
+          unset($_SESSION['status']);
+        }
 
-                  $fetch_query = "SELECT * FROM inventory";
-                  $fetch_query_run = mysqli_query($connection, $fetch_query);
+        ?>
+        <div class="card shadow">
+          <div class="card-header">
+            <button type="button" class="btn btn-primary float-end fw-medium btn-add" data-bs-toggle="modal"
+              data-bs-target="#addUserData">
+              Add New User
+            </button>
+          </div>
+          <div class="card-body mt-1">
+            <table id="inventoryManagement" class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">Supplier</th>
+                  <th scope="col">Product Name</th>
+                  <th scope="col">Package Quantity</th>
+                  <th scope="col">Measurement Per Package</th>
+                  <th scope="col">Total Measurement</th>
+                  <th scope="col">Category</th>
+                  <th scope="col">Unit</th>
+                  <th scope="col">Expiry Date</th>
 
-                  if (mysqli_num_rows($fetch_query_run) > 0) {
-                    while ($row = mysqli_fetch_array($fetch_query_run)) {
-                      ?>
-                      <tr>
-                        <td class="user_id"><?php echo $row['id']; ?></td>
-                        <td><?php echo $row['supplier']; ?></td>
-                <td><?php echo $row['product_name']; ?></td>
-                <td><?php echo $row['package_quantity']; ?></td>
-                <td><?php echo $row['measurement_per_package']; ?></td>
-                <td><?php echo $row['total_measurement']; ?></td>
-                <td><?php echo $row['category']; ?></td>
-                <td><?php echo $row['unit']; ?></td>
-                <td><?php echo $row['Expiry_Date']; ?></td>
-                        <td>
-                          <a href="#" class="btn btn-info btn-base view_data">View Data</a>
-                          <a href="#" class="btn btn-success btn-base edit_data">Edit Data</a>
-                          <a href="" class="btn btn-danger btn-base delete_data">Delete Data</a>
-                        </td>
-                      </tr>
-                      <?php
-                    }
-                  } else {
-                    echo "<tr><td colspan='6'></td></tr>";
+                  <th scope="col" class="size-table">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php
+                $connection = mysqli_connect("localhost", "root", "", "tgs_inventory");
+
+                $fetch_query = "SELECT * FROM inventory";
+                $fetch_query_run = mysqli_query($connection, $fetch_query);
+
+                if (mysqli_num_rows($fetch_query_run) > 0) {
+                  while ($row = mysqli_fetch_array($fetch_query_run)) {
+                    ?>
+                    <tr>
+                      <td class="user_id"><?php echo $row['id']; ?></td>
+                      <td><?php echo $row['supplier']; ?></td>
+                      <td><?php echo $row['product_name']; ?></td>
+                      <td><?php echo $row['package_quantity']; ?></td>
+                      <td><?php echo $row['measurement_per_package']; ?></td>
+                      <td><?php echo $row['total_measurement']; ?></td>
+                      <td><?php echo $row['category']; ?></td>
+                      <td><?php echo $row['unit']; ?></td>
+                      <td><?php echo $row['Expiry_Date']; ?></td>
+                      <td>
+                        <a href="#" class="btn btn-info btn-base view_data">View Data</a>
+                        <a href="#" class="btn btn-success btn-base edit_data">Edit Data</a>
+                        <a href="" class="btn btn-danger btn-base delete_data">Delete Data</a>
+                      </td>
+                    </tr>
+                    <?php
                   }
-                  ?>
-                </tbody>
-              </table>
-            </div>
+                } else {
+                  echo "<tr><td colspan='6'></td></tr>";
+                }
+                ?>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <script>
-        $(document).ready(function () {
-                $("#product-toggle").click(function (e) {
-                e.preventDefault();
-                $("#product-submenu").slideToggle();
-                const productArrow = $("#product-arrow");
-                if (productArrow.hasClass("fa-chevron-right")) {
-                    productArrow.removeClass("fa-chevron-right").addClass("fa-chevron-down");
-                } else {
-                    productArrow.removeClass("fa-chevron-down").addClass("fa-chevron-right");
-                }
-            });
+  <script>
+    $(document).ready(function () {
+      $("#product-toggle").click(function (e) {
+        e.preventDefault();
+        $("#product-submenu").slideToggle();
+        const productArrow = $("#product-arrow");
+        if (productArrow.hasClass("fa-chevron-right")) {
+          productArrow.removeClass("fa-chevron-right").addClass("fa-chevron-down");
+        } else {
+          productArrow.removeClass("fa-chevron-down").addClass("fa-chevron-right");
+        }
+      });
 
-            $("#supplier-toggle").click(function (e) {
-                e.preventDefault();
-                $("#supplier-submenu").slideToggle();
-                const supplierArrow = $("#supplier-arrow");
-                if (supplierArrow.hasClass("fa-chevron-right")) {
-                    supplierArrow.removeClass("fa-chevron-right").addClass("fa-chevron-down");
-                } else {
-                    supplierArrow.removeClass("fa-chevron-down").addClass("fa-chevron-right");
-                }
-            });
+      $("#supplier-toggle").click(function (e) {
+        e.preventDefault();
+        $("#supplier-submenu").slideToggle();
+        const supplierArrow = $("#supplier-arrow");
+        if (supplierArrow.hasClass("fa-chevron-right")) {
+          supplierArrow.removeClass("fa-chevron-right").addClass("fa-chevron-down");
+        } else {
+          supplierArrow.removeClass("fa-chevron-down").addClass("fa-chevron-right");
+        }
+      });
 
-            $("#reports-toggle").click(function (e) {
-                e.preventDefault();
-                $("#reports-submenu").slideToggle();
-                const reportsArrow = $("#reports-arrow");
-                if (reportsArrow.hasClass("fa-chevron-right")) {
-                    reportsArrow.removeClass("fa-chevron-right").addClass("fa-chevron-down");
-                } else {
-                    reportsArrow.removeClass("fa-chevron-down").addClass("fa-chevron-right");
-                }
-            });
-        });
-    </script>
-</body>
+      $("#reports-toggle").click(function (e) {
+        e.preventDefault();
+        $("#reports-submenu").slideToggle();
+        const reportsArrow = $("#reports-arrow");
+        if (reportsArrow.hasClass("fa-chevron-right")) {
+          reportsArrow.removeClass("fa-chevron-right").addClass("fa-chevron-down");
+        } else {
+          reportsArrow.removeClass("fa-chevron-down").addClass("fa-chevron-right");
+        }
+      });
+    });
+  </script>
+  </body>
 
 </html>
 

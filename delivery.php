@@ -5,20 +5,34 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=1024, initial-scale=1.0" />
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#deliveryTable').DataTable();
+        });
+    </script>
+    <!--Design-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="dashboard.css" />
-    <title>Dashboard</title>
+    <title>The Good Shots</title>
 </head>
 
 <body>
-<div class="d-flex content">
+    <div class="d-flex content">
         <div id="sidebar" class="sidebar-color">
             <div class="sidebar-heading">
                 <img src="Images/Logo.jpg" alt="Bootstrap" class="logo">The Good Shots
             </div>
             <div class="list-group list-group-flush mt-0">
-                <a href="dashboard.php" class="list-group-item active">
+                <a href="index.php" class="list-group-item">
                     <i class="fas fa-tachometer-alt me-3"></i>Dashboard
                 </a>
                 <a href="adduser.php" class="list-group-item">
@@ -49,7 +63,7 @@
                         </a>
                     </div>
                 </div>
-                <a href="delivery.php" class="list-group-item">
+                <a href="delivery.php" class="list-group-item active">
                     <i class="fa-solid fa-truck me-3"></i>Delivery
                 </a>
                 <div class="reports-dropdown">
@@ -74,7 +88,7 @@
         <div id="page-content-wrapper">
             <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-4 mt-2 dashboard-nav">
                 <div class="d-flex align-items-center">
-                    <h2 class="fs-3 m-1">Dashboard</h2>
+                    <h2 class="fs-3 m-1">Delivery</h2>
                 </div>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -91,8 +105,8 @@
                         </a>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle fw-bold notification-link " href="#"
-                                style="color: black; font-weight: 200; font-size: 18px; border-radius: 20px;" id="navbarDropdown"
-                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                style="color: black; font-weight: 200; font-size: 18px; border-radius: 20px;"
+                                id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <img src="icons/profile-round-1342-svgrepo-com.svg" alt="" class="user-icons">
                                 Admin
                             </a>
@@ -105,48 +119,82 @@
                     </ul>
                 </div>
             </nav>
-            <div class="container-fluid px-4 mt-5">
-    </div>
-    </div>
+            <div class="container-responsive mt-5">
+                <div class="col-sm-12 col-lg-20">
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <script>
-        $(document).ready(function () {
-                $("#product-toggle").click(function (e) {
-                e.preventDefault();
-                $("#product-submenu").slideToggle();
-                const productArrow = $("#product-arrow");
-                if (productArrow.hasClass("fa-chevron-right")) {
-                    productArrow.removeClass("fa-chevron-right").addClass("fa-chevron-down");
-                } else {
-                    productArrow.removeClass("fa-chevron-down").addClass("fa-chevron-right");
-                }
-            });
+                    <?php
+                    if (isset($_SESSION['status']) && $_SESSION['status'] != '') {
+                        ?>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <?php echo $_SESSION['status']; ?>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        <script>
+                            const alert = document.querySelector('.alert');
+                            setTimeout(() => {
+                                alert.style.display = 'none';
+                            }, 3000);
+                        </script>
+                        <?php
+                        unset($_SESSION['status']);
+                    }
 
-            $("#supplier-toggle").click(function (e) {
-                e.preventDefault();
-                $("#supplier-submenu").slideToggle();
-                const supplierArrow = $("#supplier-arrow");
-                if (supplierArrow.hasClass("fa-chevron-right")) {
-                    supplierArrow.removeClass("fa-chevron-right").addClass("fa-chevron-down");
-                } else {
-                    supplierArrow.removeClass("fa-chevron-down").addClass("fa-chevron-right");
-                }
-            });
+                    ?>
+                    <div class="card shadow">
+                        <div class="card-header">
+                            <button type="button" class="btn btn-primary float-end fw-medium btn-add"
+                                data-bs-toggle="modal" data-bs-target="#addUserData">
+                                Add New Supplier
+                            </button>
+                        </div>
+                        <div class="card-body mt-1">
+                            <table id="deliveryTable" class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Supplier Name</th>
+                                        <th scope="col">Contact Number</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col" class="size-table">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
 
-            $("#reports-toggle").click(function (e) {
-                e.preventDefault();
-                $("#reports-submenu").slideToggle();
-                const reportsArrow = $("#reports-arrow");
-                if (reportsArrow.hasClass("fa-chevron-right")) {
-                    reportsArrow.removeClass("fa-chevron-right").addClass("fa-chevron-down");
-                } else {
-                    reportsArrow.removeClass("fa-chevron-down").addClass("fa-chevron-right");
-                }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function () {
+                $("#supplier-toggle").click(function (e) {
+                    e.preventDefault();
+                    $("#supplier-submenu").slideToggle();
+                    const supplierArrow = $("#supplier-arrow");
+                    if (supplierArrow.hasClass("fa-chevron-right")) {
+                        supplierArrow.removeClass("fa-chevron-right").addClass("fa-chevron-down");
+                    } else {
+                        supplierArrow.removeClass("fa-chevron-down").addClass("fa-chevron-right");
+                    }
+                });
+
+                $("#reports-toggle").click(function (e) {
+                    e.preventDefault();
+                    $("#reports-submenu").slideToggle();
+                    const reportsArrow = $("#reports-arrow");
+                    if (reportsArrow.hasClass("fa-chevron-right")) {
+                        reportsArrow.removeClass("fa-chevron-right").addClass("fa-chevron-down");
+                    } else {
+                        reportsArrow.removeClass("fa-chevron-down").addClass("fa-chevron-right");
+                    }
+                });
             });
-        });
-    </script>
+        </script>
 </body>
 
 </html>
+<?php include('function/viewdata.js'); ?>
+<?php include('function/editdata.js'); ?>
+<?php include('function/remove.js'); ?>
