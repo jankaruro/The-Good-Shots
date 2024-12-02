@@ -1,5 +1,6 @@
-<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-            <script>
+           
+           
+           <script>
                 $(document).ready(function () {
                     $("#supplier-toggle").click(function (e) {
                         e.preventDefault();

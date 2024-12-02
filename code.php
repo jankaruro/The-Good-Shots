@@ -8,6 +8,7 @@ if (isset($_POST['save_user'])) {
     $first_name = $_POST['first_name'];
     $last_name = $_POST['last_name'];
     $email = $_POST['email'];
+    $username = $_POST['username'];
     $password = $_POST['password'];
     $role = $_POST['role'];
 
@@ -21,7 +22,7 @@ if (isset($_POST['save_user'])) {
         exit();
     } else {
         // Insert new user
-        $insert_query = "INSERT INTO users (first_name, last_name, email, password, role) VALUES ('$first_name', '$last_name', '$email', '$password', '$role')";
+        $insert_query = "INSERT INTO users (first_name, last_name, email,username, password, role) VALUES ('$first_name', '$last_name', '$email','$username', '$password', '$role')";
         if (mysqli_query($connection, $insert_query)) {
             $_SESSION['status'] = "User  added successfully!";
         } else {
@@ -126,124 +127,112 @@ if (isset($_POST['click_delete_btn'])) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-//insert addsupplier
 if (isset($_POST['add_supplier'])) {
     $supplier_name = $_POST['supplier_name'];
-    $address = $_POST['address'];
-    $contact_person = $_POST['contact_person'];
-    $email = $_POST['email'];
+    $contact_number = $_POST['contact_number'];
     $status = $_POST['status'];
 
-    // Check if email already exists
-    $check_supplier_name_query = "SELECT * FROM suppliers WHERE supplier_name='$supplier_name'";
-    $check_supplier_name_result = mysqli_query($connection, $check_supplier_name_query);
+    // Check if supplier already exists
+    $stmt = $connection->prepare("SELECT * FROM suppliers WHERE supplier_name = ?");
+    $stmt->bind_param("s", $supplier_name);
+    $stmt->execute();
+    $check_supplier_name_result = $stmt->get_result();
 
-    if (mysqli_num_rows($check_supplier_name_result) > 0) {
+    if ($check_supplier_name_result->num_rows > 0) {
         $_SESSION['status'] = "Supplier already exists!";
-        header("Location: addsupplier.php"); // Redirect back to the page
+        header("Location: addsupplier.php");
         exit();
     } else {
-        // Insert new user
-        $insert_query = "INSERT INTO suppliers (supplier_name, address, contact_person, email, status) VALUES ('$supplier_name', '$address', '$contact_person', '$email', '$status')";
-        if (mysqli_query($connection, $insert_query)) {
-            $_SESSION['status'] = "Supplier  added successfully!";
+        // Insert new supplier
+        $insert_stmt = $connection->prepare("INSERT INTO suppliers (supplier_name, contact_number, status) VALUES (?, ?, ?)");
+        $insert_stmt->bind_param("sss", $supplier_name, $contact_number, $status);
+        if ($insert_stmt->execute()) {
+            $_SESSION['status'] = "Supplier added successfully!";
         } else {
-            $_SESSION['status'] = "Error: " . mysqli_error($connection);
+            $_SESSION['status'] = "Error: " . $insert_stmt->error;
         }
-        header("Location: addsupplier.php"); // Redirect back to the page
+        header("Location: addsupplier.php");
         exit();
     }
 }
-//view addsupplier
+
+// View Supplier
 if (isset($_POST['click_view_supp_btn'])) {
     $id = $_POST['supplier_id'];
 
-    $fetch_query = "SELECT * FROM suppliers WHERE id = '$id'";
-    $fetch_query_run = mysqli_query($connection, $fetch_query);
+    $fetch_query = $connection->prepare("SELECT * FROM suppliers WHERE id = ?");
+    $fetch_query->bind_param("i", $id);
+    $fetch_query->execute();
+    $fetch_query_run = $fetch_query->get_result();
 
-
-    if (mysqli_num_rows($fetch_query_run) > 0) {
-
-        while ($row = mysqli_fetch_array($fetch_query_run)) {
+    if ($fetch_query_run->num_rows > 0) {
+        while ($row = $fetch_query_run->fetch_assoc()) {
             echo '
             <h6>ID: ' . $row['id'] . '</h6>
-        <h6>Supplier Name: ' . $row['supplier_name'] . '</h6>
-        <h6>Address: ' . $row['address'] . '</h6>
-        <h6>Contact Person: ' . $row['contact_person'] . '</h6>
-         <h6>Email: ' . $row['email'] . '</h6>
-        <h6>Status: ' . $row['status'] . '</h6>
-        ';
-
+            <h6>Supplier Name: ' . $row['supplier_name'] . '</h6>
+            <h6>Contact Number: ' . $row['contact_number'] . '</h6>
+            <h6>Status: ' . $row['status'] . '</h6>
+            ';
         }
     } else {
-        echo '<h4>no records found</h4>';
-
+        echo '<h4>No records found</h4>';
     }
 }
 
-//edit adduaddsupplierser
+// Edit Supplier
 if (isset($_POST['click_edit_supp_btn'])) {
     $id = $_POST['supplier_id'];
     $arrayresult = [];
 
-    $fetch_query = "SELECT * FROM suppliers WHERE id = '$id'";
-    $fetch_query_run = mysqli_query($connection, $fetch_query);
+    $fetch_query = $connection->prepare("SELECT * FROM suppliers WHERE id = ?");
+    $fetch_query->bind_param("i", $id);
+    $fetch_query->execute();
+    $fetch_query_run = $fetch_query->get_result();
 
-
-    if (mysqli_num_rows($fetch_query_run) > 0) {
-
-        while ($row = mysqli_fetch_array($fetch_query_run)) {
-
+    if ($fetch_query_run->num_rows > 0) {
+        while ($row = $fetch_query_run->fetch_assoc()) {
             array_push($arrayresult, $row);
-            header('content-type: application/json');
-            echo json_encode($arrayresult);
-
         }
+        header('Content-Type: application/json');
+        echo json_encode($arrayresult);
     } else {
-        echo '<h4>no records found</h4>';
-
+        echo '<h4>No records found</h4>';
     }
 }
 
-// Update addsupplier
+// Update Supplier
 if (isset($_POST['update_supplier'])) {
-    $id = $_POST['id']; // Ensure you retrieve the user ID
-    $supplier_name = $_POST['suppliername']; // Ensure you use the correct variable names
-    $address = $_POST['address'];
-    $contact_person = $_POST['contactperson'];
-    $email = $_POST['email'];
+    $id = $_POST['id'];
+    $supplier_name = $_POST['suppliername'];
+    $contact_number = $_POST['contactnumber'];
     $status = $_POST['status'];
 
     // Prepare the update query
-    $update_query = "UPDATE suppliers SET supplier_name = '$supplier_name', address = '$address', contact_person = '$contact_person', email = '$email', status = '$status' WHERE id = '$id'";
+    $update_query = $connection->prepare("UPDATE suppliers SET supplier_name = ?, contact_number = ?, status = ? WHERE id = ?");
+    $update_query->bind_param("sssi", $supplier_name, $contact_number, $status, $id);
 
     // Execute the update query
-    $update_query_run = mysqli_query($connection, $update_query);
-
-    if ($update_query_run) {
+    if ($update_query->execute()) {
         $_SESSION['status'] = "Data updated successfully";
-        header('location: addsupplier.php');
+        header('Location: addsupplier.php');
         exit();
     } else {
-        $_SESSION['status'] = "Data update failed: " . mysqli_error($connection);
-        header('location: addsupplier.php');
+        $_SESSION['status'] = "Data update failed: " . $update_query->error;
+        header('Location: addsupplier.php');
         exit();
     }
 }
 
-//delete addsupplier
+// Delete Supplier
 if (isset($_POST['click_delete_supp_btn'])) {
     $id = $_POST['supplier_id'];
-    $delete_query = "DELETE FROM suppliers WHERE id='$id'";
-    $delete_query_run = mysqli_query($connection, $delete_query);
-
-    if ($delete_query_run) {
-        echo "data deleted successfully";
+    $delete_query = $connection->prepare("DELETE FROM suppliers WHERE id = ?");
+    $delete_query->bind_param("i", $id);
+    if ($delete_query->execute()) {
+        echo "Data deleted successfully";
     } else {
-
-        echo "data deletion failed";
+        echo "Data deletion failed: " . $delete_query->error;
     }
-
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

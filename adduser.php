@@ -1,6 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -47,6 +44,10 @@
           <div class="form-group">
             <label class="fs-5 mt-1 fw-bolder">Email</label>
             <input type="email" class="form-control fw-medium" name="email" placeholder="Enter Email">
+          </div>
+          <div class="form-group">
+            <label class="fs-5 mt-1 fw-bolder">Username</label>
+            <input type="text" class="form-control fw-medium" name="username" placeholder="Enter Username">
           </div>
           <div class="form-group">
             <label class="fs-5 mt-1 fw-bolder">Password</label>
@@ -152,7 +153,7 @@
                 <img src="Images/Logo.jpg" alt="Bootstrap" class="logo">The Good Shots
             </div>
             <div class="list-group list-group-flush mt-0">
-                <a href="dashboard.php" class="list-group-item">
+                <a href="index.php" class="list-group-item">
                     <i class="fas fa-tachometer-alt me-3"></i>Dashboard
                 </a>
                 <a href="adduser.php" class="list-group-item active">
@@ -260,38 +261,13 @@
                     <th scope="col">First Name</th>
                       <th scope="col">Last Name</th>
                       <th scope="col">Email</th>
+                      <th scope="col">Username</th>
                       <th scope="col">Role</th>
                       <th scope="col" class = "size-table">Action</th>
                   </tr>
                 </thead>
                   <tbody>
-                  <?php
-                  $connection = mysqli_connect("localhost", "root", "", "tgs_inventory");
-
-                  $fetch_query = "SELECT * FROM users";
-                  $fetch_query_run = mysqli_query($connection, $fetch_query);
-
-                  if (mysqli_num_rows($fetch_query_run) > 0) {
-                    while ($row = mysqli_fetch_array($fetch_query_run)) {
-                      ?>
-                      <tr>
-                        <td class="user_id"><?php echo $row['id']; ?></td>
-                        <td><?php echo $row['first_name']; ?></td>
-                        <td><?php echo $row['last_name']; ?></td>
-                        <td><?php echo $row['email']; ?></td>
-                        <td><?php echo $row['role']; ?></td>
-                        <td>
-                          <a href="#" class="btn btn-info btn-base view_data">View </a>
-                          <a href="#" class="btn btn-success btn-base edit_data">Edit </a>
-                          <a href="" class="btn btn-danger btn-base delete_user">Delete </a>
-                        </td>
-                      </tr>
-                      <?php
-                    }
-                  } else {
-                    echo "<tr><td colspan='6'></td></tr>";
-                  }
-                  ?>
+                
                 </tbody>
               </table>
             </div>
@@ -340,6 +316,3 @@
 
 </html>
 
-<?php include('function/viewdata.js'); ?>
-<?php include('function/editdata.js'); ?>
-<?php include('function/remove.js'); ?>

@@ -3,20 +3,7 @@ session_start();
 include('header.php');
 include('connection.php'); // Ensure connection is included at the beginning
 
-// Fetch suppliers for the dropdown
-$query = "SELECT po.po_number, 
-                 po.created_at, 
-                 po.qty_received, 
-                 pod.quantity , 
-                 pod.product_name, 
-                 pod.unit_price, 
-                 pod.amount, 
-                 pod.supplier_name,
-                 pod.status  
-          FROM purchase_orders po
-          LEFT JOIN purchase_order_details pod ON po.po_number = pod.po_id";
 
-$query_run = $conn->query($query);
 ?>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="function/po_database.js"> </script>
@@ -231,46 +218,7 @@ $query_run = $conn->query($query);
                 </tr>
               </thead>
               <tbody>
-                <?php
-                if ($query_run && $query_run->rowCount() > 0) {
-                  foreach ($query_run as $row) {
-                    $status = isset($row['status']) ? $row['status'] : 'pending'; 
-                    $disableEdit = $status === 'complete' ? 'disabled' : '';
-                    $rowColorClass = '';
-
-                    switch ($status) {
-                      case 'complete':
-                        $rowColorClass = 'table-success';
-                        break;
-                      case 'incomplete':
-                        $rowColorClass = 'table-incomplete';
-                        break;
-                      case 'pending':
-                        $rowColorClass = 'table-pending';
-                        break;
-                      default:
-                        $rowColorClass = '';
-                    }
-                    ?>
-                    <tr class="<?php echo htmlspecialchars($rowColorClass); ?>">
-                      <td><?php echo htmlspecialchars($row['po_number']); ?></td>
-                      <td><?php echo htmlspecialchars($row['quantity']); ?></td>
-                      <td><?php echo htmlspecialchars($row['qty_received']); ?></td>
-                      <td><?php echo htmlspecialchars($row['supplier_name']); ?></td>
-                      <td><?php echo htmlspecialchars(date('Y-m-d', strtotime($row['created_at']))); ?></td>
-                      <td><?php echo htmlspecialchars($status); ?></td>
-                      <td>
-                        <button class="btn btn-info btn-sm view_data" data-bs-toggle="modal" data-bs-target="#viewModal" data-id="<?php echo htmlspecialchars($row['po_number']); ?>">View</button>
-                        <button class="btn btn-success btn-sm edit_data" data-bs-toggle="modal" data-bs-target="#editModal" data-id="<?php echo htmlspecialchars($row['po_number']); ?>" <?php echo $disableEdit; ?>>Edit</button>
-                        <button class="btn btn-danger btn-sm delete_data" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="<?php echo htmlspecialchars($row['po_number']); ?>">Delete</button>
-                      </td>
-                    </tr>
-                    <?php
-                  }
-                } else {
-                  echo "<tr><td colspan='7'>No Records Found</td></tr>";
-                }
-                ?>
+               
               </tbody>
             </table>
           </div>
@@ -280,7 +228,3 @@ $query_run = $conn->query($query);
   </div>
 </div>
 
-<?php include('footer.php'); ?>
-<?php include('function/viewdata.js'); ?>
-<?php include('function/editdata.js'); ?>
-<?php include('function/remove.js'); ?>
