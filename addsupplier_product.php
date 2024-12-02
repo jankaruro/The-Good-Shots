@@ -27,27 +27,7 @@ include('header.php'); ?>
                         <label for=""><b>Category</b></label>
                         <select class="form-control" id="category" name="category" required>
                             <option value="">-- Select Category --</option>
-                            <?php
-                    
-                            include('connection.php');
-
-                            
-                            $stmt = $conn->prepare("SELECT name FROM category");
-                            $stmt->execute();
-                            $result = $stmt->fetchAll();
-
-                         
-                            if (count($result) > 0) {
-                              
-                                foreach ($result as $row) {
-                                    echo "<option value='" . $row['name'] . "'>" . $row['name'] . "</option>";
-                                }
-                            } else {
-                                echo "<option value=''>No categories found</option>";
-                            }
-
-                            $conn = null;
-                            ?>
+                           
                         </select>
                     </div>
 
@@ -102,28 +82,7 @@ include('header.php'); ?>
                     <label for=""><b>Supplier</b></label>
                     <select class="form-control" id="supplier" name="supplier" required>
 
-                        <?php
-                        // Connect to the database
-                        include('connection.php');
-
-                        // Retrieve categories from the database
-                        $stmt = $conn->prepare("SELECT supplier_name FROM suppliers");
-                        $stmt->execute();
-                        $result = $stmt->fetchAll();
-
-                        // Check if there are any categories
-                        if (count($result) > 0) {
-                            // Output the categories
-                            foreach ($result as $row) {
-                                echo "<option value='" . $row['supplier_name'] . "'>" . $row['supplier_name'] . "</option>";
-                            }
-                        } else {
-                            echo "<option value=''>No categories found</option>";
-                        }
-
-                        // Close the database connection
-                        $conn = null;
-                        ?>
+                        
                     </select>
                 </div>
 
@@ -140,28 +99,7 @@ include('header.php'); ?>
                     <label for=""><b>Category</b></label>
                     <select class="form-control" id="categor" name="categor" required>
                         <option value="">-- Select Category --</option>
-                        <?php
-                        // Connect to the database
-                        include('connection.php');
-
-                        // Retrieve categories from the database
-                        $stmt = $conn->prepare("SELECT name FROM category");
-                        $stmt->execute();
-                        $result = $stmt->fetchAll();
-
-                        // Check if there are any categories
-                        if (count($result) > 0) {
-                            // Output the categories
-                            foreach ($result as $row) {
-                                echo "<option value='" . $row['name'] . "'>" . $row['name'] . "</option>";
-                            }
-                        } else {
-                            echo "<option value=''>No categories found</option>";
-                        }
-
-                        // Close the database connection
-                        $conn = null;
-                        ?>
+                        
                     </select>
                 </div>
 
@@ -290,24 +228,7 @@ include('header.php'); ?>
             <div class="row justify-content-center">
                 <div class="col-sm-12 col-lg-20">
 
-                    <?php
-                    if (isset($_SESSION['status']) && $_SESSION['status'] != '') {
-                        ?>
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <?php echo $_SESSION['status']; ?>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                        <script>
-                            const alert = document.querySelector('.alert');
-                            setTimeout(() => {
-                                alert.style.display = 'none';
-                            }, 3000);
-                        </script>
-                        <?php
-                        unset($_SESSION['status']);
-                    }
-
-                    ?>
+                    
                     <div class="card" style = "margin-top: 60px;">
                         <div class="card-header">
                             <h3 class="text-center">Supplier Products</h3>
@@ -331,40 +252,7 @@ include('header.php'); ?>
                                 </thead>
 
                                 <tbody>
-                                    <?php
-                                    $connection = mysqli_connect("localhost", "root", "", "tgs_inventory");
-
-                                    $fetch_query = "SELECT * FROM supplier_products ";
-                                    $fetch_query_run = mysqli_query($connection, $fetch_query);
-
-                                    if (mysqli_num_rows($fetch_query_run) > 0) {
-                                        while ($row = mysqli_fetch_array($fetch_query_run)) {
-
-                                            ?>
-                                            <tr>
-                                                <td class="supplier_product_id"><?php echo $row['id']; ?></td>
-                                                <td><?php echo $row['supplier']; ?></td>
-                                                <td><?php echo $row['product_name']; ?></td>
-                                                <td><?php echo $row['price']; ?></td>
-                                                <td><?php echo $row['category']; ?></td>
-                                                <td>
-                                                    <a href="#" class="btn btn-info btn-base view_supplier_products">View
-                                                        Data</a>
-                                                    <a href="#" class="btn btn-success btn-base edit_supplier_products">Edit
-                                                        Data</a>
-                                                    <a href="" class="btn btn-danger btn-base delete_supplier_products">Delete
-                                                        Data</a>
-                                                </td>
-                                            </tr>
-                                            <?php
-
-                                        }
-                                    } else {
-                                        ?>
-                                        <tr colspan="5"> No Record Found </tr>
-                                        <?php
-                                    }
-                                    ?>
+                                    
                                 </tbody>
                             </table>
                         </div>
@@ -372,9 +260,3 @@ include('header.php'); ?>
                 </div>
             </div>
         </div>
-
-
-        <?php include('footer.php'); ?>
-        <?php include('function/viewdata.js'); ?>
-        <?php include('function/editdata.js'); ?>
-        <?php include('function/remove.js'); ?>

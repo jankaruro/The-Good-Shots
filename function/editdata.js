@@ -37,38 +37,32 @@
 
 
 $(document).ready(function () {
+    $('.editsupp').click(function (e) {
+        e.preventDefault();
+        var supplier_id = $(this).closest('tr').find('.supplier_id').text();
 
-$('.editsupp').click(function (e) {
-    e.preventDefault();
-    var supplier_id = $(this).closest('tr').find('.supplier_id').text();
-
-
-
-    $.ajax({
-        method: "POST",
-        url: "code.php",
-        data: {
-            'click_edit_supp_btn': true,
-            'supplier_id': supplier_id,
-        },
-        success: function (response) {
-            
-
-            $.each(response, function (Key, value) {
-                $('#id').val(value['id']);
-                $('[name="suppliername"]').val(value['supplier_name']);
-                $('[name="address"]').val(value['address']);
-                $('[name="contactperson"]').val(value['contact_person']);
-                $('[name="email"]').val(value['email']);
-                $('[name="status"]').val(value['status']);
-            });
-            $('#editData').modal('show');
-        }
-    });
-
-})
-
+        $.ajax({
+            method: "POST",
+            url: "code.php",
+            data: {
+                'click_edit_supp_btn': true,
+                'supplier_id': supplier_id,
+            },
+            success: function (response) {
+                // Assuming the response is JSON encoded
+                var data = JSON.parse(response);
+                $('#id').val(data.id);
+                $('[name="suppliername"]').val(data.supplier_name);
+                $('[name="contactnumber"]').val(data.contact_number);
+                $('[name="status"]').val(data.status);
+ $('#editData').modal('show');
+            }
+        });
+    })
+    
 });
+
+
 
 $(document).ready(function () {
 
@@ -88,11 +82,11 @@ $('.edit_category').click(function (e) {
         success: function (response) {
             
 
-            $.each(response, function (Key, value) {
+            $.each(JSON.parse(response), function (key, value) {
                 $('#id').val(value['id']);
-                $('[name="name"]').val(value['name']);
-                $('[name="description"]').val(value['description']);
-              
+                $('[name="suppliername"]').val(value['supplier_name']);
+                $('[name="contactnumber"]').val(value['contact_number']);
+                $('[name="status"]').val(value['status']);
             });
             $('#editData').modal('show');
         }

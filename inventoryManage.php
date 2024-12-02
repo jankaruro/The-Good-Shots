@@ -25,7 +25,7 @@
     <title>The Good Shots</title>
 </head>
 
-<!--Add User-->
+<!--Add User
 <div class="modal fade" id="addUserData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
   aria-labelledby="addUserDataLabel" aria-hidden="true">
   
@@ -145,7 +145,7 @@
       </form>
     </div>
   </div>
-</div>
+</div>-->
 
 <!---->
 <!--view-->
@@ -446,37 +446,7 @@
                   </tr>
                 </thead>
                   <tbody>
-                  <?php
-                  $connection = mysqli_connect("localhost", "root", "", "tgs_inventory");
-
-                  $fetch_query = "SELECT * FROM inventory";
-                  $fetch_query_run = mysqli_query($connection, $fetch_query);
-
-                  if (mysqli_num_rows($fetch_query_run) > 0) {
-                    while ($row = mysqli_fetch_array($fetch_query_run)) {
-                      ?>
-                      <tr>
-                        <td class="user_id"><?php echo $row['id']; ?></td>
-                        <td><?php echo $row['supplier']; ?></td>
-                <td><?php echo $row['product_name']; ?></td>
-                <td><?php echo $row['package_quantity']; ?></td>
-                <td><?php echo $row['measurement_per_package']; ?></td>
-                <td><?php echo $row['total_measurement']; ?></td>
-                <td><?php echo $row['category']; ?></td>
-                <td><?php echo $row['unit']; ?></td>
-                <td><?php echo $row['Expiry_Date']; ?></td>
-                        <td>
-                          <a href="#" class="btn btn-info btn-base view_data">View Data</a>
-                          <a href="#" class="btn btn-success btn-base edit_data">Edit Data</a>
-                          <a href="" class="btn btn-danger btn-base delete_data">Delete Data</a>
-                        </td>
-                      </tr>
-                      <?php
-                    }
-                  } else {
-                    echo "<tr><td colspan='6'></td></tr>";
-                  }
-                  ?>
+              
                 </tbody>
               </table>
             </div>
@@ -524,7 +494,3 @@
 </body>
 
 </html>
-
-<?php include('function/viewdata.js'); ?>
-<?php include('function/editdata.js'); ?>
-<?php include('function/remove.js'); ?>

@@ -104,9 +104,32 @@ function fetchProductPrice(productName, callback) {
 }
 
 function addToTable(productName, price, quantity) {
-  const table = document.getElementById("display").getElementsByTagName("tbody")[0];
-  let row = table.insertRow();
-  row.innerHTML = `<td>${productName}</td><td>${price.toFixed(2)}</td><td>${quantity}</td><td>${(price * quantity).toFixed(2)}</td><td><button onclick="removeItem(this)">Delete</button></td>`;
+    const table = document.getElementById("display").getElementsByTagName("tbody")[0];
+    let row = table.insertRow();
+    row.innerHTML = `
+        <td>${productName}</td>
+        <td>${price.toFixed(2)}</td>
+        <td><input type='number' value='${quantity}' min='1' onchange='updateRowTotal(this)'/></td>
+        <td>${(price * quantity).toFixed(2)}</td>
+        <td><button onclick="removeItem(this)">Delete</button></td>
+    `;
+}
+
+function updateRowTotal(input) {
+    const row = input.parentNode.parentNode; // Get the row containing the input
+    const price = parseFloat(row.cells[1].textContent); // Get the product price
+    const quantity = parseInt(input.value); // Get the new quantity from the input
+    const totalCell = row.cells[3]; // Get the total price cell
+
+    if (quantity < 1) {
+        alert("Quantity must be 1 or more.");
+        input.value = 1; // Reset to 1 if invalid
+        return;
+    }
+
+    const newTotal = (price * quantity).toFixed(2); // Calculate new total
+    totalCell.textContent = newTotal; // Update total price in the table
+    updateTotalPrice(); // Update the overall total price
 }
 
 function removeItem(button) {
