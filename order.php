@@ -7,59 +7,55 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="order.css">
     <title>Food & Orders</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
-  
 
-
-   <!-- Checkout Modal -->
-<!-- Checkout Modal -->
-<div id="checkoutModal" class="modal fade" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Confirm Purchase</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="mb-3">
-            <label for="totalPriceInput" class="form-label">Total Amount:</label>
-            <input type="text" class="form-control" id="totalPriceInput" readonly>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" onclick="applyDiscount('PWD')">PWD Discount</button>
-        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#discountModal">Senior Discount</button>
-      </div>
+    <!-- Checkout Modal -->
+    <div id="checkoutModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirm Purchase</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="totalPriceInput" class="form-label">Total Amount:</label>
+                            <input type="text" class="form-control" id="totalPriceInput" readonly>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="applyDiscount('PWD')">PWD Discount</button>
+                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#discountModal">Senior Discount</button>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 
-<!-- Modal for Discount -->
-<div class="modal fade" id="discountModal" tabindex="-1" aria-labelledby="discountModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="discountModalLabel">Apply Discount</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>Please choose a discount option:</p>
-        <button class="btn btn-primary" onclick="applyDiscount('PWD')">PWD Discount</button>
-        <button class="btn btn-primary" onclick="applyDiscount('SENIOR')">Senior Discount</button>
-        <p class="text-danger mt-3" id="discountError" style="display:none;">Invalid credentials!</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div>
+    <!-- Modal for Discount -->
+    <div class="modal fade" id="discountModal" tabindex="-1" aria-labelledby="discountModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="discountModalLabel">Apply Discount</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Please choose a discount option:</p>
+                    <button class="btn btn-primary" onclick="applyDiscount('PWD')">PWD Discount</button>
+                    <button class="btn btn-primary" onclick="applyDiscount('SENIOR')">Senior Discount</button>
+                    <p class="text-danger mt-3" id="discountError" style="display:none;">Invalid credentials!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 
     <div class="d-flex content">
         <div id="sidebar" class="sidebar-color">
@@ -80,7 +76,7 @@
                     <img src="icons/juice-svgrepo-com (1).svg" alt="" class="icons me-3">Smoothies
                 </a>
                 <a href="#frappe" class="list-group-item">
-                    <img src="icons/frappe-svgrepo-com (1).svg" alt="" class="icons me-3">Frappe
+                    <img src="icons/frappe-sv grepo-com (1).svg" alt="" class="icons me-3">Frappe
                 </a>
                 <a href="#croffle" class="list-group-item">
                     <img src="icons/waffle-svgrepo-com.svg" alt="" class="icons me-3">Croffle
@@ -89,7 +85,7 @@
                     <img src="icons/french-fries-svgrepo-com.svg" alt="" class="icons me-3">Fries
                 </a>
                 <a href="#cakes" class="list-group-item">
-                    <img src="icons/cake-4-svgrep-com.svg" alt="" class="icons me-3">Cakes
+                    <img src="icons/cake-4-svgrepo-com.svg" alt="" class="icons me-3">Cakes
                 </a>
                 <a href="#sandwich" class="list-group-item">
                     <img src="icons/sandwich-svgrepo-com (1).svg" alt="" class="icons me-3">Sandwich
@@ -135,203 +131,125 @@
             </nav>
 
             <div class="container-fluid">
-            <div class="order-container">
+                <div class="order-container">
+                    <?php
+                    require_once 'connection.php';
+                    $categories = ['Espresso', 'Fruit Tea', 'Mocktails', 'Smoothies', 'Frappe', 'Croffle', 'Fries', 'Cakes', 'Sandwich', 'Rice Meal'];
 
-            
-    <?php
-    require_once 'connection.php';
-    $categories = ['Espresso', 'Fruit Tea', 'Mocktails', 'Smoothies', 'Frappe', 'Croffle', 'Fries', 'Cakes', 'Sandwich', 'Rice Meal'];
+                    foreach ($categories as $category) {
+                        $sql = "SELECT * FROM products WHERE category = :category";
+                        $stmt = $conn->prepare($sql);
+                        $stmt->execute(['category' => $category]);
+                        $stmt->setFetchMode(PDO::FETCH_ASSOC);
 
-    foreach ($categories as $category) {
-        
-        $sql = "SELECT * FROM products WHERE category = :category";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute(['category' => $category]);
+                        if ($stmt->rowCount() > 0) {
+                            echo "<header><div class='name-text'><span class='label-name' id='" . strtolower(str_replace(' ', '-', $category)) . "'>$category</span></div></header>";
+                            echo "<div class ```html
+                            <div class='content flex'><div class='product-list'>";
 
-        $stmt->setFetchMode(PDO::FETCH_ASSOC);
-
-     
-        if ($stmt->rowCount() > 0) {
-            echo "<header><div class='name-text'><span class='label-name' id='" . strtolower(str_replace(' ', '-', $category)) . "'>$category</span></div></header>";
-            echo "<div class='content flex'><div class='product-list'>";
-
-          
-            while ($row = $stmt->fetch()) {
-                echo "<div class='coffee-card flex me-3'>
-                        <div class='quantity'>
-                            <div class='details'>
-                                <h3 class='coffee-name'>{$row['product_name']}</h3>
-                                <span class='coffee-price'>P{$row['price']}</span>
-                            </div>
-                            
-                            <div onclick='addord.call(this)' class='addtocart'>Add to Cart</div>
-                        </div>
-                    </div>";
-            }
-            echo "</div></div>";
-        } else {
-           
-            echo "<p>No $category products found</p>";
-        }
-    }
-    ?>
-</div>
+                            while ($row = $stmt->fetch()) {
+                                echo "<div class='coffee-card flex me-3'>
+                                        <div class='quantity'>
+                                            <div class='details'>
+                                                <h3 class='coffee-name'>{$row['product_name']}</h3>
+                                                <span class='coffee-price'>P{$row['price']}</span>
+                                            </div>
+                                            <input style='width: 100%; margin-bottom: 5px;' type='button' class='btn btn-primary' value='Add To Cart' onclick='addToCart(\"{$row['id']}\", \"{$row['product_name']}\", {$row['price']})'>
+                                        </div>
+                                    </div>";
+                            }
+                            echo "</div></div>";
+                        } else {
+                            echo "<p>No $category products found</p>";
+                        }
+                    }
+                    ?>
+                </div>
 
                 <div class="receipt receipt-fluid">
                     <div class="top-cart">
                         <h3 class="cart-name">Cart</h3>
                     </div>
                     <h3 class="order-name">Order Items</h3>
-                    <div class="order-list"></div>
-                    <div class="total-price">
-                        <div class="form-check">
-                            <button class="btn-discount" data-bs-toggle="modal" data-bs-target="#discountModal">Add Discount</button>
+                    <div class="cart">
+                        <div id="cart-tbl">
+                            <table class="table table-striped table-bordered table-hover" id="cart">
+                                <tr id="tbl_head">
+                                    <th>Item Name</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                    <th>Sub Total</th>
+                                    <th>Action</th>
+                                </tr>
+                            </table>
                         </div>
-                        <div class="total-amount">
+                    </div>
+                    <div class="total-price d-flex justify-content-between align-items-center">
+                        <button class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#discountModal">
+                            Add Discount
+                        </button>
+                        <div class="fw-bold">
                             Subtotal: <span id="totalAmount">P0.00</span>
                         </div>
                     </div>
-                    <button class="btn-order" data-bs-toggle="modal" data-bs-target="#checkoutModal" onclick="updateTotalPrice()">Check Out</button>
+                    <button class="btn btn-primary w-100 mt-3" data-bs-toggle="modal" data-bs-target="#checkoutModal" onclick="updateTotalPrice()">
+                        Check Out
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 </body>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    const orderList = document.querySelector(".order-list");
-    const totalAmountElement = document.getElementById("totalAmount");
-    let isDiscountApplied = false;
+let cart = [];
 
-    function addord() {
-        const coffeeCard = this.closest(".coffee-card");
-        const coffeeName = coffeeCard.querySelector(".coffee-name").innerText;
-        const coffeePrice = coffeeCard.querySelector(".coffee-price").innerText;
-        const priceValue = parseFloat(coffeePrice.replace(/[^\d.-]/g, ''));
+function addToCart(id, name, price) {
+    const existingItem = cart.find(item => item.id === id);
+    if (existingItem) {
+        existingItem.quantity++;
+    } else {
+        cart.push({ id, name, price, quantity: 1 });
+    }
+    updateCartDisplay();
+}
 
-        const orderItem = document.createElement("div");
-        orderItem.classList.add("order-item");
+function removeFromCart(id) {
+    cart = cart.filter(item => item.id !== id);
+    updateCartDisplay();
+}
 
-        orderItem.innerHTML = `
-            <span class="me-3 name-item">${coffeeName}</span>
-            <span class="me-2 price-item">P${priceValue.toFixed(2)}</span>
-            <input type="number" class="quantity-input" value="1" min="1" />
-            <img src="icons/trash-alt-svgrepo-com.svg" alt="trash" class="remove remove-item" />
-        `;
+function updateCartDisplay() {
+    const cartTable = document.getElementById('cart');
+    const totalAmountElement = document.getElementById('totalAmount');
+    let total = 0;
 
-        const quantityInput = orderItem.querySelector(".quantity-input");
-        quantityInput.addEventListener("input", updateTotalPrice);
-
-        const removeButton = orderItem.querySelector(".remove-item");
-        removeButton.addEventListener("click", function () {
-            orderItem.remove();
-            updateTotalPrice();
-        });
-
-        orderList.appendChild(orderItem);
-        updateTotalPrice();
+    // Clear existing rows except for the header
+    while (cartTable.rows.length > 1) {
+        cartTable.deleteRow(1);
     }
 
-    function updateTotalPrice() {
-        let total = 0;
+    cart.forEach(item => {
+        const subTotal = item.price * item.quantity;
+        total += subTotal;
 
-        document.querySelectorAll(".order-item").forEach((item) => {
-            const priceElement = item.querySelector(".price-item").innerText;
-            const quantityInput = item.querySelector(".quantity-input");
-            const price = parseFloat(priceElement.replace(/[^\d.-]/g, ''));
-            const quantity = parseInt(quantityInput.value, 10);
+        const row = cartTable.insertRow();
+        row.insertCell(0).innerText = item.name;
+        row.insertCell(1).innerText = item.quantity;
+        row.insertCell(2).innerText = `P${item.price.toFixed(2)}`;
+        row.insertCell(3).innerText = `P${subTotal.toFixed(2)}`;
+        const actionCell = row.insertCell(4);
+        actionCell.innerHTML = `<button class='btn btn-danger' onclick='removeFromCart("${item.id}")'>Remove</button>`;
+    });
 
-            total += price * quantity;
-        });
+    totalAmountElement.innerText = `P${total.toFixed(2)}`;
+}
 
-        if (isDiscountApplied) {
-            total *= 0.8; // Apply 20% discount
-        }
-
-        totalAmountElement.innerText = `P${total.toFixed(2)}`;
-        document.getElementById("totalPriceInput").value = `P${total.toFixed(2)}`; // Update the checkout modal
-    }
-
-    function handleCashPayment() {
-        const totalAmount = parseFloat(totalAmountElement.innerText.replace(/[^\d.-]/g, ''));
-        const amountReceived = prompt("Enter amount received:");
-
-        if (amountReceived) {
-            const change = parseFloat(amountReceived) - totalAmount;
-            if (change < 0) {
-                alert("Insufficient amount received.");
-            } else {
-                alert(`Change: P${change.toFixed(2)}`);
-                saveOrderToDatabase("Cash", totalAmount);
-            }
-        }
-    }
-
-    function handleGcashPayment() {
-        const confirmation = confirm("Do you want to proceed with GCash payment?");
-        if (confirmation) {
-            saveOrderToDatabase("GCash", parseFloat(totalAmountElement.innerText.replace(/[^\d.-]/g, '')));
-        }
-    }
-
-    function saveOrderToDatabase(paymentMethod, totalAmount) {
-        const orderItems = [];
-        document.querySelectorAll(".order-item").forEach(item => {
-            const nameItem = item.querySelector(".name-item").innerText;
-            const priceItem = parseFloat(item.querySelector(".price-item").innerText.replace(/[^\d.-]/g, ''));
-            const quantity = parseInt(item.querySelector(".quantity-input").value);
-            orderItems.push({ name: nameItem, price: priceItem, quantity: quantity });
-        });
-
- 
-        fetch('save_order.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                paymentMethod: paymentMethod,
-                totalAmount: totalAmount,
-                items: orderItems
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert("Order saved successfully!");
-                orderList.innerHTML = '';
-                updateTotalPrice();
-            } else {
-                alert("Failed to save order.");
-            }
-        })
-        .catch(error => {
-            console.error("Error:", error);
-            alert("An error occurred while saving the order.");
-        });
-    }
-
-    function applyDiscount(type) {
-        const credentials = prompt(`Enter ${type} credentials:`);
-
-        if (credentials === "validCredential") {
-            isDiscountApplied = true;
-            updateTotalPrice();
-            alert(`${type} discount applied successfully!`);
-            const discountModal = bootstrap.Modal.getInstance(document.getElementById("discountModal"));
-            discountModal.hide();
-        } else {
-            document.getElementById("discountError").style.display = "block";
-        }
-    }
-
-    function saveTransaction() {
-        const totalAmount = parseFloat(totalAmountElement.innerText.replace(/[^\d.-]/g, ''));
-        alert(`Transaction saved with total amount: P${totalAmount.toFixed(2)}`);
-        const checkoutModal = bootstrap.Modal.getInstance(document.getElementById("checkoutModal"));
-        checkoutModal.hide();
-    }
+function updateTotalPrice() {
+    const totalPriceInput = document.getElementById('totalPriceInput');
+    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    totalPriceInput.value = `P${total.toFixed(2)}`;
+}
 </script>
 
 </html>
