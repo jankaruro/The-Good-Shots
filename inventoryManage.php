@@ -400,7 +400,7 @@
                 </div>
     </nav>
 
-    <div class="container-responsive" style="margin-top: 40px; padding: 15px;">
+    <div class="container-responsive ms-2">
         <div class="col-lg-12">
 
           <?php
@@ -421,14 +421,14 @@
           }
 
           ?>
-           <div class="card shadow">
+           <div class="card shadow mt-5">
             <div class="card-header">
               <button type="button" class="btn btn-primary float-end fw-medium btn-add" data-bs-toggle="modal"
                 data-bs-target="#addUserData">
                 Add New User
               </button>
             </div>
-            <div class="card-body mt-1">
+            <div class="card-body">
               <table id="user-management" class="table table-striped">
                 <thead>
                   <tr>

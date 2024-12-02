@@ -4,15 +4,17 @@
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=1024, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="dashboard.css" />
     <title>The Good Shots</title>
 </head>
 
 <body>
-<div class="d-flex content">
+    <div class="d-flex content">
         <div id="sidebar" class="sidebar-color">
             <div class="sidebar-heading">
                 <img src="Images/Logo.jpg" alt="Bootstrap" class="logo">The Good Shots
@@ -72,27 +74,24 @@
             </div>
         </div>
         <div id="page-content-wrapper">
-            <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-4 mt-2 dashboard-nav">
+            <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-3 mt-2 dashboard-nav">
                 <div class="d-flex align-items-center">
                     <h2 class="fs-3 m-1">Dashboard</h2>
                 </div>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
-                        <a class="nav-link fw-bold cashier-link me-3" href="order.php"
-                            style="color: black; font-weight: 200; font-size: 17px; border-radius: 20px; width: 120px; text-align: center;">
-                            <i class="fa-solid fa-cash-register me-2"></i>
+                        <a class="nav-link fw-bold cashier-link me-3 text-dark" href="order.php">
+                            <img src="icons/cashier-svgrepo-com.svg" alt="" class="topnavbar-icons">
                             Orders
                         </a>
-                        <a class="nav-link fw-bold notification-link me-3" href="#"
-                            style="color: black; font-weight: 200; font-size: 17px; border-radius: 20px;">
+                        <a class="nav-link fw-bold notification-link me-3 text-dark" href="#">
                             <img src="icons/notifications-alert-svgrepo-com.svg" alt="" class="topnavbar-icons">
                             Notifications
                         </a>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle fw-bold notification-link " href="#"
-                                style="color: black; font-weight: 200; font-size: 18px; border-radius: 20px;" id="navbarDropdown"
-                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle fw-bold notification-link text-dark" href="#"
+                                id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <img src="icons/profile-round-1342-svgrepo-com.svg" alt="" class="user-icons">
                                 Admin
                             </a>
@@ -106,11 +105,11 @@
                 </div>
             </nav>
 
-            <div class="container-responsive" style="margin-top: 40px; padding: 15px;">
+            <div class="container-responsive mt-5 ms-2">
                 <div class="row justify-content-center">
                     <div class="col-lg-3">
                         <div
-                            class="p-3 bg-color d-flex justify-content-around align-items-center rounded border-bottom-yellow">
+                            class="p-3 bg-white d-flex justify-content-around align-items-center rounded border-5 custom-border-employee h-100 mt-1">
                             <div class="responsive">
                                 <h3 class="fs-2"></h3>
                                 <p class="fs-4">Employee</p>
@@ -119,10 +118,10 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-3">
+                    <div class="col-lg-3">
                         <div
-                            class="p-3 bg-color d-flex justify-content-around align-items-center rounded border-bottom-green">
-                            <div>
+                            class="p-3 bg-white d-flex justify-content-around align-items-center rounded border-5 custom-border-sales h-100 mt-1">
+                            <div class="responsive">
                                 <h3 class="fs-2"></h3>
                                 <p class="fs-4">Sales</p>
                             </div>
@@ -130,10 +129,10 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-3">
+                    <div class="col-lg-3">
                         <div
-                            class="p-3 bg-color d-flex justify-content-around align-items-center rounded border-bottom-violet">
-                            <div>
+                            class="p-3 bg-white d-flex justify-content-around align-items-center rounded border-5 custom-border-inventory h-100 mt-1">
+                            <div class="responsive">
                                 <h3 class="fs-2"></h3>
                                 <p class="fs-4">Inventory</p>
                             </div>
@@ -141,73 +140,73 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-3">
+                    <div class="col-lg-3">
                         <div
-                            class="p-3 bg-color d-flex justify-content-around align-items-center rounded border-bottom-blue">
-                            <div>
+                            class="p-3 bg-white d-flex justify-content-around align-items-center rounded custom-border-discrepancy border-5 h-100 mt-1">
+                            <div class="responsive">
                                 <h3 class="fs-2"></h3>
                                 <p class="fs-4">Discrepancy</p>
                             </div>
                             <i class="fas fa-chart-line fs-1 p-3"></i>
                         </div>
                     </div>
-                    <h2 class = "name-chart mt-5 mb-5">Charts</h2>
+                    <h2 class="name-chart mt-4 ">Charts</h2>
                     <div class="col-sm-12">
-                                <div class="card mt-1 shadow">
-                                    <div class="card-header">
-                                        Inventory Level
-                                    </div>
-                                    <div class="card-body body-level">
-                                        <div class="row">
-                                            <div class="col-md-6 me-5">
-                                                <div class="chart-container pie-chart">
-                                                    <canvas id="doughnut_chart"></canvas>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-5">
-                                                <p class="stock-name"
-                                                    style="margin-top: 50px; font-weight: 500; font-size: 24px; text-align: center">
-                                                    Low Stock Item</p>
-                                                <ul class="list-group shadow"
-                                                    style="margin-top: 40px; height: 200px; overflow-y: auto;  scrollbar-width: thin; scrollbar-color: #edc4b3 #f1f1f1; background-color: white;">
-                                                    <li class="list-product-item">Product 1</li>
-                                                    <li class="list-product-item">Product 2</li>
-                                                    <li class="list-product-item">Product 3</li>
-                                                    <li class="list-product-item">Product 4</li>
-                                                    <li class="list-product-item">Product 5</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="card mt-1 shadow">
+                            <div class="card-header">
+                                Inventory Level
                             </div>
-                            <div class="col-sm-12">
-                        <div class="card mt-5 mb-4 shadow">
-                                <div class="card-header">
-                                    Top Selling Product
-                                </div>
-                                <div class="card-body body-level">
-                                    <div class="row">
-                                        <div class="col-md-6 me-5">
-                                            <p class="stock-name"
-                                                style="margin-top: 50px; font-weight: 500; font-size: 24px; text-align: center">
-                                                Top 3</p>
-                                            <ul class="list-group shadow"
-                                                style="margin-top: 40px; height: 200px; overflow-y: auto;  scrollbar-width: thin; scrollbar-color: #d69f7e #f1f1f1; background-color: ">
-                                                <li class="list-product-item">Product 1</li>
-                                                <li class="list-product-item">Product 2</li>
-                                                <li class="list-product-item">Product 3</li>
-                                                <li class="list-product-item">Product 4</li>
-                                                <li class="list-product-item">Product 5</li>
-                                            </ul>
-                                        </div>
+                            <div class="card-body body-level">
+                                <div class="row">
+                                    <div class="col-md-6 me-5">
                                         <div class="chart-container pie-chart">
-                                            <canvas id="pie-chart"></canvas>
+                                            <canvas id="doughnut_chart"></canvas>
                                         </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <p class="stock-name"
+                                            style="margin-top: 50px; font-weight: 500; font-size: 24px; text-align: center">
+                                            Low Stock Item</p>
+                                        <ul class="list-group shadow"
+                                            style="margin-top: 40px; height: 200px; overflow-y: auto;  scrollbar-width: thin; scrollbar-color: #edc4b3 #f1f1f1; background-color: white;">
+                                            <li class="list-product-item">Product 1</li>
+                                            <li class="list-product-item">Product 2</li>
+                                            <li class="list-product-item">Product 3</li>
+                                            <li class="list-product-item">Product 4</li>
+                                            <li class="list-product-item">Product 5</li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="card mt-5 mb-4 shadow">
+                            <div class="card-header">
+                                Top Selling Product
+                            </div>
+                            <div class="card-body body-level">
+                                <div class="row">
+                                    <div class="col-md-6 me-5">
+                                        <p class="stock-name"
+                                            style="margin-top: 50px; font-weight: 500; font-size: 24px; text-align: center">
+                                            Top 3</p>
+                                        <ul class="list-group shadow"
+                                            style="margin-top: 40px; height: 200px; overflow-y: auto;  scrollbar-width: thin; scrollbar-color: #d69f7e #f1f1f1; background-color: ">
+                                            <li class="list-product-item">Product 1</li>
+                                            <li class="list-product-item">Product 2</li>
+                                            <li class="list-product-item">Product 3</li>
+                                            <li class="list-product-item">Product 4</li>
+                                            <li class="list-product-item">Product 5</li>
+                                        </ul>
+                                    </div>
+                                    <div class="chart-container pie-chart">
+                                        <canvas id="pie-chart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-sm-12">
                         <div class="card mt-5 mb-4 shadow">
                             <h2 class="text-center">SALES ORDER SUMMARY (IN USD)</h2>

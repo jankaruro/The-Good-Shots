@@ -194,31 +194,25 @@
             </div>
         </div>
         <div id="page-content-wrapper">
-            <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-4 mt-2 dashboard-nav">
+        <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-3 mt-2 dashboard-nav">
                 <div class="d-flex align-items-center">
                     <h2 class="fs-3 m-1">User Management</h2>
                 </div>
 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
-                    <a class="nav-link fw-bold cashier-link" href="order.php" style="color: black; font-weight: 200; font-size: 17px;">
-                            <i class="fa-solid fa-cash-register me-2"></i>
-                            Food & Orders
+                        <a class="nav-link fw-bold cashier-link me-3 text-dark" href="order.php">
+                         <img src="icons/cashier-svgrepo-com.svg" alt="" class="topnavbar-icons">
+                            Orders
                         </a>
-                        <a class="nav-link fw-bold notification-link" href="#" style="color: black; font-weight: 200; font-size: 17px;">
-                            <i class="fa-solid fa-bell me-2"></i>
-                            Notification
+                        <a class="nav-link fw-bold notification-link me-3 text-dark" href="#">
+                            <img src="icons/notifications-alert-svgrepo-com.svg" alt="" class="topnavbar-icons">
+                            Notifications
                         </a>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle fw-bold admin-link" href="#" style="color: black; font-weight: 200; font-size: 17px;" id="navbarDropdown"
+                            <a class="nav-link dropdown-toggle fw-bold notification-link text-dark" href="#" id="navbarDropdown"
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa-regular fa-circle-user me-2" style = "font-size: 25px"></i>
+                                <img src="icons/profile-round-1342-svgrepo-com.svg" alt="" class="user-icons">
                                 Admin
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -230,7 +224,7 @@
                     </ul>
                 </div>
             </nav>
-            <div class="container-responsive" style="margin-top: 40px; padding: 15px;">
+            <div class="container-responsive mt-5">
         <div class="col-lg-12">
 
           <?php
@@ -251,7 +245,7 @@
           }
 
           ?>
-          <div class="card card-user-manage shadow">
+          <div class="card shadow">
             <div class="card-header">
               <button type="button" class="btn btn-primary float-end fw-medium btn-add" data-bs-toggle="modal"
                 data-bs-target="#addUserData">
@@ -259,7 +253,7 @@
               </button>
             </div>
             <div class="card-body mt-1">
-              <table id="user-management" class="table table-striped" style="width:100%">
+              <table id="user-management" class="table table-striped">
                 <thead>
                   <tr>
                     <th scope="col">ID</th>

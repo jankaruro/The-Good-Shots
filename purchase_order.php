@@ -1,9 +1,8 @@
 <?php
 session_start();
 include('header.php');
-include('connection.php'); // Ensure connection is included at the beginning
+include('connection.php');
 
-// Fetch suppliers for the dropdown
 $query = "SELECT po.po_number, 
                  po.created_at, 
                  po.qty_received, 
@@ -23,7 +22,7 @@ $query_run = $conn->query($query);
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-<script src="po_database.js"></script> <!-- Include your JavaScript file -->
+<script src="po_database.js"></script>
 
 <!-- Purchase Order Modal -->
 <div class="modal fade" id="purchaseOrderModal" tabindex="-1" role="dialog" aria-labelledby="purchaseOrderLabel"
@@ -133,7 +132,7 @@ $query_run = $conn->query($query);
                 <img src="Images/Logo.jpg" alt="Bootstrap" class="logo">The Good Shots
             </div>
             <div class="list-group list-group-flush mt-0">
-                <a href="dashboard.php" class="list-group-item active">
+                <a href="dashboard.php" class="list-group-item">
                     <i class="fas fa-tachometer-alt me-3"></i>Dashboard
                 </a>
                 <a href="adduser.php" class="list-group-item">
@@ -147,7 +146,7 @@ $query_run = $conn->query($query);
                 <a href="inventoryManage.php" class="list-group-item">
                     <i class="fas fa-shopping-cart me-3"></i>Inventory Management
                 </a>
-                <a href="purchase_order.php" class="list-group-item">
+                <a href="purchase_order.php" class="list-group-item active">
                     <i class="fa-solid fa-money-bill me-3"></i>Purchase Order
                 </a>
                 <div class="supplier-dropdown">
@@ -187,26 +186,23 @@ $query_run = $conn->query($query);
             </div>
         </div>
         <div id="page-content-wrapper">
-            <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-4 mt-2 dashboard-nav">
+        <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-3 mt-2 dashboard-nav">
                 <div class="d-flex align-items-center">
-                    <h2 class="fs-3 m-1">Dashboard</h2>
+                    <h2 class="fs-3 m-1">Purchase Order</h2>
                 </div>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
-                        <a class="nav-link fw-bold cashier-link me-3" href="order.php"
-                            style="color: black; font-weight: 200; font-size: 17px; border-radius: 20px; width: 120px; text-align: center;">
-                            <i class="fa-solid fa-cash-register me-2"></i>
+                        <a class="nav-link fw-bold cashier-link me-3 text-dark" href="order.php">
+                         <img src="icons/cashier-svgrepo-com.svg" alt="" class="topnavbar-icons">
                             Orders
                         </a>
-                        <a class="nav-link fw-bold notification-link me-3" href="#"
-                            style="color: black; font-weight: 200; font-size: 17px; border-radius: 20px;">
+                        <a class="nav-link fw-bold notification-link me-3 text-dark" href="#">
                             <img src="icons/notifications-alert-svgrepo-com.svg" alt="" class="topnavbar-icons">
                             Notifications
                         </a>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle fw-bold notification-link " href="#"
-                                style="color: black; font-weight: 200; font-size: 18px; border-radius: 20px;" id="navbarDropdown"
+                            <a class="nav-link dropdown-toggle fw-bold notification-link text-dark" href="#" id="navbarDropdown"
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <img src="icons/profile-round-1342-svgrepo-com.svg" alt="" class="user-icons">
                                 Admin
@@ -220,7 +216,7 @@ $query_run = $conn->query($query);
                     </ul>
                 </div>
             </nav>
-    <div class="container-responsive" style="margin-top: 40px; padding: 25px">
+    <div class="container-responsive ms-2">
       <div class="row justify-content-center">
         <div class="col-sm-12 col-lg-20">
 
@@ -239,7 +235,7 @@ $query_run = $conn->query($query);
             <?php unset($_SESSION['status']); ?>
           <?php endif; ?>
 
-          <div class="card">
+          <div class="card mt-5">
             <div class="card-header">
               <h3 class="text-center">Purchase Order</h3>
               <button type="button" class="btn btn-primary float-end fw-medium" data-toggle="modal" data-target="#purchaseOrderModal">
