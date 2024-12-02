@@ -76,7 +76,7 @@
                     <img src="icons/juice-svgrepo-com (1).svg" alt="" class="icons me-3">Smoothies
                 </a>
                 <a href="#frappe" class="list-group-item">
-                    <img src="icons/frappe-sv grepo-com (1).svg" alt="" class="icons me-3">Frappe
+                    <img src="icons/frappe-svgrepo-com (1).svg" alt="" class="icons me-3">Frappe
                 </a>
                 <a href="#croffle" class="list-group-item">
                     <img src="icons/waffle-svgrepo-com.svg" alt="" class="icons me-3">Croffle
@@ -179,7 +179,7 @@
                                     <th>Quantity</th>
                                     <th>Price</th>
                                     <th>Sub Total</th>
-                                    <th>Action</th>
+                                    <th class = "">Action</th>
                                 </tr>
                             </table>
                         </div>
@@ -224,7 +224,6 @@ function updateCartDisplay() {
     const totalAmountElement = document.getElementById('totalAmount');
     let total = 0;
 
-    // Clear existing rows except for the header
     while (cartTable.rows.length > 1) {
         cartTable.deleteRow(1);
     }
