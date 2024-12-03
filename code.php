@@ -354,7 +354,37 @@ if (isset($_POST['click_delete_btn'])) {
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //insert supplier_products
- 
+if (isset($_POST['add_supp_product'])) {
+    // Retrieve form data
+    $supplier = $_POST['supplier'];
+    $product_name = $_POST['product_name'];
+    $price = $_POST['price'];
+
+    // Connect to the database
+    include('connection.php');
+
+    // Prepare the SQL statement to prevent SQL injection
+    $stmt = $conn->prepare("INSERT INTO supplier_products (supplier, product_name, price) VALUES (:supplier, :product_name, :price)");
+
+    // Bind parameters
+    $stmt->bindParam(':supplier', $supplier);
+    $stmt->bindParam(':product_name', $product_name);
+    $stmt->bindParam(':price', $price);
+
+    // Execute the statement
+    if ($stmt->execute()) {
+        $_SESSION['status'] = "Product added successfully!";
+    } else {
+        $_SESSION['status'] = "Error: " . $stmt->errorInfo()[2]; // Get error message
+    }
+
+    // Close the database connection
+    $conn = null;
+
+    // Redirect back to the form page
+    header("Location: addsupplier_product.php"); // Change this to your form page
+    exit();
+}
 //view supplier_products
 if (isset($_POST['click_view_supplier_product_btn'])) {
     $id = $_POST['supplier_product_id'];

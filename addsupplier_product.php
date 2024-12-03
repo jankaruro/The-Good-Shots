@@ -32,9 +32,8 @@
 
 <body>
     <!--Add-->
-    <!--Add User-->
     <!-- Add Product Modal -->
-<div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+<div class="modal fade" id="addUserData" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -45,9 +44,33 @@
         <form id="addProductForm" method="POST" action="code.php">
           <!-- Supplier Input -->
           <div class="mb-3">
-            <label for="supplier" class="form-label">Supplier</label>
-            <input type="text" class="form-control" id="supplier" name="supplier" required>
-          </div>
+                        <label for="supplier" class="form-label">Supplier</label>
+                        <select class="form-select" id="supplier" name="supplier" required>
+                            <option value="">-- Select Category --</option>
+                            <?php
+                            // Connect to the database
+                            include('connection.php');
+
+                            // Retrieve categories from the database
+                            $stmt = $conn->prepare("SELECT supplier_name FROM suppliers");
+                            $stmt->execute();
+                            $result = $stmt->fetchAll();
+
+                            // Check if there are any categories
+                            if (count($result) > 0) {
+                                // Output the categories
+                                foreach ($result as $row) {
+                                    echo "<option value='" . htmlspecialchars($row['supplier_name']) . "'>" . htmlspecialchars($row['supplier_name']) . "</option>";
+                                }
+                            } else {
+                                echo "<option value=''>No categories found</option>";
+                            }
+
+                            // Close the database connection
+                            $conn = null;
+                            ?>
+                        </select>
+                    </div>
 
           <!-- Product Name Input -->
           <div class="mb-3">
@@ -63,7 +86,7 @@
 
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary" name="add_product">Add Product</button>
+            <button type="submit" class="btn btn-primary" name="add_supp_product">Add Product</button>
           </div>
         </form>
       </div>
@@ -261,8 +284,8 @@
                                     <tr>
                                         <th scope="col">ID</th>
                                         <th scope="col">Supplier Name</th>
-                                        <th scope="col">Contact Number</th>
-                                        <th scope="col">Status</th>
+                                        <th scope="col">Product Number</th>
+                                        <th scope="col">Price</th>
                                         <th scope="col" class="size-table">Action</th>
                                     </tr>
                                 </thead>
@@ -282,7 +305,7 @@
                                                 <td><?php echo $row['supplier']; ?></td>
                                                 <td><?php echo $row['product_name']; ?></td>
                                                 <td><?php echo $row['price']; ?></td>
-                                                <td><?php echo $row['category']; ?></td>
+                                              
                                                 <td>
                                                     <a href="#" class="btn btn-info btn-base view_supplier_products">View
                                                         Data</a>
