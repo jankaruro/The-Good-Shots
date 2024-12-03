@@ -126,11 +126,10 @@ if (isset($_POST['click_delete_btn'])) {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
 if (isset($_POST['add_supplier'])) {
-    $supplier_name = $_POST['supplier_name'];
-    $contact_number = $_POST['contact_number'];
-    $status = $_POST['status'];
+    $supplier_name = htmlspecialchars($_POST['supplier_name']);
+    $contact_number = htmlspecialchars($_POST['contact_number']);
+    $status = htmlspecialchars($_POST['status']);
 
     // Check if supplier already exists
     $stmt = $connection->prepare("SELECT * FROM suppliers WHERE supplier_name = ?");
@@ -146,6 +145,7 @@ if (isset($_POST['add_supplier'])) {
         // Insert new supplier
         $insert_stmt = $connection->prepare("INSERT INTO suppliers (supplier_name, contact_number, status) VALUES (?, ?, ?)");
         $insert_stmt->bind_param("sss", $supplier_name, $contact_number, $status);
+        
         if ($insert_stmt->execute()) {
             $_SESSION['status'] = "Supplier added successfully!";
         } else {
@@ -155,6 +155,7 @@ if (isset($_POST['add_supplier'])) {
         exit();
     }
 }
+
 
 // View Supplier
 if (isset($_POST['click_view_supp_btn'])) {
@@ -234,7 +235,6 @@ if (isset($_POST['click_delete_supp_btn'])) {
         echo "Data deletion failed: " . $delete_query->error;
     }
 }
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -594,100 +594,131 @@ if (isset($_POST['click_delete_inventory_btn'])) {
 
 
 // Insert product
-
-if (isset($_POST['add_product'])) {
-    // Retrieve and sanitize form inputs
-    $product_name = htmlspecialchars($_POST['productname']); // Match the form input name
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_product'])) {
+    $product_name = htmlspecialchars($_POST['productname']);
     $price = floatval($_POST['price']);
     $category = htmlspecialchars($_POST['category']);
 
     // Handle image upload
     if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-        $image = $_FILES['image'];
-        $imageName = basename($image['name']);
-        $imageTmpName = $image['tmp_name'];
-        $imageType = pathinfo($imageName, PATHINFO_EXTENSION);
-        $allowedTypes = ['jpg', 'jpeg', 'png'];
+        $targetDir = "images/";
+        if (!file_exists($targetDir)) {
+            mkdir($targetDir, 0755, true);
+        }
+        $newFileName = uniqid() . '_' . basename($_FILES["image"]["name"]);
+        $targetFilePath = $targetDir . $newFileName;
 
-        if (in_array(strtolower($imageType), $allowedTypes)) {
-            $targetDir = "images/";
-            $targetFile = $targetDir . uniqid() . '.' . $imageType;
-
-            // Attempt to move the uploaded file
-            if (move_uploaded_file($imageTmpName, $targetFile)) {
-                // Establish database connection
-                $connection = mysqli_connect("localhost", "root", "", "tgs_inventory");
-                if (!$connection) {
-                    die('Database connection failed: ' . mysqli_connect_error());
-                }
-
-                // Prepare the SQL statement
-                $stmt = $connection->prepare("INSERT INTO products (product_name, image, price, category) VALUES (?, ?, ?, ?)");
-                if ($stmt === false) {
-                    die('Prepare failed: ' . htmlspecialchars($connection->error));
-                }
-
-                // Bind parameters
-                $stmt->bind_param("ssds", $product_name, $targetFile, $price, $category); // Use "ssds" for string, string, double, string
-
-                // Execute the statement
-                if ($stmt->execute()) {
-                    $_SESSION['status'] = "Product added successfully!";
-                } else {
-                    $_SESSION['status'] = "Error: " . $stmt->error; // Log the error
-                }
-
-                // Close the statement and connection
-                $stmt->close();
-                $connection->close();
-            } else {
-                $_SESSION['status'] = "Error: Could not save the uploaded image.";
-            }
-        } else {
-            $_SESSION['status'] = "Invalid image format. Only JPG, JPEG, and PNG are allowed.";
+        if (!move_uploaded_file($_FILES["image"]["tmp_name"], $targetFilePath)) {
+            $_SESSION['status'] = "Error uploading file.";
+            header('Location: addproduct.php');
+            exit();
         }
     } else {
         $_SESSION['status'] = "Please upload an image.";
+        header('Location: addproduct.php');
+        exit();
     }
-    
+
+    // Prepare the SQL statement to insert into the products table
+    $stmt = $connection->prepare("INSERT INTO products (product_name, image_url, price, category) VALUES (?, ?, ?, ?)");
+    if ($stmt === false) {
+        die('Prepare failed: ' . htmlspecialchars($connection->error));
+    }
+
+    // Bind parameters
+    $stmt->bind_param("ssds", $product_name, $targetFilePath, $price, $category);
+
+    if ($stmt->execute()) {
+        $product_id = $stmt->insert_id;
+
+        // Handle the ingredients
+        if (isset($_POST['ingredient_name']) && is_array($_POST['ingredient_name'])) {
+            $ingredientNames = $_POST['ingredient_name'];
+            $quantities = $_POST['quantity'];
+            $units = $_POST['unit'];
+
+            // Prepare the SQL statement for inserting ingredients
+            $ingredientStmt = $connection->prepare("INSERT INTO ingredients (ingredient_name) VALUES (?)");
+            if ($ingredientStmt === false) {
+                error_log("Prepare failed for ingredients: " . htmlspecialchars($connection->error));
+                $_SESSION['status'] = "Error preparing ingredients statement.";
+                header('Location: addproduct.php');
+                exit();
+            }
+
+            // Loop through each ingredient and insert it into the database
+            foreach ($ingredientNames as $index => $ingredientName) {
+                $ingredientName = htmlspecialchars($ingredientName);
+                $ingredientStmt->bind_param("s", $ingredientName);
+                if (!$ingredientStmt->execute()) {
+                    error_log("Insert failed for ingredient: " . $ingredientStmt->error);
+                    $_SESSION['status'] = "Error inserting ingredient: " . $ingredientStmt->error;
+                } else {
+                    $ingredient_id = $ingredientStmt->insert_id;
+
+                    // Now insert into product_ingredients
+                    $productIngredientStmt = $connection->prepare("INSERT INTO product_ingredients (product_id, ingredient_id, quantity, unit) VALUES (?, ?, ?, ?)");
+                    $productIngredientStmt->bind_param("iids", $product_id, $ingredient_id, $quantities[$index], $units[$index]);
+                    if (!$productIngredientStmt->execute()) {
+                        error_log("Insert failed for product_ingredients: " . $productIngredientStmt->error);
+                    }
+                    $productIngredientStmt->close();
+                }
+            }
+
+            // Close the ingredient statement
+            $ingredientStmt->close();
+        }
+    } else {
+        error_log("Insert failed: " . $stmt->error);
+        $_SESSION['status'] = "Error: " . $stmt->error;
+    }
+
+    // Close the product statement
+    $stmt->close();
+
     // Redirect back to the add product page
     header('Location: addproduct.php');
     exit();
 }
 
-
 // View product
 if (isset($_POST['click_view_product_btn'])) {
-    $stmt = $conn->prepare("SELECT * FROM products WHERE id = :id");
-    $stmt->bindParam(':id', $id);
+    $id = $_POST['product_id']; // Make sure to get the product ID from the request
+    $stmt = $connection->prepare("SELECT * FROM products WHERE product_id = ?");
+    $stmt->bind_param('i', $id);
     $stmt->execute();
+    $result = $stmt->get_result();
 
-    if ($stmt->rowCount() > 0) {
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
         echo json_encode([
             'success' => true,
             'html' => '
-        <h6>ID: ' . htmlspecialchars($row['id']) . '</h6>
+        <h6>ID: ' . htmlspecialchars($row['product_id']) . '</h6>
         <h6>Product: ' . htmlspecialchars($row['product_name']) . '</h6>
         <h6>Price: ' . htmlspecialchars($row['price']) . '</h6>
         <h6>Category: ' . htmlspecialchars($row['category']) . '</h6>
-        <h6>Image: <img src="' . htmlspecialchars($row['image']) . '" style="max-width: 100px;"></h6>
+        <h6>Image: <img src="' . htmlspecialchars($row['image_url']) . '" style="max-width: 100px;"></h6>
     '
         ]);
     } else {
         echo json_encode(['success' => false, 'message' => 'No records found']);
     }
 }
-// Edit product
-if (isset($_POST['click_edit_product_btn'])) {
-    $stmt = $conn->prepare("SELECT * FROM products WHERE id = :id");
-    $stmt->bindParam(':id', $id);
-    $stmt->execute();
 
-    if ($stmt->rowCount() > 0) {
-        $arrayresult = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        header('Content-Type: application/json');
-        echo json_encode($arrayresult);
+// Edit product
+if (isset($_POST['click ```php
+_edit_product_btn'])) {
+    $id = $_POST['product_id']; // Make sure to get the product ID from the request
+    $stmt = $conn->prepare("SELECT * FROM products WHERE product_id = ?");
+    $stmt->bind_param('i', $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        echo json_encode($row);
     } else {
         echo json_encode(['message' => 'No records found']);
     }
@@ -695,6 +726,12 @@ if (isset($_POST['click_edit_product_btn'])) {
 
 // Update product
 if (isset($_POST['update_product'])) {
+    $product_id = $_POST['product_id'];
+    $product_name = htmlspecialchars($_POST['productname']);
+    $price = floatval($_POST['price']);
+    $category = htmlspecialchars($_POST['category']);
+    $newFileName = null;
+
     // Check if a new file is uploaded
     if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
         $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
@@ -717,43 +754,34 @@ if (isset($_POST['update_product'])) {
 
     // Update the product in the database
     try {
-        $query = "UPDATE products SET product_name = :product_name, price = :price, category = :category";
+        $query = "UPDATE products SET product_name = ?, price = ?, category = ?";
         if ($newFileName) {
-            $query .= ", image = :image";
+            $query .= ", image_url = ?";
         }
-        $query .= " WHERE id = :id";
+        $query .= " WHERE product_id = ?";
 
         $stmt = $conn->prepare($query);
-        $stmt->bindParam(':product_name', $product_name);
-        $stmt->bindParam(':price', $price);
-        $stmt->bindParam(':category', $category);
-        if ($newFileName) {
-            $stmt->bindParam(':image', $newFileName);
-        }
-        $stmt->bindParam(':id', $id);
+        $stmt->bind_param('sdssi', $product_name, $price, $category, $newFileName, $product_id);
         $stmt->execute();
 
-        echo "Product updated successfully.";
-    } catch (PDOException $e) {
-        echo "Database Error: " . $e->getMessage();
-    }
-    // Update the product in the database
-    try {
-        $query = "UPDATE products SET product_name = :product_name, price = :price, category = :category";
-        if ($newFileName) {
-            $query .= ", image = :image";
-        }
-        $query .= " WHERE id = :id";
+        // Update ingredients if provided
+        if (isset($_POST['ingredient_name']) && is_array($_POST['ingredient_name'])) {
+            foreach ($_POST['ingredient_name'] as $index => $ingredient_name) {
+                $quantity = floatval($_POST['quantity'][$index]);
+                $unit = htmlspecialchars($_POST['unit'][$index]);
 
-        $stmt = $conn->prepare($query);
-        $stmt->bindParam(':product_name', $product_name);
-        $stmt->bindParam(':price', $price);
-        $stmt->bindParam(':category', $category);
-        if ($newFileName) {
-            $stmt->bindParam(':image', $newFileName);
+                // Prepare the SQL statement to insert into the ingredients table
+                $ingredient_stmt = $conn->prepare("INSERT INTO ingredients (ingredient_name, product_id, quantity, unit) VALUES (?, ?, ?, ?)");
+                if ($ingredient_stmt === false) {
+                    die('Prepare failed: ' . htmlspecialchars($conn->error));
+                }
+
+                // Bind parameters
+                $ingredient_stmt->bind_param("siis", $ingredient_name, $product_id, $quantity, $unit);
+                $ingredient_stmt->execute();
+                $ingredient_stmt->close();
+            }
         }
-        $stmt->bindParam(':id', $id);
-        $stmt->execute();
 
         echo "Product updated successfully.";
     } catch (PDOException $e) {
@@ -763,9 +791,10 @@ if (isset($_POST['update_product'])) {
 
 // Delete product
 if (isset($_POST['click_delete_product_btn'])) {
+    $id = $_POST['product_id']; // Make sure to get the product ID from the request
     try {
-        $stmt = $conn->prepare("DELETE FROM products WHERE id = :id");
-        $stmt->bindParam(':id', $id);
+        $stmt = $conn->prepare("DELETE FROM products WHERE product_id = ?");
+        $stmt->bind_param('i', $id);
 
         if ($stmt->execute()) {
             $_SESSION['status'] = "Deleted successfully";
