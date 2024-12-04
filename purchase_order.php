@@ -4,8 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width,, initial-scale=1.0" />
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>The Good Shots</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -13,10 +12,8 @@
 
   <!-- DataTables CSS -->
   <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.css">
-  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
-  <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
+ 
   <script>
     $(document).ready(function () {
       $('#myTable').DataTable();
@@ -33,7 +30,6 @@
   <script src="function/po_database.js"> </script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
   <script src="po_database.js"></script>
-
 
 </head>
 
@@ -78,8 +74,6 @@
             <select class="form-control" id="supplier" name="supplier" required onchange="loadProducts()">
               <option value="">-- Select Supplier --</option>
               <?php
-              // Sample PHP code to fetch suppliers
-              // Replace with your actual database connection and query
               $suppliers = $conn->query("SELECT supplier_name FROM suppliers")->fetchAll(PDO::FETCH_ASSOC);
               foreach ($suppliers as $row) {
                 echo '<option value="' . htmlspecialchars($row['supplier_name']) . '">' . htmlspecialchars($row['supplier_name']) . '</option>';
@@ -126,7 +120,7 @@
 
         <!-- Footer Buttons -->
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-secondary" data -dismiss="modal">Cancel</button>
           <button type="button" class="btn btn-primary" onclick="showPopupForm()">Continue</button>
         </div>
       </div>
@@ -156,7 +150,6 @@
       </div>
     </div>
   </div>
-
 
   <div class="d-flex content">
     <div id="sidebar" class="sidebar-color">
@@ -200,7 +193,7 @@
         </a>
         <div class="reports-dropdown">
           <a href="#" class="list-group-item" id="reports-toggle">
-            <i class="fa-solid fa-calendar-days me-3"></i></i>Reports<i
+            <i class="fa-solid fa-calendar-days me-3"></i>Reports<i
               class="fa-solid fa-chevron-right toggle-arrow-reports" id="reports-arrow"></i>
           </a>
           <div class="submenu" id="reports-submenu">
@@ -220,6 +213,7 @@
     <div id="page-content-wrapper">
       <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-3 mt-2 dashboard-nav">
         <div class="d-flex align-items-center">
+         
           <h2 class="fs-3 m-1">Purchase Order</h2>
         </div>
 
@@ -318,6 +312,7 @@
                         <td>
                           <button class="btn btn-info btn-sm view_data" data-bs-toggle="modal" data-bs-target="#viewModal"
                             data-id="<?php echo htmlspecialchars($row['po_number']); ?>">View</button>
+                          <button class="btn btn ```html
                           <button class="btn btn-success btn-sm edit_data" data-bs-toggle="modal"
                             data-bs-target="#editModal" data-id="<?php echo htmlspecialchars($row['po_number']); ?>" <?php echo $disableEdit; ?>>Edit</button>
                           <button class="btn btn-danger btn-sm delete_data" data-bs-toggle="modal"
@@ -339,7 +334,6 @@
       </div>
     </div>
   </div>
-
 
   <script>
     $(document).ready(function () {
