@@ -13,7 +13,7 @@
   <!-- DataTables CSS -->
   <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.css">
   <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
- 
+
   <script>
     $(document).ready(function () {
       $('#myTable').DataTable();
@@ -34,21 +34,13 @@
 </head>
 
 <body>
-  <?php
+<?php
   session_start();
   include('connection.php');
 
-  $query = "SELECT po.po_number, 
-                 po.created_at, 
-                 po.qty_received, 
-                 pod.quantity , 
-                 pod.product_name, 
-                 pod.unit_price, 
-                 pod.amount, 
-                 pod.supplier_name,
-                 pod.status  
-          FROM purchase_orders po
-          LEFT JOIN purchase_order_details pod ON po.po_number = pod.po_id";
+  $query = "SELECT po.id, po.po_number, po.created_at, po.qty_received, pod.quantity, pod.product_name, pod.unit_price, pod.supplier_name, pod.status
+            FROM purchase_orders po
+            LEFT JOIN purchase_order_details pod ON po.id = pod.po_id";
 
   $query_run = $conn->query($query);
   ?>
@@ -120,7 +112,7 @@
 
         <!-- Footer Buttons -->
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data -dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
           <button type="button" class="btn btn-primary" onclick="showPopupForm()">Continue</button>
         </div>
       </div>
@@ -181,7 +173,8 @@
           </a>
           <div class="submenu" id="supplier-submenu">
             <a href="addsupplier.php" class="sub-list-item">
-              <p class="txt-name-btn">Add Supplier</p>
+              <p ```html
+              class="txt-name-btn">Add Supplier</p>
             </a>
             <a href="addsupplier_product.php" class="sub-list-item">
               <p class="txt-name-btn">Suppliers Product</p>
@@ -213,7 +206,6 @@
     <div id="page-content-wrapper">
       <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-3 mt-2 dashboard-nav">
         <div class="d-flex align-items-center">
-         
           <h2 class="fs-3 m-1">Purchase Order</h2>
         </div>
 
@@ -271,61 +263,66 @@
               <table id="myTable" class="table table-striped table-bordered table-secondary">
                 <thead>
                   <tr>
-                    <th scope="col">PO ID</th>
-                    <th scope="col">Quantity Ordered</th>
-                    <th scope="col">Quantity Received</th>
+                    <th scope="col" hidden>Product ID</th>
+                    <th scope="col">PO Number</th>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Qty Ordered</th>
+                    <th scope="col">Qty Received</th>
                     <th scope="col">Supplier</th>
-                    <th scope="col">PO Date</th>
-                    <th scope="col">Status</th>
-                    <th scope="col" class="tbl-action">Action</th>
+                    <th scope="col">Status</th ```html
+                    <th scope="col">Ordered By</th>
+                    <th scope="col">Created Date</th>
+                    <th scope="col">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <?php
-                  if ($query_run && $query_run->rowCount() > 0) {
-                    foreach ($query_run as $row) {
-                      $status = isset($row['status']) ? $row['status'] : 'pending';
-                      $disableEdit = $status === 'complete' ? 'disabled' : '';
-                      $rowColorClass = '';
+                <?php
+                if ($query_run && $query_run->rowCount() > 0) {
+                  foreach ($query_run as $row) {
+                    $status = isset($row['status']) ? $row['status'] : 'pending';
+                    $disableEdit = $status === 'complete' ? 'disabled' : '';
+                    $rowColorClass = '';
 
-                      switch ($status) {
-                        case 'complete':
-                          $rowColorClass = 'table-success';
-                          break;
-                        case 'incomplete':
-                          $rowColorClass = 'table-incomplete';
-                          break;
-                        case 'pending':
-                          $rowColorClass = 'table-pending';
-                          break;
-                        default:
-                          $rowColorClass = '';
-                      }
-                      ?>
-                      <tr class="<?php echo htmlspecialchars($rowColorClass); ?>">
-                        <td><?php echo htmlspecialchars($row['po_number']); ?></td>
-                        <td><?php echo htmlspecialchars($row['quantity']); ?></td>
-                        <td><?php echo htmlspecialchars($row['qty_received']); ?></td>
-                        <td><?php echo htmlspecialchars($row['supplier_name']); ?></td>
-                        <td><?php echo htmlspecialchars(date('Y-m-d', strtotime($row['created_at']))); ?></td>
-                        <td><?php echo htmlspecialchars($status); ?></td>
-                        <td>
-                          <button class="btn btn-info btn-sm view_data" data-bs-toggle="modal" data-bs-target="#viewModal"
-                            data-id="<?php echo htmlspecialchars($row['po_number']); ?>">View</button>
-                          <button class="btn btn ```html
-                          <button class="btn btn-success btn-sm edit_data" data-bs-toggle="modal"
-                            data-bs-target="#editModal" data-id="<?php echo htmlspecialchars($row['po_number']); ?>" <?php echo $disableEdit; ?>>Edit</button>
-                          <button class="btn btn-danger btn-sm delete_data" data-bs-toggle="modal"
-                            data-bs-target="#deleteModal"
-                            data-id="<?php echo htmlspecialchars($row['po_number']); ?>">Delete</button>
-                        </td>
-                      </tr>
-                      <?php
+                    switch ($status) {
+                      case 'complete':
+                        $rowColorClass = 'table-success';
+                        break;
+                      case 'incomplete':
+                        $rowColorClass = 'table-incomplete';
+                        break;
+                      case 'pending':
+                        $rowColorClass = 'table-pending';
+                        break;
+                      default:
+                        $rowColorClass = '';
                     }
-                  } else {
-                    echo "<tr><td colspan='7'>No Records Found</td></tr>";
+                    ?>
+                    <tr class="<?php echo htmlspecialchars($rowColorClass); ?>">
+                      <td hidden><?php echo htmlspecialchars($row['id']); ?></td>
+                      <td><?php echo htmlspecialchars($row['po_number']); ?></td>
+                      <td><?php echo htmlspecialchars($row['product_name']); ?></td>
+                      <td><?php echo htmlspecialchars($row['quantity']); ?></td>
+                      <td><?php echo htmlspecialchars($row['qty_received']); ?></td>
+                      <td><?php echo htmlspecialchars($row['supplier_name']); ?></td>
+                      <td><?php echo htmlspecialchars($status); ?></td>
+                      <td><?php echo htmlspecialchars(date('Y-m-d', strtotime($row['created_at']))); ?></td>
+                      <td>
+                        <button class="btn btn-info btn-sm view_data" data-bs-toggle="modal" data-bs-target="#viewModal"
+                          data-id="<?php echo htmlspecialchars($row['po_number']); ?>">View</button>
+
+                        <button class="btn btn-success btn-sm edit_data" data-bs-toggle="modal"
+                          data-bs-target="#editModal" data-id="<?php echo htmlspecialchars($row['id']); ?>" <?php echo $disableEdit; ?>>Edit</button>
+                        <button class="btn btn-danger btn-sm delete_data" data-bs-toggle="modal"
+                          data-bs-target="#deleteModal"
+                          data-id="<?php echo htmlspecialchars($row['id']); ?>">Delete</button>
+                      </td>
+                    </tr>
+                    <?php
                   }
-                  ?>
+                } else {
+                  echo "<tr><td colspan='10'>No Records Found</td></tr>";
+                }
+                ?>
                 </tbody>
               </table>
             </div>

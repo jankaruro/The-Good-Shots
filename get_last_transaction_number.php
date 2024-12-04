@@ -13,7 +13,5 @@ if ($result) {
         echo json_encode(['last_number' => 'PORD0000']); // Fallback if no records found
     }
 } else {
-    
     echo json_encode(['error' => $conn->errorInfo()]);
 }
-?>
