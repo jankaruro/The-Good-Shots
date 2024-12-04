@@ -225,7 +225,7 @@
                     <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
                         <a class="nav-link fw-bold cashier-link me-3" href="order.php"
                             style="color: black; font-weight: 200; font-size: 17px; border-radius: 20px; width: 120px; text-align: center;">
-                            <i class="fa-solid fa-cash-register me-2"></i>
+                            <img src="icons/cashier-svgrepo-com.svg" alt="" class="topnavbar-icons">
                             Orders
                         </a>
                         <a class="nav-link fw-bold notification-link me-3" href="#"
@@ -286,7 +286,7 @@
                                         <th scope="col">Supplier Name</th>
                                         <th scope="col">Product Number</th>
                                         <th scope="col">Price</th>
-                                        <th scope="col" class="size-table">Action</th>
+                                        <th scope="col" class="action-column">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>

@@ -190,7 +190,7 @@
                     <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
                         <a class="nav-link fw-bold cashier-link me-3" href="order.php"
                             style="color: black; font-weight: 200; font-size: 17px; border-radius: 20px; width: 120px; text-align: center;">
-                            <i class="fa-solid fa-cash-register me-2"></i>
+                            <img src="icons/cashier-svgrepo-com.svg" alt="" class="topnavbar-icons">
                             Orders
                         </a>
                         <a class="nav-link fw-bold notification-link me-3" href="#"
@@ -215,7 +215,7 @@
                 </div>
             </nav>
 
-            <div class="container-responsive" style="margin-top: 40px; padding: 15px">
+            <div class="container-responsive">
                 <div class="col-sm-12 col-lg-20">
 
                     <?php
@@ -236,22 +236,22 @@
                     }
 
                     ?>
-                    <div class="card shadow">
+                    <div class="card shadow mt-5">
                         <div class="card-header">
                             <button type="button" class="btn btn-primary float-end fw-medium btn-add"
                                 data-bs-toggle="modal" data-bs-target="#addUserData">
                                 Add New Supplier
                             </button>
                         </div>
-                        <div class="card-body mt-1">
-                            <table id="supplierTable" class="table table-striped">
+                        <div class="card-body">
+                            <table id="supplierTable" class="table table-striped" style = "width: 100%">
                                 <thead>
                                     <tr>
                                         <th scope="col">ID</th>
                                         <th scope="col">Supplier Name</th>
                                         <th scope="col">Contact Number</th>
                                         <th scope="col">Status</th>
-                                        <th scope="col" class="size-table">Action</th>
+                                        <th scope="col" class="action-column">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -272,11 +272,11 @@
                                                 <td><?php echo $row['status']; ?></td>
                                                
                                                 <td>
-                                                    <a href="#" class="btn btn-info btn-base view_supplier_products">View
+                                                    <a href="#" class="btn btn-info btn-base view_supplier_products btn-view">View
                                                         Data</a>
-                                                    <a href="#" class="btn btn-success btn-base edit_supplier_products">Edit
+                                                    <a href="#" class="btn btn-success btn-base edit_supplier_products btn-edit">Edit
                                                         Data</a>
-                                                    <a href="" class="btn btn-danger btn-base delete_supplier_products">Delete
+                                                    <a href="" class="btn btn-danger btn-base delete_supplier_products btn-delele">Delete
                                                         Data</a>
                                                 </td>
                                             </tr>
