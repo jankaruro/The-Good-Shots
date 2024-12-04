@@ -11,14 +11,14 @@
 
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.css">
-    <script src = "https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src = "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <script src = "https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
-    <script src = "https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
     <script>
-      $(document).ready(function(){
-    $('#supplierProductTable').DataTable();
-    });
+        $(document).ready(function () {
+            $('#supplierProductTable').DataTable();
+        });
     </script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
@@ -32,44 +32,68 @@
 
 <body>
     <!--Add-->
-    <!--Add User-->
-    <div class="modal fade" id="addUserData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="addUser DataLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-2" id="addUser DataLabel">Adding New Supplier</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form action="code.php" method="POST">
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label class="fs-5 mt-1 fw-bolder">Supplier Name</label>
-                            <input type="text" class="form-control fw-medium" name="supplier_name"
-                                placeholder="Enter Supplier Name" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="fs-5 mt-1 fw-bolder">Contact Number</label>
-                            <input type="text" class="form-control fw-medium" name="contact_number"
-                                placeholder="Enter Contact Number" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="fs-5 mt-1 fw-bolder">Status</label>
-                            <select class="form-control fw-medium" id="status" name="status" required>
-                                <option value="active">Active</option>
-                                <option value="inactive">Inactive</option>
-                            </select>
-                        </div>
+    <!-- Add Product Modal -->
+<div class="modal fade" id="addUserData" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addProductModalLabel">Add Product</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="addProductForm" method="POST" action="code.php">
+          <!-- Supplier Input -->
+          <div class="mb-3">
+                        <label for="supplier" class="form-label">Supplier</label>
+                        <select class="form-select" id="supplier" name="supplier" required>
+                            <option value="">-- Select Category --</option>
+                            <?php
+                            // Connect to the database
+                            include('connection.php');
+
+                            // Retrieve categories from the database
+                            $stmt = $conn->prepare("SELECT supplier_name FROM suppliers");
+                            $stmt->execute();
+                            $result = $stmt->fetchAll();
+
+                            // Check if there are any categories
+                            if (count($result) > 0) {
+                                // Output the categories
+                                foreach ($result as $row) {
+                                    echo "<option value='" . htmlspecialchars($row['supplier_name']) . "'>" . htmlspecialchars($row['supplier_name']) . "</option>";
+                                }
+                            } else {
+                                echo "<option value=''>No categories found</option>";
+                            }
+
+                            // Close the database connection
+                            $conn = null;
+                            ?>
+                        </select>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary fw-medium" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" name="add_supplier" class="btn btn-primary fw-medium">Add
-                            Supplier</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+
+          <!-- Product Name Input -->
+          <div class="mb-3">
+            <label for="product_name" class="form-label">Product Name</label>
+            <input type="text" class="form-control" id="product_name" name="product_name" required>
+          </div>
+
+          <!-- Price Input -->
+          <div class="mb-3">
+            <label for="price" class="form-label">Price</label>
+            <input type="number" class="form-control" id="price" name="price" step="0.01" required>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" name="add_supp_product">Add Product</button>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
+</div>
+
     <!---->
     <!--view-->
     <div class="modal fade" id="viewitemModal" tabindex="-1" aria-labelledby="viewitemModalLabel" aria-hidden="true">
@@ -260,13 +284,46 @@
                                     <tr>
                                         <th scope="col">ID</th>
                                         <th scope="col">Supplier Name</th>
-                                        <th scope="col">Contact Number</th>
-                                        <th scope="col">Status</th>
+                                        <th scope="col">Product Number</th>
+                                        <th scope="col">Price</th>
                                         <th scope="col" class="size-table">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <?php
+                                    $connection = mysqli_connect("localhost", "root", "", "tgs_inventory");
 
+                                    $fetch_query = "SELECT * FROM supplier_products ";
+                                    $fetch_query_run = mysqli_query($connection, $fetch_query);
+
+                                    if (mysqli_num_rows($fetch_query_run) > 0) {
+                                        while ($row = mysqli_fetch_array($fetch_query_run)) {
+
+                                            ?>
+                                            <tr>
+                                                <td class="supplier_product_id"><?php echo $row['id']; ?></td>
+                                                <td><?php echo $row['supplier']; ?></td>
+                                                <td><?php echo $row['product_name']; ?></td>
+                                                <td><?php echo $row['price']; ?></td>
+                                              
+                                                <td>
+                                                    <a href="#" class="btn btn-info btn-base view_supplier_products">View
+                                                        Data</a>
+                                                    <a href="#" class="btn btn-success btn-base edit_supplier_products">Edit
+                                                        Data</a>
+                                                    <a href="" class="btn btn-danger btn-base delete_supplier_products">Delete
+                                                        Data</a>
+                                                </td>
+                                            </tr>
+                                            <?php
+
+                                        }
+                                    } else {
+                                        ?>
+                                        <tr colspan="5"> No Record Found </tr>
+                                        <?php
+                                    }
+                                    ?>
                                 </tbody>
                             </table>
                         </div>
@@ -277,35 +334,36 @@
             </div>
         </div>
 
-               
+
         <script>
-                $(document).ready(function () {
-                    $("#supplier-toggle").click(function (e) {
-                        e.preventDefault();
-                        $("#supplier-submenu").slideToggle();
-                        const supplierArrow = $("#supplier-arrow");
-                        if (supplierArrow.hasClass("fa-chevron-right")) {
-                            supplierArrow.removeClass("fa-chevron-right").addClass("fa-chevron-down");
-                        } else {
-                            supplierArrow.removeClass("fa-chevron-down").addClass("fa-chevron-right");
-                        }
-                    });
-
-                    $("#reports-toggle").click(function (e) {
-                        e.preventDefault();
-                        $("#reports-submenu").slideToggle();
-                        const reportsArrow = $("#reports-arrow");
-                        if (reportsArrow.hasClass("fa-chevron-right")) {
-                            reportsArrow.removeClass("fa-chevron-right").addClass("fa-chevron-down");
-                        } else {
-                            reportsArrow.removeClass("fa-chevron-down").addClass("fa-chevron-right");
-                        }
-                    });
+            $(document).ready(function () {
+                $("#supplier-toggle").click(function (e) {
+                    e.preventDefault();
+                    $("#supplier-submenu").slideToggle();
+                    const supplierArrow = $("#supplier-arrow");
+                    if (supplierArrow.hasClass("fa-chevron-right")) {
+                        supplierArrow.removeClass("fa-chevron-right").addClass("fa-chevron-down");
+                    } else {
+                        supplierArrow.removeClass("fa-chevron-down").addClass("fa-chevron-right");
+                    }
                 });
-            </script>
-        </body>
-    </html>
 
-        <?php include('function/viewdata.js'); ?>
-        <?php include('function/editdata.js'); ?>
-        <?php include('function/remove.js'); ?>
+                $("#reports-toggle").click(function (e) {
+                    e.preventDefault();
+                    $("#reports-submenu").slideToggle();
+                    const reportsArrow = $("#reports-arrow");
+                    if (reportsArrow.hasClass("fa-chevron-right")) {
+                        reportsArrow.removeClass("fa-chevron-right").addClass("fa-chevron-down");
+                    } else {
+                        reportsArrow.removeClass("fa-chevron-down").addClass("fa-chevron-right");
+                    }
+                });
+            });
+        </script>
+</body>
+
+</html>
+
+<?php include('function/viewdata.js'); ?>
+<?php include('function/editdata.js'); ?>
+<?php include('function/remove.js'); ?>

@@ -225,6 +225,7 @@
                     </ul>
                 </div>
             </nav>
+            
             <div class="container-responsive mt-5">
         <div class="col-lg-12">
 
@@ -267,7 +268,33 @@
                   </tr>
                 </thead>
                   <tbody>
-                
+                  <?php
+                                    $connection = mysqli_connect("localhost", "root", "", "tgs_inventory");
+                                    $fetch_query = "SELECT * FROM users";
+                                    $fetch_query_run = mysqli_query($connection, $fetch_query);
+
+                                    if (mysqli_num_rows($fetch_query_run) > 0) {
+                                        while ($row = mysqli_fetch_array($fetch_query_run)) {
+                                            ?>
+                                            <tr>
+                                                <td class="user_id"><?php echo $row['id']; ?></td>
+                                                <td><?php echo $row['first_name']; ?></td>
+                                                <td><?php echo $row['last_name']; ?></td>
+                                                <td><?php echo $row['email']; ?></td>
+                                                <td><?php echo $row['username']; ?></td>
+                                                <td><?php echo $row['role']; ?></td>
+                                                <td>
+                                                    <a href="#" class="btn btn-info btn-base view_data" data-id="<?php echo $row['id']; ?>">View</a>
+                                                    <a href="#" class="btn btn-success btn-base edit_data" data-id="<?php echo $row['id']; ?>">Edit</a>
+                                                    <a href="#" class="btn btn-danger btn-base delete_user" data-id="<?php echo $row['id']; ?>">Delete</a>
+                                                </td>
+                                            </tr>
+                                            <?php
+                                        }
+                                    } else {
+                                        echo "<tr><td colspan='7' class='text-center'>No record found</td></tr>";
+                                    }
+                                    ?>
                 </tbody>
               </table>
             </div>

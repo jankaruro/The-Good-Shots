@@ -25,7 +25,7 @@
     <title>The Good Shots</title>
 </head>
 
-<!--Add User
+<!--Add User-->
 <div class="modal fade" id="addUserData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
   aria-labelledby="addUserDataLabel" aria-hidden="true">
   
@@ -145,7 +145,7 @@
       </form>
     </div>
   </div>
-</div>-->
+</div>
 
 <!---->
 <!--view-->
@@ -436,7 +436,7 @@
                       <th scope="col">Package Quantity</th>
                       <th scope="col">Measurement Per Package</th>
                       <th scope="col">Total Measurement</th>
-                      <th scope="col">Category</th>
+                     
                       <th scope="col">Unit</th>
                       <th scope="col">Expiry Date</th>
                         
@@ -444,7 +444,36 @@
                   </tr>
                 </thead>
                   <tbody>
-              
+                  <?php
+                                    $connection = mysqli_connect("localhost", "root", "", "tgs_inventory");
+                                    $fetch_query = "SELECT * FROM inventory";
+                                    $fetch_query_run = mysqli_query($connection, $fetch_query);
+
+                                    if (mysqli_num_rows($fetch_query_run) > 0) {
+                                        while ($row = mysqli_fetch_array($fetch_query_run)) {
+                                            ?>
+                                            <tr>
+                                            <td><?php echo htmlspecialchars($row['id']); ?></td>
+                            <td><?php echo htmlspecialchars($row['supplier']); ?></td>
+                            <td><?php echo htmlspecialchars($row['product_name']); ?></td>
+                            <td><?php echo htmlspecialchars($row['package_quantity']); ?></td>
+                            <td><?php echo htmlspecialchars($row['measurement_per_package']); ?></td>
+                            <td><?php echo htmlspecialchars($row['total_measurement']); ?></td>
+                         
+                            <td><?php echo htmlspecialchars($row['unit']); ?></td>
+                            <td><?php echo htmlspecialchars($row['expiry_date']); ?></td>
+                                                <td>
+                                                    <a href="#" class="btn btn-info btn-base view_data" data-id="<?php echo $row['id']; ?>">View</a>
+                                                    <a href="#" class="btn btn-success btn-base edit_data" data-id="<?php echo $row['id']; ?>">Edit</a>
+                                                    <a href="#" class="btn btn-danger btn-base delete_user" data-id="<?php echo $row['id']; ?>">Delete</a>
+                                                </td>
+                                            </tr>
+                                            <?php
+                                        }
+                                    } else {
+                                        echo "<tr><td colspan='7' class='text-center'>No record found</td></tr>";
+                                    }
+                                    ?>
                 </tbody>
               </table>
             </div>
