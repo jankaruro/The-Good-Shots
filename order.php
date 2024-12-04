@@ -98,7 +98,7 @@
         <div id="page-content-wrapper">
             <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-4 mt-2 dashboard-nav">
                 <div class="d-flex align-items-center">
-                    <a href="dashboard.php" class="btn-back me-4"><img src="icons/back-svgrepo-com.svg" alt="" class="back-icon"></a>
+                    <a href="index.php" class="btn-back me-4"><img src="icons/back-svgrepo-com.svg" alt="" class="back-icon"></a>
                     <h2 class="fs-3 m-1">Food and Orders</h2>
                 </div>
 

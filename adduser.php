@@ -264,7 +264,7 @@
                       <th scope="col">Email</th>
                       <th scope="col">Username</th>
                       <th scope="col">Role</th>
-                      <th scope="col" class = "size-table">Action</th>
+                      <th scope="col" class = "action-column">Action</th>
                   </tr>
                 </thead>
                   <tbody>
@@ -284,9 +284,9 @@
                                                 <td><?php echo $row['username']; ?></td>
                                                 <td><?php echo $row['role']; ?></td>
                                                 <td>
-                                                    <a href="#" class="btn btn-info btn-base view_data" data-id="<?php echo $row['id']; ?>">View</a>
-                                                    <a href="#" class="btn btn-success btn-base edit_data" data-id="<?php echo $row['id']; ?>">Edit</a>
-                                                    <a href="#" class="btn btn-danger btn-base delete_user" data-id="<?php echo $row['id']; ?>">Delete</a>
+                                                    <a href="#" class="btn btn-info btn-base view_data btn-view" data-id="<?php echo $row['id']; ?>">View</a>
+                                                    <a href="#" class="btn btn-success btn-base edit_data btn-edit" data-id="<?php echo $row['id']; ?>">Edit</a>
+                                                    <a href="#" class="btn btn-danger btn-base delete_user btn-delete" data-id="<?php echo $row['id']; ?>">Delete</a>
                                                 </td>
                                             </tr>
                                             <?php

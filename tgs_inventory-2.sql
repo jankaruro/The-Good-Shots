@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 29, 2024 at 10:35 PM
+-- Generation Time: Dec 04, 2024 at 03:48 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `category` (
   `id` int(11) NOT NULL,
-  `name` varchar(50) NOT NULL
+  `name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -37,16 +37,16 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`id`, `name`) VALUES
-(6, 'Espresso'),
-(7, 'Fruit Tea'),
-(8, 'Mocktails'),
-(9, 'Smoothies'),
-(10, 'Frappe'),
-(11, 'Croffle'),
-(12, 'Fries'),
-(13, 'Cakes'),
-(14, 'Sandwich'),
-(15, 'Rice Meal');
+(1, 'Espresso'),
+(2, 'Fruit Tea'),
+(3, 'Mocktails'),
+(4, 'Smoothies'),
+(5, 'Frappe'),
+(6, 'Croffle'),
+(7, 'Fries'),
+(8, 'Cakes'),
+(9, 'Sandwich'),
+(10, 'Rice Meal');
 
 -- --------------------------------------------------------
 
@@ -78,11 +78,30 @@ CREATE TABLE `completed_orders_details` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `ingredients`
+--
+
+CREATE TABLE `ingredients` (
+  `ingredient_id` int(11) NOT NULL,
+  `ingredient_name` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `ingredients`
+--
+
+INSERT INTO `ingredients` (`ingredient_id`, `ingredient_name`, `created_at`) VALUES
+(1, 'asd', '2024-12-03 20:26:17');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `inventory`
 --
 
 CREATE TABLE `inventory` (
-  `id` varchar(255) NOT NULL,
+  `id` int(11) NOT NULL,
   `supplier` varchar(100) NOT NULL,
   `product_name` varchar(100) NOT NULL,
   `package_quantity` int(11) NOT NULL,
@@ -90,7 +109,7 @@ CREATE TABLE `inventory` (
   `total_measurement` varchar(100) NOT NULL,
   `category` varchar(100) NOT NULL,
   `unit` varchar(100) NOT NULL,
-  `Expiry_Date` date NOT NULL,
+  `expiry_date` date NOT NULL,
   `created_at` datetime DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `created_by` int(11) DEFAULT NULL
@@ -100,9 +119,8 @@ CREATE TABLE `inventory` (
 -- Dumping data for table `inventory`
 --
 
-INSERT INTO `inventory` (`id`, `supplier`, `product_name`, `package_quantity`, `measurement_per_package`, `total_measurement`, `category`, `unit`, `Expiry_Date`, `created_at`, `updated_at`, `created_by`) VALUES
-('1', 'saiden corp', 'kerbs', 12, 12, '144.00', '', 'grams', '2024-11-30', '2024-11-26 01:57:14', '2024-11-26 01:57:14', NULL),
-('2', 'coffeebean', 'Milk', 12, 12, '144.00', '', 'milliliter', '2024-11-30', '2024-11-26 01:49:38', '2024-11-26 01:49:38', NULL);
+INSERT INTO `inventory` (`id`, `supplier`, `product_name`, `package_quantity`, `measurement_per_package`, `total_measurement`, `category`, `unit`, `expiry_date`, `created_at`, `updated_at`, `created_by`) VALUES
+(4, 'HeBrews Kape', 'kristicks', 123, 123, '15129.00', '', 'grams', '2024-12-21', '2024-12-04 06:42:32', '2024-12-04 06:42:32', NULL);
 
 -- --------------------------------------------------------
 
@@ -126,25 +144,46 @@ CREATE TABLE `payments` (
 --
 
 CREATE TABLE `products` (
-  `id` int(11) NOT NULL,
-  `product_name` varchar(100) NOT NULL,
-  `image` varchar(100) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `product_name` varchar(255) NOT NULL,
   `price` decimal(10,2) NOT NULL,
-  `category` varchar(255) NOT NULL,
-  `created_at` datetime DEFAULT current_timestamp(),
-  `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `created_by` int(11) NOT NULL
+  `category` varchar(100) NOT NULL,
+  `image_url` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `product_name`, `image`, `price`, `category`, `created_at`, `updated_at`, `created_by`) VALUES
-(1, 'chesses', 'images/67422a9269e9f.jpg', 1000000.00, '', '2024-11-24 03:18:42', '2024-11-24 03:18:42', 0),
-(2, 'saiden', 'images/6742bf67b547a.png', 123.00, '', '2024-11-24 13:53:43', '2024-11-24 13:53:43', 0),
-(7, '21', 'images/674a3330e0056.png', 123.00, 'Espresso', '2024-11-30 05:33:36', '2024-11-30 05:33:36', 0),
-(8, 'gian', 'images/674a3352e0c32.png', 1000.00, 'Fruit Tea', '2024-11-30 05:34:10', '2024-11-30 05:34:10', 0);
+INSERT INTO `products` (`product_id`, `product_name`, `price`, `category`, `image_url`, `created_at`) VALUES
+(1, 'asd', 0.00, 'espresso', 'asdadasda', '2024-12-03 17:49:04'),
+(2, 'asd', 123.00, 'Espresso', 'images/674f6605892bc_download.jpg', '2024-12-03 20:11:49'),
+(3, 'chocolate frappe', 123123.00, 'Espresso', 'images/674f67816d67c_28cfc142-844b-4bf4-baaf-4240d90b025b.jpg', '2024-12-03 20:18:09'),
+(4, 'chocolate frappe', 123123.00, 'Espresso', 'images/674f678299226_28cfc142-844b-4bf4-baaf-4240d90b025b.jpg', '2024-12-03 20:18:10'),
+(5, 'chocolate frappe', 123123.00, 'Espresso', 'images/674f678e23843_28cfc142-844b-4bf4-baaf-4240d90b025b.jpg', '2024-12-03 20:18:22'),
+(6, '123', 123.00, 'Espresso', 'images/674f696924de4_DTI.png', '2024-12-03 20:26:17');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_ingredients`
+--
+
+CREATE TABLE `product_ingredients` (
+  `product_ingredient_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `ingredient_id` int(11) NOT NULL,
+  `quantity` decimal(10,2) NOT NULL,
+  `unit` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `product_ingredients`
+--
+
+INSERT INTO `product_ingredients` (`product_ingredient_id`, `product_id`, `ingredient_id`, `quantity`, `unit`) VALUES
+(1, 6, 1, 12.00, 'milliliter');
 
 -- --------------------------------------------------------
 
@@ -167,13 +206,14 @@ CREATE TABLE `purchase_orders` (
 --
 
 INSERT INTO `purchase_orders` (`id`, `po_number`, `created_at`, `qty_received`, `acc_id`, `total_amount`, `received_date`) VALUES
-(156, 'PORD0001', '2024-11-30 04:19:15', 0, NULL, 2100.00, '2024-11-30 04:19:15'),
-(157, 'PORD0002', '2024-11-30 04:19:47', 0, NULL, 252.00, '2024-11-30 04:19:47'),
-(158, 'PORD0003', '2024-11-30 04:20:30', 0, NULL, 2583.00, '2024-11-30 04:20:30'),
-(159, 'PORD0004', '2024-11-30 04:22:18', 0, NULL, 2583.00, '2024-11-30 04:22:18'),
-(160, 'PORD0005', '2024-11-30 04:23:17', 0, NULL, 2100.00, '2024-11-30 04:23:17'),
-(161, 'PORD0006', '2024-11-30 04:23:29', 0, NULL, 2583.00, '2024-11-30 04:23:29'),
-(162, 'PORD0007', '2024-11-30 04:27:29', 0, NULL, 2583.00, '2024-11-30 04:27:29');
+(1, 'PORD0001', '2024-12-04 06:18:37', 0, NULL, 1476.00, '2024-12-04 06:18:37'),
+(2, 'PORD0002', '2024-12-04 06:26:19', 0, NULL, 2829.00, '2024-12-04 06:26:19'),
+(3, 'PORD0003', '2024-12-04 06:28:11', 0, NULL, 15129.00, '2024-12-04 06:28:11'),
+(6, 'PORD0004', '2024-12-04 06:28:37', 0, NULL, 39483.00, '2024-12-04 06:28:37'),
+(8, 'PORD0005', '2024-12-04 06:28:58', 0, NULL, 15129.00, '2024-12-04 06:28:58'),
+(9, 'PORD0006', '2024-12-04 06:29:56', 0, NULL, 1476.00, '2024-12-04 06:29:56'),
+(10, 'PORD0007', '2024-12-04 06:39:13', 0, NULL, 15129.00, '2024-12-04 06:39:13'),
+(13, 'PORD0008', '2024-12-04 06:51:28', 0, NULL, 1476.00, '2024-12-04 06:51:28');
 
 -- --------------------------------------------------------
 
@@ -183,9 +223,9 @@ INSERT INTO `purchase_orders` (`id`, `po_number`, `created_at`, `qty_received`, 
 
 CREATE TABLE `purchase_order_details` (
   `id` int(11) NOT NULL,
-  `po_id` varchar(255) NOT NULL,
+  `po_id` int(11) NOT NULL,
   `product_name` varchar(255) NOT NULL,
-  `unit_price` int(11) NOT NULL,
+  `unit_price` decimal(10,2) NOT NULL,
   `quantity` int(11) NOT NULL,
   `qty_received` int(11) NOT NULL DEFAULT 0,
   `status` varchar(255) NOT NULL DEFAULT 'pending',
@@ -198,9 +238,8 @@ CREATE TABLE `purchase_order_details` (
 --
 
 INSERT INTO `purchase_order_details` (`id`, `po_id`, `product_name`, `unit_price`, `quantity`, `qty_received`, `status`, `supplier_name`, `amount`) VALUES
-(138, '160', 'Milk', 100, 21, 0, 'pending', 'asd', 0.00),
-(139, '161', 'kerbs', 123, 21, 0, 'pending', '', 0.00),
-(140, '162', 'kerbs', 123, 21, 0, 'pending', '', 0.00);
+(1, 1, 'kristicks', 123.00, 0, 0, 'pending', '', 0.00),
+(2, 2, 'kristicks', 123.00, 0, 0, 'pending', '', 0.00);
 
 -- --------------------------------------------------------
 
@@ -211,8 +250,7 @@ INSERT INTO `purchase_order_details` (`id`, `po_id`, `product_name`, `unit_price
 CREATE TABLE `suppliers` (
   `id` int(11) NOT NULL,
   `supplier_name` varchar(100) NOT NULL,
-  `contact_number` bigint(11) NOT NULL,
-  `email` varchar(100) DEFAULT NULL,
+  `contact_number` bigint(20) NOT NULL,
   `status` varchar(100) NOT NULL,
   `created_at` datetime DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
@@ -223,10 +261,10 @@ CREATE TABLE `suppliers` (
 -- Dumping data for table `suppliers`
 --
 
-INSERT INTO `suppliers` (`id`, `supplier_name`, `contact_number`, `email`, `status`, `created_at`, `updated_at`, `created_by`) VALUES
-(5, 'coffeebean', 0, 'giancarlo@gmail.com', 'inactive', '2024-11-23 04:03:10', '2024-11-24 03:19:18', NULL),
-(6, 'saiden corp', 0, 'saidenabbas21@gmail.com', 'active', '2024-11-23 08:58:11', '2024-11-23 08:58:11', NULL),
-(7, 'Esdelac Company', 0, 'samsam@gmail.com', 'active', '2024-11-23 13:40:37', '2024-11-23 13:40:37', NULL);
+INSERT INTO `suppliers` (`id`, `supplier_name`, `contact_number`, `status`, `created_at`, `updated_at`, `created_by`) VALUES
+(1, 'HeBrews Kape', 9272222920, 'active', '2024-12-03 02:19:46', '2024-12-03 02:19:46', NULL),
+(2, 'asd', 123123123, 'active', '2024-12-04 05:28:06', '2024-12-04 05:28:06', NULL),
+(3, 'asdasd', 123123123, 'inactive', '2024-12-04 05:36:16', '2024-12-04 05:36:16', NULL);
 
 -- --------------------------------------------------------
 
@@ -250,23 +288,10 @@ CREATE TABLE `supplier_products` (
 --
 
 INSERT INTO `supplier_products` (`id`, `supplier`, `product_name`, `price`, `category`, `created_at`, `updated_at`, `created_by`) VALUES
-(13, 'Esdelac Company', 'sairenz', 100.00, '', '2024-11-23 18:13:29', '2024-11-24 22:40:59', NULL),
-(14, 'saiden corp', 'kerbs', 123.00, 'asd', '2024-11-23 18:13:40', '2024-11-23 18:13:40', NULL),
-(15, 'coffeebean', 'beans', 12.00, '', '2024-11-23 18:13:58', '2024-11-24 04:56:44', NULL),
-(16, 'coffeebean', 'Milk', 100.00, 'Espresso', '2024-11-23 18:16:57', '2024-11-23 18:16:57', NULL);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `temporary_po`
---
-
-CREATE TABLE `temporary_po` (
-  `id` int(11) NOT NULL,
-  `product_name` varchar(255) NOT NULL,
-  `unit_price` varchar(255) NOT NULL,
-  `total_amount` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+(1, 'HeBrews Kape', 'kristicks', 123.00, '', '2024-12-04 06:00:52', '2024-12-04 06:00:52', NULL),
+(2, 'asdasd', 'Eden Cheese | 170g', 321.00, '', '2024-12-04 06:01:06', '2024-12-04 06:01:06', NULL),
+(3, 'asdasd', 'saiden', 3123.00, '', '2024-12-04 06:01:55', '2024-12-04 06:01:55', NULL),
+(4, 'asd', 'kristicks', 12.00, '', '2024-12-04 06:02:14', '2024-12-04 06:02:14', NULL);
 
 -- --------------------------------------------------------
 
@@ -276,24 +301,23 @@ CREATE TABLE `temporary_po` (
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
-  `first_name` varchar(255) NOT NULL,
-  `last_name` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
+  `first_name` varchar(50) NOT NULL,
+  `last_name` varchar(50) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `username` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
   `role` varchar(255) NOT NULL,
-  `created_at` datetime DEFAULT current_timestamp(),
-  `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `role`, `created_at`, `updated_at`) VALUES
-(31, '123', 'asdasdasd2123', 'abbas.104661@laspinas.sti.edu.ph', '123', 'superadmin', '2024-11-23 02:55:03', '2024-11-24 22:36:16'),
-(32, 'gian', 'ganub', 'ganub@gmial.com', '123123123', 'admin', '2024-11-23 14:06:02', '2024-11-24 22:36:28'),
-(34, '', '', '', '', '', '2024-11-29 19:42:36', '2024-11-29 19:42:36'),
-(35, '123', '123', 'qweasd@laspinas.sti.edu.ph', '123456', 'admin', '2024-11-30 04:00:38', '2024-11-30 04:00:38');
+INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `username`, `password`, `role`, `created_at`) VALUES
+(2, 'saiden', 'abbas', 'saidenabbas21@gmail.com', 'superadmin1', '123123', 'superadmin', '2024-12-03 16:08:29'),
+(3, 'saiden', 'asdasd', 'abbas.104661@laspinas.sti.edu.ph', 'superadmin2', '123123', 'admin', '2024-12-03 16:28:28'),
+(4, 'saiden', 'abbas', 'saidenabbas@gmail.com', 'superadmin3', '123123', 'user', '2024-12-03 16:31:45');
 
 --
 -- Indexes for dumped tables
@@ -320,11 +344,17 @@ ALTER TABLE `completed_orders_details`
   ADD KEY `product_id` (`product_id`);
 
 --
+-- Indexes for table `ingredients`
+--
+ALTER TABLE `ingredients`
+  ADD PRIMARY KEY (`ingredient_id`),
+  ADD UNIQUE KEY `ingredient_name` (`ingredient_name`);
+
+--
 -- Indexes for table `inventory`
 --
 ALTER TABLE `inventory`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `created_by` (`created_by`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `payments`
@@ -337,20 +367,29 @@ ALTER TABLE `payments`
 -- Indexes for table `products`
 --
 ALTER TABLE `products`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`product_id`);
+
+--
+-- Indexes for table `product_ingredients`
+--
+ALTER TABLE `product_ingredients`
+  ADD PRIMARY KEY (`product_ingredient_id`),
+  ADD KEY `product_id` (`product_id`),
+  ADD KEY `ingredient_id` (`ingredient_id`);
 
 --
 -- Indexes for table `purchase_orders`
 --
 ALTER TABLE `purchase_orders`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `po_number` (`po_number`);
 
 --
 -- Indexes for table `purchase_order_details`
 --
 ALTER TABLE `purchase_order_details`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `po_id` (`po_id`);
+  ADD KEY `po_id` (`po_id`);
 
 --
 -- Indexes for table `suppliers`
@@ -362,13 +401,6 @@ ALTER TABLE `suppliers`
 -- Indexes for table `supplier_products`
 --
 ALTER TABLE `supplier_products`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `created_by` (`created_by`);
-
---
--- Indexes for table `temporary_po`
---
-ALTER TABLE `temporary_po`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -376,7 +408,8 @@ ALTER TABLE `temporary_po`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email` (`email`);
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `username` (`username`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -386,7 +419,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `completed_orders`
@@ -401,6 +434,18 @@ ALTER TABLE `completed_orders_details`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `ingredients`
+--
+ALTER TABLE `ingredients`
+  MODIFY `ingredient_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `inventory`
+--
+ALTER TABLE `inventory`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
@@ -410,43 +455,43 @@ ALTER TABLE `payments`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `product_ingredients`
+--
+ALTER TABLE `product_ingredients`
+  MODIFY `product_ingredient_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `purchase_orders`
 --
 ALTER TABLE `purchase_orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=163;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `purchase_order_details`
 --
 ALTER TABLE `purchase_order_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=141;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `suppliers`
 --
 ALTER TABLE `suppliers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `supplier_products`
 --
 ALTER TABLE `supplier_products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
-
---
--- AUTO_INCREMENT for table `temporary_po`
---
-ALTER TABLE `temporary_po`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
@@ -456,32 +501,27 @@ ALTER TABLE `users`
 -- Constraints for table `completed_orders_details`
 --
 ALTER TABLE `completed_orders_details`
-  ADD CONSTRAINT `completed_orders_details_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `completed_orders` (`order_id`),
-  ADD CONSTRAINT `completed_orders_details_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
-
---
--- Constraints for table `inventory`
---
-ALTER TABLE `inventory`
-  ADD CONSTRAINT `inventory_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `completed_orders_details_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `completed_orders` (`order_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `completed_orders_details_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `payments`
 --
 ALTER TABLE `payments`
-  ADD CONSTRAINT `payments_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `completed_orders` (`order_id`);
+  ADD CONSTRAINT `payments_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `completed_orders` (`order_id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `suppliers`
+-- Constraints for table `product_ingredients`
 --
-ALTER TABLE `suppliers`
-  ADD CONSTRAINT `suppliers_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`);
+ALTER TABLE `product_ingredients`
+  ADD CONSTRAINT `product_ingredients_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `product_ingredients_ibfk_2` FOREIGN KEY (`ingredient_id`) REFERENCES `ingredients` (`ingredient_id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `supplier_products`
+-- Constraints for table `purchase_order_details`
 --
-ALTER TABLE `supplier_products`
-  ADD CONSTRAINT `supplier_products_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`);
+ALTER TABLE `purchase_order_details`
+  ADD CONSTRAINT `purchase_order_details_ibfk_1` FOREIGN KEY (`po_id`) REFERENCES `purchase_orders` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -178,22 +178,22 @@
 .custom-employee{
     border-left: 1px solid blue;
     cursor: pointer;
-    height: 190px;
+    height: 150px;
 }
 .custom-sales{
     border-left: 1px solid green;
     cursor: pointer;
-    height: 190px;
+    height: 150px;
 }
 .custom-inventory{
     border-left: 1px solid violet;
     cursor: pointer;
-    height: 190px;
+    height: 150px;
 }
 .custom-discrepancy{
     border-left: 1px solid red;
     cursor: pointer;
-    height: 190px;
+    height: 150px;
 }
 .dashboard-nav {
     position: fixed;
@@ -254,8 +254,11 @@
     background: wheat;
     border-radius: 10px;
 }
-.size-table{
-    width: 350px;
+.action-column{
+    width: 21rem;
+}
+.btn-view, .btn-edit, .btn-delete{
+    width: 100px;
 }
 .btn-excel {
     height: 40px;
@@ -275,14 +278,6 @@
 }
 .btn-inventory{
     width: 300px;
-}
-.edit_data{
-    background-color: rgb(219, 180, 106);
-    width: 100px;
-}
-.delete_data{
-    width: 120px;
-    height: 38px;
 }
 .custom-modal-product{
     width: 100%;

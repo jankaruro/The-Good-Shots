@@ -320,7 +320,7 @@
                 </button>
               </div>
               <div class="card-body mt-1">
-                <table id="product" class="table table-bordered">
+                <table id="product" class="table table-striped">
                   <thead>
                     <tr>
                       <th scope="col">#</th>
@@ -328,7 +328,7 @@
                       <th scope="col">Price</th>
                       <th scope="col">Category</th>
                       <th scope="col">Image</th>
-                      <th scope="col">Actions</th>
+                      <th scope="col" class = "action-column">Actions</th>
 
 
                     </tr>
@@ -356,11 +356,11 @@
                           <td><?php echo $row['category']; ?></td>
                           <td>
                             <img src="<?php echo $row['image_url']; ?>" alt="Product Image"
-                              style="max-width: 100px; max-height: 100px;">
+                              style="max-width: 80px; max-height: 80px;">
                           </td>
                           <td>
-                            <a href="#" class="btn btn-info btn-base view_product">View Data</a>
-                            <a href="#" class="btn btn-success btn-base edit_product">Edit Data</a>
+                            <a href="#" class="btn btn-info btn-base view_product btn-view">View Data</a>
+                            <a href="#" class="btn btn-success btn-base edit_product btn-edit">Edit Data</a>
                             <a href="#" class="btn btn-danger btn-base delete_product">Delete Data</a>
                           </td>
                         </tr>

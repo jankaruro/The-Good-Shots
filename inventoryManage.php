@@ -435,12 +435,10 @@
                       <th scope="col">Product Name</th>
                       <th scope="col">Package Quantity</th>
                       <th scope="col">Measurement Per Package</th>
-                      <th scope="col">Total Measurement</th>
-                     
+                      <th scope="col">Total Measurement</th>              
                       <th scope="col">Unit</th>
                       <th scope="col">Expiry Date</th>
-                        
-                      <th scope="col" class = "size-table">Action</th>
+                      <th scope="col" class = "action-column">Action</th>
                   </tr>
                 </thead>
                   <tbody>
@@ -463,9 +461,9 @@
                             <td><?php echo htmlspecialchars($row['unit']); ?></td>
                             <td><?php echo htmlspecialchars($row['expiry_date']); ?></td>
                                                 <td>
-                                                    <a href="#" class="btn btn-info btn-base view_data" data-id="<?php echo $row['id']; ?>">View</a>
-                                                    <a href="#" class="btn btn-success btn-base edit_data" data-id="<?php echo $row['id']; ?>">Edit</a>
-                                                    <a href="#" class="btn btn-danger btn-base delete_user" data-id="<?php echo $row['id']; ?>">Delete</a>
+                                                    <a href="#" class="btn btn-info btn-base view_data btn-view" data-id="<?php echo $row['id']; ?>">View</a>
+                                                    <a href="#" class="btn btn-success btn-base edit_data btn-edit" data-id="<?php echo $row['id']; ?>">Edit</a>
+                                                    <a href="#" class="btn btn-danger btn-base delete_user btn-delete" data-id="<?php echo $row['id']; ?>">Delete</a>
                                                 </td>
                                             </tr>
                                             <?php
