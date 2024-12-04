@@ -45,79 +45,79 @@
   $query_run = $conn->query($query);
   ?>
   <!-- Purchase Order Modal -->
-  <div class="modal fade" id="purchaseOrderModal" tabindex="-1" role="dialog" aria-labelledby="purchaseOrderLabel"
-    aria-hidden="true">
+  <div class="modal fade" id="purchaseOrderModal" tabindex="-1" role="dialog" aria-labelledby="purchaseOrderLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="purchaseOrderLabel">Purchase Order Details</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="purchaseOrderLabel">Purchase Order Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Purchase Order Date and Time: <span id="transactionDate"><?php echo date("Y-m-d h:i:sa"); ?></span></p>
+                <p>Purchase Order Number: <span id="transactionNumber"></span></p>
+                <hr>
+
+                <!-- Supplier Selection -->
+                <div class="form-group">
+                    <label for="supplier"><b>Supplier</b></label>
+                    <select class="form-control" id="supplier" name="supplier" required onchange="loadProducts()">
+                        <option value="">-- Select Supplier --</option>
+                        <?php
+                        $suppliers = $conn->query("SELECT supplier_name FROM suppliers")->fetchAll(PDO::FETCH_ASSOC);
+                        foreach ($suppliers as $row) {
+                            echo '<option value="' . htmlspecialchars($row['supplier_name']) . '">' . htmlspecialchars($row['supplier_name']) . '</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
+
+                <hr>
+                <div class="form-group">
+                    <label for="product"><b>Product:</b></label>
+                    <select class="form-control" id="product_list" name="product" required>
+                        <option value="">-- Select Product --</option>
+                    </select>
+                </div>
+
+                <!-- Quantity Input -->
+                <div class="form-group">
+                    <label for="product_qty"><b>Quantity:</b></label>
+                    <input type="number" id="product_qty" name="product_qty" class="form-control" min="1">
+                    <button id="btn_add" class="btn btn-primary mt-2" onclick="addProduct()">Add Product</button>
+                </div>
+
+                <!-- Product Table -->
+                <table id="display" class="table table-bordered mt-4">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Unit Price</th>
+                            <th>Quantity</th>
+                            <th>Supplier</th>
+                            <th>Amount</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+
+                <!-- Total Price -->
+                <div class="d-flex justify-content-between">
+                    <strong>Total:</strong>
+                    <span id="total_price">0.00</span>
+                </div>
+            </div>
+
+            <!-- Footer Buttons -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="showPopupForm()">Continue</button>
+            </div>
         </div>
-        <div class="modal-body">
-          <p>Purchase Order Date and Time: <span id="transactionDate"><?php echo date("Y-m-d h:i:sa"); ?></span></p>
-          <p>Purchase Order Number: <span id="transactionNumber"></span></p>
-          <hr>
-
-          <!-- Supplier Selection -->
-          <div class="form-group">
-            <label for="supplier"><b>Supplier</b></label>
-            <select class="form-control" id="supplier" name="supplier" required onchange="loadProducts()">
-              <option value="">-- Select Supplier --</option>
-              <?php
-              $suppliers = $conn->query("SELECT supplier_name FROM suppliers")->fetchAll(PDO::FETCH_ASSOC);
-              foreach ($suppliers as $row) {
-                echo '<option value="' . htmlspecialchars($row['supplier_name']) . '">' . htmlspecialchars($row['supplier_name']) . '</option>';
-              }
-              ?>
-            </select>
-          </div>
-
-          <hr>
-          <div class="form-group">
-            <label for="product"><b>Product:</b></label>
-            <select class="form-control" id="product_list" name="product" required>
-              <option value="">-- Select Product --</option>
-            </select>
-          </div>
-
-          <!-- Quantity Input -->
-          <div class="form-group">
-            <label for="product_qty"><b>Quantity:</b></label>
-            <input type="number" id="product_qty" name="product_qty" class="form-control" min="1">
-            <button id="btn_add" class="btn btn-primary mt-2" onclick="addProduct()">Add Product</button>
-          </div>
-
-          <!-- Product Table -->
-          <table id="display" class="table table-bordered mt-4">
-            <thead>
-              <tr>
-                <th>Product</th>
-                <th>Unit Price</th>
-                <th>Quantity</th>
-                <th>Amount</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-
-          <!-- Total Price -->
-          <div class="d-flex justify-content-between">
-            <strong>Total:</strong>
-            <span id="total_price">0.00</span>
-          </div>
-        </div>
-
-        <!-- Footer Buttons -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-primary" onclick="showPopupForm()">Continue</button>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
 
   <!-- Confirmation Modal -->
   <div id="popupForm" class="modal fade" tabindex="-1" role="dialog">

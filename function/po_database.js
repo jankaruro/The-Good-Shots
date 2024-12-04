@@ -73,6 +73,7 @@ function addProduct() {
     const productName = productSelect.value;
     const quantity = parseInt(document.getElementById("product_qty").value);
     const supplierSelect = document.getElementById("supplier"); // Get the supplier select element
+    const supplierName = supplierSelect.value; // Get the selected supplier name
 
     if (!productName || quantity < 1) {
         alert("Please select a valid product and enter a quantity of 1 or more.");
@@ -83,6 +84,7 @@ function addProduct() {
         const table = document.getElementById("display").getElementsByTagName("tbody")[0];
         let existingRow = null;
 
+        // Check if the product already exists in the table
         for (let i = 0; i < table.rows.length; i++) {
             if (table.rows[i].cells[0].textContent === productName) {
                 existingRow = table.rows[i];
@@ -91,13 +93,16 @@ function addProduct() {
         }
 
         if (existingRow) {
-            const existingQuantity = parseInt(existingRow.cells[2].textContent);
+            // If the product exists, update the quantity and total price
+            const existingQuantity = parseInt(existingRow.cells[2].getElementsByTagName('input')[0].value);
             const newQuantity = existingQuantity + quantity;
-            existingRow.cells[2].textContent = newQuantity; // Update quantity
-            existingRow.cells[3].textContent = (price * newQuantity).toFixed(2); // Update total price
+            existingRow.cells[2].getElementsByTagName('input')[0].value = newQuantity; // Update quantity input
+            existingRow.cells[4].textContent = (price * newQuantity).toFixed(2); // Update total price
         } else {
+            // If the product does not exist, add a new row to the table
             console.log(`Adding product: ${productName}, Price: ${price}, Quantity: ${quantity}`);
-            addToTable(productName, price, quantity);
+            addToTable(productName, price, quantity, supplierName); // Pass supplier name to addToTable
+
         }
 
         updateTotalPrice(); // Update the total price after adding/updating
@@ -108,13 +113,15 @@ function addProduct() {
         supplierSelect.value = ""; // Reset supplier selection
     });
 }
-function addToTable(productName, price, quantity) {
+
+function addToTable(productName, price, quantity, supplierName) {
     const table = document.getElementById("display").getElementsByTagName("tbody")[0];
     let row = table.insertRow();
     row.innerHTML = `
         <td>${productName}</td>
         <td>${price.toFixed(2)}</td>
         <td><input type='number' value='${quantity}' min='1' onchange='updateRowTotal(this)'/></td>
+        <td>${supplierName}</td> <!-- Display supplier name -->
         <td>${(price * quantity).toFixed(2)}</td>
         <td><button onclick="removeItem(this)">Delete</button></td>
     `;
@@ -124,7 +131,7 @@ function updateRowTotal(input) {
     const row = input.parentNode.parentNode; // Get the row containing the input
     const price = parseFloat(row.cells[1].textContent); // Get the product price
     const quantity = parseInt(input.value); // Get the new quantity from the input
-    const totalCell = row.cells[3]; // Get the total price cell
+    const totalCell = row.cells[4]; // Get the total price cell
 
     if (quantity < 1) {
         alert("Quantity must be 1 or more.");
@@ -149,7 +156,7 @@ function updateTotalPrice() {
     let total = 0;
 
     for (let i = 0; i < rows.length; i++) {
-        total += parseFloat(rows[i].cells[3].textContent);
+        total += parseFloat(rows[i].cells[4].textContent); // Update to use the correct cell index for amount
     }
 
     document.getElementById("total_price").textContent = total.toFixed(2);
@@ -217,7 +224,9 @@ function gatherProducts() {
         products.push({
             name: rows[i].cells[0].textContent,
             price: parseFloat(rows[i].cells[1].textContent),
-            quantity: parseInt(rows[i].cells[2].getElementsByTagName('input')[0].value)
+            quantity: parseInt(rows[i].cells[2].getElementsByTagName('input')[0].value),
+            supplier: rows[i].cells[3].textContent // Capture supplier name
+        
         });
     }
 
