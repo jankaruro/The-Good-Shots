@@ -307,7 +307,7 @@
       <img src="Images/Logo.jpg" alt="Bootstrap" class="logo">The Good Shots
     </div>
     <div class="list-group list-group-flush mt-0">
-      <a href="dashboard.php" class="list-group-item ">
+      <a href="index.php" class="list-group-item ">
         <i class="fas fa-tachometer-alt me-3"></i>Dashboard
       </a>
       <a href="adduser.php" class="list-group-item">
