@@ -98,7 +98,7 @@
         <div id="page-content-wrapper">
             <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-4 mt-2 dashboard-nav">
                 <div class="d-flex align-items-center">
-                    <a href="index.php" class="btn-back me-4"><img src="icons/back-svgrepo-com.svg" alt="" class="back-icon"></a>
+                    <a href="dashboard.php" class="btn-back me-4"><img src="icons/back-svgrepo-com.svg" alt="" class="back-icon"></a>
                     <h2 class="fs-3 m-1">Food and Orders</h2>
                 </div>
 
@@ -128,7 +128,9 @@
                         </li>
                     </ul>
                 </div>
-            </nav><div class="container-responsive d-flex ms-2">
+            </nav>
+
+            <div class="container-fluid">
                 <div class="order-container">
                     <?php
                     require_once 'connection.php';
@@ -152,7 +154,7 @@
                                                 <h3 class='coffee-name'>{$row['product_name']}</h3>
                                                 <span class='coffee-price'>P{$row['price']}</span>
                                             </div>
-                                            <input type='button' class='btn addtocart' value='Add To Cart' onclick='addToCart(\"{$row['id']}\", \"{$row['product_name']}\", {$row['price']})'>
+                                            <input style='width: 100%; margin-bottom: 5px;' type='button' class='btn btn-primary' value='Add To Cart' onclick='addToCart(\"{$row['id']}\", \"{$row['product_name']}\", {$row['price']})'>
                                         </div>
                                     </div>";
                             }
@@ -164,7 +166,7 @@
                     ?>
                 </div>
 
-                <div class="receipt receipt-responsive"">
+                <div class="receipt receipt-fluid">
                     <div class="top-cart">
                         <h3 class="cart-name">Cart</h3>
                     </div>
@@ -173,23 +175,24 @@
                         <div id="cart-tbl">
                             <table class="table table-striped table-bordered table-hover" id="cart">
                                 <tr id="tbl_head">
-                                    <th style ="width: 15rem;">Item Name</th>
-                                    <th style="width: 2rem;">Qty</th>
-                                    <th style ="width: 3rem;">Price</th>
-                                    <th>Action</th>
+                                    <th>Item Name</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                    <th>Sub Total</th>
+                                    <th class = "">Action</th>
                                 </tr>
                             </table>
                         </div>
                     </div>
                     <div class="total-price d-flex justify-content-between align-items-center">
-                        <button class="btn btn-outline-success" id="discount-btn" data-bs-toggle="modal" data-bs-target="#discountModal">
+                        <button class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#discountModal">
                             Add Discount
                         </button>
                         <div class="fw-bold">
                             Subtotal: <span id="totalAmount">P0.00</span>
                         </div>
                     </div>
-                    <button class="btn btn-checkout" data-bs-toggle="modal" data-bs-target="#checkoutModal" onclick="updateTotalPrice()">
+                    <button class="btn btn-primary w-100 mt-3" data-bs-toggle="modal" data-bs-target="#checkoutModal" onclick="updateTotalPrice()">
                         Check Out
                     </button>
                 </div>
@@ -233,6 +236,7 @@ function updateCartDisplay() {
         row.insertCell(0).innerText = item.name;
         row.insertCell(1).innerText = item.quantity;
         row.insertCell(2).innerText = `P${item.price.toFixed(2)}`;
+        row.insertCell(3).innerText = `P${subTotal.toFixed(2)}`;
         const actionCell = row.insertCell(4);
         actionCell.innerHTML = `<button class='btn btn-danger' onclick='removeFromCart("${item.id}")'>Remove</button>`;
     });
@@ -246,5 +250,5 @@ function updateTotalPrice() {
     totalPriceInput.value = `P${total.toFixed(2)}`;
 }
 </script>
-        
+
 </html>

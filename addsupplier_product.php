@@ -193,9 +193,6 @@
                         </a>
                     </div>
                 </div>
-                <a href="delivery.php" class="list-group-item">
-                    <i class="fa-solid fa-truck me-3"></i>Delivery
-                </a>
                 <div class="reports-dropdown">
                     <a href="#" class="list-group-item" id="reports-toggle">
                         <i class="fa-solid fa-calendar-days me-3"></i></i>Reports<i

@@ -17,7 +17,7 @@ body {
     background-color: #fff7f0;
     border-radius: 5px;
     height: 98.5vh;
-    width:  300px;
+    width:  340px;
     position: fixed;
     top: 0;
     left: 0;
@@ -67,9 +67,9 @@ body {
 }
 
 #page-content-wrapper {
-    margin-left: 260px;
+    margin-left: 300px;
     padding: 30px;
-    width: calc(100% - 310px);
+    width: calc(100% - 284px);
     height: 100vh;
     box-sizing: border-box;
     position: fixed;
@@ -96,10 +96,10 @@ body {
 }
 .dashboard-nav {
     position: fixed;
-    width: calc(100% - 330px);
+    width: calc(100% - 365px);
     height: 64px;
     top: 5px;
-    left: 320px;
+    left: 360px;
     background-color: white !important;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     border-radius: 5px;
@@ -108,22 +108,27 @@ body {
     z-index: 1000;
 }
 
+.container-fluid {
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
+    height: 100%;
+}
 
 .order-container {
     flex: 2;
-    margin-top: 30px;
+    margin-top: 35px;
     background-color: #b2a189;
     border-radius: 10px;
-    padding: 25px;
-    height: 55rem;
+    padding: 5px;
+    height: 90vh;
     overflow-y: auto;
     scrollbar-width: thin;
-    width: 70rem;
 }
 
 .content {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); 
+    grid-template-columns: repeat(5, 1fr); 
     gap: 20px; 
     padding: 20px;
 }
@@ -220,7 +225,6 @@ input[type="number"] {
     border-radius: 40px;
     width: 180px;
     height: 30px;
-    height: 50px;
     margin-top: 20px;
     margin-left: 5px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -236,13 +240,14 @@ input[type="number"] {
 .receipt {
     background-color: #f9f9f9;
     border-radius: 5px;
-    width: 30rem;
-    height: 100vh;
+    width: calc(100% - 100px);
+    width: 350px;
     border: #8d8d8d solid 1px;
-    margin-top: 30px;
+    margin-top: 40px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
     overflow-y: auto;
 }
 .top-cart{
@@ -290,27 +295,26 @@ input[type="number"] {
     height: 150px;
     font-weight: 500;
 }
-.btn-checkout{
-    width: 250px;
-    height: 50px;
+.btn-order{
+    width: 200px;
+    height: 40px;
     border-radius: 10px;
-    margin-top: 300px;
+    margin-top: 10px;
     font-weight: 600;
-    margin-left: 130px;
-    background-color: #574C48;
-    color: white;
+    text-align: center;
+    margin-left: 75px;
 }
 .total-amount{
     margin-top: 20px;
     font-size: 22px;
 }
-#discount-btn{
-    width: 200px;
-    height: 50px;
+.btn-discount{
+    width: 300px;
+    height: 40px;
     font-size: 20px;
     font-weight: 400;
 }
-#discount-btn:hover{
+.btn-discount:hover{
     background-color: #b5c99a;
     color: black;
     font-size: 20px;
