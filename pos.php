@@ -4,14 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="pos.css">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
         crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
-        integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
-        crossorigin="anonymous"></script>
+   
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+    integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+    crossorigin="anonymous"></script>
     <title>Food & Orders</title>
 </head>
 
@@ -62,7 +64,7 @@
                         </a>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle fw-bold notification-link" href="#"
-                                style="color: black; font-weight: 200; font-size: 17 px;" id="navbarDropdown"
+                                style="color: black; font-weight: 200; font-size: 17px;" id="navbarDropdown"
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <img src="icons/profile-round-1342-svgrepo-com.svg" alt="" class="user-icons"> Admin
                             </a>
@@ -170,153 +172,153 @@
                                 </div>
                             </header>
                             <header>
-                                <div class="name-text">
+                                <div class="name -text">
                                     <span class="label-name" id="rice">Rice Meal</span>
                                 </div>
                             </header>
                         </div>
-                   
+
                     </div>
                     <div class="receipt receipt-fluid">
-                            <div class="top-cart">
-                                <h3 class="cart-name">Cart</h3>
-                            </div>
-                            <h3 class="order-name">Order Items</h3>
-                            <div class="order-list">
-                                <table class="table table-striped table-bordered table-hover" id="cart">
-                                    <thead>
-                                        <tr id="tbl_head">
-                                            <th style="width: 10rem">Item Name</th>
-                                            <th>Qty</th>
-                                            <th>Price</th>
-                                            <th class="">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="cart-body">
-                                        <!-- Cart items will be dynamically added here -->
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="total-price">
-                                <div class="total-amount">
-                                    Total: <span id="total-amount">0.00</span>
-                                </div>
-                            </div>
-                            <button type="button" class="btn-order" data-bs-toggle="modal"
-                                data-bs-target="#checkoutModal" id="checkoutButton">
-                                Checkout
-                            </button>
+                        <div class="top-cart">
+                            <h3 class="cart-name">Cart</h3>
                         </div>
+                        <h3 class="order-name">Order Items</h3>
+                        <div class="order-list">
+                            <table class="table table-striped table-bordered table-hover" id="cart">
+                                <thead>
+                                    <tr id="tbl_head">
+                                        <th style="width: 10rem">Item Name</th>
+                                        <th>Qty</th>
+                                        <th>Price</th>
+                                        <th class="">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="cart-body">
+                                    <!-- Cart items will be dynamically added here -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="total-price">
+                            <div class="total-amount">
+                                Total: <span id="total-amount">0.00</span>
+                            </div>
+                        </div>
+                        <button type="button" class="btn-order" data-bs-toggle="modal" data-bs-target="#checkoutModal"
+                            id="checkoutButton">
+                            Checkout
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="checkoutModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="checkoutModalLabel">Checkout</h5> <button type="button"
-                            class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <<div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="checkoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="checkoutModalLabel">Checkout</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="checkoutForm" method="POST" action="submit_order.php">
+                    <div class="mb-3">
+                        <label for="paymentMethod" class="form-label">Payment Method</label>
+                        <select class="form-select" id="paymentMethod" name="payment_method" required>
+                            <option value="Cash">Cash</option>
+                            <option value="Credit Card">Credit Card</option>
+                            <option value="Debit Card">Debit Card</option>
+                        </select>
                     </div>
-                    <div class="modal-body">
-                        <form id="checkoutForm" method="POST" action="process_checkout.php">
-                            <div class="mb-3"> <label for="paymentMethod" class="form-label">Payment Method</label>
-                                <select class="form-select" id="paymentMethod" name="payment_method" required>
-                                    <option value="Cash">Cash</option>
-                                    <option value="Credit Card">Credit Card</option>
-                                    <option value="Debit Card">Debit Card</option>
-                                </select> </div> <input type="hidden" name="cart_data" id="cart_data">
-                            <div class="total-amount"> Total: <span id="final-total">0.00</span> </div> <button
-                                type="submit" id="confirmOrderButton">Confirm Order</button>
-                        </form>
-                    </div>
-                </div>
+                    <input type="hidden" name="cart_data" id="cart_data">
+                    <div class="total-amount"> Total: <span id="final-total">0.00</span> </div>
+                    <button type="submit" id="confirmOrderButton">Confirm Order</button>
+                </form>
             </div>
         </div>
-
-        
-
+    </div>
+</div>
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script>
-    let cart = [];
-    let totalAmount = 0;
-    let isSubmitting = false; // Flag to prevent multiple submissions
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script>
+            let cart = [];
+            let totalAmount = 0;
+            let isSubmitting = false; // Flag to prevent multiple submissions
 
-    function addToCart(productName, price, productId) {
-        const existingProduct = cart.find(item => item.name === productName);
-        if (existingProduct) {
-            existingProduct.quantity++;
-            existingProduct.totalPrice += price;
-        } else {
-            cart.push({ name: productName, price: price, quantity: 1, totalPrice: price, productId: productId });
-        }
-        updateCart();
-    }
+            function addToCart(productName, price, productId) {
+                const existingProduct = cart.find(item => item.name === productName);
+                if (existingProduct) {
+                    existingProduct.quantity++;
+                    existingProduct.totalPrice += price;
+                } else {
+                    cart.push({ name: productName, price: price, quantity: 1, totalPrice: price, productId: productId });
+                }
+                updateCart();
+            }
 
-    function updateCart() {
-        const cartBody = document.getElementById('cart-body');
-        cartBody.innerHTML = '';
-        totalAmount = 0;
+            function updateCart() {
+                const cartBody = document.getElementById('cart-body');
+                cartBody.innerHTML = '';
+                totalAmount = 0;
 
-        cart.forEach(item => {
-            totalAmount += item.totalPrice;
-            const row = document.createElement('tr');
-            row.innerHTML = `
- <td>${item.name}</td>
-            <td>${item.quantity}</td>
-            <td>P${item.totalPrice.toFixed(2)}</td>
-            <td><button class="btn btn-danger" onclick="removeFromCart('${item.name}')">Remove</button></td>
-        `;
-            cartBody.appendChild(row);
-        });
+                cart.forEach(item => {
+                    totalAmount += item.totalPrice;
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${item.name}</td>
+                        <td>${item.quantity}</td>
+                        <td>P${item.totalPrice.toFixed(2)}</td>
+                        <td><button class="btn btn-danger" onclick="removeFromCart('${item.name}')">Remove</button></td>
+                    `;
+                    cartBody.appendChild(row);
+                });
 
-        document.getElementById('total-amount').innerText = totalAmount.toFixed(2);
-        document.getElementById('cart_data').value = JSON.stringify(cart);
-    }
+                document.getElementById('total-amount').innerText = totalAmount.toFixed(2);
+                document.getElementById('cart_data').value = JSON.stringify(cart);
+            }
 
-    function removeFromCart(productName) {
-        cart = cart.filter(item => item.name !== productName);
-        updateCart();
-    }
+            function removeFromCart(productName) {
+                cart = cart.filter(item => item.name !== productName);
+                updateCart();
+            }
 
-    document.getElementById('checkoutForm').addEventListener('submit', function (event) {
-        event.preventDefault(); // Prevent default form submission
+            document.getElementById('checkoutForm').addEventListener('submit', function (event) {
+                event.preventDefault(); // Prevent default form submission
 
-        if (isSubmitting) return; // Prevent multiple submissions
-        isSubmitting = true; // Set the flag to true
+                if (isSubmitting) return; // Prevent multiple submissions
+                isSubmitting = true; // Set the flag to true
 
-        const formData = new FormData(this);
-        const cartData = JSON.stringify(cart);
-        formData.append('cart_data', cartData);
+                const formData = new FormData(this);
+                const cartData = JSON.stringify(cart);
+                formData.append('cart_data', cartData);
 
-        // Disable the checkout button to prevent multiple clicks
-        document.getElementById('confirmOrderButton').disabled = true;
+                // Disable the checkout button to prevent multiple clicks
+                document.getElementById('confirmOrderButton').disabled = true;
 
-        fetch('submit_order.php', { // Update this line
-            method: 'POST',
-            body: formData
-        })
-            .then(response => response.text())
-            .then(data => {
-                alert(data); // Show success message
-                cart = []; // Clear cart
-                updateCart(); // Update cart display
-                const modalElement = document.getElementById('checkoutModal');
-                const modal = new bootstrap.Modal(modalElement);
-                modal.hide(); // Hide the modal
-            })
-            .catch(error => console.error('Error:', error))
-            .finally(() => {
-                isSubmitting = false; // Reset the flag
-                document.getElementById('confirmOrderButton').disabled = false; // Re-enable the button
+                fetch('submit_order.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok ' + response.statusText);
+                        }
+                        return response.text();
+                    })
+                    .then(data => {
+                        alert(data); // Show success message
+                        // Clear cart and update display
+                    })
+                    .catch(error => {
+                        alert('There was a problem with your order: ' + error.message);
+                    })
+                    .finally(() => {
+                        isSubmitting = false; // Reset the flag
+                        document.getElementById('confirmOrderButton').disabled = false; // Re-enable the button
+                    });
             });
-    });
-    
-</script>
-
-
+        </script>
+    </div>
 </body>
 
 </html>
