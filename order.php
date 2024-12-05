@@ -130,19 +130,14 @@
                     </ul>
                 </div>
             </nav>
-<<<<<<< HEAD
             <div class="container-responsive d-flex ms-2">
-=======
-
-            <div class="container-fluid">
->>>>>>> 0499a0af2f7519f2cc67ab2ddc122d46ba9f46bc
                 <div class="order-container">
                     <?php
                     require_once 'connection.php';
                     $categories = ['Espresso', 'Fruit Tea', 'Mocktails', 'Smoothies', 'Frappe', 'Croffle', 'Fries', 'Cakes', 'Sandwich', 'Rice Meal'];
 
                     foreach ($categories as $category) {
-                        $sql = "SELECT * FROM products WHERE category = :category";
+                        $sql = "SELECT * FROM product WHERE category = :category";
                         $stmt = $conn->prepare($sql);
                         $stmt->execute(['category' => $category]);
                         $stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -158,7 +153,7 @@
                                                 <h3 class='coffee-name'>{$row['product_name']}</h3>
                                                 <span class='coffee-price'>P{$row['price']}</span>
                                             </div>
-                                            <input style='width: 100%; margin-bottom: 5px;' type='button' class='btn btn-primary' value='Add To Cart' onclick='addToCart(\"{$row['id']}\", \"{$row['product_name']}\", {$row['price']})'>
+                                            <input style='width: 100%; margin-bottom: 5px;' type='button' class='btn btn-primary' value='Add To Cart' onclick='addToCart(\"{$row['product_id']}\", \"{$row['product_name']}\", {$row['price']})'>
                                         </div>
                                     </div>";
                             }
@@ -170,11 +165,11 @@
                     ?>
                 </div>
 
-<<<<<<< HEAD
+
                 <div class="receipt receipt-responsive">
-=======
+
                 <div class="receipt receipt-fluid">
->>>>>>> 0499a0af2f7519f2cc67ab2ddc122d46ba9f46bc
+
                     <div class="top-cart">
                         <h3 class="cart-name">Cart</h3>
                     </div>
@@ -183,18 +178,18 @@
                         <div id="cart-tbl">
                             <table class="table table-striped table-bordered table-hover" id="cart">
                                 <tr id="tbl_head">
-<<<<<<< HEAD
+
                                     <th style="width: 15rem;">Item Name</th>
                                     <th style="width: 2rem;">Qty</th>
                                     <th style="width: 3rem;">Price</th>
                                     <th>Action</th>
-=======
+
                                     <th>Item Name</th>
                                     <th>Quantity</th>
                                     <th>Price</th>
                                     <th>Sub Total</th>
                                     <th class = "">Action</th>
->>>>>>> 0499a0af2f7519f2cc67ab2ddc122d46ba9f46bc
+
                                 </tr>
                             </table>
                         </div>

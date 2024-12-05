@@ -375,12 +375,12 @@
                       while ($row = mysqli_fetch_array($fetch_query_run)) {
                         ?>
                         <tr>
-                          <td class="product_id"><?php echo $row['product_id']; ?></td>
+                          <td class="productid"><?php echo $row['product_id']; ?></td>
                           <td><?php echo $row['product_name']; ?></td>
                           <td><?php echo $row['price']; ?></td>
                           <td><?php echo $row['category']; ?></td>
                           <td>
-                            <img src="<?php echo $row['images']; ?>" alt="Product Image"
+                            <img src="<?php echo $row['image']; ?>" alt="Product Image"
                               style="max-width: 80px; max-height: 80px;">
                           </td>
                           <td>
@@ -410,17 +410,16 @@
   </div>
 </body>
 <script>
-  function previewImage(event) {
-        var reader = new FileReader();
-        reader.onload = function () {
-            var output = document.getElementById('imagePreview');
-            output.src = reader.result;
-            output.style.display = 'block';
-            document.getElementById('remove-image').style.display = 'inline-block';
-        };
-        reader.readAsDataURL(event.target.files[0]);
-    }
-
+function previewImage(event) {
+    var reader = new FileReader();
+    reader.onload = function () {
+        var output = document.getElementById('imagePreview');
+        output.src = reader.result; // Set the src of the image to the result from FileReader
+        output.style.display = 'block'; // Show the image preview
+        document.getElementById('remove-image').style.display = 'inline-block'; // Show the remove button
+    };
+    reader.readAsDataURL(event.target.files[0]); // Read the uploaded file as a data URL
+}
     function removeImage() {
         document.getElementById('imagePreview').src = '';
         document.getElementById('imagePreview').style.display = 'none';

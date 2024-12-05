@@ -824,29 +824,27 @@ if (isset($_POST['update_product'])) {
     }
 }
 
-// Delete product
 if (isset($_POST['click_delete_product_btn'])) {
-    $id = $_POST['product_id']; // Make sure to get the product ID from the request
+    $id = $_POST['productid']; // Make sure to get the product ID from the request
     try {
-        $stmt = $conn->prepare("DELETE FROM products WHERE product_id = ?");
+        $stmt = $conn->prepare("DELETE FROM product WHERE product_id = ?");
         $stmt->bind_param('i', $id);
 
         if ($stmt->execute()) {
-            $_SESSION['status'] = "Deleted successfully";
-            header('Location: addproduct.php');
+            // Return a JSON response
+            echo json_encode(['success' => true]);
             exit();
         } else {
-            $_SESSION['status'] = "Delete failed";
-            header('Location: addproduct.php');
+            // Return a JSON response for failure
+            echo json_encode(['success' => false, 'message' => 'Delete failed']);
             exit();
         }
     } catch (PDOException $e) {
-        $_SESSION['status'] = "Database Error: " . $e->getMessage();
-        header('Location: addproduct.php');
+        // Return a JSON response for database error
+        echo json_encode(['success' => false, 'message' => 'Database Error: ' . $e->getMessage()]);
         exit();
     }
 }
-
 
 
 //////////////////////////////////////////////////////////////////////////////////
