@@ -49,9 +49,6 @@
                         </a>
                     </div>
                 </div>
-                <a href="delivery.php" class="list-group-item">
-                    <i class="fa-solid fa-truck me-3"></i>Delivery
-                </a>
                 <div class="reports-dropdown">
                     <a href="#" class="list-group-item" id="reports-toggle">
                         <i class="fa-solid fa-calendar-days me-3"></i></i>Reports<i
@@ -79,7 +76,7 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
-                        <a class="nav-link fw-bold cashier-link me-3 text-dark" href="order.php">
+                        <a class="nav-link fw-bold cashier-link me-3 text-dark" href="pos.php">
                             <img src="icons/cashier-svgrepo-com.svg" alt="" class="topnavbar-icons">
                             Orders
                         </a>
