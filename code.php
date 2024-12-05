@@ -359,23 +359,30 @@ if (isset($_POST['add_supp_product'])) {
     $supplier = $_POST['supplier'];
     $product_name = $_POST['product_name'];
     $price = $_POST['price'];
+    $quantity = $_POST['quantity']; // Assuming you're adding this field
+    $unit = $_POST['unit']; // Assuming you're adding this field
+    $reorder_level = $_POST['reorder_level']; // Assuming you're adding this field
 
     // Connect to the database
     include('connection.php');
 
     // Prepare the SQL statement to prevent SQL injection
-    $stmt = $conn->prepare("INSERT INTO supplier_products (supplier, product_name, price) VALUES (:supplier, :product_name, :price)");
+    $stmt = $conn->prepare("INSERT INTO supplier_products (supplier, product_name, price, quantity, unit, reorder_level) VALUES (:supplier, :product_name, :price, :quantity, :unit, :reorder_level)");
 
     // Bind parameters
     $stmt->bindParam(':supplier', $supplier);
     $stmt->bindParam(':product_name', $product_name);
     $stmt->bindParam(':price', $price);
+    $stmt->bindParam(':quantity', $quantity);
+    $stmt->bindParam(':unit', $unit);
+    $stmt->bindParam(':reorder_level', $reorder_level);
 
     // Execute the statement
-    if ($stmt->execute()) {
+    try {
+        $stmt->execute();
         $_SESSION['status'] = "Product added successfully!";
-    } else {
-        $_SESSION['status'] = "Error: " . $stmt->errorInfo()[2]; // Get error message
+    } catch (PDOException $e) {
+        $_SESSION['status'] = "Error: " . $e->getMessage();
     }
 
     // Close the database connection
@@ -624,10 +631,16 @@ if (isset($_POST['click_delete_inventory_btn'])) {
 
 
 // Insert product
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_product'])) {
+if (isset($_POST['add_product'])) {
+    // Debugging output
+    echo "Form submitted. Processing...<br>";
+
     $product_name = htmlspecialchars($_POST['productname']);
     $price = floatval($_POST['price']);
     $category = htmlspecialchars($_POST['category']);
+
+    // Debugging output
+    echo "Product Name: $product_name, Price: $price, Category: $category<br>";
 
     // Handle image upload
     if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
@@ -649,8 +662,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_product'])) {
         exit();
     }
 
-    // Prepare the SQL statement to insert into the products table
-    $stmt = $connection->prepare("INSERT INTO products (product_name, image_url, price, category) VALUES (?, ?, ?, ?)");
+    // Prepare the SQL statement to insert into the product_ingredients table
+    $stmt = $connection->prepare("INSERT INTO product (product_name, image, price, category) VALUES (?, ?, ?, ?)");
     if ($stmt === false) {
         die('Prepare failed: ' . htmlspecialchars($connection->error));
     }
@@ -667,8 +680,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_product'])) {
             $quantities = $_POST['quantity'];
             $units = $_POST['unit'];
 
-            // Prepare the SQL statement for inserting ingredients
-            $ingredientStmt = $connection->prepare("INSERT INTO ingredients (ingredient_name) VALUES (?)");
+            // Prepare the SQL statement for inserting into product_ingredients_detail
+            $ingredientStmt = $connection->prepare("INSERT INTO product_ingredients_detail (product_id, ingredient_name, quantity, unit) VALUES (?, ?, ?, ?)");
             if ($ingredientStmt === false) {
                 error_log("Prepare failed for ingredients: " . htmlspecialchars($connection->error));
                 $_SESSION['status'] = "Error preparing ingredients statement.";
@@ -679,23 +692,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_product'])) {
             // Loop through each ingredient and insert it into the database
             foreach ($ingredientNames as $index => $ingredientName) {
                 $ingredientName = htmlspecialchars($ingredientName);
-                $ingredientStmt->bind_param("s", $ingredientName);
+                $quantity = floatval($quantities[$index]);
+                $unit = htmlspecialchars($units[$index]);
+
+                $ingredientStmt->bind_param("isds", $product_id, $ingredientName, $quantity, $unit);
                 if (!$ingredientStmt->execute()) {
-                    error_log("Insert failed for ingredient: " . $ingredientStmt->error);
+                    error_log("Insert failed for product_ingredients_detail: " . $ingredientStmt->error);
                     $_SESSION['status'] = "Error inserting ingredient: " . $ingredientStmt->error;
-                } else {
-                    $ingredient_id = $ingredientStmt->insert_id;
-
-                    // Now insert into product_ingredients
-                    $productIngredientStmt = $connection->prepare("INSERT INTO product_ingredients (product_id, ingredient_id, quantity, unit) VALUES (?, ?, ?, ?)");
-                    $productIngredientStmt->bind_param("iids", $product_id, $ingredient_id, $quantities[$index], $units[$index]);
-                    if (!$productIngredientStmt->execute()) {
-                        error_log("Insert failed for product_ingredients: " . $productIngredientStmt->error);
-                    }
-                    $productIngredientStmt->close();
                 }
-            }
-
+            } 
             // Close the ingredient statement
             $ingredientStmt->close();
         }
@@ -819,29 +824,27 @@ if (isset($_POST['update_product'])) {
     }
 }
 
-// Delete product
 if (isset($_POST['click_delete_product_btn'])) {
-    $id = $_POST['product_id']; // Make sure to get the product ID from the request
+    $id = $_POST['productid']; // Make sure to get the product ID from the request
     try {
-        $stmt = $conn->prepare("DELETE FROM products WHERE product_id = ?");
+        $stmt = $conn->prepare("DELETE FROM product WHERE product_id = ?");
         $stmt->bind_param('i', $id);
 
         if ($stmt->execute()) {
-            $_SESSION['status'] = "Deleted successfully";
-            header('Location: addproduct.php');
+            // Return a JSON response
+            echo json_encode(['success' => true]);
             exit();
         } else {
-            $_SESSION['status'] = "Delete failed";
-            header('Location: addproduct.php');
+            // Return a JSON response for failure
+            echo json_encode(['success' => false, 'message' => 'Delete failed']);
             exit();
         }
     } catch (PDOException $e) {
-        $_SESSION['status'] = "Database Error: " . $e->getMessage();
-        header('Location: addproduct.php');
+        // Return a JSON response for database error
+        echo json_encode(['success' => false, 'message' => 'Database Error: ' . $e->getMessage()]);
         exit();
     }
 }
-
 
 
 //////////////////////////////////////////////////////////////////////////////////

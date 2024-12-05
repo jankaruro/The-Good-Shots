@@ -133,7 +133,7 @@ $(document).ready(function () {
     $('.delete_product').click(function (e) {
         e.preventDefault();
         
-        var product_id = $(this).closest('tr').find('.product_id').text().trim();
+        var productid = $(this).closest('tr').find('.productid').text().trim();
 
         if (confirm("Are you sure you want to delete this product?")) {
             $.ajax({
@@ -141,7 +141,7 @@ $(document).ready(function () {
                 url: "code.php",
                 data: {
                     'click_delete_product_btn': true,
-                    'product_id': product_id
+                    'productid': productid
                 },
                 success: function (response) {
                     try {

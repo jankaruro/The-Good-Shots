@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="order.css">
     <title>Food & Orders</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
 <body>
@@ -74,8 +75,8 @@
                 </a>
                 <a href="#smoothies" class="list-group-item">
                     <img src="icons/juice-svgrepo-com (1).svg" alt="" class="icons me-3">Smoothies
-                </a>
-                <a href="#frappe" class="list-group-item">
+</a >
+                    <a href="#frappe" class="list-group-item">
                     <img src="icons/frappe-svgrepo-com (1).svg" alt="" class="icons me-3">Frappe
                 </a>
                 <a href="#croffle" class="list-group-item">
@@ -98,7 +99,7 @@
         <div id="page-content-wrapper">
             <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-4 mt-2 dashboard-nav">
                 <div class="d-flex align-items-center">
-                    <a href="index.php" class="btn-back me-4"><img src="icons/back-svgrepo-com.svg" alt="" class="back-icon"></a>
+                    <a href="dashboard.php" class="btn-back me-4"><img src="icons/back-svgrepo-com.svg" alt="" class="back-icon"></a>
                     <h2 class="fs-3 m-1">Food and Orders</h2>
                 </div>
 
@@ -129,23 +130,21 @@
                     </ul>
                 </div>
             </nav>
-
-            <div class="container-fluid">
+            <div class="container-responsive d-flex ms-2">
                 <div class="order-container">
                     <?php
                     require_once 'connection.php';
                     $categories = ['Espresso', 'Fruit Tea', 'Mocktails', 'Smoothies', 'Frappe', 'Croffle', 'Fries', 'Cakes', 'Sandwich', 'Rice Meal'];
 
                     foreach ($categories as $category) {
-                        $sql = "SELECT * FROM products WHERE category = :category";
+                        $sql = "SELECT * FROM product WHERE category = :category";
                         $stmt = $conn->prepare($sql);
                         $stmt->execute(['category' => $category]);
                         $stmt->setFetchMode(PDO::FETCH_ASSOC);
 
                         if ($stmt->rowCount() > 0) {
-                            echo "<header><div class='name-text'><span class='label-name' id='" . strtolower(str_replace(' ', '-', $category)) . "'>$category</span></div></header>";
-                            echo "<div class ```html
-                            <div class='content flex'><div class='product-list'>";
+                            echo "<header><div class='name-text'><span class='label-name ' id='" . strtolower(str_replace(' ', '-', $category)) . "'>$category</span></div></header>";
+                            echo "<div class='content flex'><div class='product-list'>";
 
                             while ($row = $stmt->fetch()) {
                                 echo "<div class='coffee-card flex me-3'>
@@ -154,7 +153,7 @@
                                                 <h3 class='coffee-name'>{$row['product_name']}</h3>
                                                 <span class='coffee-price'>P{$row['price']}</span>
                                             </div>
-                                            <input style='width: 100%; margin-bottom: 5px;' type='button' class='btn btn-primary' value='Add To Cart' onclick='addToCart(\"{$row['id']}\", \"{$row['product_name']}\", {$row['price']})'>
+                                            <input style='width: 100%; margin-bottom: 5px;' type='button' class='btn btn-primary' value='Add To Cart' onclick='addToCart(\"{$row['product_id']}\", \"{$row['product_name']}\", {$row['price']})'>
                                         </div>
                                     </div>";
                             }
@@ -166,7 +165,11 @@
                     ?>
                 </div>
 
+
+                <div class="receipt receipt-responsive">
+
                 <div class="receipt receipt-fluid">
+
                     <div class="top-cart">
                         <h3 class="cart-name">Cart</h3>
                     </div>
@@ -175,11 +178,18 @@
                         <div id="cart-tbl">
                             <table class="table table-striped table-bordered table-hover" id="cart">
                                 <tr id="tbl_head">
+
+                                    <th style="width: 15rem;">Item Name</th>
+                                    <th style="width: 2rem;">Qty</th>
+                                    <th style="width: 3rem;">Price</th>
+                                    <th>Action</th>
+
                                     <th>Item Name</th>
                                     <th>Quantity</th>
                                     <th>Price</th>
                                     <th>Sub Total</th>
                                     <th class = "">Action</th>
+
                                 </tr>
                             </table>
                         </div>
@@ -236,8 +246,12 @@ function updateCartDisplay() {
         row.insertCell(0).innerText = item.name;
         row.insertCell(1).innerText = item.quantity;
         row.insertCell(2).innerText = `P${item.price.toFixed(2)}`;
+<<<<<<< HEAD
+        const actionCell = row.insertCell(3);
+=======
         row.insertCell(3).innerText = `P${subTotal.toFixed(2)}`;
         const actionCell = row.insertCell(4);
+>>>>>>> 0499a0af2f7519f2cc67ab2ddc122d46ba9f46bc
         actionCell.innerHTML = `<button class='btn btn-danger' onclick='removeFromCart("${item.id}")'>Remove</button>`;
     });
 

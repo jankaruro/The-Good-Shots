@@ -12,8 +12,10 @@
 
   <!-- DataTables CSS -->
   <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.css">
-  <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
-
+    <script src = "https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src = "https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+    <script src = "https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
   <script>
     $(document).ready(function () {
       $('#myTable').DataTable();
@@ -89,7 +91,7 @@
                 </div>
 
                 <!-- Product Table -->
-                <table id="display" class="table table-bordered mt-4">
+                <table id="display" class="table table-striped">
                     <thead>
                         <tr>
                             <th>Product</th>
@@ -149,7 +151,7 @@
         <img src="Images/Logo.jpg" alt="Bootstrap" class="logo">The Good Shots
       </div>
       <div class="list-group list-group-flush mt-0">
-        <a href="dashboard.php" class="list-group-item">
+        <a href="index.php" class="list-group-item">
           <i class="fas fa-tachometer-alt me-3"></i>Dashboard
         </a>
         <a href="adduser.php" class="list-group-item">
@@ -181,9 +183,6 @@
             </a>
           </div>
         </div>
-        <a href="delivery.php" class="list-group-item">
-          <i class="fa-solid fa-truck me-3"></i>Delivery
-        </a>
         <div class="reports-dropdown">
           <a href="#" class="list-group-item" id="reports-toggle">
             <i class="fa-solid fa-calendar-days me-3"></i>Reports<i
@@ -260,7 +259,7 @@
                   Add New Order
                 </button>
               </div>
-              <table id="myTable" class="table table-striped table-bordered table-secondary">
+              <table id="myTable" class="table table-striped">
                 <thead>
                   <tr>
                     <th scope="col" hidden>Product ID</th>

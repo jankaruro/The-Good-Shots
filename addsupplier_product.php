@@ -33,7 +33,7 @@
 <body>
     <!--Add-->
     <!-- Add Product Modal -->
-<div class="modal fade" id="addUserData" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addUserData" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -44,33 +44,33 @@
         <form id="addProductForm" method="POST" action="code.php">
           <!-- Supplier Input -->
           <div class="mb-3">
-                        <label for="supplier" class="form-label">Supplier</label>
-                        <select class="form-select" id="supplier" name="supplier" required>
-                            <option value="">-- Select Category --</option>
-                            <?php
-                            // Connect to the database
-                            include('connection.php');
+            <label for="supplier" class="form-label">Supplier</label>
+            <select class="form-select" id="supplier" name="supplier" required>
+              <option value="">-- Select Category --</option>
+              <?php
+              // Connect to the database
+              include('connection.php');
 
-                            // Retrieve categories from the database
-                            $stmt = $conn->prepare("SELECT supplier_name FROM suppliers");
-                            $stmt->execute();
-                            $result = $stmt->fetchAll();
+              // Retrieve categories from the database
+              $stmt = $conn->prepare("SELECT supplier_name FROM suppliers");
+              $stmt->execute();
+              $result = $stmt->fetchAll();
 
-                            // Check if there are any categories
-                            if (count($result) > 0) {
-                                // Output the categories
-                                foreach ($result as $row) {
-                                    echo "<option value='" . htmlspecialchars($row['supplier_name']) . "'>" . htmlspecialchars($row['supplier_name']) . "</option>";
-                                }
-                            } else {
-                                echo "<option value=''>No categories found</option>";
-                            }
+              // Check if there are any categories
+              if (count($result) > 0) {
+                // Output the categories
+                foreach ($result as $row) {
+                  echo "<option value='" . htmlspecialchars($row['supplier_name']) . "'>" . htmlspecialchars($row['supplier_name']) . "</option>";
+                }
+              } else {
+                echo "<option value=''>No categories found</option>";
+              }
 
-                            // Close the database connection
-                            $conn = null;
-                            ?>
-                        </select>
-                    </div>
+              // Close the database connection
+              $conn = null;
+              ?>
+            </select>
+          </div>
 
           <!-- Product Name Input -->
           <div class="mb-3">
@@ -84,6 +84,28 @@
             <input type="number" class="form-control" id="price" name="price" step="0.01" required>
           </div>
 
+          <!-- Measurement/Quantity Input -->
+          <div class="mb-3">
+            <label for="quantity" class="form-label">Measurement/Quantity</label>
+            <input type="number" class="form-control" id="quantity" name="quantity" step="0.01" required>
+          </div>
+
+          <!-- Unit Input -->
+          <div class="form-group">
+            <label class="form-label">Unit</label>
+            <select class="form-control" id="unit" name="unit" required>
+              <option value="pack">pack</option>
+              <option value="pieces">pieces</option>
+              <option value="box">box</option>
+              <option value="cups">cups</option>
+            </select>
+          </div>
+          <!-- Reorder Level Input -->
+          <div class="mb-3">
+            <label for="reorder_level" class="form-label">Reorder Level</label>
+            <input type="number" class="form-control" id="reorder_level" name="reorder_level" required>
+          </div>
+
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             <button type="submit" class="btn btn-primary" name="add_supp_product">Add Product</button>
@@ -93,6 +115,7 @@
     </div>
   </div>
 </div>
+
 
     <!---->
     <!--view-->
@@ -193,9 +216,6 @@
                         </a>
                     </div>
                 </div>
-                <a href="delivery.php" class="list-group-item">
-                    <i class="fa-solid fa-truck me-3"></i>Delivery
-                </a>
                 <div class="reports-dropdown">
                     <a href="#" class="list-group-item" id="reports-toggle">
                         <i class="fa-solid fa-calendar-days me-3"></i></i>Reports<i
@@ -286,6 +306,9 @@
                                         <th scope="col">Supplier Name</th>
                                         <th scope="col">Product Number</th>
                                         <th scope="col">Price</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Unit</th>
+                                        <th scope="col">Reorder Level</th>
                                         <th scope="col" class="action-column">Action</th>
                                     </tr>
                                 </thead>
@@ -305,6 +328,9 @@
                                                 <td><?php echo $row['supplier']; ?></td>
                                                 <td><?php echo $row['product_name']; ?></td>
                                                 <td><?php echo $row['price']; ?></td>
+                                                <td><?php echo $row['quantity']; ?></td>
+                                                <td><?php echo $row['unit']; ?></td>
+                                                <td><?php echo $row['reorder_level']; ?></td>
                                               
                                                 <td>
                                                     <a href="#" class="btn btn-info btn-base view_supplier_products">View
