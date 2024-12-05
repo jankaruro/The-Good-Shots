@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="order.css">
     <title>Food & Orders</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
 <body>
@@ -74,8 +75,8 @@
                 </a>
                 <a href="#smoothies" class="list-group-item">
                     <img src="icons/juice-svgrepo-com (1).svg" alt="" class="icons me-3">Smoothies
-                </a>
-                <a href="#frappe" class="list-group-item">
+</a >
+                    <a href="#frappe" class="list-group-item">
                     <img src="icons/frappe-svgrepo-com (1).svg" alt="" class="icons me-3">Frappe
                 </a>
                 <a href="#croffle" class="list-group-item">
@@ -128,7 +129,8 @@
                         </li>
                     </ul>
                 </div>
-            </nav><div class="container-responsive d-flex ms-2">
+            </nav>
+            <div class="container-responsive d-flex ms-2">
                 <div class="order-container">
                     <?php
                     require_once 'connection.php';
@@ -141,9 +143,8 @@
                         $stmt->setFetchMode(PDO::FETCH_ASSOC);
 
                         if ($stmt->rowCount() > 0) {
-                            echo "<header><div class='name-text'><span class='label-name' id='" . strtolower(str_replace(' ', '-', $category)) . "'>$category</span></div></header>";
-                            echo "<div class ```html
-                            <div class='content flex'><div class='product-list'>";
+                            echo "<header><div class='name-text'><span class='label-name ' id='" . strtolower(str_replace(' ', '-', $category)) . "'>$category</span></div></header>";
+                            echo "<div class='content flex'><div class='product-list'>";
 
                             while ($row = $stmt->fetch()) {
                                 echo "<div class='coffee-card flex me-3'>
@@ -164,7 +165,7 @@
                     ?>
                 </div>
 
-                <div class="receipt receipt-responsive"">
+                <div class="receipt receipt-responsive">
                     <div class="top-cart">
                         <h3 class="cart-name">Cart</h3>
                     </div>
@@ -173,9 +174,9 @@
                         <div id="cart-tbl">
                             <table class="table table-striped table-bordered table-hover" id="cart">
                                 <tr id="tbl_head">
-                                    <th style ="width: 15rem;">Item Name</th>
+                                    <th style="width: 15rem;">Item Name</th>
                                     <th style="width: 2rem;">Qty</th>
-                                    <th style ="width: 3rem;">Price</th>
+                                    <th style="width: 3rem;">Price</th>
                                     <th>Action</th>
                                 </tr>
                             </table>
@@ -233,7 +234,7 @@ function updateCartDisplay() {
         row.insertCell(0).innerText = item.name;
         row.insertCell(1).innerText = item.quantity;
         row.insertCell(2).innerText = `P${item.price.toFixed(2)}`;
-        const actionCell = row.insertCell(4);
+        const actionCell = row.insertCell(3);
         actionCell.innerHTML = `<button class='btn btn-danger' onclick='removeFromCart("${item.id}")'>Remove</button>`;
     });
 
@@ -246,5 +247,5 @@ function updateTotalPrice() {
     totalPriceInput.value = `P${total.toFixed(2)}`;
 }
 </script>
-        
+
 </html>

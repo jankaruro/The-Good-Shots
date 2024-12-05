@@ -37,61 +37,42 @@
   ?>
   <div class="modal fade" id="insertdata" tabindex="-1" aria-labelledby="insertdataLabel" aria-hidden="true">
     <div class="modal-dialog custom-modal-product">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="insertdataLabel">Add Product</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="insertdataLabel">Add Product</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="registration-form" method="POST" action="code.php" enctype="multipart/form-data">
+            <div class="mb-3">
+              <label for="productname" class="form-label">Product Name</label>
+              <input type="text" class="form-control" id="productname" name="productname" required>
             </div>
-            <div class="modal-body">
-                <form id="registration-form" method="POST" action="code.php" enctype="multipart/form-data">
-                    <div class="mb-3">
-                        <label for="productname" class="form-label">Product Name</label>
-                        <input type="text" class="form-control" id="productname" name="productname" required>
-                    </div>
 
-                    <div class="mb-3">
-                        <label for="image" class="form-label">Image</label>
-                        <input type="file" class="form-control" id="image" name="image" accept=".jpg, .jpeg, .png" onchange="previewImage(event)">
-                        <img id="imagePreview" src="" alt="Image Preview" style="max-width: 150px; max-height: 150px; display: none;">
-                        <button type="button" class="btn btn-danger mt-2" id="remove-image" style="display: none;" onclick="removeImage()">Remove Image</button>
-                    </div>
+            <div class="mb-3">
+              <label for="image" class="form-label">Image</label>
+              <input type="file" class="form-control" id="image" name="image" accept=".jpg, .jpeg, .png"
+                onchange="previewImage(event)">
+              <img id="imagePreview" src="" alt="Image Preview"
+                style="max-width: 150px; max-height: 150px; display: none;">
+              <button type="button" class="btn btn-danger mt-2" id="remove-image" style="display: none;"
+                onclick="removeImage()">Remove Image</button>
+            </div>
 
-                    <div class="mb-3">
-                        <h2>Ingredients</h2>
-                        <div id="ingredients-container">
-                            <div class="ingredient mb-3" id="ingredient_1">
-                                <label for="ingredient_name_1">Ingredient Name:</label>
-                                <input type="text" class="form-control" id="ingredient_name_1" name="ingredient_name[]" required>
-
-                                <label for="quantity_1">Quantity:</label>
-                                <input type="number" class="form-control" id="quantity_1" name="quantity[]" required>
-
-                                <label for="unit_1">Unit:</label>
-                                <select class="form-control fw-medium" id="unit_1" name="unit[]" required>
-                                    <option value="">-- Select Unit --</option>
-                                    <option value="milliliter">milliliter</option>
-                                    <option value="grams">grams</option>
-                                </select>
-                            </div>
-                        </div>
-                        <button type="button" class="btn btn-primary" id="add-ingredient">Add Another Ingredient</button>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="price" class="form-label">Price</label>
-                        <input type="text" class="form-control" id="price" name="price" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="category" class="form-label">Category</label>
-                        <select class="form-select" id="category" name="category" required>
-                            <option value="">-- Select Category --</option>
-                            <?php
+            <div class="mb-3">
+              <h2>Ingredients</h2>
+              <div id="ingredients-container">
+                <div class="ingredient mb-3" id="ingredient_1">
+                  <label for="ingredient_name_1">Select Ingredient:</label>
+                  <select class="form-control fw-medium" id="ingredient_name_1" name="ingredient_name[]" required>
+                    <option value="">-- Select Ingredient --</option>
+                    <!-- Example inventory items -->
+                    <?php
                             // Connect to the database
                             include('connection.php');
 
                             // Retrieve categories from the database
-                            $stmt = $conn->prepare("SELECT name FROM category");
+                            $stmt = $conn->prepare("SELECT product_name FROM inventory");
                             $stmt->execute();
                             $result = $stmt->fetchAll();
 
@@ -99,7 +80,7 @@
                             if (count($result) > 0) {
                                 // Output the categories
                                 foreach ($result as $row) {
-                                    echo "<option value='" . htmlspecialchars($row['name']) . "'>" . htmlspecialchars($row['name']) . "</option>";
+                                    echo "<option value='" . htmlspecialchars($row['product_name']) . "'>" . htmlspecialchars($row['product_name']) . "</option>";
                                 }
                             } else {
                                 echo "<option value=''>No categories found</option>";
@@ -108,18 +89,65 @@
                             // Close the database connection
                             $conn = null;
                             ?>
-                        </select>
-                    </div>
+                  </select>
 
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" name="add_product">Save changes</button>
-                    </div>
-                </form>
+                  <label for="quantity_1">Quantity:</label>
+                  <input type="number" class="form-control" id="quantity_1" name="quantity[]" required>
+
+                  <label for="unit_1">Unit:</label>
+                  <select class="form-control fw-medium" id="unit_1" name="unit[]" required>
+                    <option value="">-- Select Unit --</option>
+                    <option value="milliliter">milliliter</option>
+                    <option value="grams">grams</option>
+                  </select>
+                </div>
+              </div>
+              <button type="button" class="btn btn-primary" id="add-ingredient">Add Another Ingredient</button>
             </div>
+
+            <div class="mb-3">
+              <label for="price" class="form-label">Price</label>
+              <input type="text" class="form-control" id="price" name="price" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="category" class="form-label">Category</label>
+              <select class="form-select" id="category" name="category" required>
+                <option value="">-- Select Category --</option>
+                <?php
+                // Connect to the database
+                include('connection.php');
+
+                // Retrieve categories from the database
+                $stmt = $conn->prepare("SELECT name FROM category");
+                $stmt->execute();
+                $result = $stmt->fetchAll();
+
+                // Check if there are any categories
+                if (count($result) > 0) {
+                  // Output the categories
+                  foreach ($result as $row) {
+                    echo "<option value='" . htmlspecialchars($row['name']) . "'>" . htmlspecialchars($row['name']) . "</option>";
+                  }
+                } else {
+                  echo "<option value=''>No categories found</option>";
+                }
+
+                // Close the database connection
+                $conn = null;
+                ?>
+              </select>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary" name="add_product">Save changes</button>
+            </div>
+          </form>
         </div>
+      </div>
     </div>
-</div>
+  </div>
 
   <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel"
     aria-hidden="true">
@@ -176,7 +204,7 @@
   </div>
 
 
- 
+
   <div class="modal fade" id="viewProductModal" tabindex="-1" aria-labelledby="viewProductModalLabel"
     aria-hidden="true">
     <div class="modal-dialog">
@@ -328,7 +356,7 @@
                       <th scope="col">Price</th>
                       <th scope="col">Category</th>
                       <th scope="col">Image</th>
-                      <th scope="col" class = "action-column">Actions</th>
+                      <th scope="col" class="action-column">Actions</th>
 
 
                     </tr>
@@ -340,7 +368,7 @@
                       die('Database connection failed: ' . mysqli_connect_error());
                     }
 
-                    $fetch_query = "SELECT * FROM products";
+                    $fetch_query = "SELECT * FROM product";
                     $fetch_query_run = mysqli_query($connection, $fetch_query);
                     if (!$fetch_query_run) {
                       die('Query Failed: ' . mysqli_error($connection));
@@ -355,7 +383,7 @@
                           <td><?php echo $row['price']; ?></td>
                           <td><?php echo $row['category']; ?></td>
                           <td>
-                            <img src="<?php echo $row['image_url']; ?>" alt="Product Image"
+                            <img src="<?php echo $row['images']; ?>" alt="Product Image"
                               style="max-width: 80px; max-height: 80px;">
                           </td>
                           <td>
@@ -385,23 +413,23 @@
   </div>
 </body>
 <script>
-function previewImage(event) {
-    var reader = new FileReader();
-    reader.onload = function () {
-        var output = document.getElementById('imagePreview');
-        output.src = reader.result; // Set the src of the image to the result from FileReader
-        output.style.display = 'block'; // Show the image preview
-        document.getElementById('remove-image').style.display = 'inline-block'; // Show the remove button
-    };
-    reader.readAsDataURL(event.target.files[0]); // Read the uploaded file as a data URL
-}
+  function previewImage(event) {
+        var reader = new FileReader();
+        reader.onload = function () {
+            var output = document.getElementById('imagePreview');
+            output.src = reader.result;
+            output.style.display = 'block';
+            document.getElementById('remove-image').style.display = 'inline-block';
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
 
-function removeImage() {
-    document.getElementById('imagePreview').src = ''; // Clear the image source
-    document.getElementById('imagePreview').style.display = 'none'; // Hide the image preview
-    document.getElementById('image').value = ''; // Clear the file input
-    document.getElementById('remove-image').style.display = 'none'; // Hide the remove button
-}
+    function removeImage() {
+        document.getElementById('imagePreview').src = '';
+        document.getElementById('imagePreview').style.display = 'none';
+        document.getElementById('image').value= '';
+        document.getElementById('remove-image').style.display = 'none';
+    }
   $(document).ready(function () {
     $("#supplier-toggle").click(function (e) {
       e.preventDefault();
@@ -426,39 +454,49 @@ function removeImage() {
     });
   });
 
-  $(document).ready(function () {
-    document.getElementById('add-ingredient').addEventListener('click', function () {
+  document.getElementById('add-ingredient').addEventListener('click', function () {
         const container = document.getElementById('ingredients-container');
         const index = container.children.length + 1;
 
         const newIngredient = `
             <div class="ingredient mb-3" id="ingredient_${index}">
-                <label for="ingredient_name_${index}">Ingredient Name:</label>
-                <input type="text" class="form-control" id="ingredient_name_${index}" name="ingredient_name[]" required>
-                
+                <label for="ingredient_name_${index}">Select Ingredient:</label>
+                <select class="form-control fw-medium" id="ingredient_name_${index}" name="ingredient_name[]" required>
+                    <option value="">-- Select Ingredient --</option>
+                    <?php
+                    include('connection.php');
+                    $stmt = $conn->prepare("SELECT product_name FROM inventory");
+                    $stmt->execute();
+                    $result = $stmt->fetchAll();
+                    foreach ($result as $row) {
+                        echo "<option value='" . htmlspecialchars($row['product_name']) . "'>" . htmlspecialchars($row['product_name']) . "</option>";
+                    }
+                    $conn = null;
+                    ?>
+                </select>
+
                 <label for="quantity_${index}">Quantity:</label>
                 <input type="number" class="form-control" id="quantity_${index}" name="quantity[]" required>
-                
+
                 <label for="unit_${index}">Unit:</label>
                 <select class="form-control fw-medium" id="unit_${index}" name="unit[]" required>
                     <option value="">-- Select Unit --</option>
                     <option value="milliliter">milliliter</option>
                     <option value="grams">grams</option>
                 </select>
-                
-                <button type="button" class="btn btn-danger remove-ingredient" onclick="removeIngredient(${index})">Remove</button>
+
+                <button type="button" class="btn btn-danger" onclick="removeIngredient(${index})">Remove</button>
             </div>
         `;
 
         container.insertAdjacentHTML('beforeend', newIngredient);
     });
-});
 
     function removeIngredient(index) {
-      const ingredientDiv = document.getElementById(`ingredient_${index}`);
-      if (ingredientDiv) {
-        ingredientDiv.remove();
-      }
+        const ingredientDiv = document.getElementById(`ingredient_${index}`);
+        if (ingredientDiv) {
+            ingredientDiv.remove();
+        }
     }
 </script>
 
