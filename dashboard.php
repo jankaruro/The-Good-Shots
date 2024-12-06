@@ -1,19 +1,21 @@
 <?php
-// Check if the session is already started
-if (session_status() === PHP_SESSION_NONE) {
-    session_start(); // Start the session only if it hasn't been started yet
-}
-
-// Prevent caching
-header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1.
-header("Pragma: no-cache"); // HTTP 1.0.
-header("Expires: 0"); // Proxies.
+session_start();
 
 // Check if the user is logged in
 if (!isset($_SESSION['username'])) {
-    header("Location: index.php"); // Redirect to login page if not logged in
+    header("Location: index.php"); // Redirect to login if not logged in
     exit();
 }
+
+// Check for inactivity timeout (10 minutes)
+if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 600)) {
+    session_unset(); // Unset $_SESSION variable
+    session_destroy(); // Destroy session data
+    header("Location: index.php"); // Redirect to login page
+    exit();
+}
+
+$_SESSION['last_activity'] = time(); // Update last activity time
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -244,6 +246,22 @@ if (!isset($_SESSION['username'])) {
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script>
+         var idleMax = 10; // Logout after 10 minutes of idle
+        var idleTime = 0;
+
+        $(document).ready(function () {
+            var idleInterval = setInterval(timerIncrement, 50000); // Increment idle time every minute
+
+            $(this).mousemove(function (e) { idleTime = 0; }); // Reset idle time on mouse movement
+            $(this).keypress(function (e) { idleTime = 0; }); // Reset idle time on key press
+        });
+
+        function timerIncrement() {
+            idleTime++;
+            if (idleTime > idleMax) {
+                window.location = "index.php"; // Redirect to login page after timeout
+            }
+        }
         $(document).ready(function () {
             $("#product-toggle").click(function (e) {
                 e.preventDefault();

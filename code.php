@@ -1,135 +1,141 @@
 <?php
 
 session_start();
-$connection = mysqli_connect("localhost", "root", "", "tgs_inventory");
+include 'connection.php'; 
 
-//insert add user
+
+// User Registration
+// Add User
 if (isset($_POST['save_user'])) {
-    $first_name = mysqli_real_escape_string($connection, $_POST['first_name']);
-    $last_name = mysqli_real_escape_string($connection, $_POST['last_name']);
-    $username = mysqli_real_escape_string($connection, $_POST['username']);
-    $email = mysqli_real_escape_string($connection, $_POST['email']);
-    $password = $_POST['password']; // Get the plain password
-    $role = mysqli_real_escape_string($connection, $_POST['role']);
+    $first_name = htmlspecialchars($_POST['first_name']);
+    $last_name = htmlspecialchars($_POST['last_name']);
+    $username = htmlspecialchars($_POST['username']);
+    $email = htmlspecialchars($_POST['email']);
+    $password = $_POST['password'];
+    $role = htmlspecialchars($_POST['role']);
 
-    // Check if username already exists
-    $query = "SELECT * FROM users WHERE username = '$username'";
-    $result = mysqli_query($connection, $query);
-    
-    if ($result) {
-        if (mysqli_num_rows($result) > 0) {
+    try {
+        $query = "SELECT * FROM users WHERE username = :username";
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam(':username', $username);
+        $stmt->execute();
+
+        if ($stmt->rowCount() > 0) {
             $_SESSION['status'] = "Username already exists";
         } else {
-            // Validate password
             if (strlen($password) < 8) {
                 $_SESSION['status'] = "Password must be at least 8 characters long.";
             } else {
-                // Create User
-                $hashed_password = password_hash($password, PASSWORD_DEFAULT); // Hash password using password_hash
-                $sql = "INSERT INTO users (first_name, last_name, username, email, password, role) VALUES ('$first_name', '$last_name', '$username', '$email', '$hashed_password', '$role')";
+                $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+                $sql = "INSERT INTO users (first_name, last_name, username, email, password, role) VALUES (:first_name, :last_name, :username, :email, :password, :role)";
                 
-                if (mysqli_query($connection, $sql)) {
+                $stmt = $conn->prepare($sql);
+                $stmt->bindParam(':first_name', $first_name);
+                $stmt->bindParam(':last_name', $last_name);
+                $stmt->bindParam(':username', $username);
+                $stmt->bindParam(':email', $email);
+                $stmt->bindParam(':password', $hashed_password);
+                $stmt->bindParam(':role', $role);
+                
+                if ($stmt->execute()) {
                     $_SESSION['status'] = "User  registered successfully.";
-                    header("Location: adduser.php");  // Redirect to add user page
-                    exit(); // Ensure no further code is executed after redirection
+                    header("Location: adduser.php");
+                    exit();
                 } else {
                     $_SESSION['status'] = "Error in registration. Please try again.";
                 }
             }
         }
-    } else {
-        $_SESSION['status'] = "Database query failed: " . mysqli_error($connection);
+    } catch (PDOException $e) {
+        $_SESSION['status'] = "Database query failed: " . $e->getMessage();
     }
 }
-//view add user
+
+// View User
 if (isset($_POST['click_view_btn'])) {
     $id = $_POST['user_id'];
+    $fetch_query = "SELECT * FROM users WHERE id = :id";
+    $stmt = $conn->prepare($fetch_query);
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
 
-    $fetch_query = "SELECT * FROM users WHERE id = '$id'";
-    $fetch_query_run = mysqli_query($connection, $fetch_query);
-
-
-    if (mysqli_num_rows($fetch_query_run) > 0) {
-
-        while ($row = mysqli_fetch_array($fetch_query_run)) {
+    if ($stmt->rowCount() > 0) {
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             echo '
-        <h6>ID: ' . $row['id'] . '</h6>
-        <h6>First Name: ' . $row['first_name'] . '</h6>
-        <h6>Last Name: ' . $row['last_name'] . '</h6>
-         <h6>Email: ' . $row['email'] . '</h6>
-        <h6>Role    : ' . $row['role'] . '</h6>
-        ';
-
+            <h6>ID: ' . $row['id'] . '</h6>
+            <h6>First Name: ' . $row['first_name'] . '</h6>
+            <h6>Last Name: ' . $row['last_name'] . '</h6>
+            <h6>Email: ' . $row['email'] . '</h6>
+            <h6>Role: ' . $row['role'] . '</h6>
+            ';
         }
     } else {
-        echo '<h4>no records found</h4>';
-
+        echo '<h4>No records found</h4>';
     }
 }
 
-//edit adduser
+// Edit User
 if (isset($_POST['click_edit_btn'])) {
     $id = $_POST['user_id'];
-    $arrayresult = [];
+    $fetch_query = "SELECT * FROM users WHERE id = :id";
+    $stmt = $conn->prepare($fetch_query);
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
 
-    $fetch_query = "SELECT * FROM users WHERE id = '$id'";
-    $fetch_query_run = mysqli_query($connection, $fetch_query);
-
-
-    if (mysqli_num_rows($fetch_query_run) > 0) {
-
-        while ($row = mysqli_fetch_array($fetch_query_run)) {
-
+    if ($stmt->rowCount() > 0) {
+        $arrayresult = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             array_push($arrayresult, $row);
-            header('content-type: application/json');
-            echo json_encode($arrayresult);
-
         }
+        header('Content-Type: application/json');
+        echo json_encode($arrayresult);
     } else {
-        echo '<h4>no records found</h4>';
-
+        echo json_encode([]);
     }
 }
 
-// Update adduser
+// Update User
 if (isset($_POST['update_data'])) {
-    $id = $_POST['id']; // Ensure you retrieve the user ID
-    $first_name = $_POST['firstname']; // Ensure you use the correct variable names
+    $id = $_POST['id'];
+    $first_name = $_POST['firstname'];
     $last_name = $_POST['lastname'];
     $email = $_POST['email'];
     $password = $_POST['password'];
     $role = $_POST['role'];
+    $update_query = "UPDATE users SET first_name = :first_name, last_name = :last_name, email = :email, password = :password, role = :role WHERE id = :id";
+    $stmt = $conn->prepare($update_query);
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    // Prepare the update query
-    $update_query = "UPDATE users SET first_name = '$first_name', last_name = '$last_name', email = '$email', password = '$password', role = '$role' WHERE id = '$id'";
+    $stmt->bindParam(':first_name', $first_name);
+    $stmt->bindParam(':last_name', $last_name);
+    $stmt->bindParam(':email', $email);
+    $stmt->bindParam(':password', $hashed_password);
+    $stmt->bindParam(':role', $role);
+    $stmt->bindParam(':id', $id);
 
-    // Execute the update query
-    $update_query_run = mysqli_query($connection, $update_query);
-
-    if ($update_query_run) {
+    if ($stmt->execute()) {
         $_SESSION['status'] = "Data updated successfully";
         header('location: adduser.php');
         exit();
     } else {
-        $_SESSION['status'] = "Data update failed: " . mysqli_error($connection);
+        $_SESSION['status'] = "Data update failed: " . $stmt->errorInfo()[2];
         header('location: adduser.php');
         exit();
     }
 }
 
-//delete adduser
+// Delete User
 if (isset($_POST['click_delete_btn'])) {
     $id = $_POST['user_id'];
-    $delete_query = "DELETE FROM users WHERE id='$id'";
-    $delete_query_run = mysqli_query($connection, $delete_query);
+    $delete_query = "DELETE FROM users WHERE id = :id";
+    $stmt = $conn->prepare($delete_query);
+    $stmt->bindParam(':id', $id);
 
-    if ($delete_query_run) {
-        echo "data deleted successfully";
+    if ($stmt->execute()) {
+        $_SESSION['status'] = "Data deleted successfully";
     } else {
-
-        echo "data deletion failed";
+        $_SESSION['status'] = "Data deletion failed: " . $stmt->errorInfo()[2];
     }
-
 }
 
 

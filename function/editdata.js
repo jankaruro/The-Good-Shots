@@ -1,38 +1,30 @@
 <script>
+$(document).ready(function () {
+    $('.edit_data').click(function (e) {
+        e.preventDefault();
+        var user_id = $(this).data('id');
 
-    $(document).ready(function () {
-
-        $('.edit_data').click(function (e) {
-            e.preventDefault();
-            var user_id = $(this).closest('tr').find('.user_id').text();
-
-
-
-            $.ajax({
-                method: "POST",
-                url: "code.php",
-                data: {
-                    'click_edit_btn': true,
-                    'user_id': user_id,
-                },
-                success: function (response) {
-                    
-
-                    $.each(response, function (Key, value) {
-                        $('#id').val(value['id']);
-                        $('[name="firstname"]').val(value['first_name']);
-                        $('[name="lastname"]').val(value['last_name']);
-                        $('[name="email"]').val(value['email']);
-                        $('[name="password"]').val(value['password']);
-                        $('[name="role"]').val(value['role']);
-                    });
-                    $('#editData').modal('show');
-                }
-            });
-
-        })
-
-    });
+        $.ajax({
+            method: "POST",
+            url: "code.php",
+            data: {
+                'click_edit_btn': true,
+                'user_id': user_id,
+            },
+            success: function (response) {
+                $.each(response, function (Key, value) {
+                    $('#id').val(value['id']);
+                    $('[name="firstname"]').val(value['first_name']);
+                    $('[name="lastname"]').val(value['last_name']);
+                    $('[name="email"]').val(value['email']);
+                    $('[name="password"]').val(''); // Clear password field
+                    $('[name="role"]').val(value['role']);
+                });
+                $('#editData').modal('show');
+            }
+        });
+    })
+});
 
 
 
