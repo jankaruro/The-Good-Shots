@@ -17,6 +17,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <script>
         $(document).ready(function () {
             $('#supplierProductTable').DataTable();
@@ -245,20 +246,17 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
-                        <a class="nav-link fw-bold cashier-link me-3" href="order.php"
-                            style="color: black; font-weight: 200; font-size: 17px; border-radius: 20px; width: 120px; text-align: center;">
-                            <img src="icons/cashier-svgrepo-com.svg" alt="" class="topnavbar-icons">
+                        <a class="nav-link fw-bold cashier-link me-3 text-dark" href="pos.php">
+                         <img src="icons/cashier-svgrepo-com.svg" alt="" class="topnavbar-icons">
                             Orders
                         </a>
-                        <a class="nav-link fw-bold notification-link me-3" href="#"
-                            style="color: black; font-weight: 200; font-size: 17px; border-radius: 20px;">
+                        <a class="nav-link fw-bold notification-link me-3 text-dark" href="#">
                             <img src="icons/notifications-alert-svgrepo-com.svg" alt="" class="topnavbar-icons">
                             Notifications
                         </a>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle fw-bold notification-link " href="#"
-                                style="color: black; font-weight: 200; font-size: 18px; border-radius: 20px;"
-                                id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle fw-bold notification-link text-dark" href="#" id="navbarDropdown"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <img src="icons/profile-round-1342-svgrepo-com.svg" alt="" class="user-icons">
                                 Admin
                             </a>
