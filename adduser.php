@@ -1,10 +1,12 @@
+<?php session_start();include('connection.php');?>
+
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=1024, initial-scale=1.0" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.css">
-
     <script src = "https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src = "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script src = "https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
@@ -42,12 +44,12 @@
             <input type="text" class="form-control fw-medium" name="last_name" placeholder="Enter Last Name">
           </div>
           <div class="form-group">
-            <label class="fs-5 mt-1 fw-bolder">Email</label>
-            <input type="email" class="form-control fw-medium" name="email" placeholder="Enter Email">
-          </div>
-          <div class="form-group">
             <label class="fs-5 mt-1 fw-bolder">Username</label>
             <input type="text" class="form-control fw-medium" name="username" placeholder="Enter Username">
+          </div>
+          <div class="form-group">
+            <label class="fs-5 mt-1 fw-bolder">Email</label>
+            <input type="email" class="form-control fw-medium" name="email" placeholder="Enter Email">
           </div>
           <div class="form-group">
             <label class="fs-5 mt-1 fw-bolder">Password</label>
@@ -199,7 +201,7 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
-                        <a class="nav-link fw-bold cashier-link me-3 text-dark" href="order.php">
+                        <a class="nav-link fw-bold cashier-link me-3 text-dark" href="pos.php">
                          <img src="icons/cashier-svgrepo-com.svg" alt="" class="topnavbar-icons">
                             Orders
                         </a>

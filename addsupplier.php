@@ -1,3 +1,5 @@
+
+<?php session_start();include('connection.php');?>
 <!doctype html>
 <html lang="en">
 
@@ -21,9 +23,8 @@
     });
     </script>
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="dashboard.css" />
@@ -110,7 +111,7 @@
                             <option value="inactive">Inactive</option>
                         </select>
                     </div>
-                    <input type="hidden" name="id" id="id"> <!-- Hidden field for supplier ID -->
+                    <input type="hidden" name="id" id="id">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary fw-medium" data-bs-dismiss="modal">Close</button>
@@ -185,19 +186,16 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
-                        <a class="nav-link fw-bold cashier-link me-3" href="order.php"
-                            style="color: black; font-weight: 200; font-size: 17px; border-radius: 20px; width: 120px; text-align: center;">
+                        <a class="nav-link fw-bold cashier-link me-3 text-dark" href="pos.php">
                             <img src="icons/cashier-svgrepo-com.svg" alt="" class="topnavbar-icons">
                             Orders
                         </a>
-                        <a class="nav-link fw-bold notification-link me-3" href="#"
-                            style="color: black; font-weight: 200; font-size: 17px; border-radius: 20px;">
+                        <a class="nav-link fw-bold notification-link me-3 text-dark" href="#">
                             <img src="icons/notifications-alert-svgrepo-com.svg" alt="" class="topnavbar-icons">
                             Notifications
                         </a>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle fw-bold notification-link " href="#"
-                                style="color: black; font-weight: 200; font-size: 18px; border-radius: 20px;"
+                            <a class="nav-link dropdown-toggle fw-bold notification-link text-dark" href="#"
                                 id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <img src="icons/profile-round-1342-svgrepo-com.svg" alt="" class="user-icons">
                                 Admin
@@ -241,7 +239,7 @@
                             </button>
                         </div>
                         <div class="card-body">
-                            <table id="supplierTable" class="table table-striped" style = "width: 100%">
+                            <table id="supplierTable" class="table table-striped">
                                 <thead>
                                     <tr>
                                         <th scope="col">ID</th>
@@ -267,7 +265,6 @@
                                                 <td><?php echo $row['supplier_name']; ?></td>
                                                 <td><?php echo $row['contact_number']; ?></td>
                                                 <td><?php echo $row['status']; ?></td>
-                                               
                                                 <td>
                                                     <a href="#" class="btn btn-info btn-base view_supplier_products btn-view">View
                                                         Data</a>
