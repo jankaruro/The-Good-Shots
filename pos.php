@@ -236,18 +236,81 @@
                             <label for="paymentMethod" class="form-label">Payment Method</label>
                             <select class="form-select" id="paymentMethod" name="payment_method" required>
                                 <option value="Cash">Cash</option>
-                                <option value="Credit Card">Credit Card</option>
-                                <option value="Debit Card">Debit Card</option>
+                                <option value="Credit Card">Online Payment</option>
                             </select>
                         </div>
                         <input type="hidden" name="cart_data" id="cart_data">
                         <div class="total-amount"> Total: <span id="final-total">0.00</span> </div>
-                        <button type="submit" id="confirmOrderButton">Confirm Order</button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" id="confirmOrder"  data-bs-toggle="modal"
+                            data-bs-target="#confirmOrderModal" class="confirmOrder">Confirm Order</button>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+    <div class="modal fade" id="confirmOrderModal" tabindex="-1" aria-labelledby="confirmOrderModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmOrderModalLabel">Receipt</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="checkoutForm" method="POST" action="submit_order.php">
+                        <div class="mb-3">
+                           <header class = "receipt-header">
+                            <h3>The Good Shots</h3>
+                            <p>3 Atis St. Admiral Talon Tres, Las Piñas, Philippines</p>
+                           </header>
+
+                            <p>Employee: SuperAdmin</p>
+                            <p>POS: </p>
+                            
+                            <p>Customer: </p>
+                            <p>---------------------------------------</p>
+
+                            <p>---------------------------------------</p>
+                            <h4>Total</h4>
+
+                            <p>---------------------------------------</p>
+                            <?php
+                                date_default_timezone_set('Asia/Manila');
+                                echo "Date and Time: " . date("Y-m-d h:i:s A");
+                                ?>
+                        </div>
+                        <input type="hidden" name="cart_data" id="cart_data">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Print</button>
+                            <button type="button" id="confirmOrderButton" class="confirmOrder">Download PDF</button></a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script>
+    document.getElementById('confirmOrderButton').addEventListener('click', function () {
+        const { jsPDF } = window.jspdf;
+
+        const doc = new jsPDF();
+
+        const modalContent = document.querySelector('#confirmOrderModal .modal-body').innerHTML;
+
+        const tempElement = document.createElement('div');
+        tempElement.innerHTML = modalContent;
+
+        const textContent = tempElement.innerText || tempElement.textContent;
+
+        doc.text(textContent, 10, 10);
+
+        doc.save('Receipt.pdf');
+    });
+</script>
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
