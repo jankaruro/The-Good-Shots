@@ -5,31 +5,40 @@ $connection = mysqli_connect("localhost", "root", "", "tgs_inventory");
 
 //insert add user
 if (isset($_POST['save_user'])) {
-    $first_name = $_POST['first_name'];
-    $last_name = $_POST['last_name'];
-    $email = $_POST['email'];
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    $role = $_POST['role'];
+    $first_name = mysqli_real_escape_string($connection, $_POST['first_name']);
+    $last_name = mysqli_real_escape_string($connection, $_POST['last_name']);
+    $username = mysqli_real_escape_string($connection, $_POST['username']);
+    $email = mysqli_real_escape_string($connection, $_POST['email']);
+    $password = $_POST['password']; // Get the plain password
+    $role = mysqli_real_escape_string($connection, $_POST['role']);
 
-    // Check if email already exists
-    $check_email_query = "SELECT * FROM users WHERE email='$email'";
-    $check_email_result = mysqli_query($connection, $check_email_query);
-
-    if (mysqli_num_rows($check_email_result) > 0) {
-        $_SESSION['status'] = "Email already exists!";
-        header("Location: adduser.php"); // Redirect back to the page
-        exit();
-    } else {
-        // Insert new user
-        $insert_query = "INSERT INTO users (first_name, last_name, email,username, password, role) VALUES ('$first_name', '$last_name', '$email','$username', '$password', '$role')";
-        if (mysqli_query($connection, $insert_query)) {
-            $_SESSION['status'] = "User  added successfully!";
+    // Check if username already exists
+    $query = "SELECT * FROM users WHERE username = '$username'";
+    $result = mysqli_query($connection, $query);
+    
+    if ($result) {
+        if (mysqli_num_rows($result) > 0) {
+            $_SESSION['status'] = "Username already exists";
         } else {
-            $_SESSION['status'] = "Error: " . mysqli_error($connection);
+            // Validate password
+            if (strlen($password) < 8) {
+                $_SESSION['status'] = "Password must be at least 8 characters long.";
+            } else {
+                // Create User
+                $hashed_password = password_hash($password, PASSWORD_DEFAULT); // Hash password using password_hash
+                $sql = "INSERT INTO users (first_name, last_name, username, email, password, role) VALUES ('$first_name', '$last_name', '$username', '$email', '$hashed_password', '$role')";
+                
+                if (mysqli_query($connection, $sql)) {
+                    $_SESSION['status'] = "User  registered successfully.";
+                    header("Location: adduser.php");  // Redirect to add user page
+                    exit(); // Ensure no further code is executed after redirection
+                } else {
+                    $_SESSION['status'] = "Error in registration. Please try again.";
+                }
+            }
         }
-        header("Location: adduser.php"); // Redirect back to the page
-        exit();
+    } else {
+        $_SESSION['status'] = "Database query failed: " . mysqli_error($connection);
     }
 }
 //view add user

@@ -1,3 +1,5 @@
+<?php session_start();include('connection.php');?>
+
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -42,12 +44,12 @@
             <input type="text" class="form-control fw-medium" name="last_name" placeholder="Enter Last Name">
           </div>
           <div class="form-group">
-            <label class="fs-5 mt-1 fw-bolder">Email</label>
-            <input type="email" class="form-control fw-medium" name="email" placeholder="Enter Email">
-          </div>
-          <div class="form-group">
             <label class="fs-5 mt-1 fw-bolder">Username</label>
             <input type="text" class="form-control fw-medium" name="username" placeholder="Enter Username">
+          </div>
+          <div class="form-group">
+            <label class="fs-5 mt-1 fw-bolder">Email</label>
+            <input type="email" class="form-control fw-medium" name="email" placeholder="Enter Email">
           </div>
           <div class="form-group">
             <label class="fs-5 mt-1 fw-bolder">Password</label>
