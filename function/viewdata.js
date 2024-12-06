@@ -1,29 +1,26 @@
 <script>
 
-    $(document).ready(function () {
+$(document).ready(function () {
+    $('.view_data').click(function (e) {
+        e.preventDefault();
+        var user_id = $(this).data('id');
 
-        $('.view_data').click(function (e) {
-            e.preventDefault();
-            var user_id = $(this).closest('tr').find('.user_id').text();
-           
+        $.ajax({
+            method: "POST",
+            url: "code.php",
+            data: {
+                'click_view_btn': true,
+                'user_id': user_id,
+            },
+            success: function (response) {
+                $('.view_item_data').html(response);
+                $('#viewitemModal').modal('show');
+            }
+        });
+    })
+});
 
 
-            $.ajax({
-                method: "POST",
-                url: "code.php",
-                data: {
-                    'click_view_btn': true,
-                    'user_id':user_id,
-                },
-                success: function (response) {
-                    $('.view_item_data').html(response);
-                    $('#viewitemModal').modal('show');    
-                }
-            });
-
-        })
-
-    });
   $(document).ready(function () {
 
 $('.viewsupp').click(function (e) {

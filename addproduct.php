@@ -68,27 +68,27 @@
                     <option value="">-- Select Ingredient --</option>
                     <!-- Example inventory items -->
                     <?php
-                            // Connect to the database
-                            include('connection.php');
+                    // Connect to the database
+                    include('connection.php');
 
-                            // Retrieve categories from the database
-                            $stmt = $conn->prepare("SELECT product_name FROM inventory");
-                            $stmt->execute();
-                            $result = $stmt->fetchAll();
+                    // Retrieve categories from the database
+                    $stmt = $conn->prepare("SELECT product_name FROM inventory");
+                    $stmt->execute();
+                    $result = $stmt->fetchAll();
 
-                            // Check if there are any categories
-                            if (count($result) > 0) {
-                                // Output the categories
-                                foreach ($result as $row) {
-                                    echo "<option value='" . htmlspecialchars($row['product_name']) . "'>" . htmlspecialchars($row['product_name']) . "</option>";
-                                }
-                            } else {
-                                echo "<option value=''>No categories found</option>";
-                            }
+                    // Check if there are any categories
+                    if (count($result) > 0) {
+                      // Output the categories
+                      foreach ($result as $row) {
+                        echo "<option value='" . htmlspecialchars($row['product_name']) . "'>" . htmlspecialchars($row['product_name']) . "</option>";
+                      }
+                    } else {
+                      echo "<option value=''>No categories found</option>";
+                    }
 
-                            // Close the database connection
-                            $conn = null;
-                            ?>
+                    // Close the database connection
+                    $conn = null;
+                    ?>
                   </select>
 
                   <label for="quantity_1">Quantity:</label>
@@ -115,22 +115,30 @@
               <select class="form-select" id="category" name="category" required>
                 <option value="">-- Select Category --</option>
                 <?php
-                // Connect to the database
+                // Include the database connection
                 include('connection.php');
 
-                // Retrieve categories from the database
-                $stmt = $conn->prepare("SELECT name FROM category");
-                $stmt->execute();
-                $result = $stmt->fetchAll();
+                if ($conn !== null) {
+                  try {
+                    // Retrieve categories from the database
+                    $stmt = $conn->prepare("SELECT name FROM category");
+                    $stmt->execute();
+                    $result = $stmt->fetchAll();
 
-                // Check if there are any categories
-                if (count($result) > 0) {
-                  // Output the categories
-                  foreach ($result as $row) {
-                    echo "<option value='" . htmlspecialchars($row['name']) . "'>" . htmlspecialchars($row['name']) . "</option>";
+                    // Check if there are any categories
+                    if (count($result) > 0) {
+                      // Output the categories
+                      foreach ($result as $row) {
+                        echo "<option value='" . htmlspecialchars($row['name']) . "'>" . htmlspecialchars($row['name']) . "</option>";
+                      }
+                    } else {
+                      echo "<option value=''>No categories found</option>";
+                    }
+                  } catch (PDOException $e) {
+                    echo "Error retrieving categories: " . $e->getMessage();
                   }
                 } else {
-                  echo "<option value=''>No categories found</option>";
+                  echo "Database connection failed.";
                 }
 
                 // Close the database connection
@@ -184,12 +192,35 @@
                 <?php
                 // Connect to the database and fetch categories
                 include('connection.php');
-                $stmt = $conn->prepare("SELECT name FROM category");
-                $stmt->execute();
-                $result = $stmt->fetchAll();
-                foreach ($result as $row) {
-                  echo "<option value='" . $row['name'] . "'>" . $row['name'] . "</option>";
+
+                // Check if the connection was successful
+                if ($conn !== null) {
+                  try {
+                    // Prepare and execute the SQL statement
+                    $stmt = $conn->prepare("SELECT name FROM category");
+                    $stmt->execute();
+
+                    // Fetch all results
+                    $result = $stmt->fetchAll();
+
+                    // Check if there are any categories
+                    if (count($result) > 0) {
+                      // Output the categories
+                      foreach ($result as $row) {
+                        echo "<option value='" . htmlspecialchars($row['name']) . "'>" . htmlspecialchars($row['name']) . "</option>";
+                      }
+                    } else {
+                      echo "<option value=''>No categories found</option>";
+                    }
+                  } catch (PDOException $e) {
+                    echo "Error retrieving categories: " . htmlspecialchars($e->getMessage());
+                  }
+                } else {
+                  echo "Database connection failed.";
                 }
+
+                // Close the database connection
+                $conn = null;
                 ?>
               </select>
             </div>
@@ -288,29 +319,29 @@
         </div>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
-                        <a class="nav-link fw-bold cashier-link me-3 text-dark" href="pos.php">
-                         <img src="icons/cashier-svgrepo-com.svg" alt="" class="topnavbar-icons">
-                            Orders
-                        </a>
-                        <a class="nav-link fw-bold notification-link me-3 text-dark" href="#">
-                            <img src="icons/notifications-alert-svgrepo-com.svg" alt="" class="topnavbar-icons">
-                            Notifications
-                        </a>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle fw-bold notification-link text-dark" href="#" id="navbarDropdown"
-                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="icons/profile-round-1342-svgrepo-com.svg" alt="" class="user-icons">
-                                Admin
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Profile</a></li>
-                                <li><a class="dropdown-item" href="#">Settings</a></li>
-                                <li><a class="dropdown-item" href="#">Logout</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
+          <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
+            <a class="nav-link fw-bold cashier-link me-3 text-dark" href="pos.php">
+              <img src="icons/cashier-svgrepo-com.svg" alt="" class="topnavbar-icons">
+              Orders
+            </a>
+            <a class="nav-link fw-bold notification-link me-3 text-dark" href="#">
+              <img src="icons/notifications-alert-svgrepo-com.svg" alt="" class="topnavbar-icons">
+              Notifications
+            </a>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle fw-bold notification-link text-dark" href="#" id="navbarDropdown"
+                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="icons/profile-round-1342-svgrepo-com.svg" alt="" class="user-icons">
+                Admin
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="#">Profile</a></li>
+                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li><a class="dropdown-item" href="#">Logout</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
       </nav>
 
 
@@ -407,22 +438,22 @@
   </div>
 </body>
 <script>
-function previewImage(event) {
+  function previewImage(event) {
     var reader = new FileReader();
     reader.onload = function () {
-        var output = document.getElementById('imagePreview');
-        output.src = reader.result; // Set the src of the image to the result from FileReader
-        output.style.display = 'block'; // Show the image preview
-        document.getElementById('remove-image').style.display = 'inline-block'; // Show the remove button
+      var output = document.getElementById('imagePreview');
+      output.src = reader.result; // Set the src of the image to the result from FileReader
+      output.style.display = 'block'; // Show the image preview
+      document.getElementById('remove-image').style.display = 'inline-block'; // Show the remove button
     };
     reader.readAsDataURL(event.target.files[0]); // Read the uploaded file as a data URL
-}
-    function removeImage() {
-        document.getElementById('imagePreview').src = '';
-        document.getElementById('imagePreview').style.display = 'none';
-        document.getElementById('image').value= '';
-        document.getElementById('remove-image').style.display = 'none';
-    }
+  }
+  function removeImage() {
+    document.getElementById('imagePreview').src = '';
+    document.getElementById('imagePreview').style.display = 'none';
+    document.getElementById('image').value = '';
+    document.getElementById('remove-image').style.display = 'none';
+  }
   $(document).ready(function () {
     $("#supplier-toggle").click(function (e) {
       e.preventDefault();
@@ -448,22 +479,45 @@ function previewImage(event) {
   });
 
   document.getElementById('add-ingredient').addEventListener('click', function () {
-        const container = document.getElementById('ingredients-container');
-        const index = container.children.length + 1;
+    const container = document.getElementById('ingredients-container');
+    const index = container.children.length + 1;
 
-        const newIngredient = `
+    const newIngredient = `
             <div class="ingredient mb-3" id="ingredient_${index}">
                 <label for="ingredient_name_${index}">Select Ingredient:</label>
                 <select class="form-control fw-medium" id="ingredient_name_${index}" name="ingredient_name[]" required>
                     <option value="">-- Select Ingredient --</option>
                     <?php
+                    // Connect to the database and fetch product names
                     include('connection.php');
-                    $stmt = $conn->prepare("SELECT product_name FROM inventory");
-                    $stmt->execute();
-                    $result = $stmt->fetchAll();
-                    foreach ($result as $row) {
-                        echo "<option value='" . htmlspecialchars($row['product_name']) . "'>" . htmlspecialchars($row['product_name']) . "</option>";
+
+                    // Check if the connection was successful
+                    if ($conn !== null) {
+                      try {
+                        // Prepare and execute the SQL statement
+                        $stmt = $conn->prepare("SELECT product_name FROM inventory");
+                        $stmt->execute();
+
+                        // Fetch all results
+                        $result = $stmt->fetchAll();
+
+                        // Check if there are any products
+                        if (count($result) > 0) {
+                          // Output the product names
+                          foreach ($result as $row) {
+                            echo "<option value='" . htmlspecialchars($row['product_name']) . "'>" . htmlspecialchars($row['product_name']) . "</option>";
+                          }
+                        } else {
+                          echo "<option value=''>No products found</option>";
+                        }
+                      } catch (PDOException $e) {
+                        echo "Error retrieving products: " . htmlspecialchars($e->getMessage());
+                      }
+                    } else {
+                      echo "Database connection failed.";
                     }
+
+                    // Close the database connection
                     $conn = null;
                     ?>
                 </select>
@@ -482,15 +536,15 @@ function previewImage(event) {
             </div>
         `;
 
-        container.insertAdjacentHTML('beforeend', newIngredient);
-    });
+    container.insertAdjacentHTML('beforeend', newIngredient);
+  });
 
-    function removeIngredient(index) {
-        const ingredientDiv = document.getElementById(`ingredient_${index}`);
-        if (ingredientDiv) {
-            ingredientDiv.remove();
-        }
+  function removeIngredient(index) {
+    const ingredientDiv = document.getElementById(`ingredient_${index}`);
+    if (ingredientDiv) {
+      ingredientDiv.remove();
     }
+  }
 </script>
 
 </html>
