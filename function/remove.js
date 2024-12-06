@@ -1,30 +1,23 @@
 <script>
 
-    $(document).ready(function () {
+$(document).ready(function () {
+    $('.delete_user').click(function (e) {
+        e.preventDefault();
+        var user_id = $(this).data('id');
 
-        $('.delete_data').click(function (e) {
-            e.preventDefault();
-            var user_id = $(this).closest('tr').find('.user_id').text();
-          
-
-            $.ajax({
-                method: "POST",
-                url: "code.php",
-                data: {
-                    'click_delete_btn': true,
-                    'user_id':user_id,
-                },
-                success: function (response) {
-                   
-                    window.location.reload();
-                      
-                }
-            });
-
-        })
-
-    });
-    
+        $.ajax({
+            method: "POST",
+            url: "code.php",
+            data: {
+                'click_delete_btn': true,
+                'user_id': user_id,
+            },
+            success: function (response) {
+                window.location.reload();
+ }
+        });
+    })
+});
     $(document).ready(function () {
 
 $('.deletesupp').click(function (e) {
