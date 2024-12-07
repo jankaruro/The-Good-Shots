@@ -95,7 +95,7 @@
                         <div class="order-header">
                             <header>
                                 <div class="name-text">
-                                    <span class="label-name" id="best-seller">Best Seller Coffee Drinks</span>
+                                    <span class="label-name" id="espresso-coffee">Espresso Based Coffee</span>
                                 </div>
                             </header>
                         </div>
@@ -133,59 +133,377 @@
                             }
                             ?>
                         </div>
-                            <header>
-                                <div class="name-text">
-                                    <span class="label-name" id="espresso-coffee">Espresso Based Coffee</span>
-                                </div>
-                            </header>
-
-                        
+                                 
+                        <div class="order-header">
                             <header>
                                 <div class="name-text">
                                     <span class="label-name" id="fruit-tea">Fruit Tea</span>
                                 </div>
                             </header>
+                        </div>
+                        <div class="order-card">
+                            <?php
+                            require_once 'connection.php';
+
+                            $sql = "SELECT * FROM product WHERE category = 'Fruit Tea'";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->execute();
+                            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+                            if ($stmt->rowCount() > 0) {
+                                while ($row = $stmt->fetch()) { ?>
+                                    <div class="coffee-card">
+                                        <div class="quantity">
+                                            <div class="details">
+                                                <h3 class="coffee-name">
+                                                    <?php echo htmlspecialchars($row['product_name']); ?>
+                                                </h3>
+                                                <span
+                                                    class="coffee-price">P<?php echo htmlspecialchars($row['price']); ?></span>
+                                            </div>
+                                            <img src="<?php echo htmlspecialchars($row['image']); ?>"
+                                                alt="<?php echo htmlspecialchars($row['product_name']); ?>" />
+                                            <div class="addtocart"
+                                                onclick="addToCart('<?php echo htmlspecialchars($row['product_name']); ?>', <?php echo htmlspecialchars($row['price']); ?>, <?php echo htmlspecialchars($row['product_id']); ?>)">
+                                                Add to Cart
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php }
+                            } else {
+                                echo "No espresso products found";
+                            }
+                            ?>
+                        </div>
+                        <div class="order-header">
                             <header>
                                 <div class="name-text">
                                     <span class="label-name" id="mocktails">Mocktails</span>
                                 </div>
                             </header>
+                        </div>
+                        <div class="order-card">
+                            <?php
+                            require_once 'connection.php';
+
+                            $sql = "SELECT * FROM product WHERE category = 'Mocktails'";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->execute();
+                            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+                            if ($stmt->rowCount() > 0) {
+                                while ($row = $stmt->fetch()) { ?>
+                                    <div class="coffee-card">
+                                        <div class="quantity">
+                                            <div class="details">
+                                                <h3 class="coffee-name">
+                                                    <?php echo htmlspecialchars($row['product_name']); ?>
+                                                </h3>
+                                                <span
+                                                    class="coffee-price">P<?php echo htmlspecialchars($row['price']); ?></span>
+                                            </div>
+                                            <img src="<?php echo htmlspecialchars($row['image']); ?>"
+                                                alt="<?php echo htmlspecialchars($row['product_name']); ?>" />
+                                            <div class="addtocart"
+                                                onclick="addToCart('<?php echo htmlspecialchars($row['product_name']); ?>', <?php echo htmlspecialchars($row['price']); ?>, <?php echo htmlspecialchars($row['product_id']); ?>)">
+                                                Add to Cart
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php }
+                            } else {
+                                echo "No espresso products found";
+                            }
+                            ?>
+                        </div>
+                        <div class="order-header">
                             <header>
                                 <div class="name-text">
                                     <span class="label-name" id="smoothies">Smoothies</span>
                                 </div>
                             </header>
+                        </div>
+                        <div class="order-card">
+                            <?php
+                            require_once 'connection.php';
+
+                            $sql = "SELECT * FROM product WHERE category = 'Smoothies'";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->execute();
+                            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+                            if ($stmt->rowCount() > 0) {
+                                while ($row = $stmt->fetch()) { ?>
+                                    <div class="coffee-card">
+                                        <div class="quantity">
+                                            <div class="details">
+                                                <h3 class="coffee-name">
+                                                    <?php echo htmlspecialchars($row['product_name']); ?>
+                                                </h3>
+                                                <span
+                                                    class="coffee-price">P<?php echo htmlspecialchars($row['price']); ?></span>
+                                            </div>
+                                            <img src="<?php echo htmlspecialchars($row['image']); ?>"
+                                                alt="<?php echo htmlspecialchars($row['product_name']); ?>" />
+                                            <div class="addtocart"
+                                                onclick="addToCart('<?php echo htmlspecialchars($row['product_name']); ?>', <?php echo htmlspecialchars($row['price']); ?>, <?php echo htmlspecialchars($row['product_id']); ?>)">
+                                                Add to Cart
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php }
+                            } else {
+                                echo "No espresso products found";
+                            }
+                            ?>
+                        </div>
+                        <div class="order-header">
                             <header>
                                 <div class="name-text">
                                     <span class="label-name" id="frappe">Frappe</span>
                                 </div>
                             </header>
+                        </div>
+                        <div class="order-card">
+                            <?php
+                            require_once 'connection.php';
+
+                            $sql = "SELECT * FROM product WHERE category = 'Frappe'";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->execute();
+                            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+                            if ($stmt->rowCount() > 0) {
+                                while ($row = $stmt->fetch()) { ?>
+                                    <div class="coffee-card">
+                                        <div class="quantity">
+                                            <div class="details">
+                                                <h3 class="coffee-name">
+                                                    <?php echo htmlspecialchars($row['product_name']); ?>
+                                                </h3>
+                                                <span
+                                                    class="coffee-price">P<?php echo htmlspecialchars($row['price']); ?></span>
+                                            </div>
+                                            <img src="<?php echo htmlspecialchars($row['image']); ?>"
+                                                alt="<?php echo htmlspecialchars($row['product_name']); ?>" />
+                                            <div class="addtocart"
+                                                onclick="addToCart('<?php echo htmlspecialchars($row['product_name']); ?>', <?php echo htmlspecialchars($row['price']); ?>, <?php echo htmlspecialchars($row['product_id']); ?>)">
+                                                Add to Cart
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php }
+                            } else {
+                                echo "No espresso products found";
+                            }
+                            ?>
+                        </div>
+                        <div class="order-header">
                             <header>
                                 <div class="name-text">
                                     <span class="label-name" id="croffle">Croffle</span>
                                 </div>
                             </header>
+                        </div>
+                        <div class="order-card">
+                            <?php
+                            require_once 'connection.php';
+
+                            $sql = "SELECT * FROM product WHERE category = 'Croffle'";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->execute();
+                            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+                            if ($stmt->rowCount() > 0) {
+                                while ($row = $stmt->fetch()) { ?>
+                                    <div class="coffee-card">
+                                        <div class="quantity">
+                                            <div class="details">
+                                                <h3 class="coffee-name">
+                                                    <?php echo htmlspecialchars($row['product_name']); ?>
+                                                </h3>
+                                                <span
+                                                    class="coffee-price">P<?php echo htmlspecialchars($row['price']); ?></span>
+                                            </div>
+                                            <img src="<?php echo htmlspecialchars($row['image']); ?>"
+                                                alt="<?php echo htmlspecialchars($row['product_name']); ?>" />
+                                            <div class="addtocart"
+                                                onclick="addToCart('<?php echo htmlspecialchars($row['product_name']); ?>', <?php echo htmlspecialchars($row['price']); ?>, <?php echo htmlspecialchars($row['product_id']); ?>)">
+                                                Add to Cart
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php }
+                            } else {
+                                echo "No espresso products found";
+                            }
+                            ?>
+                        </div>
+                        <div class="order-header">
                             <header>
                                 <div class="name-text">
                                     <span class="label-name" id="fries">Fries</span>
                                 </div>
                             </header>
+                        </div>
+                        <div class="order-card">
+                            <?php
+                            require_once 'connection.php';
+
+                            $sql = "SELECT * FROM product WHERE category = 'Fries'";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->execute();
+                            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+                            if ($stmt->rowCount() > 0) {
+                                while ($row = $stmt->fetch()) { ?>
+                                    <div class="coffee-card">
+                                        <div class="quantity">
+                                            <div class="details">
+                                                <h3 class="coffee-name">
+                                                    <?php echo htmlspecialchars($row['product_name']); ?>
+                                                </h3>
+                                                <span
+                                                    class="coffee-price">P<?php echo htmlspecialchars($row['price']); ?></span>
+                                            </div>
+                                            <img src="<?php echo htmlspecialchars($row['image']); ?>"
+                                                alt="<?php echo htmlspecialchars($row['product_name']); ?>" />
+                                            <div class="addtocart"
+                                                onclick="addToCart('<?php echo htmlspecialchars($row['product_name']); ?>', <?php echo htmlspecialchars($row['price']); ?>, <?php echo htmlspecialchars($row['product_id']); ?>)">
+                                                Add to Cart
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php }
+                            } else {
+                                echo "No espresso products found";
+                            }
+                            ?>
+                        </div>
+                        <div class="order-header">
                             <header>
                                 <div class="name-text">
                                     <span class="label-name" id="cakes">Cakes</span>
                                 </div>
                             </header>
+                        </div>
+                        <div class="order-card">
+                            <?php
+                            require_once 'connection.php';
+
+                            $sql = "SELECT * FROM product WHERE category = 'Cakes'";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->execute();
+                            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+                            if ($stmt->rowCount() > 0) {
+                                while ($row = $stmt->fetch()) { ?>
+                                    <div class="coffee-card">
+                                        <div class="quantity">
+                                            <div class="details">
+                                                <h3 class="coffee-name">
+                                                    <?php echo htmlspecialchars($row['product_name']); ?>
+                                                </h3>
+                                                <span
+                                                    class="coffee-price">P<?php echo htmlspecialchars($row['price']); ?></span>
+                                            </div>
+                                            <img src="<?php echo htmlspecialchars($row['image']); ?>"
+                                                alt="<?php echo htmlspecialchars($row['product_name']); ?>" />
+                                            <div class="addtocart"
+                                                onclick="addToCart('<?php echo htmlspecialchars($row['product_name']); ?>', <?php echo htmlspecialchars($row['price']); ?>, <?php echo htmlspecialchars($row['product_id']); ?>)">
+                                                Add to Cart
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php }
+                            } else {
+                                echo "No espresso products found";
+                            }
+                            ?>
+                        </div>
+                        <div class="order-header">
                             <header>
                                 <div class="name-text">
                                     <span class="label-name" id="sandwich">Sandwich</span>
                                 </div>
                             </header>
+                        </div>
+                        <div class="order-card">
+                            <?php
+                            require_once 'connection.php';
+
+                            $sql = "SELECT * FROM product WHERE category = 'Sandwich'";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->execute();
+                            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+                            if ($stmt->rowCount() > 0) {
+                                while ($row = $stmt->fetch()) { ?>
+                                    <div class="coffee-card">
+                                        <div class="quantity">
+                                            <div class="details">
+                                                <h3 class="coffee-name">
+                                                    <?php echo htmlspecialchars($row['product_name']); ?>
+                                                </h3>
+                                                <span
+                                                    class="coffee-price">P<?php echo htmlspecialchars($row['price']); ?></span>
+                                            </div>
+                                            <img src="<?php echo htmlspecialchars($row['image']); ?>"
+                                                alt="<?php echo htmlspecialchars($row['product_name']); ?>" />
+                                            <div class="addtocart"
+                                                onclick="addToCart('<?php echo htmlspecialchars($row['product_name']); ?>', <?php echo htmlspecialchars($row['price']); ?>, <?php echo htmlspecialchars($row['product_id']); ?>)">
+                                                Add to Cart
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php }
+                            } else {
+                                echo "No espresso products found";
+                            }
+                            ?>
+                        </div>
+                        <div class="order-header">
                             <header>
                                 <div class="name-text">
                                     <span class="label-name" id="rice">Rice Meal</span>
                                 </div>
                             </header>
-                        <div class="receipt responsive">
+                        </div>
+                        <div class="order-card">
+                            <?php
+                            require_once 'connection.php';
+
+                            $sql = "SELECT * FROM product WHERE category = 'Rice Meal'";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->execute();
+                            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+                            if ($stmt->rowCount() > 0) {
+                                while ($row = $stmt->fetch()) { ?>
+                                    <div class="coffee-card">
+                                        <div class="quantity">
+                                            <div class="details">
+                                                <h3 class="coffee-name">
+                                                    <?php echo htmlspecialchars($row['product_name']); ?>
+                                                </h3>
+                                                <span
+                                                    class="coffee-price">P<?php echo htmlspecialchars($row['price']); ?></span>
+                                            </div>
+                                            <img src="<?php echo htmlspecialchars($row['image']); ?>"
+                                                alt="<?php echo htmlspecialchars($row['product_name']); ?>" />
+                                            <div class="addtocart"
+                                                onclick="addToCart('<?php echo htmlspecialchars($row['product_name']); ?>', <?php echo htmlspecialchars($row['price']); ?>, <?php echo htmlspecialchars($row['product_id']); ?>)">
+                                                Add to Cart
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php }
+                            } else {
+                                echo "No espresso products found";
+                            }
+                            ?>
+                        </div>
+                        <div class="receipt">
                             <div class="top-cart">
                                 <h3 class="cart-name">Cart</h3>
                             </div>
