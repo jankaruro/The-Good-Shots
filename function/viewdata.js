@@ -20,56 +20,27 @@ $(document).ready(function () {
     })
 });
 
-
-  $(document).ready(function () {
-
-$('.viewsupp').click(function (e) {
-    e.preventDefault();
-    var supplier_id = $(this).closest('tr').find('.supplier_id').text();
-   
-
-
-    $.ajax({
-        method: "POST",
-        url: "code.php",
-        data: {
-            'click_view_supp_btn': true,
-            'supplier_id':supplier_id,
-        },
-        success: function (response) {
-            $('.view_item_data').html(response);
-            $('#viewitemModal').modal('show');    
-        }
-    });
-
-})
-
-});
-
 $(document).ready(function () {
+    $('.viewsupp').click(function (e) {
+        e.preventDefault();
+        var supplier_id = $(this).data('id');
 
-$('.view_category').click(function (e) {
-    e.preventDefault();
-    var category_id = $(this).closest('tr').find('.category_id').text();
-   
-
-
-    $.ajax({
-        method: "POST",
-        url: "code.php",
-        data: {
-            'click_view_category_btn': true,
-            'category_id':category_id,
-        },
-        success: function (response) {
-            $('.view_item_data').html(response);
-            $('#viewitemModal').modal('show');    
-        }
-    });
-
-})
-
+        $.ajax({
+            method: "POST",
+            url: "code.php",
+            data: {
+                'click_view_supp_btn': true,
+                'supplier_id': supplier_id,
+            },
+            success: function (response) {
+                $('.view_item_data').html(response);
+                $('#viewitemModal').modal('show');
+            }
+        });
+    })
 });
+
+
 
 
 $(document).ready(function () {
@@ -121,12 +92,11 @@ $('.view_inventory').click(function (e) {
 })
 
 });
-
 $(document).ready(function () {
     $('.view_product').click(function (e) {
         e.preventDefault();
         
-        var product_id = $(this).closest('tr').find('.product_id').text().trim();
+        var product_id = $(this).closest('tr').find('.productid').text().trim();
 
         $.ajax({
             method: "POST",
@@ -139,12 +109,17 @@ $(document).ready(function () {
                 try {
                     const data = JSON.parse(response);
                     if (data.success) {
-                        $('.view_item_data').html(data.html);
-                        $('#viewitemModal').modal('show');
-                    } else if (data.message) {
-                        alert(data.message);
+                        $('#viewProductName').text(data.data.product_name);
+                        $('#viewPrice').text(data.data.price);
+                        $('#viewCategory').text(data.data.category);
+                        $('#viewImage').attr('src', data.data.image);
+                        $('#viewIngredients').empty();
+                        data.data.ingredients.forEach(function(ingredient) {
+                            $('#viewIngredients').append(`<li>${ingredient.ingredient_name} - ${ingredient.quantity} ${ingredient.unit}</li>`);
+                        });
+                        $('#viewProductModal').modal('show');
                     } else {
-                        alert("An error occurred while fetching the product details. Please try again.");
+                        alert(data.message);
                     }
                 } catch (error) {
                     console.error("Error parsing JSON:", error);
@@ -157,6 +132,5 @@ $(document).ready(function () {
         });
     })
 });
-
 
 </script>

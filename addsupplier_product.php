@@ -104,10 +104,7 @@
             </select>
           </div>
           <!-- Reorder Level Input -->
-          <div class="mb-3">
-            <label for="reorder_level" class="form-label">Reorder Level</label>
-            <input type="number" class="form-control" id="reorder_level" name="reorder_level" required>
-          </div>
+         
 
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -308,7 +305,7 @@
                                         <th scope="col">Price</th>
                                         <th scope="col">Quantity</th>
                                         <th scope="col">Unit</th>
-                                        <th scope="col">Reorder Level</th>
+                                       
                                         <th scope="col" class="action-column">Action</th>
                                     </tr>
                                 </thead>
@@ -330,15 +327,15 @@
                                                 <td><?php echo $row['price']; ?></td>
                                                 <td><?php echo $row['quantity']; ?></td>
                                                 <td><?php echo $row['unit']; ?></td>
-                                                <td><?php echo $row['reorder_level']; ?></td>
+                                                
                                               
                                                 <td>
-                                                    <a href="#" class="btn btn-info btn-base view_supplier_products">View
-                                                        Data</a>
-                                                    <a href="#" class="btn btn-success btn-base edit_supplier_products">Edit
-                                                        Data</a>
-                                                    <a href="" class="btn btn-danger btn-base delete_supplier_products">Delete
-                                                        Data</a>
+                                                <a href="#" class="btn btn-info btn-base view_data btn-view"
+                              data-id="<?php echo htmlspecialchars($row['id']); ?>">View</a>
+                            <a href="#" class="btn btn-success btn-base edit_data btn-edit"
+                              data-id="<?php echo htmlspecialchars($row['id']); ?>">Edit</a>
+                            <a href="#" class="btn btn-danger btn-base deletesuppprod btn-delete"
+                              data-id="<?php echo htmlspecialchars($row['id']); ?>">Delete</a>
                                                 </td>
                                             </tr>
                                             <?php

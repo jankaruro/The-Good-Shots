@@ -28,114 +28,116 @@ include('connection.php'); ?>
 </head>
 <!--Add User-->
 <!-- Add User Modal -->
-<div class="modal fade" id="addUserData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addUser DataLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-2" id="addUser DataLabel">Adding New User</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="code.php" method="POST">
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label class="fs-5 mt-1 fw-bolder">First Name</label>
-                        <input type="text" class="form-control fw-medium" name="first_name" placeholder="Enter First Name" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="fs-5 mt-1 fw-bolder">Last Name</label>
-                        <input type="text" class="form-control fw-medium" name="last_name" placeholder="Enter Last Name" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="fs-5 mt-1 fw-bolder">Username</label>
-                        <input type="text" class="form-control fw-medium" name="username" placeholder="Enter Username" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="fs-5 mt-1 fw-bolder">Email</label>
-                        <input type="email" class="form-control fw-medium" name="email" placeholder="Enter Email" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="fs-5 mt-1 fw-bolder">Password</label>
-                        <input type="password" class="form-control fw-medium" name="password" placeholder="Enter Password" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="fs-5 mt-1 fw-bolder">Role</label>
-                        <select class="form-control fw-medium" id="role" name="role" required>
-                            <option value="user">User </option>
-                            <option value="admin">Admin</option>
-                            <option value="superadmin">Super Admin</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary fw-medium" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" name="save_user" class="btn btn-primary fw-medium">Add User</button>
-                </div>
-            </form>
+<div class="modal fade" id="addUserData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="addUser DataLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-2" id="addUser DataLabel">Adding New User</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="code.php" method="POST">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="fs-5 mt-1 fw-bolder">First Name</label>
+            <input type="text" class="form-control fw-medium" name="first_name" placeholder="Enter First Name" required>
+          </div>
+          <div class="form-group">
+            <label class="fs-5 mt-1 fw-bolder">Last Name</label>
+            <input type="text" class="form-control fw-medium" name="last_name" placeholder="Enter Last Name" required>
+          </div>
+          <div class="form-group">
+            <label class="fs-5 mt-1 fw-bolder">Username</label>
+            <input type="text" class="form-control fw-medium" name="username" placeholder="Enter Username" required>
+          </div>
+          <div class="form-group">
+            <label class="fs-5 mt-1 fw-bolder">Email</label>
+            <input type="email" class="form-control fw-medium" name="email" placeholder="Enter Email" required>
+          </div>
+          <div class="form-group">
+            <label class="fs-5 mt-1 fw-bolder">Password</label>
+            <input type="password" class="form-control fw-medium" name="password" placeholder="Enter Password" required>
+          </div>
+          <div class="form-group">
+            <label class="fs-5 mt-1 fw-bolder">Role</label>
+            <select class="form-control fw-medium" id="role" name="role" required>
+              <option value="user">User </option>
+              <option value="admin">Admin</option>
+              <option value="superadmin">Super Admin</option>
+            </select>
+          </div>
         </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary fw-medium" data-bs-dismiss="modal">Close</button>
+          <button type="submit" name="save_user" class="btn btn-primary fw-medium">Add User</button>
+        </div>
+      </form>
     </div>
+  </div>
 </div>
 
 <!-- View User Modal -->
 <div class="modal fade" id="viewitemModal" tabindex="-1" aria-labelledby="viewitemModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="viewitemModalLabel">View Item</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="view_item_data"></div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="viewitemModalLabel">View Item</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="view_item_data"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
     </div>
+  </div>
 </div>
 
 <!-- Edit User Modal -->
-<div class="modal fade" id="editData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editDataLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-2" id="editDataLabel">Edit Users</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="code.php" method="POST">
-                <div class="modal-body">
-                    <input type="hidden" class="form-control fw-medium" id="id" name="id">
-                    <div class="form-group">
-                        <label class="fs-5 mt-1 fw-bolder">First Name</label>
-                        <input type="text" class="form-control fw-medium" name="firstname" placeholder="Enter First Name" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="fs-5 mt-1 fw-bolder">Last Name</label>
-                        <input type="text" class="form-control fw-medium" name="lastname" placeholder="Enter Last Name" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="fs-5 mt-1 fw-bolder">Email</label>
-                        <input type="email" class="form-control fw-medium" name="email" placeholder="Enter Email" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="fs-5 mt-1 fw-bolder">Password</label>
-                        <input type="password" class="form-control fw-medium" name="password" placeholder="Enter Password" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="fs-5 mt-1 fw-bolder">Role</label>
-                        <select class="form-control fw-medium" id="role" name="role" required>
-                            <option value="user">User </option>
-                            <option value="admin">Admin</option>
-                            <option value="superadmin">Super Admin</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary fw-medium" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" name="update_data" class="btn btn-primary fw-medium">Update Item</button>
-                </div>
-            </form>
+<div class="modal fade" id="editData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="editDataLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-2" id="editDataLabel">Edit Users</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="code.php" method="POST">
+        <div class="modal-body">
+          <input type="hidden" class="form-control fw-medium" id="id" name="id">
+          <div class="form-group">
+            <label class="fs-5 mt-1 fw-bolder">First Name</label>
+            <input type="text" class="form-control fw-medium" name="firstname" placeholder="Enter First Name" required>
+          </div>
+          <div class="form-group">
+            <label class="fs-5 mt-1 fw-bolder">Last Name</label>
+            <input type="text" class="form-control fw-medium" name="lastname" placeholder="Enter Last Name" required>
+          </div>
+          <div class="form-group">
+            <label class="fs-5 mt-1 fw-bolder">Email</label>
+            <input type="email" class="form-control fw-medium" name="email" placeholder="Enter Email" required>
+          </div>
+          <div class="form-group">
+            <label class="fs-5 mt-1 fw-bolder">Password</label>
+            <input type="password" class="form-control fw-medium" name="password" placeholder="Enter Password" required>
+          </div>
+          <div class="form-group">
+            <label class="fs-5 mt-1 fw-bolder">Role</label>
+            <select class="form-control fw-medium" id="role" name="role" required>
+              <option value="user">User </option>
+              <option value="admin">Admin</option>
+              <option value="superadmin">Super Admin</option>
+            </select>
+          </div>
         </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary fw-medium" data-bs-dismiss="modal">Close</button>
+          <button type="submit" name="update_data" class="btn btn-primary fw-medium">Update Item</button>
+        </div>
+      </form>
     </div>
+  </div>
 </div>
 
 <body>
@@ -293,9 +295,12 @@ include('connection.php'); ?>
                           <td><?php echo htmlspecialchars($row['username']); ?></td>
                           <td><?php echo htmlspecialchars($row['role']); ?></td>
                           <td>
-                          <a href="#" class="btn btn-info btn-base view_data btn-view" data-id="<?php echo htmlspecialchars($row['id']); ?>">View</a>
-<a href="#" class="btn btn-success btn-base edit_data btn-edit" data-id="<?php echo htmlspecialchars($row['id']); ?>">Edit</a>
-<a href="#" class="btn btn-danger btn-base delete_user btn-delete" data-id="<?php echo htmlspecialchars($row['id']); ?>">Delete</a>
+                            <a href="#" class="btn btn-info btn-base view_data btn-view"
+                              data-id="<?php echo htmlspecialchars($row['id']); ?>">View</a>
+                            <a href="#" class="btn btn-success btn-base edit_data btn-edit"
+                              data-id="<?php echo htmlspecialchars($row['id']); ?>">Edit</a>
+                            <a href="#" class="btn btn-danger btn-base delete_user btn-delete"
+                              data-id="<?php echo htmlspecialchars($row['id']); ?>">Delete</a>
                           </td>
                         </tr>
                         <?php
@@ -351,9 +356,9 @@ include('connection.php'); ?>
         });
       });
     </script>
-        <?php include('function/viewdata.js'); ?>
-        <?php include('function/editdata.js'); ?>
-        <?php include('function/deletedata.js'); ?>
+    <?php include('function/viewdata.js'); ?>
+    <?php include('function/editdata.js'); ?>
+    <?php include('function/deletedata.js'); ?>
 </body>
 
 </html>

@@ -19,7 +19,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <script>
       $(document).ready(function () {
-        $('#myTable').DataTable();
+        $('#display').DataTable();
       });
     </script>
   <!-- Font Awesome -->
@@ -31,7 +31,7 @@
   <link rel="stylesheet" href="dashboard.css" />
   <script src="function/po_database.js"> </script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-  <script src="po_database.js"></script>
+
 
 </head>
 
@@ -144,7 +144,71 @@
       </div>
     </div>
   </div>
-
+<!-- Edit Order Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Edit Purchase Order</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="order_id">
+                <div class="form-group">
+                    <label for="po_number">PO Number</label>
+                    <input type="text" class="form-control" id="po_number" required>
+                </div>
+                <div class="form-group">
+                    <label for="product_name">Product Name</label>
+                    <input type="text" class="form-control" id="product_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="quantity">Quantity</label>
+                    <input type="number" class="form-control" id="quantity" required>
+                </div>
+                <div class="form-group">
+                    <label for="unit_price">Unit Price</label>
+                    <input type="number" class="form-control" id="unit_price" required>
+                </div>
+                <div class="form-group">
+                    <label for="supplier_name">Supplier Name</label>
+                    <input type="text" class="form-control" id="supplier_name" required>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="update_order">Update Order</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- View Order Modal -->
+<div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewModalLabel">View Purchase Order</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p><strong>PO Number:</strong> <span id="view_po_number"></span></p>
+                <p><strong>Product Name:</strong> <span id="view_product_name"></span></p>
+                <p><strong>Quantity:</strong> <span id="view_quantity"></span></p>
+                <p><strong>Unit Price:</strong> <span id="view_unit_price"></span></p>
+                <p><strong>Supplier Name:</strong> <span id="view_supplier_name"></span></p>
+                <p><strong>Status:</strong> <span id="view_status"></span></p>
+                <p><strong>Created At:</strong> <span id="view_created_at"></span></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
   <div class="d-flex content">
     <div id="sidebar" class="sidebar-color">
       <div class="sidebar-heading">
@@ -175,8 +239,7 @@
           </a>
           <div class="submenu" id="supplier-submenu">
             <a href="addsupplier.php" class="sub-list-item">
-              <p ```html
-              class="txt-name-btn">Add Supplier</p>
+              <p class="txt-name-btn">Add Supplier</p>
             </a>
             <a href="addsupplier_product.php" class="sub-list-item">
               <p class="txt-name-btn">Suppliers Product</p>
@@ -268,9 +331,9 @@
                     <th scope="col">Qty Ordered</th>
                     <th scope="col">Qty Received</th>
                     <th scope="col">Supplier</th>
-                    <th scope="col">Status</th ```html
+                    <th scope="col">Status</th>
                     <th scope="col">Ordered By</th>
-                    <th scope="col">Created Date</th>
+                   
                     <th scope="col" style = "width: 25rem">Actions</th>
                   </tr>
                 </thead>
@@ -355,6 +418,111 @@
         }
       });
     });
+    $(document).on('click', '.view_data', function() {
+    var id = $(this).data('id');
+    
+    $.ajax({
+        url: 'view_order.php',
+        method: 'POST',
+        data: { id: id },
+        success: function(data) {
+            var order = JSON.parse(data);
+            if (order.error) {
+                alert(order.error);
+            } else {
+                // Populate modal with order details
+                $('#viewModal .modal-body').html(`
+                    <p><strong>PO Number:</strong> ${order.po_number}</ <p><strong>Product Name:</strong> ${order.product_name}</p>
+                    <p><strong>Quantity:</strong> ${order.quantity}</p>
+                    <p><strong>Unit Price:</strong> ${order.unit_price}</p>
+                    <p><strong>Supplier Name:</strong> ${order.supplier_name}</p>
+                    <p><strong>Status:</strong> ${order.status}</p>
+                    <p><strong>Created At:</strong> ${order.created_at}</p>
+                `);
+                $('#viewModal').modal('show');
+            }
+        }
+    });
+});
+$(document).on('click', '.edit_data', function() {
+    var id = $(this).data('id');
+
+    $.ajax({
+        url: 'fetch_order.php',
+        method: 'POST',
+        data: { id: id },
+        success: function(data) {
+            var order = JSON.parse(data);
+            if (order.error) {
+                alert(order.error);
+            } else {
+                // Populate edit form with order details
+                $('#editModal #po_number').val(order.po_number);
+                $('#editModal #product_name').val(order.product_name);
+                $('#editModal #quantity').val(order.quantity);
+                $('#editModal #unit_price').val(order.unit_price);
+                $('#editModal #supplier_name').val(order.supplier_name);
+                $('#editModal #order_id').val(order.id);
+                $('#editModal').modal('show');
+            }
+        }
+    });
+});
+
+$('#editModal #update_order').on('click', function() {
+    var id = $('#editModal #order_id').val();
+    var poNumber = $('#editModal #po_number').val();
+    var productName = $('#editModal #product_name').val();
+    var quantity = $('#editModal #quantity').val();
+    var unitPrice = $('#editModal #unit_price').val();
+    var supplierName = $('#editModal #supplier_name').val();
+
+    $.ajax({
+        url: 'update_order.php',
+        method: 'POST',
+        data: {
+            id: id,
+            po_number: poNumber,
+            product_name: productName,
+            quantity: quantity,
+            unit_price: unitPrice,
+            supplier_name: supplierName
+        },
+        success: function(response) {
+            var res = JSON.parse(response);
+            if (res.success) {
+                alert('Order updated successfully!');
+                location.reload(); // Reload the page to see changes
+            } else {
+                alert(res.message);
+            }
+        }
+    });
+});
+$(document).on('click', '.delete_data', function() {
+    var id = $(this).data('id');
+    $('#deleteModal #confirm_delete').data('id', id); // Store ID in the confirm button
+    $('#deleteModal').modal('show');
+});
+
+$('#deleteModal #confirm_delete').on('click', function() {
+    var id = $(this).data('id');
+
+    $.ajax({
+        url: 'delete_order.php',
+        method: 'POST',
+        data: { id: id },
+        success: function(response) {
+            var res = JSON.parse(response);
+            if (res.success) {
+                alert('Order deleted successfully!');
+                location.reload(); // Reload the page to see changes
+            } else {
+                alert(res.message);
+            }
+        }
+    });
+});
   </script>
 </body>
 

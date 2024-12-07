@@ -26,12 +26,10 @@ $(document).ready(function () {
     })
 });
 
-
-
 $(document).ready(function () {
     $('.editsupp').click(function (e) {
         e.preventDefault();
-        var supplier_id = $(this).closest('tr').find('.supplier_id').text();
+        var supplier_id = $(this).data('id');
 
         $.ajax({
             method: "POST",
@@ -41,52 +39,23 @@ $(document).ready(function () {
                 'supplier_id': supplier_id,
             },
             success: function (response) {
-                // Assuming the response is JSON encoded
-                var data = JSON.parse(response);
-                $('#id').val(data.id);
-                $('[name="suppliername"]').val(data.supplier_name);
-                $('[name="contactnumber"]').val(data.contact_number);
-                $('[name="status"]').val(data.status);
- $('#editData').modal('show');
+                $.each(response, function (Key, value) {
+                    $('#id').val(value['id']);
+                    $('[name="suppliername"]').val(value['supplier_name']);
+                    $('[name="contactnumber"]').val(value['contact_number']);
+                    $('[name="status"]').val(value['status']);
+                   ;
+                });
+                $('#editSupplierModal').modal('show');
             }
         });
     })
-    
 });
+                                       
 
 
 
-$(document).ready(function () {
 
-$('.edit_category').click(function (e) {
-    e.preventDefault();
-    var category_id = $(this).closest('tr').find('.category_id').text();
-
-
-
-    $.ajax({
-        method: "POST",
-        url: "code.php",
-        data: {
-            'click_edit_category_btn': true,
-            'category_id': category_id,
-        },
-        success: function (response) {
-            
-
-            $.each(JSON.parse(response), function (key, value) {
-                $('#id').val(value['id']);
-                $('[name="suppliername"]').val(value['supplier_name']);
-                $('[name="contactnumber"]').val(value['contact_number']);
-                $('[name="status"]').val(value['status']);
-            });
-            $('#editData').modal('show');
-        }
-    });
-
-})
-
-});
 
 
 $(document).ready(function () {
@@ -165,8 +134,34 @@ $('.edit_inventory').click(function (e) {
 $(document).ready(function () {
     $('.edit_product').click(function (e) {
         e.preventDefault();
+        var product_id = $(this).data('id');
+
+        $.ajax({
+            method: "POST",
+            url: "code.php",
+            data: {
+                'click_edit_btn': true,
+                'product_id': product_id,
+            },
+            success: function (response) {
+                $.each(response, function (Key, value) {
+                    $('#id').val(value['id']);
+                    $('[name="supplier_name"]').val(value['supplier_name']);
+                    $('[name="contact_number"]').val(value['contact_number']);
+                    $('[name="status"]').val(value['status']);
+                   
+                });
+                $('#editData').modal('show');
+            }
+        });
+    })
+});
+
+$(document).ready(function () {
+    $('.edit_product').click(function (e) {
+        e.preventDefault();
         
-        var product_id = $(this).closest('tr').find('.product_id').text().trim();
+        var product_id = $(this).closest('tr').find('.productid').text().trim();
 
         $.ajax({
             method: "POST",
@@ -180,15 +175,36 @@ $(document).ready(function () {
                     const data = JSON.parse(response);
                     if (data.message) {
                         alert(data.message);
-                    } else if (data.length > 0) {
-                        $('#id').val(data[0].id);
-                        $('[name="product_name"]').val(data[0].product_name);
-                        $('[name="price"]').val(data[0].price);
-                        $('[name="category"]').val(data[0].category);
-                        $('#currentImage').attr('src', 'uploaded_images/' + data[0].image);
-                        $('#editData').modal('show');
                     } else {
-                        alert('No data found.');
+                        $('#editProductId').val(data.product_id);
+                        $('#editProductName').val(data.product_name);
+                        $('#editPrice').val(data.price);
+                        $('#editCategory').val(data.category);
+                        $('#editImagePreview').attr('src', data.image).show();
+                        $('#edit-ingredients-container').empty();
+                        
+                        // Populate ingredients
+                        data.ingredients.forEach(function(ingredient, index) {
+                            $('#edit-ingredients-container').append(`
+                                <div class="ingredient-field mb-2" id="ingredient_${index + 1}">
+                                    <label for="ingredient_name_${index + 1}">Select Ingredient:</label>
+                                    <select class="form-control fw-medium" id="ingredient_name_${index + 1}" name="ingredient_name[]" required>
+                                        <option value="">-- Select Ingredient --</option>
+                                        ${data.ingredientOptions}
+                                    </select>
+                                    <label for="quantity_${index + 1}">Quantity:</label>
+                                    <input type="number" class="form-control" id="quantity_${index + 1}" name="quantity[]" value="${ingredient.quantity}" required>
+                                    <label for="unit_${index + 1}">Unit:</label>
+                                    <select class="form-control fw-medium" id="unit_${index + 1}" name="unit[]" required>
+                                        <option value="">-- Select Unit --</option>
+                                        <option value="milliliter" ${ingredient.unit === 'milliliter' ? 'selected' : ''}>milliliter</option>
+                                        <option value="grams" ${ingredient.unit === 'grams' ? 'selected' : ''}>grams</option>
+                                    </select>
+                                    <button type="button" class="btn btn-danger remove-ingredient">Remove</button>
+                                </div>
+                            `);
+                        });
+                        $('#editProductModal').modal('show');
                     }
                 } catch (error) {
                     console.error("Error parsing JSON:", error);
@@ -201,5 +217,6 @@ $(document).ready(function () {
         });
     })
 });
+
 
 </script>

@@ -29,6 +29,7 @@ $_SESSION['last_activity'] = time(); // Update last activity time
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="dashboard.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>The Good Shots</title>
 </head>
 
@@ -165,7 +166,7 @@ $_SESSION['last_activity'] = time(); // Update last activity time
                             <i class="fas fa-chart-line fs-1 p-3"></i>
                         </div>
                     </div>
-                    <h2 class="name-chart mt-4 ">Charts</h2>
+                    <h2 class="name-chart mt-4">Charts</h2>
                     <div class="col-sm-12">
                         <div class="card mt-1 shadow">
                             <div class="card-header">
@@ -182,63 +183,41 @@ $_SESSION['last_activity'] = time(); // Update last activity time
                                         <p class="stock-name"
                                             style="margin-top: 50px; font-weight: 500; font-size: 24px; text-align: center">
                                             Low Stock Item</p>
-                                        <ul class="list-group shadow"
-                                            style="margin-top: 40px; height: 200px; overflow-y: auto;  scrollbar-width: thin; scrollbar-color: #edc4b3 #f1f1f1; background-color: white;">
-                                            <li class="list-product-item">Product 1</li>
-                                            <li class="list-product-item">Product 2</li>
-                                            <li class="list-product-item">Product 3</li>
-                                            <li class="list-product-item">Product 4</li>
-                                            <li class="list-product-item">Product 5</li>
+                                        <ul class="list-group shadow" id="low-stock-list"
+                                            style="margin-top: 40px; height: 200px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #edc4b3 #f1f1f1; background-color: white;">
                                         </ul>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-12">
-                        <div class="card mt-5 mb-4 shadow">
-                            <div class="card-header">
-                                Top Selling Product
-                            </div>
-                            <div class="card-body body-level">
-                                <div class="row">
-                                    <div class="col-md-6 me-5">
-                                        <p class="stock-name"
-                                            style="margin-top: 50px; font-weight: 500; font-size: 24px; text-align: center">
-                                            Top 3</p>
-                                        <ul class="list-group shadow"
-                                            style="margin-top: 40px; height: 200px; overflow-y: auto;  scrollbar-width: thin; scrollbar-color: #d69f7e #f1f1f1; background-color: ">
-                                            <li class="list-product-item">Product 1</li>
-                                            <li class="list-product-item">Product 2</li>
-                                            <li class="list-product-item">Product 3</li>
-                                            <li class="list-product-item">Product 4</li>
-                                            <li class="list-product-item">Product 5</li>
-                                        </ul>
-                                    </div>
-                                    <div class="chart-container pie-chart">
-                                        <canvas id="pie-chart"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-12">
-                        <div class="card mt-5 mb-4 shadow">
-                            <h2 class="text-center">SALES ORDER SUMMARY (IN USD)</h2>
-                            <p class="text-center">This Month</p>
-                            <div class="chart-container body-level">
-                                <canvas id="salesChart"></canvas>
-                            </div>
-                            <div class="total-sales">
-                                <h5>Total Sales</h5>
-                                <p>DIRECT SALES: $55,229.28</p>
-                            </div>
-                        </div>
-                    </div>
+                   <div class="col-sm-12">
+    <div class="card mt-5 mb-4 shadow">
+        <div class="card-header">
+            Top Selling Product
+        </div>
+        <div class="card-body body-level">
+            <div class="row">
+                <div class="col-md-6 me-5">
+                    <p class="stock-name"
+                        style="margin-top: 50px; font-weight: 500; font-size: 24px; text-align: center">
+                        Top 3</p>
+                    <ul class="list-group shadow" id="top-selling-products"
+                        style="margin-top: 40px; height: 200px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #d69f7e #f1f1f1; background-color: ">
+                    </ul>
+                </div>
+                <div class="chart-container pie-chart">
+                    <canvas id="pie-chart"></canvas>
                 </div>
             </div>
         </div>
     </div>
+</di>
+                   
+                </div>
+            </div>
+        </div>
+
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -246,7 +225,7 @@ $_SESSION['last_activity'] = time(); // Update last activity time
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script>
-         var idleMax = 10; // Logout after 10 minutes of idle
+        var idleMax = 10; // Logout after 10 minutes of idle
         var idleTime = 0;
 
         $(document).ready(function () {
@@ -296,6 +275,90 @@ $_SESSION['last_activity'] = time(); // Update last activity time
                 }
             });
         });
+
+
+        $(document).ready(function () {
+            $.ajax({
+                url: 'fetch_inventory.php', // Your PHP file to fetch inventory data
+                method: 'GET',
+                success: function (response) {
+                    var data = JSON.parse(response);
+
+                    // Set up the doughnut chart
+                    var ctx = document.getElementById('doughnut_chart').getContext('2d');
+                    var doughnutChart = new Chart(ctx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: [], // No labels displayed
+                            datasets: [{
+                                label: 'Inventory Levels',
+                                data: data.chartData,
+                                backgroundColor: ['#FF6384'], // Single color for the chart
+                                borderColor: '#fff',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false
+                        }
+                    });
+
+                    // Populate low stock items
+                    var lowStockList = $('#low-stock-list');
+                    data.lowStockItems.forEach(function (item) {
+                        lowStockList.append('<li class="list-product-item">' + item + '</li>');
+                    });
+                },
+                error: function () {
+                    console.error('Failed to fetch inventory data.');
+                }
+            });
+
+           
+        });
+        
+        $(document).ready(function () {
+        $.ajax({
+            url: 'fetch_top_selling_products.php', // Your PHP file to fetch top selling products
+            method: 'GET',
+            success: function (response) {
+                var data = JSON.parse(response);
+
+                // Populate the top selling products list
+                var productList = $('#top-selling-products');
+                data.productNames.forEach(function (product) {
+                    productList.append('<li class="list-product-item">' + product + '</li>');
+                });
+
+                // Set up the pie chart
+                var ctx = document.getElementById('pie-chart').getContext('2d');
+                var pieChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: data.productNames,
+                        datasets: [{
+                            label: 'Top Selling Products',
+                            data: data.quantities,
+                            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+                            borderColor: '#fff',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+            },
+            error: function () {
+                console.error('Failed to fetch top selling products.');
+            }
+        });
+    });
+
+
+    
     </script>
 </body>
 
