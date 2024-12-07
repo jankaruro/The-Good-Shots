@@ -82,8 +82,6 @@
                                 <img src="icons/profile-round-1342-svgrepo-com.svg" alt="" class="user-icons">Admin
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Profile</a></li>
-                                <li><a class="dropdown-item" href="#">Settings</a></li>
                                 <li><a class="dropdown-item" href="#">Logout</a></li>
                             </ul>
                         </li>
@@ -187,13 +185,13 @@
                                     <span class="label-name" id="rice">Rice Meal</span>
                                 </div>
                             </header>
-                        <div class="receipt receipt-fluid">
+                        <div class="receipt responsive">
                             <div class="top-cart">
                                 <h3 class="cart-name">Cart</h3>
                             </div>
                             <h3 class="order-name">Order Items</h3>
                             <div class="order-list">
-                                <table class="table table-striped table-bordered table-hover" id="cart">
+                                <table class="table table-striped table-bordered" id="cart">
                                     <thead>
                                         <tr id="tbl_head">
                                             <th style="width: 10rem">Item Name</th>
