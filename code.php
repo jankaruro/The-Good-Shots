@@ -295,7 +295,7 @@ if (isset($_POST['add_inventory'])) {
     $measurement_per_package = (float)$_POST['measurement_per_package']; // Ensure this is a float
     $total_measurement = (float)$_POST['total_measurement']; // Ensure this is a float
     $unit = $_POST['unit'];
-    $Expiry_Date = $_POST['Expiry_Date'];
+    
 
     // Check if product already exists
     $check_product_name_query = "SELECT * FROM inventory WHERE product_name = ?";
@@ -319,11 +319,11 @@ if (isset($_POST['add_inventory'])) {
         }
     } else {
         // Product does not exist, insert a new record
-        $insert_query = "INSERT INTO inventory (supplier, product_name, package_quantity, measurement_per_package, total_measurement, unit, Expiry_Date) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $insert_query = "INSERT INTO inventory (supplier, product_name, package_quantity, measurement_per_package, total_measurement, unit) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($insert_query);
         
         // Execute the statement with an array of values
-        if ($stmt->execute([$supplier, $product, $package_quantity, $measurement_per_package, $total_measurement, $unit, $Expiry_Date])) {
+        if ($stmt->execute([$supplier, $product, $package_quantity, $measurement_per_package, $total_measurement, $unit])) {
             $_SESSION['status'] = "Supplier Product added successfully!";
         } else {
             $_SESSION['status'] = "Error: " . $stmt->errorInfo()[2]; // Get the error message
