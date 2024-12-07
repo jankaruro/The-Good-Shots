@@ -250,7 +250,7 @@
         </div>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-<<<<<<< HEAD
+
                     <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
                         <a class="nav-link fw-bold cashier-link me-3 text-dark" href="pos.php">
                          <img src="icons/cashier-svgrepo-com.svg" alt="" class="topnavbar-icons">
@@ -274,7 +274,7 @@
                         </li>
                     </ul>
                 </div>
-=======
+
           <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
             <a class="nav-link fw-bold cashier-link me-3 text-dark" href="pos.php">
               <img src="icons/cashier-svgrepo-com.svg" alt="" class="topnavbar-icons">
@@ -296,7 +296,7 @@
             </li>
           </ul>
         </div>
->>>>>>> 7033bdbf127760edbfcbdb56fba130c74fe1fb44
+
       </nav>
 
 
