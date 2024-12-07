@@ -20,21 +20,18 @@
                 <img src="Images/Logo.jpg" alt="Bootstrap" class="logo">The Good Shots
             </div>
             <div class="list-group list-group-flush mt-0">
-                <a href="dashboard.php" class="list-group-item active">
+                <a href="dashboard_admin.php" class="list-group-item active">
                     <i class="fas fa-tachometer-alt me-3"></i>Dashboard
                 </a>
-                <a href="adduser.php" class="list-group-item">
-                    <i class="fas fa-project-diagram me-3"></i>User Management
-                </a>
                 <div class="product-dropdown">
-                    <a href="addproduct.php" class="list-group-item" id="product-toggle">
+                    <a href="addproduct_admin.php" class="list-group-item" id="product-toggle">
                         <i class="fa-brands fa-product-hunt me-3"></i>Product Management
                     </a>
                 </div>
-                <a href="inventoryManage.php" class="list-group-item">
+                <a href="inventoryManage_admin.php" class="list-group-item">
                     <i class="fas fa-shopping-cart me-3"></i>Inventory Management
                 </a>
-                <a href="purchase_order.php" class="list-group-item">
+                <a href="purchase_order_admin.php" class="list-group-item">
                     <i class="fa-solid fa-money-bill me-3"></i>Purchase Order
                 </a>
                 <div class="supplier-dropdown">
@@ -43,30 +40,27 @@
                             class="fa-solid fa-chevron-right toggle-arrow-supplier" id="supplier-arrow"></i>
                     </a>
                     <div class="submenu" id="supplier-submenu">
-                        <a href="addsupplier.php" class="sub-list-item">
+                        <a href="addsupplier_admin.php" class="sub-list-item">
                             <p class="txt-name-btn">Add Supplier</p>
                         </a>
-                        <a href="addsupplier_product.php" class="sub-list-item">
+                        <a href="addsupplier_product_admin.php" class="sub-list-item">
                             <p class="txt-name-btn">Suppliers Product</p>
                         </a>
                     </div>
                 </div>
-                <a href="delivery.php" class="list-group-item">
-                    <i class="fa-solid fa-truck me-3"></i>Delivery
-                </a>
                 <div class="reports-dropdown">
                     <a href="#" class="list-group-item" id="reports-toggle">
                         <i class="fa-solid fa-calendar-days me-3"></i></i>Reports<i
                             class="fa-solid fa-chevron-right toggle-arrow-reports" id="reports-arrow"></i>
                     </a>
                     <div class="submenu" id="reports-submenu">
-                        <a href="discrepancy.php" class="sub-list-item">
+                        <a href="discrepancy_admin.php" class="sub-list-item">
                             <p class="txt-name-btn">Discrepancy Report</p>
                         </a>
-                        <a href="inventoryReport.php" class="sub-list-item">
+                        <a href="inventoryReport_admin.php" class="sub-list-item">
                             <p class="txt-name-btn">Inventory Report</p>
                         </a>
-                        <a href="salesReport.php" class="sub-list-item">
+                        <a href="salesReport_admin.php" class="sub-list-item">
                             <p class="txt-name-btn">Sales Report</p>
                         </a>
                     </div>
@@ -96,8 +90,6 @@
                                 Admin
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Profile</a></li>
-                                <li><a class="dropdown-item" href="#">Settings</a></li>
                                 <li><a class="dropdown-item" href="#">Logout</a></li>
                             </ul>
                         </li>

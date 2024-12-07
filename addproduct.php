@@ -250,6 +250,7 @@
         </div>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
+<<<<<<< HEAD
                     <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
                         <a class="nav-link fw-bold cashier-link me-3 text-dark" href="pos.php">
                          <img src="icons/cashier-svgrepo-com.svg" alt="" class="topnavbar-icons">
@@ -273,6 +274,29 @@
                         </li>
                     </ul>
                 </div>
+=======
+          <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
+            <a class="nav-link fw-bold cashier-link me-3 text-dark" href="pos.php">
+              <img src="icons/cashier-svgrepo-com.svg" alt="" class="topnavbar-icons">
+              Orders
+            </a>
+            <a class="nav-link fw-bold notification-link me-3 text-dark" href="#">
+              <img src="icons/notifications-alert-svgrepo-com.svg" alt="" class="topnavbar-icons">
+              Notifications
+            </a>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle fw-bold notification-link text-dark" href="#" id="navbarDropdown"
+                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="icons/profile-round-1342-svgrepo-com.svg" alt="" class="user-icons">
+                Admin
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="#">Logout</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+>>>>>>> 7033bdbf127760edbfcbdb56fba130c74fe1fb44
       </nav>
 
 

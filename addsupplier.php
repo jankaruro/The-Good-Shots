@@ -204,8 +204,11 @@ include('connection.php'); ?>
                                 Admin                                                                                                  
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+<<<<<<< HEAD
                                 <li><a class="dropdown-item" href="#">Profile</a></li>
                                 <li><a class="dropdown-item" href="#">Settings</a></li>                                                                                                        
+=======
+>>>>>>> 7033bdbf127760edbfcbdb56fba130c74fe1fb44
                                 <li><a class="dropdown-item" href="#">Logout</a></li>
                             </ul>
                         </li>

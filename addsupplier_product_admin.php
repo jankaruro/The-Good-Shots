@@ -104,7 +104,10 @@
             </select>
           </div>
           <!-- Reorder Level Input -->
-         
+          <div class="mb-3">
+            <label for="reorder_level" class="form-label">Reorder Level</label>
+            <input type="number" class="form-control" id="reorder_level" name="reorder_level" required>
+          </div>
 
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -185,21 +188,18 @@
                 <img src="Images/Logo.jpg" alt="Bootstrap" class="logo">The Good Shots
             </div>
             <div class="list-group list-group-flush mt-0">
-                <a href="index.php" class="list-group-item">
+                <a href="dashboard_admin.php" class="list-group-item">
                     <i class="fas fa-tachometer-alt me-3"></i>Dashboard
                 </a>
-                <a href="adduser.php" class="list-group-item">
-                    <i class="fas fa-project-diagram me-3"></i>User Management
-                </a>
                 <div class="product-dropdown">
-                    <a href="addproduct.php" class="list-group-item" id="product-toggle">
+                    <a href="addproduct_admin.php" class="list-group-item" id="product-toggle">
                         <i class="fa-brands fa-product-hunt me-3"></i>Product Management
                     </a>
                 </div>
-                <a href="inventoryManage.php" class="list-group-item">
+                <a href="inventoryManage_admin.php" class="list-group-item">
                     <i class="fas fa-shopping-cart me-3"></i>Inventory Management
                 </a>
-                <a href="purchase_order.php" class="list-group-item">
+                <a href="purchase_order_admin.php" class="list-group-item">
                     <i class="fa-solid fa-money-bill me-3"></i>Purchase Order
                 </a>
                 <div class="supplier-dropdown">
@@ -211,7 +211,7 @@
                         <a href="addsupplier.php" class="sub-list-item">
                             <p class="txt-name-btn">Add Supplier</p>
                         </a>
-                        <a href="addsupplier_product.php" class="sub-list-item active">
+                        <a href="addsupplier_product_admin.php" class="sub-list-item active">
                             <p class="txt-name-btn">Suppliers Product</p>
                         </a>
                     </div>
@@ -222,13 +222,13 @@
                             class="fa-solid fa-chevron-right toggle-arrow-reports" id="reports-arrow"></i>
                     </a>
                     <div class="submenu" id="reports-submenu">
-                        <a href="discrepancy.php" class="sub-list-item">
+                        <a href="discrepancy_admin.php" class="sub-list-item">
                             <p class="txt-name-btn">Discrepancy Report</p>
                         </a>
-                        <a href="inventoryReport.php" class="sub-list-item">
+                        <a href="inventoryReport_admin.php" class="sub-list-item">
                             <p class="txt-name-btn">Inventory Report</p>
                         </a>
-                        <a href="salesReport.php" class="sub-list-item">
+                        <a href="salesReport_admin.php" class="sub-list-item">
                             <p class="txt-name-btn">Sales Report</p>
                         </a>
                     </div>
@@ -236,15 +236,15 @@
             </div>
         </div>
         <div id="page-content-wrapper">
-            <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-4 mt-2 dashboard-nav">
+            <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-3 mt-2 dashboard-nav">
                 <div class="d-flex align-items-center">
-                    <h2 class="fs-3 m-1">Add Suppliers Product</h2>
+                    <h2 class="fs-3 m-1">Dashboard</h2>
                 </div>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
-                        <a class="nav-link fw-bold cashier-link me-3 text-dark" href="pos.php">
-                         <img src="icons/cashier-svgrepo-com.svg" alt="" class="topnavbar-icons">
+                        <a class="nav-link fw-bold cashier-link me-3 text-dark" href="order.php">
+                            <img src="icons/cashier-svgrepo-com.svg" alt="" class="topnavbar-icons">
                             Orders
                         </a>
                         <a class="nav-link fw-bold notification-link me-3 text-dark" href="#">
@@ -252,8 +252,8 @@
                             Notifications
                         </a>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle fw-bold notification-link text-dark" href="#" id="navbarDropdown"
-                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle fw-bold notification-link text-dark" href="#"
+                                id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <img src="icons/profile-round-1342-svgrepo-com.svg" alt="" class="user-icons">
                                 Admin
                             </a>
@@ -303,7 +303,7 @@
                                         <th scope="col">Price</th>
                                         <th scope="col">Quantity</th>
                                         <th scope="col">Unit</th>
-                                       
+                                        <th scope="col">Reorder Level</th>
                                         <th scope="col" class="action-column">Action</th>
                                     </tr>
                                 </thead>
@@ -325,15 +325,15 @@
                                                 <td><?php echo $row['price']; ?></td>
                                                 <td><?php echo $row['quantity']; ?></td>
                                                 <td><?php echo $row['unit']; ?></td>
-                                                
+                                                <td><?php echo $row['reorder_level']; ?></td>
                                               
                                                 <td>
-                                                <a href="#" class="btn btn-info btn-base view_data btn-view"
-                              data-id="<?php echo htmlspecialchars($row['id']); ?>">View</a>
-                            <a href="#" class="btn btn-success btn-base edit_data btn-edit"
-                              data-id="<?php echo htmlspecialchars($row['id']); ?>">Edit</a>
-                            <a href="#" class="btn btn-danger btn-base deletesuppprod btn-delete"
-                              data-id="<?php echo htmlspecialchars($row['id']); ?>">Delete</a>
+                                                    <a href="#" class="btn btn-info btn-base view_supplier_products">View
+                                                        Data</a>
+                                                    <a href="#" class="btn btn-success btn-base edit_supplier_products">Edit
+                                                        Data</a>
+                                                    <a href="" class="btn btn-danger btn-base delete_supplier_products">Delete
+                                                        Data</a>
                                                 </td>
                                             </tr>
                                             <?php
