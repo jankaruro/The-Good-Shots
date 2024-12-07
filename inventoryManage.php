@@ -132,10 +132,7 @@
             </select>
           </div>
 
-          <div class="form-group">
-            <label class="fs-5 mt-1 fw-bolder">Expiration Date</label>
-            <input type="date" class="form-control fw-medium" id="Expiry_Date" name="Expiry_Date" placeholder="Enter Expiry Date" required>
-          </div>
+          
 
           </div>
 
@@ -175,7 +172,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="viewitemModalLabel">View Item</h1>
+        <h1 class="modal-title fs-5" id="viewitemModalLabel">View Item</h1> 
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -378,8 +375,6 @@
                                 Admin
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Profile</a></li>
-                                <li><a class="dropdown-item" href="#">Settings</a></li>
                                 <li><a class="dropdown-item" href="#">Logout</a></li>
                             </ul>
                         </li>
@@ -426,7 +421,7 @@
                       <th scope="col">Measurement Per Package</th>
                       <th scope="col">Total Measurement</th>              
                       <th scope="col">Unit</th>
-                      <th scope="col">Expiry Date</th>
+                        
                       <th scope="col" class = "action-column">Action</th>
                   </tr>
                 </thead>
@@ -448,7 +443,7 @@
                             <td><?php echo htmlspecialchars($row['total_measurement']); ?></td>
                          
                             <td><?php echo htmlspecialchars($row['unit']); ?></td>
-                            <td><?php echo htmlspecialchars($row['expiry_date']); ?></td>
+                           
                                                 <td>
                                                     <a href="#" class="btn btn-info btn-base view_data btn-view" data-id="<?php echo $row['id']; ?>">View</a>
                                                     <a href="#" class="btn btn-success btn-base edit_data btn-edit" data-id="<?php echo $row['id']; ?>">Edit</a>

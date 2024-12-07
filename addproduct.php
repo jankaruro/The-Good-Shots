@@ -35,230 +35,162 @@
   <?php
   include('add.php');
   ?>
-  <div class="modal fade" id="insertdata" tabindex="-1" aria-labelledby="insertdataLabel" aria-hidden="true">
+  <!-- Add Product Modal -->
+<!-- Add Product Modal -->
+<div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="insertdataLabel" aria-hidden="true">
     <div class="modal-dialog custom-modal-product">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="insertdataLabel">Add Product</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="insertdataLabel">Add Product</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="registration-form" method="POST" action="code.php" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="productname" class="form-label">Product Name</label>
+                        <input type="text" class="form-control" id="productname" name="productname" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Image</label>
+                        <input type="file" class="form-control" id="image" name="image" accept=".jpg, .jpeg, .png" onchange="previewImage(event)">
+                        <img id="imagePreview" src="" alt="Image Preview" style="max-width: 150px; max-height: 150px; display: none;">
+                    </div>
+                    <div class="mb-3">
+                        <h2>Ingredients</h2>
+                        <div id="ingredients-container">
+                            <div class="ingredient mb-3" id="ingredient_1">
+                                <label for="ingredient_name_1">Select Ingredient:</label>
+                                <select class="form-control fw-medium" id="ingredient_name_1" name="ingredient_name[]" required>
+                                    <option value="">-- Select Ingredient --</option>
+                                    <?php
+                                    include('connection.php');
+                                    $stmt = $conn->prepare("SELECT product_name FROM inventory");
+                                    $stmt->execute();
+                                    $result = $stmt->fetchAll();
+                                    foreach ($result as $row) {
+                                        echo "<option value='" . htmlspecialchars($row['product_name']) . "'>" . htmlspecialchars($row['product_name']) . "</option>";
+                                    }
+                                    ?>
+                                </select>
+                                <label for="quantity_1">Quantity:</label>
+                                <input type="number" class="form-control" id="quantity_1" name="quantity[]" required>
+                                <label for="unit_1">Unit:</label>
+                                <select class="form-control fw-medium" id="unit_1" name="unit[]" required>
+                                    <option value="">-- Select Unit --</option>
+                                    <option value="milliliter">milliliter</option>
+                                    <option value="grams">grams</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary" id="add-ingredient">Add Another Ingredient</button>
+                    </div>
+                    <div class="mb-3">
+                        <label for="price" class="form-label">Price</label>
+                        <input type="text" class="form-control" id="price" name="price" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Category</label>
+                        <select class="form-select" id="category" name="category" required>
+                            <option value="">-- Select Category --</option>
+                            <?php
+                            $stmt = $conn->prepare("SELECT name FROM category");
+                            $stmt->execute();
+                            $result = $stmt->fetchAll();
+                            foreach ($result as $row) {
+                                echo "<option value='" . htmlspecialchars($row['name']) . "'>" . htmlspecialchars($row['name']) . "</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" name="add_product">Save changes</button>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div class="modal-body">
-          <form id="registration-form" method="POST" action="code.php" enctype="multipart/form-data">
-            <div class="mb-3">
-              <label for="productname" class="form-label">Product Name</label>
-              <input type="text" class="form-control" id="productname" name="productname" required>
-            </div>
-
-            <div class="mb-3">
-              <label for="image" class="form-label">Image</label>
-              <input type="file" class="form-control" id="image" name="image" accept=".jpg, .jpeg, .png"
-                onchange="previewImage(event)">
-              <img id="imagePreview" src="" alt="Image Preview"
-                style="max-width: 150px; max-height: 150px; display: none;">
-              <button type="button" class="btn btn-danger mt-2" id="remove-image" style="display: none;"
-                onclick="removeImage()">Remove Image</button>
-            </div>
-
-            <div class="mb-3">
-              <h2>Ingredients</h2>
-              <div id="ingredients-container">
-                <div class="ingredient mb-3" id="ingredient_1">
-                  <label for="ingredient_name_1">Select Ingredient:</label>
-                  <select class="form-control fw-medium" id="ingredient_name_1" name="ingredient_name[]" required>
-                    <option value="">-- Select Ingredient --</option>
-                    <!-- Example inventory items -->
-                    <?php
-                    // Connect to the database
-                    include('connection.php');
-
-                    // Retrieve categories from the database
-                    $stmt = $conn->prepare("SELECT product_name FROM inventory");
-                    $stmt->execute();
-                    $result = $stmt->fetchAll();
-
-                    // Check if there are any categories
-                    if (count($result) > 0) {
-                      // Output the categories
-                      foreach ($result as $row) {
-                        echo "<option value='" . htmlspecialchars($row['product_name']) . "'>" . htmlspecialchars($row['product_name']) . "</option>";
-                      }
-                    } else {
-                      echo "<option value=''>No categories found</option>";
-                    }
-
-                    // Close the database connection
-                    $conn = null;
-                    ?>
-                  </select>
-
-                  <label for="quantity_1">Quantity:</label>
-                  <input type="number" class="form-control" id="quantity_1" name="quantity[]" required>
-
-                  <label for="unit_1">Unit:</label>
-                  <select class="form-control fw-medium" id="unit_1" name="unit[]" required>
-                    <option value="">-- Select Unit --</option>
-                    <option value="milliliter">milliliter</option>
-                    <option value="grams">grams</option>
-                  </select>
-                </div>
-              </div>
-              <button type="button" class="btn btn-primary" id="add-ingredient">Add Another Ingredient</button>
-            </div>
-
-            <div class="mb-3">
-              <label for="price" class="form-label">Price</label>
-              <input type="text" class="form-control" id="price" name="price" required>
-            </div>
-
-            <div class="mb-3">
-              <label for="category" class="form-label">Category</label>
-              <select class="form-select" id="category" name="category" required>
-                <option value="">-- Select Category --</option>
-                <?php
-                // Include the database connection
-                include('connection.php');
-
-                if ($conn !== null) {
-                  try {
-                    // Retrieve categories from the database
-                    $stmt = $conn->prepare("SELECT name FROM category");
-                    $stmt->execute();
-                    $result = $stmt->fetchAll();
-
-                    // Check if there are any categories
-                    if (count($result) > 0) {
-                      // Output the categories
-                      foreach ($result as $row) {
-                        echo "<option value='" . htmlspecialchars($row['name']) . "'>" . htmlspecialchars($row['name']) . "</option>";
-                      }
-                    } else {
-                      echo "<option value=''>No categories found</option>";
-                    }
-                  } catch (PDOException $e) {
-                    echo "Error retrieving categories: " . $e->getMessage();
-                  }
-                } else {
-                  echo "Database connection failed.";
-                }
-
-                // Close the database connection
-                $conn = null;
-                ?>
-              </select>
-            </div>
-
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary" name="add_product">Save changes</button>
-            </div>
-          </form>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
 
-  <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel"
-    aria-hidden="true">
+<!-- Edit Product Modal -->
+<!-- Edit Product Modal -->
+<div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">
     <div class="modal-dialog custom-modal-product">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="editProductModalLabel">Edit Product</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editProductModalLabel">Edit Product</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="edit-registration-form" method="POST" action="code.php" enctype="multipart/form-data">
+                    <input type="hidden" id="editProductId" name="product_id">
+                    <div class="mb-3">
+                        <label for="editProductName" class="form-label">Product Name</label>
+                        <input type="text" class="form-control" id="editProductName" name="productname" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editImage" class="form-label">Image</label>
+                        <input type="file" class="form-control" id="editImage" name="image" accept=".jpg, .jpeg, .png" onchange="previewEditImage(event)">
+                        <img id="editImagePreview" src="" alt="Image Preview" style="max-width: 150px; max-height: 150px; display: none;">
+                    </div>
+                    <div class="mb-3">
+                        <h2>Ingredients</h2>
+                        <div id="edit-ingredients-container">
+                            <!-- Existing ingredients will be populated here -->
+                        </div>
+                        <button type="button" class="btn btn-primary" id="add-edit-ingredient">Add Another Ingredient</button>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editPrice" class="form-label">Price</label>
+                        <input type="text" class="form-control" id="editPrice" name="price" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editCategory" class="form-label">Category</label>
+                        <select class="form-select" id="editCategory" name="category" required>
+                            <option value="">-- Select Category --</option>
+                            <?php
+                            $stmt = $conn->prepare("SELECT name FROM category");
+                            $stmt->execute();
+                            $result = $stmt->fetchAll();
+                            foreach ($result as $row) {
+                                echo "<option value='" . htmlspecialchars($row['name']) . "'>" . htmlspecialchars($row['name']) . "</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" name="update_product">Save changes</button>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div class="modal-body">
-          <form id="edit-registration-form" method="POST" action="code.php" enctype="multipart/form-data">
-            <input type="hidden" id="editProductId" name="product_id">
-            <div class="mb-3">
-              <label for="editProductName" class="form-label">Product Name</label>
-              <input type="text" class="form-control" id="editProductName" name="productname" required>
-            </div>
-            <div class="mb-3">
-              <label for="editImage" class="form-label">Image</label>
-              <input type="file" class="form-control" id="editImage" name="image" accept=".jpg, .jpeg, .png"
-                onchange="previewEditImage(event)">
-              <img id="editImagePreview" src="" alt="Image Preview"
-                style="max-width: 150px; max-height: 150px; display: none;">
-              <button type="button" class="btn btn-danger mt-2" id="remove-edit-image" style="display: none;"
-                onclick="removeEditImage()">Remove Image</button>
-            </div>
-            <div class="mb-3">
-              <label for="editPrice" class="form-label">Price</label>
-              <input type="text" class="form-control" id="editPrice" name="price" required>
-            </div>
-            <div class="mb-3">
-              <label for="editCategory" class="form-label">Category</label>
-              <select class="form-select" id="editCategory" name="category" required>
-                <option value="">-- Select Category --</option>
-                <?php
-                // Connect to the database and fetch categories
-                include('connection.php');
-
-                // Check if the connection was successful
-                if ($conn !== null) {
-                  try {
-                    // Prepare and execute the SQL statement
-                    $stmt = $conn->prepare("SELECT name FROM category");
-                    $stmt->execute();
-
-                    // Fetch all results
-                    $result = $stmt->fetchAll();
-
-                    // Check if there are any categories
-                    if (count($result) > 0) {
-                      // Output the categories
-                      foreach ($result as $row) {
-                        echo "<option value='" . htmlspecialchars($row['name']) . "'>" . htmlspecialchars($row['name']) . "</option>";
-                      }
-                    } else {
-                      echo "<option value=''>No categories found</option>";
-                    }
-                  } catch (PDOException $e) {
-                    echo "Error retrieving categories: " . htmlspecialchars($e->getMessage());
-                  }
-                } else {
-                  echo "Database connection failed.";
-                }
-
-                // Close the database connection
-                $conn = null;
-                ?>
-              </select>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary" name="edit_product">Save changes</button>
-            </div>
-          </form>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
 
-
-
-  <div class="modal fade" id="viewProductModal" tabindex="-1" aria-labelledby="viewProductModalLabel"
-    aria-hidden="true">
+<!-- View Product Modal -->
+<div class="modal fade" id="viewProductModal" tabindex="-1" aria-labelledby="viewProductModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="viewProductModalLabel">View Product</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewProductModalLabel">View Product</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img id="viewImage" src="" alt="Product Image" style="max-width: 100%; max-height: 200px;">
+                <h5 id="viewProductName"></h5>
+                <p><strong>Price:</strong> <span id="viewPrice"></span></p>
+                <p><strong>Category:</strong> <span id="viewCategory"></span></p>
+                <h6>Ingredients:</h6>
+                <ul id="viewIngredients"></ul>
+            </div>
         </div>
-        <div class="modal-body">
-          <img id="viewImage" src="" alt="Product Image" style="max-width: 100%; max-height: 200px;">
-          <h5 id="viewProductName"></h5>
-          <p><strong>Price:</strong> <span id="viewPrice"></span></p>
-          <p><strong>Category:</strong> <span id="viewCategory"></span></p>
-          <h6>Ingredients:</h6>
-          <ul id="viewIngredients"></ul>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
 
 
-
-  <div class="d-flex content">
+  
+<div class="d-flex content">
     <div id="sidebar" class="sidebar-color">
       <div class="sidebar-heading">
         <img src="Images/Logo.jpg" alt="Bootstrap" class="logo">The Good Shots
@@ -438,22 +370,22 @@
   </div>
 </body>
 <script>
-  function previewImage(event) {
+function previewImage(event) {
     var reader = new FileReader();
     reader.onload = function () {
-      var output = document.getElementById('imagePreview');
-      output.src = reader.result; // Set the src of the image to the result from FileReader
-      output.style.display = 'block'; // Show the image preview
-      document.getElementById('remove-image').style.display = 'inline-block'; // Show the remove button
+        var output = document.getElementById('imagePreview');
+        output.src = reader.result; // Set the src of the image to the result from FileReader
+        output.style.display = 'block'; // Show the image preview
+        document.getElementById('remove-image').style.display = 'inline-block'; // Show the remove button
     };
     reader.readAsDataURL(event.target.files[0]); // Read the uploaded file as a data URL
-  }
-  function removeImage() {
-    document.getElementById('imagePreview').src = '';
-    document.getElementById('imagePreview').style.display = 'none';
-    document.getElementById('image').value = '';
-    document.getElementById('remove-image').style.display = 'none';
-  }
+}
+    function removeImage() {
+        document.getElementById('imagePreview').src = '';
+        document.getElementById('imagePreview').style.display = 'none';
+        document.getElementById('image').value= '';
+        document.getElementById('remove-image').style.display = 'none';
+    }
   $(document).ready(function () {
     $("#supplier-toggle").click(function (e) {
       e.preventDefault();
@@ -479,45 +411,22 @@
   });
 
   document.getElementById('add-ingredient').addEventListener('click', function () {
-    const container = document.getElementById('ingredients-container');
-    const index = container.children.length + 1;
+        const container = document.getElementById('ingredients-container');
+        const index = container.children.length + 1;
 
-    const newIngredient = `
+        const newIngredient = `
             <div class="ingredient mb-3" id="ingredient_${index}">
                 <label for="ingredient_name_${index}">Select Ingredient:</label>
                 <select class="form-control fw-medium" id="ingredient_name_${index}" name="ingredient_name[]" required>
                     <option value="">-- Select Ingredient --</option>
                     <?php
-                    // Connect to the database and fetch product names
                     include('connection.php');
-
-                    // Check if the connection was successful
-                    if ($conn !== null) {
-                      try {
-                        // Prepare and execute the SQL statement
-                        $stmt = $conn->prepare("SELECT product_name FROM inventory");
-                        $stmt->execute();
-
-                        // Fetch all results
-                        $result = $stmt->fetchAll();
-
-                        // Check if there are any products
-                        if (count($result) > 0) {
-                          // Output the product names
-                          foreach ($result as $row) {
-                            echo "<option value='" . htmlspecialchars($row['product_name']) . "'>" . htmlspecialchars($row['product_name']) . "</option>";
-                          }
-                        } else {
-                          echo "<option value=''>No products found</option>";
-                        }
-                      } catch (PDOException $e) {
-                        echo "Error retrieving products: " . htmlspecialchars($e->getMessage());
-                      }
-                    } else {
-                      echo "Database connection failed.";
+                    $stmt = $conn->prepare("SELECT product_name FROM inventory");
+                    $stmt->execute();
+                    $result = $stmt->fetchAll();
+                    foreach ($result as $row) {
+                        echo "<option value='" . htmlspecialchars($row['product_name']) . "'>" . htmlspecialchars($row['product_name']) . "</option>";
                     }
-
-                    // Close the database connection
                     $conn = null;
                     ?>
                 </select>
@@ -536,15 +445,16 @@
             </div>
         `;
 
-    container.insertAdjacentHTML('beforeend', newIngredient);
-  });
+        container.insertAdjacentHTML('beforeend', newIngredient);
+    });
 
-  function removeIngredient(index) {
-    const ingredientDiv = document.getElementById(`ingredient_${index}`);
-    if (ingredientDiv) {
-      ingredientDiv.remove();
+    function removeIngredient(index) {
+        const ingredientDiv = document.getElementById(`ingredient_${index}`);
+        if (ingredientDiv) {
+            ingredientDiv.remove();
+        }
     }
-  }
+   
 </script>
 
 </html>

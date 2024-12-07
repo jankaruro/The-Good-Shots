@@ -5,7 +5,7 @@ include 'connection.php';
 
 
 // User Registration
-// Add User
+
 if (isset($_POST['save_user'])) {
     $first_name = htmlspecialchars($_POST['first_name']);
     $last_name = htmlspecialchars($_POST['last_name']);
@@ -50,6 +50,8 @@ if (isset($_POST['save_user'])) {
         $_SESSION['status'] = "Database query failed: " . $e->getMessage();
     }
 }
+
+
 
 // View User
 if (isset($_POST['click_view_btn'])) {
@@ -146,48 +148,49 @@ if (isset($_POST['add_supplier'])) {
     $contact_number = htmlspecialchars($_POST['contact_number']);
     $status = htmlspecialchars($_POST['status']);
 
-    // Check if supplier already exists
-    $stmt = $connection->prepare("SELECT * FROM suppliers WHERE supplier_name = ?");
-    $stmt->bind_param("s", $supplier_name);
-    $stmt->execute();
-    $check_supplier_name_result = $stmt->get_result();
+    try {
+        $stmt = $conn->prepare("SELECT * FROM suppliers WHERE supplier_name = :supplier_name");
+        $stmt->bindParam(':supplier_name', $supplier_name);
+        $stmt->execute();
 
-    if ($check_supplier_name_result->num_rows > 0) {
-        $_SESSION['status'] = "Supplier already exists!";
-        header("Location: addsupplier.php");
-        exit();
-    } else {
-        // Insert new supplier
-        $insert_stmt = $connection->prepare("INSERT INTO suppliers (supplier_name, contact_number, status) VALUES (?, ?, ?)");
-        $insert_stmt->bind_param("sss", $supplier_name, $contact_number, $status);
-        
-        if ($insert_stmt->execute()) {
-            $_SESSION['status'] = "Supplier added successfully!";
+        if ($stmt->rowCount() > 0) {
+            $_SESSION['status'] = "Supplier already exists!";
         } else {
-            $_SESSION['status'] = "Error: " . $insert_stmt->error;
+            $insert_stmt = $conn->prepare("INSERT INTO suppliers (supplier_name, contact_number, status) VALUES (:supplier_name, :contact_number, :status)");
+            $insert_stmt->bindParam(':supplier_name', $supplier_name);
+            $insert_stmt->bindParam(':contact_number', $contact_number);
+            $insert_stmt->bindParam(':status', $status);
+
+            if ($insert_stmt->execute()) {
+                $_SESSION['status'] = "Supplier added successfully!";
+            } else {
+                $_SESSION['status'] = "Error: " . $insert_stmt->errorInfo()[2];
+            }
         }
-        header("Location: addsupplier.php");
-        exit();
+    } catch (PDOException $e) {
+        $_SESSION['status'] = "Database query failed: " . $e->getMessage();
     }
+    header("Location: addsupplier.php");
+    exit();
 }
+
 
 
 // View Supplier
 if (isset($_POST['click_view_supp_btn'])) {
     $id = $_POST['supplier_id'];
-
-    $fetch_query = $connection->prepare("SELECT * FROM suppliers WHERE id = ?");
-    $fetch_query->bind_param("i", $id);
-    $fetch_query->execute();
-    $fetch_query_run = $fetch_query->get_result();
-
-    if ($fetch_query_run->num_rows > 0) {
-        while ($row = $fetch_query_run->fetch_assoc()) {
+    $fetch_query = "SELECT * FROM suppliers WHERE id = :id";
+    $stmt = $conn->prepare($fetch_query);
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
+    if ($stmt->rowCount() > 0) {
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             echo '
             <h6>ID: ' . $row['id'] . '</h6>
             <h6>Supplier Name: ' . $row['supplier_name'] . '</h6>
             <h6>Contact Number: ' . $row['contact_number'] . '</h6>
             <h6>Status: ' . $row['status'] . '</h6>
+         
             ';
         }
     } else {
@@ -195,26 +198,46 @@ if (isset($_POST['click_view_supp_btn'])) {
     }
 }
 
-// Edit Supplier
-if (isset($_POST['click_edit_supp_btn'])) {
-    $id = $_POST['supplier_id'];
-    $arrayresult = [];
+// Edit User
+if (isset($_POST['click_edit_btn'])) {
+    $id = $_POST['user_id'];
+    $fetch_query = "SELECT * FROM users WHERE id     = :id";
+    $stmt = $conn->prepare($fetch_query);
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
 
-    $fetch_query = $connection->prepare("SELECT * FROM suppliers WHERE id = ?");
-    $fetch_query->bind_param("i", $id);
-    $fetch_query->execute();
-    $fetch_query_run = $fetch_query->get_result();
-
-    if ($fetch_query_run->num_rows > 0) {
-        while ($row = $fetch_query_run->fetch_assoc()) {
+    if ($stmt->rowCount() > 0) {
+        $arrayresult = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             array_push($arrayresult, $row);
         }
         header('Content-Type: application/json');
         echo json_encode($arrayresult);
     } else {
-        echo '<h4>No records found</h4>';
+        echo json_encode([]);
     }
 }
+// Edit User
+if (isset($_POST['click_edit_supp_btn'])) {
+    $id = $_POST['supplier_id'];
+    $fetch_query = "SELECT * FROM suppliers WHERE id = :id";
+    $stmt = $conn->prepare($fetch_query);
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
+
+    if ($stmt->rowCount() > 0) {
+        $arrayresult = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            array_push($arrayresult, $row);
+        }
+        header('Content-Type: application/json');
+        echo json_encode($arrayresult);
+    } else {
+        echo json_encode([]);
+    }
+}
+// Edit Supplier
+
 
 // Update Supplier
 if (isset($_POST['update_supplier'])) {
@@ -223,320 +246,93 @@ if (isset($_POST['update_supplier'])) {
     $contact_number = $_POST['contactnumber'];
     $status = $_POST['status'];
 
-    // Prepare the update query
-    $update_query = $connection->prepare("UPDATE suppliers SET supplier_name = ?, contact_number = ?, status = ? WHERE id = ?");
-    $update_query->bind_param("sssi", $supplier_name, $contact_number, $status, $id);
+    try {
+        $update_query = "UPDATE suppliers SET supplier_name = :supplier_name, contact_number = :contact_number, status = :status WHERE id = :id";
+        $stmt = $conn->prepare($update_query);
+        $stmt->bindParam(':supplier_name', $supplier_name);
+        $stmt->bindParam(':contact_number', $contact_number);
+        $stmt->bindParam(':status', $status);
+        $stmt->bindParam(':id', $id);
 
-    // Execute the update query
-    if ($update_query->execute()) {
-        $_SESSION['status'] = "Data updated successfully";
-        header('Location: addsupplier.php');
-        exit();
-    } else {
-        $_SESSION['status'] = "Data update failed: " . $update_query->error;
-        header('Location: addsupplier.php');
-        exit();
+        if ($stmt->execute()) {
+            $_SESSION['status'] = "Data updated successfully";
+        } else {
+            $_SESSION['status'] = "Data update failed: " . $stmt->errorInfo()[2];
+        }
+    } catch (Exception $e) {
+        $_SESSION['status'] = "Data update failed: " . $e->getMessage();
     }
+    header('Location: addsupplier.php');
+    exit();
 }
-
-// Delete Supplier
+// Delete User
 if (isset($_POST['click_delete_supp_btn'])) {
     $id = $_POST['supplier_id'];
-    $delete_query = $connection->prepare("DELETE FROM suppliers WHERE id = ?");
-    $delete_query->bind_param("i", $id);
-    if ($delete_query->execute()) {
-        echo "Data deleted successfully";
+    $delete_query = "DELETE FROM suppliers WHERE id = :id";
+    $stmt = $conn->prepare($delete_query);
+    $stmt->bindParam(':id', $id);
+
+    if ($stmt->execute()) {
+        $_SESSION['status'] = "Data deleted successfully";
     } else {
-        echo "Data deletion failed: " . $delete_query->error;
+        $_SESSION['status'] = "Data deletion failed: " . $stmt->errorInfo()[2];
     }
 }
+// Delete Supplier
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
 
-//insert category
-if (isset($_POST['add_category'])) {
-    $name = $_POST['name'];
-    $description = $_POST['description'];
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-    // Check if email already exists
-    $check_name_query = "SELECT * FROM category WHERE name='$name'";
-    $check_name_result = mysqli_query($connection, $check_name_query);
-
-    if (mysqli_num_rows($check_name_result) > 0) {
-        $_SESSION['status'] = "Category already exists!";
-        header("Location: addcategory.php"); // Redirect back to the page
-        exit();
-    } else {
-        $insert_query = "INSERT INTO category (name, description) VALUES ('$name', '$description')";
-        if (mysqli_query($connection, $insert_query)) {
-            $_SESSION['status'] = "Category added successfully!";
-        } else {
-            $_SESSION['status'] = "Error: " . mysqli_error($connection);
-        }
-        header("Location: addcategory.php"); // Redirect back to the page
-        exit();
-    }
-}
-//view category
-if (isset($_POST['click_view_category_btn'])) {
-    $id = $_POST['category_id'];
-
-    $fetch_query = "SELECT * FROM category WHERE id = '$id'";
-    $fetch_query_run = mysqli_query($connection, $fetch_query);
-
-
-    if (mysqli_num_rows($fetch_query_run) > 0) {
-
-        while ($row = mysqli_fetch_array($fetch_query_run)) {
-            echo '
-        <h6>ID: ' . $row['id'] . '</h6>
-        <h6>Category Name: ' . $row['name'] . '</h6>
-        <h6>Description: ' . $row['description'] . '</h6>
-         
-        ';
-
-        }
-    } else {
-        echo '<h4>no records found</h4>';
-
-    }
-}
-
-//edit category
-if (isset($_POST['click_edit_category_btn'])) {
-    $id = $_POST['category_id'];
-    $arrayresult = [];
-
-    $fetch_query = "SELECT * FROM category WHERE id = '$id'";
-    $fetch_query_run = mysqli_query($connection, $fetch_query);
-
-
-    if (mysqli_num_rows($fetch_query_run) > 0) {
-
-        while ($row = mysqli_fetch_array($fetch_query_run)) {
-
-            array_push($arrayresult, $row);
-            header('content-type: application/json');
-            echo json_encode($arrayresult);
-
-        }
-    } else {
-        echo '<h4>no records found</h4>';
-
-    }
-}
-
-// Update category
-if (isset($_POST['update_category'])) {
-    $id = $_POST['id']; // Ensure you retrieve the user ID
-    $name = $_POST['name']; // Ensure you use the correct variable names
-    $description = $_POST['description'];
-
-    // Prepare the update query
-    $update_query = "UPDATE category SET name = '$name', description = '$description' WHERE id = '$id'";
-
-    // Execute the update query
-    $update_query_run = mysqli_query($connection, $update_query);
-
-    if ($update_query_run) {
-        $_SESSION['status'] = "Data updated successfully";
-        header('location: addcategory.php');
-        exit();
-    } else {
-        $_SESSION['status'] = "Data update failed: " . mysqli_error($connection);
-        header('location: addcategory.php');
-        exit();
-    }
-}
-
-//delete category
-if (isset($_POST['click_delete_btn'])) {
-    $id = $_POST['category_id'];
-    $delete_query = "DELETE FROM category WHERE id='$id'";
-    $delete_query_run = mysqli_query($connection, $delete_query);
-
-    if ($delete_query_run) {
-        echo "Category deleted successfully";
-    } else {
-
-        echo "Category deletion failed";
-    }
-
-}
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//insert supplier_products
-if (isset($_POST['add_supp_product'])) {
-    // Retrieve form data
-    $supplier = $_POST['supplier'];
-    $product_name = $_POST['product_name'];
-    $price = $_POST['price'];
-    $quantity = $_POST['quantity']; // Assuming you're adding this field
-    $unit = $_POST['unit']; // Assuming you're adding this field
-    $reorder_level = $_POST['reorder_level']; // Assuming you're adding this field
-
-    // Connect to the database
-    include('connection.php');
-
-    // Prepare the SQL statement to prevent SQL injection
-    $stmt = $conn->prepare("INSERT INTO supplier_products (supplier, product_name, price, quantity, unit, reorder_level) VALUES (:supplier, :product_name, :price, :quantity, :unit, :reorder_level)");
-
-    // Bind parameters
-    $stmt->bindParam(':supplier', $supplier);
-    $stmt->bindParam(':product_name', $product_name);
-    $stmt->bindParam(':price', $price);
-    $stmt->bindParam(':quantity', $quantity);
-    $stmt->bindParam(':unit', $unit);
-    $stmt->bindParam(':reorder_level', $reorder_level);
-
-    // Execute the statement
-    try {
-        $stmt->execute();
-        $_SESSION['status'] = "Product added successfully!";
-    } catch (PDOException $e) {
-        $_SESSION['status'] = "Error: " . $e->getMessage();
-    }
-
-    // Close the database connection
-    $conn = null;
-
-    // Redirect back to the form page
-    header("Location: addsupplier_product.php"); // Change this to your form page
-    exit();
-}
-//view supplier_products
-if (isset($_POST['click_view_supplier_product_btn'])) {
-    $id = $_POST['supplier_product_id'];
-
-    $fetch_query = "SELECT * FROM supplier_products WHERE id = '$id'";
-    $fetch_query_run = mysqli_query($connection, $fetch_query);
-
-
-    if (mysqli_num_rows($fetch_query_run) > 0) {
-
-        while ($row = mysqli_fetch_array($fetch_query_run)) {
-            echo '
-        <h6>ID: ' . $row['id'] . '</h6>
-        <h6>Supplier: ' . $row['supplier'] . '</h6>
-        <h6>Product Name: ' . $row['product_name'] . '</h6>
-        <h6>Proce: ' . $row['price'] . '</h6>
-        <h6>Category: ' . $row['category'] . '</h6>
-         
-        ';
-
-        }
-    } else {
-        echo '<h4>no records found</h4>';
-
-    }
-}
-
-//edit supplier_products
-if (isset($_POST['click_edit_supplier_products_btn'])) {
-    $id = $_POST['supplier_product_id'];
-    $arrayresult = [];
-
-    $fetch_query = "SELECT * FROM supplier_products WHERE id = '$id'";
-    $fetch_query_run = mysqli_query($connection, $fetch_query);
-
-
-    if (mysqli_num_rows($fetch_query_run) > 0) {
-
-        while ($row = mysqli_fetch_array($fetch_query_run)) {
-
-            array_push($arrayresult, $row);
-            header('content-type: application/json');
-            echo json_encode($arrayresult);
-
-        }
-    } else {
-        echo '<h4>no records found</h4>';
-
-    }
-}
-
-// Update supplier_products
-if (isset($_POST['update_supplier_product'])) {
-    $id = $_POST['id']; // Ensure you retrieve the user ID
-    $supplier = $_POST['supplier'];
-    $product_name = $_POST['product_name'];
-    $price = $_POST['price'];
-    $category = $_POST['category'];
-
-    // Prepare the update query
-    $update_query = "UPDATE supplier_products SET supplier = '$supplier', product_name = '$product_name', price = '$price', category = '$category' WHERE id = '$id'";
-
-    // Execute the update query
-    $update_query_run = mysqli_query($connection, $update_query);
-
-    if ($update_query_run) {
-        $_SESSION['status'] = "Data updated successfully";
-        header('location: addsupplier_product.php');
-        exit();
-    } else {
-        $_SESSION['status'] = "Data update failed: " . mysqli_error($connection);
-        header('location: addsupplier_product.php');
-        exit();
-    }
-}
-
-//delete supplier_products
-if (isset($_POST['click_delete_supplier_product_btn'])) {
-    $id = $_POST['supplier_product_id'];
-    $delete_query = "DELETE FROM supplier_products WHERE id='$id'";
-    $delete_query_run = mysqli_query($connection, $delete_query);
-
-    if ($delete_query_run) {
-        echo "Category deleted successfully";
-    } else {
-
-        echo "Category deletion failed";
-    }
-
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//insert inventory
+// Insert inventory
 if (isset($_POST['add_inventory'])) {
     $supplier = $_POST['supplier'];
     $product = $_POST['product_name']; // Change this to match form field name
-    $package_quantity = $_POST['package_quantity'];
-    $measurement_per_package = $_POST['measurement_per_package'];
-    $total_measurement = $_POST['total_measurement'];
+    $package_quantity = (int)$_POST['package_quantity']; // Ensure this is an integer
+    $measurement_per_package = (float)$_POST['measurement_per_package']; // Ensure this is a float
+    $total_measurement = (float)$_POST['total_measurement']; // Ensure this is a float
     $unit = $_POST['unit'];
-    $Expiry_Date = $_POST['Expiry_Date'];
+    
 
     // Check if product already exists
     $check_product_name_query = "SELECT * FROM inventory WHERE product_name = ?";
-    $stmt = $connection->prepare($check_product_name_query);
-    $stmt->bind_param("s", $product);
-    $stmt->execute();
-    $check_product_result = $stmt->get_result();
+    $stmt = $conn->prepare($check_product_name_query);
+    $stmt->execute([$product]);
+    $check_product_result = $stmt->fetch(PDO::FETCH_ASSOC); // Fetch a single row
 
-    if ($check_product_result->num_rows > 0) {
-        $_SESSION['status'] = "Item already exists!";
-        header("Location: inventoryManage.php");
-        exit();
+    if ($check_product_result) {
+        // Product exists, update the quantity and total measurement
+        $new_package_quantity = $check_product_result['package_quantity'] + $package_quantity;
+        $existing_measurement_per_package = $check_product_result['measurement_per_package']; // Keep the existing measurement per package
+        $new_total_measurement = $new_package_quantity * $existing_measurement_per_package; // Update total measurement
+
+        $update_query = "UPDATE inventory SET package_quantity = ?, total_measurement = ? WHERE product_name = ?";
+        $stmt = $conn->prepare($update_query);
+        
+        if ($stmt->execute([$new_package_quantity, $new_total_measurement, $product])) {
+            $_SESSION['status'] = "Product quantity updated successfully!";
+        } else {
+            $_SESSION['status'] = "Error: " . $stmt->errorInfo()[2]; // Get the error message
+        }
     } else {
-        $insert_query = "INSERT INTO inventory (supplier, product_name, package_quantity, measurement_per_package, total_measurement, unit, Expiry_Date) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        $stmt = $connection->prepare($insert_query);
-        $stmt->bind_param("ssissss", $supplier, $product, $package_quantity, $measurement_per_package, $total_measurement, $unit, $Expiry_Date);
-
-        if ($stmt->execute()) {
+        // Product does not exist, insert a new record
+        $insert_query = "INSERT INTO inventory (supplier, product_name, package_quantity, measurement_per_package, total_measurement, unit) VALUES (?, ?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($insert_query);
+        
+        // Execute the statement with an array of values
+        if ($stmt->execute([$supplier, $product, $package_quantity, $measurement_per_package, $total_measurement, $unit])) {
             $_SESSION['status'] = "Supplier Product added successfully!";
         } else {
-            $_SESSION['status'] = "Error: " . $stmt->error;
+            $_SESSION['status'] = "Error: " . $stmt->errorInfo()[2]; // Get the error message
         }
-        header("Location: inventoryManage.php");
-        exit();
     }
+    
+    header("Location: inventoryManage.php");
+    exit();
 }
-
-
 
 
 //view inventory
@@ -622,6 +418,7 @@ if (isset($_POST['update_inventory'])) {
     }
 }
 
+
 //delete inventory
 if (isset($_POST['click_delete_inventory_btn'])) {
     $id = $_POST['inventory_id'];
@@ -639,25 +436,15 @@ if (isset($_POST['click_delete_inventory_btn'])) {
     }
 
 }
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-// Insert product
+    // Insert product
 if (isset($_POST['add_product'])) {
-    // Debugging output
-    echo "Form submitted. Processing...<br>";
-
     $product_name = htmlspecialchars($_POST['productname']);
     $price = floatval($_POST['price']);
     $category = htmlspecialchars($_POST['category']);
+    $targetFilePath = '';
 
-    // Debugging output
-    echo "Product Name: $product_name, Price: $price, Category: $category<br>";
-
-    // Handle image upload
     if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
         $targetDir = "images/";
         if (!file_exists($targetDir)) {
@@ -677,104 +464,91 @@ if (isset($_POST['add_product'])) {
         exit();
     }
 
-    // Prepare the SQL statement to insert into the product_ingredients table
-    $stmt = $connection->prepare("INSERT INTO product (product_name, image, price, category) VALUES (?, ?, ?, ?)");
-    if ($stmt === false) {
-        die('Prepare failed: ' . htmlspecialchars($connection->error));
-    }
+    try {
+        $stmt = $conn->prepare("INSERT INTO product (product_name, image, price, category) VALUES (:product_name, :image, :price, :category)");
+        $stmt->bindParam(':product_name', $product_name);
+        $stmt->bindParam(':image', $targetFilePath);
+        $stmt->bindParam(':price', $price);
+        $stmt->bindParam(':category', $category);
 
-    // Bind parameters
-    $stmt->bind_param("ssds", $product_name, $targetFilePath, $price, $category);
+        if ($stmt->execute()) {
+            $product_id = $conn->lastInsertId();
+            if (isset($_POST['ingredient_name']) && is_array($_POST['ingredient_name'])) {
+                $ingredientNames = $_POST['ingredient_name'];
+                $quantities = $_POST['quantity'];
+                $units = $_POST['unit'];
 
-    if ($stmt->execute()) {
-        $product_id = $stmt->insert_id;
+                $ingredientStmt = $conn->prepare("INSERT INTO product_ingredients_detail (product_id, ingredient_name, quantity, unit) VALUES (:product_id, :ingredient_name, :quantity, :unit)");
 
-        // Handle the ingredients
-        if (isset($_POST['ingredient_name']) && is_array($_POST['ingredient_name'])) {
-            $ingredientNames = $_POST['ingredient_name'];
-            $quantities = $_POST['quantity'];
-            $units = $_POST['unit'];
+                foreach ($ingredientNames as $index => $ingredientName) {
+                    $ingredientName = htmlspecialchars($ingredientName);
+                    $quantity = floatval($quantities[$index]);
+                    $unit = htmlspecialchars($units[$index]);
 
-            // Prepare the SQL statement for inserting into product_ingredients_detail
-            $ingredientStmt = $connection->prepare("INSERT INTO product_ingredients_detail (product_id, ingredient_name, quantity, unit) VALUES (?, ?, ?, ?)");
-            if ($ingredientStmt === false) {
-                error_log("Prepare failed for ingredients: " . htmlspecialchars($connection->error));
-                $_SESSION['status'] = "Error preparing ingredients statement.";
-                header('Location: addproduct.php');
-                exit();
-            }
-
-            // Loop through each ingredient and insert it into the database
-            foreach ($ingredientNames as $index => $ingredientName) {
-                $ingredientName = htmlspecialchars($ingredientName);
-                $quantity = floatval($quantities[$index]);
-                $unit = htmlspecialchars($units[$index]);
-
-                $ingredientStmt->bind_param("isds", $product_id, $ingredientName, $quantity, $unit);
-                if (!$ingredientStmt->execute()) {
-                    error_log("Insert failed for product_ingredients_detail: " . $ingredientStmt->error);
-                    $_SESSION['status'] = "Error inserting ingredient: " . $ingredientStmt->error;
+                    $ingredientStmt->bindParam(':product_id', $product_id);
+                    $ingredientStmt->bindParam(':ingredient_name', $ingredientName);
+                    $ingredientStmt->bindParam(':quantity', $quantity);
+                    $ingredientStmt->bindParam(':unit', $unit);
+                    $ingredientStmt->execute();
                 }
-            } 
-            // Close the ingredient statement
-            $ingredientStmt->close();
+            }
+            $_SESSION['status'] = "Product added successfully.";
+        } else {
+            $_SESSION['status'] = "Error: " . $stmt->errorInfo()[2];
         }
-    } else {
-        error_log("Insert failed: " . $stmt->error);
-        $_SESSION['status'] = "Error: " . $stmt->error;
+    } catch (PDOException $e) {
+        $_SESSION['status'] = "Database error: " . $e->getMessage();
     }
 
-    // Close the product statement
-    $stmt->close();
-
-    // Redirect back to the add product page
     header('Location: addproduct.php');
     exit();
 }
 
 // View product
 if (isset($_POST['click_view_product_btn'])) {
-    $id = $_POST['product_id']; // Make sure to get the product ID from the request
-    $stmt = $connection->prepare("SELECT * FROM products WHERE product_id = ?");
-    $stmt->bind_param('i', $id);
+    $id = $_POST['product_id'];
+    $stmt = $conn->prepare("SELECT * FROM product WHERE product_id = ?");
+    $stmt->bindParam(1, $id, PDO::PARAM_INT);
     $stmt->execute();
-    $result = $stmt->get_result();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        echo json_encode([
-            'success' => true,
-            'html' => '
-        <h6>ID: ' . htmlspecialchars($row['product_id']) . '</h6>
-        <h6>Product: ' . htmlspecialchars($row['product_name']) . '</h6>
-        <h6>Price: ' . htmlspecialchars($row['price']) . '</h6>
-        <h6>Category: ' . htmlspecialchars($row['category']) . '</h6>
-        <h6>Image: <img src="' . htmlspecialchars($row['image_url']) . '" style="max-width: 100px;"></h6>
-    '
-        ]);
-    } else {
+    if ($result) {
+        // Fetch ingredients for the product
+        $ingredientStmt = $conn->prepare("SELECT * FROM product_ingredients_detail WHERE product_id = ?");
+        $ingredientStmt->bindParam(1, $id, PDO::PARAM_INT);
+        $ingredientStmt->execute();
+        $ingredients = $ingredientStmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $result['ingredients'] = $ingredients;
+        echo json_encode(['success' => true, 'data' => $result]);
+    } 
+    else {
         echo json_encode(['success' => false, 'message' => 'No records found']);
     }
 }
 
-// Edit product
-if (isset($_POST['click ```php
-_edit_product_btn'])) {
-    $id = $_POST['product_id']; // Make sure to get the product ID from the request
-    $stmt = $conn->prepare("SELECT * FROM products WHERE product_id = ?");
-    $stmt->bind_param('i', $id);
+if (isset($_POST['click_edit_product_btn'])) {
+    $id = $_POST['product_id'];
+    $stmt = $conn->prepare("SELECT * FROM product WHERE product_id = ?");
+    $stmt->bindParam(1, $id, PDO::PARAM_INT);
     $stmt->execute();
-    $result = $stmt->get_result();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        echo json_encode($row);
+    if ($result) {
+        // Fetch ingredients for the product
+        $ingredientStmt = $conn->prepare("SELECT * FROM product_ingredients_detail WHERE product_id = ?");
+        $ingredientStmt->bindParam(1, $id, PDO::PARAM_INT);
+        $ingredientStmt->execute();
+        $ingredients = $ingredientStmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $result['ingredients'] = $ingredients;
+        echo json_encode($result);
     } else {
         echo json_encode(['message' => 'No records found']);
     }
 }
 
-// Update product
+// Update product details
 if (isset($_POST['update_product'])) {
     $product_id = $_POST['product_id'];
     $product_name = htmlspecialchars($_POST['productname']);
@@ -782,92 +556,227 @@ if (isset($_POST['update_product'])) {
     $category = htmlspecialchars($_POST['category']);
     $newFileName = null;
 
-    // Check if a new file is uploaded
+    // Handle image upload
     if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-        $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
-        $fileType = mime_content_type($_FILES['image']['tmp_name']);
+        $targetDir = "images/";
+        $newFileName = uniqid() . '_' . basename($_FILES["image"]["name"]);
+        $targetFilePath = $targetDir . $newFileName;
 
-        if (in_array($fileType, $allowedTypes)) {
-            $targetDir = "uploads/";
-            $newFileName = uniqid() . '_' . basename($_FILES["image"]["name"]);
-            $targetFilePath = $targetDir . $newFileName;
-
-            if (!move_uploaded_file($_FILES["image"]["tmp_name"], $targetFilePath)) {
-                echo "Error uploading file.";
-                exit();
-            }
-        } else {
-            echo "Invalid file type. Please upload an image.";
+        if (!move_uploaded_file($_FILES["image"]["tmp_name"], $targetFilePath)) {
+            echo json_encode(['success' => false, 'message' => 'Error uploading file.']);
             exit();
         }
     }
 
-    // Update the product in the database
     try {
-        $query = "UPDATE products SET product_name = ?, price = ?, category = ?";
+        // Prepare the update query
+        $query = "UPDATE product SET product_name = ?, price = ?, category = ?";
         if ($newFileName) {
-            $query .= ", image_url = ?";
+            $query .= ", image = ?";
         }
         $query .= " WHERE product_id = ?";
 
         $stmt = $conn->prepare($query);
-        $stmt->bind_param('sdssi', $product_name, $price, $category, $newFileName, $product_id);
+        if ($newFileName) {
+            $stmt->bindParam(1, $product_name);
+            $stmt->bindParam(2, $price);
+            $stmt->bindParam(3, $category);
+            $stmt->bindParam(4, $newFileName);
+            $stmt->bindParam(5, $product_id);
+        } else {
+            $stmt->bindParam(1, $product_name);
+            $stmt->bindParam(2, $price);
+            $stmt->bindParam(3, $category);
+            $stmt->bindParam(4, $product_id);
+        }
         $stmt->execute();
 
-        // Update ingredients if provided
-        if (isset($_POST['ingredient_name']) && is_array($_POST['ingredient_name'])) {
-            foreach ($_POST['ingredient_name'] as $index => $ingredient_name) {
-                $quantity = floatval($_POST['quantity'][$index]);
-                $unit = htmlspecialchars($_POST['unit'][$index]);
+        // Update ingredients
+        $ingredient_names = $_POST['ingredient_name'];
+        $quantities = $_POST['quantity'];
+        $units = $_POST['unit'];
 
-                // Prepare the SQL statement to insert into the ingredients table
-                $ingredient_stmt = $conn->prepare("INSERT INTO ingredients (ingredient_name, product_id, quantity, unit) VALUES (?, ?, ?, ?)");
-                if ($ingredient_stmt === false) {
-                    die('Prepare failed: ' . htmlspecialchars($conn->error));
-                }
+        // Clear existing ingredients for the product
+        $deleteStmt = $conn->prepare("DELETE FROM product_ingredients_detail WHERE product_id = ?");
+        $deleteStmt->bindParam(1, $product_id, PDO::PARAM_INT);
+        $deleteStmt->execute();
 
-                // Bind parameters
-                $ingredient_stmt->bind_param("siis", $ingredient_name, $product_id, $quantity, $unit);
-                $ingredient_stmt->execute();
-                $ingredient_stmt->close();
-            }
+        // Insert new ingredients
+        $insertStmt = $conn->prepare("INSERT INTO product_ingredients_detail (product_id, ingredient_name, quantity, unit) VALUES (?, ?, ?, ?)");
+        foreach ($ingredient_names as $index => $ingredient_name) {
+            $quantity = $quantities[$index];
+            $unit = $units[$index];
+            $insertStmt->execute([$product_id, $ingredient_name, $quantity, $unit]);
         }
 
-        echo "Product updated successfully.";
+        echo json_encode(['success' => true, 'message' => 'Product updated successfully.']);
     } catch (PDOException $e) {
-        echo "Database Error: " . $e->getMessage();
+        echo json_encode(['success' => false, 'message' => 'Database Error: ' . $e->getMessage()]);
     }
 }
 
+// Delete product
 if (isset($_POST['click_delete_product_btn'])) {
-    $id = $_POST['productid']; // Make sure to get the product ID from the request
+    $id = $_POST['productid'];
     try {
+        // First delete from product_ingredients_detail
+        $ingredientStmt = $conn->prepare("DELETE FROM product_ingredients_detail WHERE product_id = ?");
+        $ingredientStmt->bindParam(1, $id, PDO::PARAM_INT);
+        $ingredientStmt->execute();
+
+        // Then delete from product
         $stmt = $conn->prepare("DELETE FROM product WHERE product_id = ?");
-        $stmt->bind_param('i', $id);
+        $stmt->bindParam(1, $id, PDO::PARAM_INT);
 
         if ($stmt->execute()) {
-            // Return a JSON response
             echo json_encode(['success' => true]);
             exit();
         } else {
-            // Return a JSON response for failure
-            echo json_encode(['success' => false, 'message' => 'Delete failed']);
+            echo json_encode(['success' => false, ' message' => 'Delete failed']);
             exit();
         }
     } catch (PDOException $e) {
-        // Return a JSON response for database error
         echo json_encode(['success' => false, 'message' => 'Database Error: ' . $e->getMessage()]);
         exit();
     }
 }
-
-
 //////////////////////////////////////////////////////////////////////////////////
 
+//insert supplier_products
+if (isset($_POST['add_supp_product'])) {
+    // Retrieve form data
+    $supplier = $_POST['supplier'];
+    $product_name = $_POST['product_name'];
+    $price = $_POST['price'];
+    $quantity = $_POST['quantity']; // Assuming you're adding this field
+    $unit = $_POST['unit']; // Assuming you're adding this field
+    
+
+    // Connect to the database
+    include('connection.php');
+
+    // Prepare the SQL statement to prevent SQL injection
+    $stmt = $conn->prepare("INSERT INTO supplier_products (supplier, product_name, price, quantity, unit) VALUES (:supplier, :product_name, :price, :quantity, :unit)");
+
+    // Bind parameters
+    $stmt->bindParam(':supplier', $supplier);
+    $stmt->bindParam(':product_name', $product_name);
+    $stmt->bindParam(':price', $price);
+    $stmt->bindParam(':quantity', $quantity);
+    $stmt->bindParam(':unit', $unit);
+   
+
+    // Execute the statement
+    try {
+        $stmt->execute();
+        $_SESSION['status'] = "Product added successfully!";
+    } catch (PDOException $e) {
+        $_SESSION['status'] = "Error: " . $e->getMessage();
+    }
+
+    // Close the database connection
+    $conn = null;
+
+    // Redirect back to the form page
+    header("Location: addsupplier_product.php"); // Change this to your form page
+    exit();
+}
+//view supplier_products
+if (isset($_POST['click_view_supplier_product_btn'])) {
+    $id = $_POST['supplier_product_id'];
+
+    $fetch_query = "SELECT * FROM supplier_products WHERE id = '$id'";
+    $fetch_query_run = mysqli_query($connection, $fetch_query);
 
 
+    if (mysqli_num_rows($fetch_query_run) > 0) {
+
+        while ($row = mysqli_fetch_array($fetch_query_run)) {
+            echo '
+        <h6>ID: ' . $row['id'] . '</h6>
+        <h6>Supplier: ' . $row['supplier'] . '</h6>
+        <h6>Product Name: ' . $row['product_name'] . '</h6>
+        <h6>Proce: ' . $row['price'] . '</h6>
+        <h6>Category: ' . $row['category'] . '</h6>
+         
+        ';
+
+        }
+    } else {
+        echo '<h4>no records found</h4>';
+
+    }
+}
+
+//edit supplier_products
+if (isset($_POST['click_edit_supplier_products_btn'])) {
+    $id = $_POST['supplier_product_id'];
+    $arrayresult = [];
+
+    $fetch_query = "SELECT * FROM supplier_products WHERE id = '$id'";
+    $fetch_query_run = mysqli_query($conn, $fetch_query);
 
 
+    if (mysqli_num_rows($fetch_query_run) > 0) {
+
+        while ($row = mysqli_fetch_array($fetch_query_run)) {
+
+            array_push($arrayresult, $row);
+            header('content-type: application/json');
+            echo json_encode($arrayresult);
+
+        }
+    } else {
+        echo '<h4>no records found</h4>';
+
+    }
+}
+
+// Update supplier_products
+if (isset($_POST['update_supplier_product'])) {
+    $id = $_POST['id']; // Ensure you retrieve the user ID
+    $supplier = $_POST['supplier'];
+    $product_name = $_POST['product_name'];
+    $price = $_POST['price'];
+    $category = $_POST['category'];
+
+    // Prepare the update query
+    $update_query = "UPDATE supplier_products SET supplier = '$supplier', product_name = '$product_name', price = '$price', category = '$category' WHERE id = '$id'";
+
+    // Execute the update query
+    $update_query_run = mysqli_query($connection, $update_query);
+
+    if ($update_query_run) {
+        $_SESSION['status'] = "Data updated successfully";
+        header('location: addsupplier_product.php');
+        exit();
+    } else {
+        $_SESSION['status'] = "Data update failed: " . mysqli_error($connection);
+        header('location: addsupplier_product.php');
+        exit();
+    }
+}
+
+//delete supplier_products
+
+
+//delete inventory
+if (isset($_POST['click_delete_supplier_product_btn'])) {
+    $id = $_POST['supplier_product_id'];
+    $delete_query = "DELETE FROM supplier_products WHERE id='$id'";
+    $delete_query_run = mysqli_query($conn, $delete_query);
+
+    if ($delete_query_run) {
+        $_SESSION['status'] = "Data updated successfully";
+        header('location: addsupplier_product.php');
+        exit();
+    } else {
+        $_SESSION['status'] = "Data update failed: " . mysqli_error($connection);
+        header('location: addsupplier_product.php');
+        exit();
+    }
+
+}
 // Assuming the database connection is already included and initialized
 
 
