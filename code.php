@@ -201,7 +201,7 @@ if (isset($_POST['click_view_supp_btn'])) {
 // Edit User
 if (isset($_POST['click_edit_btn'])) {
     $id = $_POST['user_id'];
-    $fetch_query = "SELECT * FROM users WHERE id = :id";
+    $fetch_query = "SELECT * FROM users WHERE id     = :id";
     $stmt = $conn->prepare($fetch_query);
     $stmt->bindParam(':id', $id);
     $stmt->execute();

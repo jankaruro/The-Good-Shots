@@ -181,7 +181,7 @@ include('connection.php'); ?>
                 </div>
             </div>
         </div>
-        <div id="page-content-wrapper">                                                                        
+        <div id="page-content-wrapper">
             <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-4 mt-2 dashboard-nav">
                 <div class="d-flex align-items-center">
                     <h2 class="fs-3 m-1">Add Supplier</h2>
@@ -201,17 +201,17 @@ include('connection.php'); ?>
                             <a class="nav-link dropdown-toggle fw-bold notification-link text-dark" href="#"
                                 id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <img src="icons/profile-round-1342-svgrepo-com.svg" alt="" class="user-icons">
-                                Admin                                                                                                  
+                                Admin
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-<<<<<<< HEAD
-                                <li><a class="dropdown-item" href="#">Profile</a></li>
-                                <li><a class="dropdown-item" href="#">Settings</a></li>                                                                                                        
-=======
->>>>>>> 7033bdbf127760edbfcbdb56fba130c74fe1fb44
-                                <li><a class="dropdown-item" href="#">Logout</a></li>
-                            </ul>
+                                <<<<<<< HEAD <li><a class="dropdown-item" href="#">Profile</a>
                         </li>
+                        <li><a class="dropdown-item" href="#">Settings</a></li>
+                        =======
+                        >>>>>>> 7033bdbf127760edbfcbdb56fba130c74fe1fb44
+                        <li><a class="dropdown-item" href="#">Logout</a></li>
+                    </ul>
+                    </li>
                     </ul>
                 </div>
             </nav>
@@ -233,9 +233,9 @@ include('connection.php'); ?>
                         </script>
                         <?php
                         unset($_SESSION['status']);
-                    }           
-                                                                                                                            
-                    ?>                                         
+                    }
+
+                    ?>
                     <div class="card shadow mt-5">
                         <div class="card-header">
                             <button type="button" class="btn btn-primary float-end fw-medium btn-add"
@@ -256,38 +256,47 @@ include('connection.php'); ?>
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $connection = mysqli_connect("localhost", "root", "", "tgs_inventory");
+                                    include 'connection.php'; // Ensure this file sets up a PDO connection
+                                    
+                                    try {
+                                        // Prepare the SQL statement
+                                        $fetch_query = "SELECT * FROM suppliers";
+                                        $stmt = $conn->prepare($fetch_query);
 
-                                    $fetch_query = "SELECT * FROM suppliers ";
-                                    $fetch_query_run = mysqli_query($connection, $fetch_query);
+                                        // Execute the statement
+                                        $stmt->execute();
 
-                                    if (mysqli_num_rows($fetch_query_run) > 0) {
-                                        while ($row = mysqli_fetch_array($fetch_query_run)) {
+                                        // Fetch all results
+                                        $suppliers = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+                                        if (count($suppliers) > 0) {
+                                            foreach ($suppliers as $row) {
+                                                ?>
+                                                <tr>
+                                                    <td class="supplier_id"><?php echo htmlspecialchars($row['id']); ?></td>
+                                                    <td><?php echo htmlspecialchars($row['supplier_name']); ?></td>
+                                                    <td><?php echo htmlspecialchars($row['contact_number']); ?></td>
+                                                    <td><?php echo htmlspecialchars($row['status']); ?></td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info btn-base delete_supplier_products btn-view"
+                                                            data-id="<?php echo htmlspecialchars($row['id']); ?>">View</a>
+                                                        <a href="#" class="btn btn-success btn-base edit_supplier_products btn-edit"
+                                                            data-id="<?php echo htmlspecialchars($row['id']); ?>">Edit</a>
+                                                        <a href="#" class="btn btn-danger btn-base deletesupp btn-delete"
+                                                            data-id="<?php echo htmlspecialchars($row['id']); ?>">Delete</a>
+                                                    </td>
+                                                </tr>
+                                                <?php
+                                            }
+                                        } else {
                                             ?>
                                             <tr>
-                                                <td class="supplier_id"><?php echo $row['id']; ?></td>
-                                                <td><?php echo $row['supplier_name']; ?></td>
-                                                <td><?php echo $row['contact_number']; ?></td>
-                                                <td><?php echo $row['status']; ?></td>
-                                                <td>
-                                                    <a href="#" class="btn btn-info btn-base delete_supplier_products btn-view"
-                                                        data-id="<?php echo htmlspecialchars($row['id']); ?>">View</a>
-                                                    <a href="#" class="btn btn-success btn-base edit_supplier_products btn-edit"
-                                                        data-id="<?php echo htmlspecialchars($row['id']); ?>">Edit</a>
-                                                    <a href="#" class="btn btn-danger btn-base deletesupp btn-delete"
-                                                        data-id="<?php echo htmlspecialchars($row['id']); ?>">Delete</a>
-
-
-                                                </td>
+                                                <td colspan="5" class="text-center">No Record Found</td>
                                             </tr>
                                             <?php
-
                                         }
-                                    } else {
-                                        ?>
-                                        <tr colspan="5"> No Record Found </tr>
-                                        <?php
+                                    } catch (PDOException $e) {
+                                        echo "Error: " . $e->getMessage();
                                     }
                                     ?>
                                 </tbody>

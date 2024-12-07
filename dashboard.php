@@ -189,175 +189,175 @@ $_SESSION['last_activity'] = time(); // Update last activity time
                             </div>
                         </div>
                     </div>
-                   <div class="col-sm-12">
-    <div class="card mt-5 mb-4 shadow">
-        <div class="card-header">
-            Top Selling Product
-        </div>
-        <div class="card-body body-level">
-            <div class="row">
-                <div class="col-md-6 me-5">
-                    <p class="stock-name"
-                        style="margin-top: 50px; font-weight: 500; font-size: 24px; text-align: center">
-                        Top 3</p>
-                    <ul class="list-group shadow" id="top-selling-products"
-                        style="margin-top: 40px; height: 200px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #d69f7e #f1f1f1; background-color: ">
-                    </ul>
-                </div>
-                <div class="chart-container pie-chart">
-                    <canvas id="pie-chart"></canvas>
+                    <div class="col-sm-12 d-flex">
+                        <div class="card mt-5 mb-4 shadow">
+                            <div class="card-header">
+                                Top Selling Product
+                            </div>
+                            <div class="card-body body-level">
+                                <div class="row">
+                                    <div class="col-md-6 me-5">
+                                        <p class="stock-name"
+                                            style="margin-top: 50px; font-weight: 500; font-size: 24px; text-align: center">
+                                            Top 3</p>
+                                        <ul class="list-group shadow" id="top-selling-products"
+                                            style="margin-top: 40px; height: 200px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #d69f7e #f1f1f1; background-color: ">
+                                        </ul>
+                                    </div>
+                                    <div class="chart-container pie-chart">
+                                        <canvas id="pie-chart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </di>
+
+                    </div>
                 </div>
             </div>
+
         </div>
-    </div>
-</di>
-                   
-                </div>
-            </div>
-        </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+        <script>
+            var idleMax = 10; // Logout after 10 minutes of idle
+            var idleTime = 0;
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <script>
-        var idleMax = 10; // Logout after 10 minutes of idle
-        var idleTime = 0;
+            $(document).ready(function () {
+                var idleInterval = setInterval(timerIncrement, 50000); // Increment idle time every minute
 
-        $(document).ready(function () {
-            var idleInterval = setInterval(timerIncrement, 50000); // Increment idle time every minute
+                $(this).mousemove(function (e) { idleTime = 0; }); // Reset idle time on mouse movement
+                $(this).keypress(function (e) { idleTime = 0; }); // Reset idle time on key press
+            });
 
-            $(this).mousemove(function (e) { idleTime = 0; }); // Reset idle time on mouse movement
-            $(this).keypress(function (e) { idleTime = 0; }); // Reset idle time on key press
-        });
-
-        function timerIncrement() {
-            idleTime++;
-            if (idleTime > idleMax) {
-                window.location = "index.php"; // Redirect to login page after timeout
+            function timerIncrement() {
+                idleTime++;
+                if (idleTime > idleMax) {
+                    window.location = "index.php"; // Redirect to login page after timeout
+                }
             }
-        }
-        $(document).ready(function () {
-            $("#product-toggle").click(function (e) {
-                e.preventDefault();
-                $("#product-submenu").slideToggle();
-                const productArrow = $("#product-arrow");
-                if (productArrow.hasClass("fa-chevron-right")) {
-                    productArrow.removeClass("fa-chevron-right").addClass("fa-chevron-down");
-                } else {
-                    productArrow.removeClass("fa-chevron-down").addClass("fa-chevron-right");
-                }
-            });
-
-            $("#supplier-toggle").click(function (e) {
-                e.preventDefault();
-                $("#supplier-submenu").slideToggle();
-                const supplierArrow = $("#supplier-arrow");
-                if (supplierArrow.hasClass("fa-chevron-right")) {
-                    supplierArrow.removeClass("fa-chevron-right").addClass("fa-chevron-down");
-                } else {
-                    supplierArrow.removeClass("fa-chevron-down").addClass("fa-chevron-right");
-                }
-            });
-
-            $("#reports-toggle").click(function (e) {
-                e.preventDefault();
-                $("#reports-submenu").slideToggle();
-                const reportsArrow = $("#reports-arrow");
-                if (reportsArrow.hasClass("fa-chevron-right")) {
-                    reportsArrow.removeClass("fa-chevron-right").addClass("fa-chevron-down");
-                } else {
-                    reportsArrow.removeClass("fa-chevron-down").addClass("fa-chevron-right");
-                }
-            });
-        });
-
-
-        $(document).ready(function () {
-            $.ajax({
-                url: 'fetch_inventory.php', // Your PHP file to fetch inventory data
-                method: 'GET',
-                success: function (response) {
-                    var data = JSON.parse(response);
-
-                    // Set up the doughnut chart
-                    var ctx = document.getElementById('doughnut_chart').getContext('2d');
-                    var doughnutChart = new Chart(ctx, {
-                        type: 'doughnut',
-                        data: {
-                            labels: [], // No labels displayed
-                            datasets: [{
-                                label: 'Inventory Levels',
-                                data: data.chartData,
-                                backgroundColor: ['#FF6384'], // Single color for the chart
-                                borderColor: '#fff',
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false
-                        }
-                    });
-
-                    // Populate low stock items
-                    var lowStockList = $('#low-stock-list');
-                    data.lowStockItems.forEach(function (item) {
-                        lowStockList.append('<li class="list-product-item">' + item + '</li>');
-                    });
-                },
-                error: function () {
-                    console.error('Failed to fetch inventory data.');
-                }
-            });
-
-           
-        });
-        
-        $(document).ready(function () {
-        $.ajax({
-            url: 'fetch_top_selling_products.php', // Your PHP file to fetch top selling products
-            method: 'GET',
-            success: function (response) {
-                var data = JSON.parse(response);
-
-                // Populate the top selling products list
-                var productList = $('#top-selling-products');
-                data.productNames.forEach(function (product) {
-                    productList.append('<li class="list-product-item">' + product + '</li>');
-                });
-
-                // Set up the pie chart
-                var ctx = document.getElementById('pie-chart').getContext('2d');
-                var pieChart = new Chart(ctx, {
-                    type: 'pie',
-                    data: {
-                        labels: data.productNames,
-                        datasets: [{
-                            label: 'Top Selling Products',
-                            data: data.quantities,
-                            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
-                            borderColor: '#fff',
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false
+            $(document).ready(function () {
+                $("#product-toggle").click(function (e) {
+                    e.preventDefault();
+                    $("#product-submenu").slideToggle();
+                    const productArrow = $("#product-arrow");
+                    if (productArrow.hasClass("fa-chevron-right")) {
+                        productArrow.removeClass("fa-chevron-right").addClass("fa-chevron-down");
+                    } else {
+                        productArrow.removeClass("fa-chevron-down").addClass("fa-chevron-right");
                     }
                 });
-            },
-            error: function () {
-                console.error('Failed to fetch top selling products.');
-            }
-        });
-    });
+
+                $("#supplier-toggle").click(function (e) {
+                    e.preventDefault();
+                    $("#supplier-submenu").slideToggle();
+                    const supplierArrow = $("#supplier-arrow");
+                    if (supplierArrow.hasClass("fa-chevron-right")) {
+                        supplierArrow.removeClass("fa-chevron-right").addClass("fa-chevron-down");
+                    } else {
+                        supplierArrow.removeClass("fa-chevron-down").addClass("fa-chevron-right");
+                    }
+                });
+
+                $("#reports-toggle").click(function (e) {
+                    e.preventDefault();
+                    $("#reports-submenu").slideToggle();
+                    const reportsArrow = $("#reports-arrow");
+                    if (reportsArrow.hasClass("fa-chevron-right")) {
+                        reportsArrow.removeClass("fa-chevron-right").addClass("fa-chevron-down");
+                    } else {
+                        reportsArrow.removeClass("fa-chevron-down").addClass("fa-chevron-right");
+                    }
+                });
+            });
 
 
-    
-    </script>
+            $(document).ready(function () {
+                $.ajax({
+                    url: 'fetch_inventory.php', // Your PHP file to fetch inventory data
+                    method: 'GET',
+                    success: function (response) {
+                        var data = JSON.parse(response);
+
+                        // Set up the doughnut chart
+                        var ctx = document.getElementById('doughnut_chart').getContext('2d');
+                        var doughnutChart = new Chart(ctx, {
+                            type: 'doughnut',
+                            data: {
+                                labels: [], // No labels displayed
+                                datasets: [{
+                                    label: 'Inventory Levels',
+                                    data: data.chartData,
+                                    backgroundColor: ['#FF6384'], // Single color for the chart
+                                    borderColor: '#fff',
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false
+                            }
+                        });
+
+                        // Populate low stock items
+                        var lowStockList = $('#low-stock-list');
+                        data.lowStockItems.forEach(function (item) {
+                            lowStockList.append('<li class="list-product-item">' + item + '</li>');
+                        });
+                    },
+                    error: function () {
+                        console.error('Failed to fetch inventory data.');
+                    }
+                });
+
+
+            });
+
+            $(document).ready(function () {
+                $.ajax({
+                    url: 'fetch_top_selling_products.php', // Your PHP file to fetch top selling products
+                    method: 'GET',
+                    success: function (response) {
+                        var data = JSON.parse(response);
+
+                        // Populate the top selling products list
+                        var productList = $('#top-selling-products');
+                        data.productNames.forEach(function (product) {
+                            productList.append('<li class="list-product-item">' + product + '</li>');
+                        });
+
+                        // Set up the pie chart
+                        var ctx = document.getElementById('pie-chart').getContext('2d');
+                        var pieChart = new Chart(ctx, {
+                            type: 'pie',
+                            data: {
+                                labels: data.productNames,
+                                datasets: [{
+                                    label: 'Top Selling Products',
+                                    data: data.quantities,
+                                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+                                    borderColor: '#fff',
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false
+                            }
+                        });
+                    },
+                    error: function () {
+                        console.error('Failed to fetch top selling products.');
+                    }
+                });
+            });
+
+
+
+        </script>
 </body>
 
 </html>

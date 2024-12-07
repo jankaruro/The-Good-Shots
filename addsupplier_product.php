@@ -1,5 +1,5 @@
-
-<?php session_start();include('connection.php');?>
+<?php session_start();
+include('connection.php'); ?>
 <!doctype html>
 <html lang="en">
 
@@ -37,84 +37,85 @@
     <!--Add-->
     <!-- Add Product Modal -->
     <div class="modal fade" id="addUserData" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="addProductModalLabel">Add Product</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form id="addProductForm" method="POST" action="code.php">
-          <!-- Supplier Input -->
-          <div class="mb-3">
-            <label for="supplier" class="form-label">Supplier</label>
-            <select class="form-select" id="supplier" name="supplier" required>
-              <option value="">-- Select Category --</option>
-              <?php
-              // Connect to the database
-              include('connection.php');
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addProductModalLabel">Add Product</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addProductForm" method="POST" action="code.php">
+                        <!-- Supplier Input -->
+                        <div class="mb-3">
+                            <label for="supplier" class="form-label">Supplier</label>
+                            <select class="form-select" id="supplier" name="supplier" required>
+                                <option value="">-- Select Category --</option>
+                                <?php
+                                // Connect to the database
+                                include('connection.php');
 
-              // Retrieve categories from the database
-              $stmt = $conn->prepare("SELECT supplier_name FROM suppliers");
-              $stmt->execute();
-              $result = $stmt->fetchAll();
+                                // Retrieve categories from the database
+                                $stmt = $conn->prepare("SELECT supplier_name FROM suppliers");
+                                $stmt->execute();
+                                $result = $stmt->fetchAll();
 
-              // Check if there are any categories
-              if (count($result) > 0) {
-                // Output the categories
-                foreach ($result as $row) {
-                  echo "<option value='" . htmlspecialchars($row['supplier_name']) . "'>" . htmlspecialchars($row['supplier_name']) . "</option>";
-                }
-              } else {
-                echo "<option value=''>No categories found</option>";
-              }
+                                // Check if there are any categories
+                                if (count($result) > 0) {
+                                    // Output the categories
+                                    foreach ($result as $row) {
+                                        echo "<option value='" . htmlspecialchars($row['supplier_name']) . "'>" . htmlspecialchars($row['supplier_name']) . "</option>";
+                                    }
+                                } else {
+                                    echo "<option value=''>No categories found</option>";
+                                }
 
-              // Close the database connection
-              $conn = null;
-              ?>
-            </select>
-          </div>
+                                // Close the database connection
+                                $conn = null;
+                                ?>
+                            </select>
+                        </div>
 
-          <!-- Product Name Input -->
-          <div class="mb-3">
-            <label for="product_name" class="form-label">Product Name</label>
-            <input type="text" class="form-control" id="product_name" name="product_name" required>
-          </div>
+                        <!-- Product Name Input -->
+                        <div class="mb-3">
+                            <label for="product_name" class="form-label">Product Name</label>
+                            <input type="text" class="form-control" id="product_name" name="product_name" required>
+                        </div>
 
-          <!-- Price Input -->
-          <div class="mb-3">
-            <label for="price" class="form-label">Price</label>
-            <input type="number" class="form-control" id="price" name="price" step="0.01" required>
-          </div>
+                        <!-- Price Input -->
+                        <div class="mb-3">
+                            <label for="price" class="form-label">Price</label>
+                            <input type="number" class="form-control" id="price" name="price" step="0.01" required>
+                        </div>
 
-          <!-- Measurement/Quantity Input -->
-          <div class="mb-3">
-            <label for="quantity" class="form-label">Measurement/Quantity</label>
-            <input type="number" class="form-control" id="quantity" name="quantity" step="0.01" required>
-          </div>
+                        <!-- Measurement/Quantity Input -->
+                        <div class="mb-3">
+                            <label for="quantity" class="form-label">Measurement/Quantity</label>
+                            <input type="number" class="form-control" id="quantity" name="quantity" step="0.01"
+                                required>
+                        </div>
 
-          <!-- Unit Input -->
-          <div class="form-group">
-            <label class="form-label">Unit</label>
-            <select class="form-control" id="unit" name="unit" required>
-              <option value="pack">pack</option>
-              <option value="pieces">pieces</option>
-              <option value="box">box</option>
-              <option value="cups">cups</option>
-            </select>
-          </div>
-          <!-- Reorder Level Input -->
-         
+                        <!-- Unit Input -->
+                        <div class="form-group">
+                            <label class="form-label">Unit</label>
+                            <select class="form-control" id="unit" name="unit" required>
+                                <option value="pack">pack</option>
+                                <option value="pieces">pieces</option>
+                                <option value="box">box</option>
+                                <option value="cups">cups</option>
+                            </select>
+                        </div>
+                        <!-- Reorder Level Input -->
 
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary" name="add_supp_product">Add Product</button>
-          </div>
-        </form>
-      </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" name="add_supp_product">Add Product</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 
 
     <!---->
@@ -244,7 +245,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
                         <a class="nav-link fw-bold cashier-link me-3 text-dark" href="pos.php">
-                         <img src="icons/cashier-svgrepo-com.svg" alt="" class="topnavbar-icons">
+                            <img src="icons/cashier-svgrepo-com.svg" alt="" class="topnavbar-icons">
                             Orders
                         </a>
                         <a class="nav-link fw-bold notification-link me-3 text-dark" href="#">
@@ -252,8 +253,8 @@
                             Notifications
                         </a>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle fw-bold notification-link text-dark" href="#" id="navbarDropdown"
-                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle fw-bold notification-link text-dark" href="#"
+                                id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <img src="icons/profile-round-1342-svgrepo-com.svg" alt="" class="user-icons">
                                 Admin
                             </a>
@@ -303,46 +304,55 @@
                                         <th scope="col">Price</th>
                                         <th scope="col">Quantity</th>
                                         <th scope="col">Unit</th>
-                                       
+
                                         <th scope="col" class="action-column">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $connection = mysqli_connect("localhost", "root", "", "tgs_inventory");
+                                    include 'connection.php'; // Ensure this file sets up a PDO connection
+                                    
+                                    try {
+                                        // Prepare the SQL statement
+                                        $fetch_query = "SELECT * FROM supplier_products";
+                                        $stmt = $conn->prepare($fetch_query);
 
-                                    $fetch_query = "SELECT * FROM supplier_products ";
-                                    $fetch_query_run = mysqli_query($connection, $fetch_query);
+                                        // Execute the statement
+                                        $stmt->execute();
 
-                                    if (mysqli_num_rows($fetch_query_run) > 0) {
-                                        while ($row = mysqli_fetch_array($fetch_query_run)) {
+                                        // Fetch all results
+                                        $supplierProducts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+                                        if (count($supplierProducts) > 0) {
+                                            foreach ($supplierProducts as $row) {
+                                                ?>
+                                                <tr>
+                                                    <td class="supplier_product_id"><?php echo htmlspecialchars($row['id']); ?></td>
+                                                    <td><?php echo htmlspecialchars($row['supplier']); ?></td>
+                                                    <td><?php echo htmlspecialchars($row['product_name']); ?></td>
+                                                    <td><?php echo htmlspecialchars($row['price']); ?></td>
+                                                    <td><?php echo htmlspecialchars($row['quantity']); ?></td>
+                                                    <td><?php echo htmlspecialchars($row['unit']); ?></td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info btn-base view_data btn-view"
+                                                            data-id="<?php echo htmlspecialchars($row['id']); ?>">View</a>
+                                                        <a href="#" class="btn btn-success btn-base edit_data btn-edit"
+                                                            data-id="<?php echo htmlspecialchars($row['id']); ?>">Edit</a>
+                                                        <a href="#" class="btn btn-danger btn-base deletesuppprod btn-delete"
+                                                            data-id="<?php echo htmlspecialchars($row['id']); ?>">Delete</a>
+                                                    </td>
+                                                </tr>
+                                                <?php
+                                            }
+                                        } else {
                                             ?>
                                             <tr>
-                                                <td class="supplier_product_id"><?php echo $row['id']; ?></td>
-                                                <td><?php echo $row['supplier']; ?></td>
-                                                <td><?php echo $row['product_name']; ?></td>
-                                                <td><?php echo $row['price']; ?></td>
-                                                <td><?php echo $row['quantity']; ?></td>
-                                                <td><?php echo $row['unit']; ?></td>
-                                                
-                                              
-                                                <td>
-                                                <a href="#" class="btn btn-info btn-base view_data btn-view"
-                              data-id="<?php echo htmlspecialchars($row['id']); ?>">View</a>
-                            <a href="#" class="btn btn-success btn-base edit_data btn-edit"
-                              data-id="<?php echo htmlspecialchars($row['id']); ?>">Edit</a>
-                            <a href="#" class="btn btn-danger btn-base deletesuppprod btn-delete"
-                              data-id="<?php echo htmlspecialchars($row['id']); ?>">Delete</a>
-                                                </td>
+                                                <td colspan="7" class="text-center">No Record Found</td>
                                             </tr>
                                             <?php
-
                                         }
-                                    } else {
-                                        ?>
-                                        <tr colspan="5"> No Record Found </tr>
-                                        <?php
+                                    } catch (PDOException $e) {
+                                        echo "Error: " . $e->getMessage();
                                     }
                                     ?>
                                 </tbody>

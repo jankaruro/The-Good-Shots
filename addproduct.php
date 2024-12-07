@@ -189,7 +189,8 @@
 </div>
 
 
-  <div class="d-flex content">
+  
+<div class="d-flex content">
     <div id="sidebar" class="sidebar-color">
       <div class="sidebar-heading">
         <img src="Images/Logo.jpg" alt="Bootstrap" class="logo">The Good Shots
@@ -250,31 +251,6 @@
         </div>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-                    <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
-                        <a class="nav-link fw-bold cashier-link me-3 text-dark" href="pos.php">
-                         <img src="icons/cashier-svgrepo-com.svg" alt="" class="topnavbar-icons">
-                            Orders
-                        </a>
-                        <a class="nav-link fw-bold notification-link me-3 text-dark" href="#">
-                            <img src="icons/notifications-alert-svgrepo-com.svg" alt="" class="topnavbar-icons">
-                            Notifications
-                        </a>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle fw-bold notification-link text-dark" href="#" id="navbarDropdown"
-                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="icons/profile-round-1342-svgrepo-com.svg" alt="" class="user-icons">
-                                Admin
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Profile</a></li>
-                                <li><a class="dropdown-item" href="#">Settings</a></li>
-                                <li><a class="dropdown-item" href="#">Logout</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-
           <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
             <a class="nav-link fw-bold cashier-link me-3 text-dark" href="pos.php">
               <img src="icons/cashier-svgrepo-com.svg" alt="" class="topnavbar-icons">
@@ -291,12 +267,13 @@
                 Admin
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="#">Profile</a></li>
+                <li><a class="dropdown-item" href="#">Settings</a></li>
                 <li><a class="dropdown-item" href="#">Logout</a></li>
               </ul>
             </li>
           </ul>
         </div>
-
       </nav>
 
 
@@ -323,7 +300,7 @@
             <div class="card shadow">
               <div class="card-header">
                 <button type="button" class="btn btn-primary float-end fw-medium" data-bs-toggle="modal"
-                  data-bs-target="#addProductModal">
+                  data-bs-target="#insertdata">
                   Add New Product
                 </button>
               </div>
@@ -343,52 +320,44 @@
                   </thead>
                   <tbody>
                     <?php
-                    try {
-                      // Create a new PDO instance
-                     include 'connection.php  ';
-                      // Set the PDO error mode to exception
-                      $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                      
-                      // Prepare and execute the SQL statement
-                      $fetch_query = "SELECT * FROM product";
-                      $stmt = $conn->prepare($fetch_query);
-                      $stmt->execute();
-                  
-                      // Fetch all results
-                      $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                  
-                      if (count($products) > 0) {
-                          foreach ($products as $row) {
-                              ?>
-                              <tr>
-                                  <td class="productid"><?php echo htmlspecialchars($row['product_id']); ?></td>
-                                  <td><?php echo htmlspecialchars($row['product_name']); ?></td>
-                                  <td><?php echo htmlspecialchars($row['price']); ?></td>
-                                  <td><?php echo htmlspecialchars($row['category']); ?></td>
-                                  <td>
-                                      <img src="<?php echo htmlspecialchars($row['image']); ?>" alt="Product Image" style="max-width: 80px; max-height: 80px;">
-                                  </td>
-                                  <td>
-                                      <a href="#" class="btn btn-info btn-base view_product btn-view">View Data</a>
-                                      <a href="#" class="btn btn-success btn-base edit_product btn-edit">Edit Data</a>
-                                      <a href="#" class="btn btn-danger btn-base delete_product">Delete Data</a>
-                                  </td>
-                              </tr>
-                              <?php
-                          }
-                      } else {
-                          ?>
-                          <tr>
-                              <td colspan="6" class="text-center">No Record Found</td>
-                          </tr>
-                          <?php
+                    $connection = mysqli_connect("localhost", "root", "", "tgs_inventory");
+                    if (!$connection) {
+                      die('Database connection failed: ' . mysqli_connect_error());
+                    }
+
+                    $fetch_query = "SELECT * FROM product";
+                    $fetch_query_run = mysqli_query($connection, $fetch_query);
+                    if (!$fetch_query_run) {
+                      die('Query Failed: ' . mysqli_error($connection));
+                    }
+
+                    if (mysqli_num_rows($fetch_query_run) > 0) {
+                      while ($row = mysqli_fetch_array($fetch_query_run)) {
+                        ?>
+                        <tr>
+                          <td class="productid"><?php echo $row['product_id']; ?></td>
+                          <td><?php echo $row['product_name']; ?></td>
+                          <td><?php echo $row['price']; ?></td>
+                          <td><?php echo $row['category']; ?></td>
+                          <td>
+                            <img src="<?php echo $row['image']; ?>" alt="Product Image"
+                              style="max-width: 80px; max-height: 80px;">
+                          </td>
+                          <td>
+                            <a href="#" class="btn btn-info btn-base view_product btn-view">View Data</a>
+                            <a href="#" class="btn btn-success btn-base edit_product btn-edit">Edit Data</a>
+                            <a href="#" class="btn btn-danger btn-base delete_product">Delete Data</a>
+                          </td>
+                        </tr>
+                        <?php
                       }
-                  } catch(PDOException $e) {
-                      echo "Error: " . $e->getMessage();
-                  }
-                  
-                  // Close the connection
-                  $conn = null;
+                    } else {
+                      ?>
+                      <tr>
+                        <td colspan="6" class="text-center">No Record Found</td>
+                      </tr>
+                      <?php
+                    }
                     ?>
                   </tbody>
                 </table>
