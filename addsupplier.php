@@ -128,7 +128,7 @@ include('connection.php'); ?>
     <div class="d-flex content">
         <div id="sidebar" class="sidebar-color">
             <div class="sidebar-heading">
-                <img src="Images/Logo.jpg" alt="Bootstrap" class="logo">The Good Shots
+                <img src="images/Logo.jpg" alt="Bootstrap" class="logo">The Good Shots
             </div>
             <div class="list-group list-group-flush mt-0">
                 <a href="index.php" class="list-group-item">
@@ -168,16 +168,16 @@ include('connection.php'); ?>
                             class="fa-solid fa-chevron-right toggle-arrow-reports" id="reports-arrow"></i>
                     </a>
                     <div class="submenu" id="reports-submenu">
-                        <a href="discrepancy.php" class="sub-list-item">
-                            <p class="txt-name-btn">Discrepancy Report</p>
-                        </a>
-                        <a href="inventoryReport.php" class="sub-list-item">
-                            <p class="txt-name-btn">Inventory Report</p>
-                        </a>
-                        <a href="salesReport.php" class="sub-list-item">
-                            <p class="txt-name-btn">Sales Report</p>
-                        </a>
-                    </div>
+            <a href="discrepancy.php" class="sub-list-item">
+              <p class="txt-name-btn">Supplier Report</p>
+            </a>
+            <a href="inventoryReport.php" class="sub-list-item">
+              <p class="txt-name-btn">List of Products Report</p>
+            </a>
+            <a href="salesReport.php" class="sub-list-item">
+              <p class="txt-name-btn">Sales Report</p>
+            </a>
+          </div>
                 </div>
             </div>
         </div>
@@ -207,8 +207,6 @@ include('connection.php'); ?>
                                 <<<<<<< HEAD <li><a class="dropdown-item" href="#">Profile</a>
                         </li>
                         <li><a class="dropdown-item" href="#">Settings</a></li>
-                        =======
-                        >>>>>>> 7033bdbf127760edbfcbdb56fba130c74fe1fb44
                         <li><a class="dropdown-item" href="#">Logout</a></li>
                     </ul>
                     </li>

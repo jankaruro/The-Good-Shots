@@ -157,10 +157,10 @@ include('header.php'); ?>
           </a>
           <div class="submenu" id="reports-submenu">
             <a href="discrepancy.php" class="sub-list-item">
-              <p class="txt-name-btn">Discrepancy Report</p>
+              <p class="txt-name-btn">Supplier Report</p>
             </a>
             <a href="inventoryReport.php" class="sub-list-item">
-              <p class="txt-name-btn">Inventory Report</p>
+              <p class="txt-name-btn">List of Products Report</p>
             </a>
             <a href="salesReport.php" class="sub-list-item">
               <p class="txt-name-btn">Sales Report</p>

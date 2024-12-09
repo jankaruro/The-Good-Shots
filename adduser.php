@@ -144,7 +144,7 @@ include('connection.php'); ?>
   <div class="d-flex content">
     <div id="sidebar" class="sidebar-color">
       <div class="sidebar-heading">
-        <img src="Images/Logo.jpg" alt="Bootstrap" class="logo">The Good Shots
+        <img src="images/Logo.jpg" alt="Bootstrap" class="logo">The Good Shots
       </div>
       <div class="list-group list-group-flush mt-0">
         <a href="index.php" class="list-group-item">
@@ -153,11 +153,9 @@ include('connection.php'); ?>
         <a href="adduser.php" class="list-group-item active">
           <i class="fas fa-project-diagram me-3"></i>User Management
         </a>
-        <div class="product-dropdown">
-          <a href="addproduct.php" class="list-group-item">
-            <i class="fa-brands fa-product-hunt me-3"></i></i>Product Management
-          </a>
-        </div>
+        <a href="addproduct.php" class="list-group-item">
+          <i class="fa-brands fa-product-hunt me-3"></i>Product Management
+        </a>
         <a href="inventoryManage.php" class="list-group-item">
           <i class="fas fa-shopping-cart me-3"></i>Inventory Management
         </a>
@@ -183,12 +181,12 @@ include('connection.php'); ?>
             <i class="fa-solid fa-calendar-days me-3"></i></i>Reports<i
               class="fa-solid fa-chevron-right toggle-arrow-reports" id="reports-arrow"></i>
           </a>
-          <div class="submenu" id="reports-submenu">
+           <div class="submenu" id="reports-submenu">
             <a href="discrepancy.php" class="sub-list-item">
-              <p class="txt-name-btn">Discrepancy Report</p>
+              <p class="txt-name-btn">Supplier Report</p>
             </a>
             <a href="inventoryReport.php" class="sub-list-item">
-              <p class="txt-name-btn">Inventory Report</p>
+              <p class="txt-name-btn">List of Products Report</p>
             </a>
             <a href="salesReport.php" class="sub-list-item">
               <p class="txt-name-btn">Sales Report</p>
@@ -198,7 +196,7 @@ include('connection.php'); ?>
       </div>
     </div>
     <div id="page-content-wrapper">
-      <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-3 mt-2 dashboard-nav">
+      <nav class="navbar navbar-expand-lg navbar-light bg-transparent px-4 mt-2 dashboard-nav">
         <div class="d-flex align-items-center">
           <h2 class="fs-3 m-1">User Management</h2>
         </div>
@@ -214,11 +212,11 @@ include('connection.php'); ?>
               Notifications
             </a>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle fw-bold notification-link text-dark" href="#" id="navbarDropdown"
-                role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="icons/profile-round-1342-svgrepo-com.svg" alt="" class="user-icons">
-                Admin
-              </a>
+             <a class="nav-link dropdown-toggle fw-bold notification-link text-dark" href="#"
+                                id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="icons/profile-round-1342-svgrepo-com.svg" alt="" class="user-icons">
+                                <?php echo isset($_SESSION['username']) ? $_SESSION['username'] : 'Admin'; ?>
+                            </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li><a class="dropdown-item" href="#">Logout</a></li>
               </ul>
@@ -248,6 +246,10 @@ include('connection.php'); ?>
           }
 
           ?>
+
+
+
+
           <div class="card shadow">
             <div class="card-header">
               <button type="button" class="btn btn-primary float-end fw-medium btn-add" data-bs-toggle="modal"
@@ -314,6 +316,9 @@ include('connection.php'); ?>
               </table>
             </div>
           </div>
+
+
+          
         </div>
       </div>
     </div>

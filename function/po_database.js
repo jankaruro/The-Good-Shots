@@ -102,7 +102,6 @@ function addProduct() {
             // If the product does not exist, add a new row to the table
             console.log(`Adding product: ${productName}, Price: ${price}, Quantity: ${quantity}`);
             addToTable(productName, price, quantity, supplierName); // Pass supplier name to addToTable
-
         }
 
         updateTotalPrice(); // Update the total price after adding/updating
@@ -226,7 +225,6 @@ function gatherProducts() {
             price: parseFloat(rows[i].cells[1].textContent),
             quantity: parseInt(rows[i].cells[2].getElementsByTagName('input')[0].value),
             supplier: rows[i].cells[3].textContent // Capture supplier name
-        
         });
     }
 

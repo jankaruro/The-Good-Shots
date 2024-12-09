@@ -438,13 +438,14 @@ if (isset($_POST['click_delete_inventory_btn'])) {
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    // Insert product
+ // Insert product
 if (isset($_POST['add_product'])) {
     $product_name = htmlspecialchars($_POST['productname']);
     $price = floatval($_POST['price']);
     $category = htmlspecialchars($_POST['category']);
     $targetFilePath = '';
 
+    // Check if image is uploaded
     if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
         $targetDir = "images/";
         if (!file_exists($targetDir)) {
@@ -453,6 +454,7 @@ if (isset($_POST['add_product'])) {
         $newFileName = uniqid() . '_' . basename($_FILES["image"]["name"]);
         $targetFilePath = $targetDir . $newFileName;
 
+        // Move uploaded file
         if (!move_uploaded_file($_FILES["image"]["tmp_name"], $targetFilePath)) {
             $_SESSION['status'] = "Error uploading file.";
             header('Location: addproduct.php');
@@ -465,6 +467,7 @@ if (isset($_POST['add_product'])) {
     }
 
     try {
+        // Prepare and execute the insert statement
         $stmt = $conn->prepare("INSERT INTO product (product_name, image, price, category) VALUES (:product_name, :image, :price, :category)");
         $stmt->bindParam(':product_name', $product_name);
         $stmt->bindParam(':image', $targetFilePath);
@@ -494,7 +497,7 @@ if (isset($_POST['add_product'])) {
             }
             $_SESSION['status'] = "Product added successfully.";
         } else {
-            $_SESSION['status'] = "Error: " . $stmt->errorInfo()[2];
+            $_SESSION['status'] = "Error: " . implode(", ", $stmt->errorInfo());
         }
     } catch (PDOException $e) {
         $_SESSION['status'] = "Database error: " . $e->getMessage();

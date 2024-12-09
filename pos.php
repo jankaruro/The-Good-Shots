@@ -20,6 +20,9 @@
 </head>
 
 <body>
+   
+
+
     <div class="d-flex content">
         <div id="sidebar" class="sidebar-color">
             <div class="sidebar-heading">
@@ -88,6 +91,7 @@
                     </ul>
                 </div>
             </nav>
+             
 
             <div class="container-responsive mt-5 ms-2" id="container">
                 <div class="row justify-content-center">
@@ -539,173 +543,236 @@
         </div>
     </div>
     </div>
-    <div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="checkoutModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="checkoutModalLabel">Checkout</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="checkoutForm" method="POST" action="submit_order.php">
-                        <div class="mb-3">
-                            <label for="paymentMethod" class="form-label">Payment Method</label>
-                            <select class="form-select" id="paymentMethod" name="payment_method" required>
-                                <option value="Cash">Cash</option>
-                                <option value="Credit Card">Online Payment</option>
-                            </select>
-                        </div>
-                        <input type="hidden" name="cart_data" id="cart_data">
-                        <div class="total-amount"> Total: <span id="final-total">0.00</span> </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" id="confirmOrder"  data-bs-toggle="modal"
-                            data-bs-target="#confirmOrderModal" class="confirmOrder">Confirm Order</button>
-                        </div>
-                    </form>
-                </div>
+  <div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="checkoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="checkoutModalLabel">Checkout</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="checkoutForm" method="POST" action="submit_order.php">
+                    <div>
+                        <label for="paymentMethod" class="form-label">Payment Method</label>
+                        <select class="form-select" id="paymentMethod" name="payment_method" required>
+                            <option value="Cash">--Select Payment Option--</option>
+                            <option value="Cash">Cash</option>
+                            <option value="Credit Card">Online Payment</option>
+                        </select>
+                    </div>
+                    <div class="mb-3" id="cashInputContainer" style="display: none;">
+                        <label for="cashInput" class="form-label">Cash Amount</label>
+                        <input type="number" class="form-control" id="cashInput" placeholder="Enter cash amount" oninput="calculateChange()" required>
+                    </div>
+                    <div class="total-amount"> Total: <span id="final-total">0.00</span> </div>
+                    <div class="change-amount" style="display: none;">
+                        Change: <span id="change-amount">0.00</span>
+                    </div>
+                    <input type="hidden" name="cart_data" id="cart_data">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" id="confirmOrder" data-bs-toggle="modal" data-bs-target="#confirmOrderModal" class="confirmOrder">Confirm Order</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
     <div class="modal fade" id="confirmOrderModal" tabindex="-1" aria-labelledby="confirmOrderModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="confirmOrderModalLabel">Receipt</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="checkoutForm" method="POST" action="submit_order.php">
-                        <div class="mb-3">
-                           <header class = "receipt-header">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmOrderModalLabel">Receipt</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="checkoutForm" method="POST" action="submit_order.php">
+                    <div class="mb-3">
+                        <header class="receipt-header">
                             <h3>The Good Shots</h3>
                             <p>3 Atis St. Admiral Talon Tres, Las Piñas, Philippines</p>
-                           </header>
-
-                            <p>Employee: SuperAdmin</p>
-                            <p>POS: </p>
-                            
-                            <p>Customer: </p>
-                            <p>---------------------------------------</p>
-
-                            <p>---------------------------------------</p>
-                            <h4>Total</h4>
-
-                            <p>---------------------------------------</p>
-                            <?php
-                                date_default_timezone_set('Asia/Manila');
-                                echo "Date and Time: " . date("Y-m-d h:i:s A");
-                                ?>
-                        </div>
-                        <input type="hidden" name="cart_data" id="cart_data">
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Print</button>
-                            <button type="button" id="confirmOrderButton" class="confirmOrder">Download PDF</button></a>
-                        </div>
-                    </form>
-                </div>
+                        </header>
+                        <p>---------------------------------------</p>
+                        <div id="receiptItems"></div> <!-- This will hold the cart items -->
+                        <p>---------------------------------------</p>
+                        <h4>Total: <span id="receiptTotal">0.00</span></h4>
+                        <p>---------------------------------------</p>
+                        <?php
+                            date_default_timezone_set('Asia/Manila');
+                            echo "Date and Time: " . date("Y-m-d h:i:s A");
+                        ?>
+                    </div>
+                    <input type="hidden" name="cart_data" id="cart_data">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Print</button>
+                        <button type="button" id="downloadOrderButton" class="btn btn-primary">Download Receipt</button>
+                        <button type="button" id="confirmOrderButton" class="btn btn-primary">Confirm Order</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script>
-    document.getElementById('confirmOrderButton').addEventListener('click', function () {
+      document.getElementById('downloadOrderButton').addEventListener('click', function () {
         const { jsPDF } = window.jspdf;
-
         const doc = new jsPDF();
 
-        const modalContent = document.querySelector('#confirmOrderModal .modal-body').innerHTML;
+        // Capture the receipt header
+        const header = `
+            The Good Shots
+            3 Atis St. Admiral Talon Tres, Las Piñas, Philippines
+            ---------------------------------------
+        `;
+        doc.text(header, 10, 10);
 
-        const tempElement = document.createElement('div');
-        tempElement.innerHTML = modalContent;
+        // Capture the receipt items
+        const receiptItems = document.getElementById('receiptItems').innerText;
+        doc.text(receiptItems, 10, 30); // Adjust the Y position as needed
 
-        const textContent = tempElement.innerText || tempElement.textContent;
+        // Capture the total amount
+        const totalAmount = document.getElementById('receiptTotal').innerText;
+        doc.text(`Total: ${totalAmount}`, 10, 50); // Adjust the Y position as needed
 
-        doc.text(textContent, 10, 10);
+        // Capture the date and time
+        const dateTime = new Date().toLocaleString();
+        doc.text(`Date and Time: ${dateTime}`, 10, 60); // Adjust the Y position as needed
 
+        // Save the PDF
         doc.save('Receipt.pdf');
     });
 </script>
-
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-        let cart = [];
-        let totalAmount = 0;
-        let isSubmitting = false;
+    document.getElementById('confirmOrderButton').addEventListener('click', function () {
+        const checkoutForm = document.getElementById('checkoutForm');
+        
+        // Prepare the cart data
+        const cartData = JSON.stringify(cart);
+        document.getElementById('cart_data').value = cartData; // Set the cart data in the hidden input
 
-        function addToCart(productName, price, productId) {
-            const existingProduct = cart.find(item => item.name === productName);
-            if (existingProduct) {
-                existingProduct.quantity++;
-                existingProduct.totalPrice += price;
-            } else {
-                cart.push({ name: productName, price: price, quantity: 1, totalPrice: price, productId: productId });
+        // Submit the form
+        checkoutForm.submit();
+    });
+       let cart = [];
+let totalAmount = 0;
+let isSubmitting = false;
+
+function addToCart(productName, price, productId) {
+    const existingProduct = cart.find(item => item.name === productName);
+    if (existingProduct) {
+        existingProduct.quantity++;
+        existingProduct.totalPrice += price;
+    } else {
+        cart.push({ name: productName, price: price, quantity: 1, totalPrice: price, productId: productId });
+    }
+    updateCart();
+}
+
+function updateCart() {
+    const cartBody = document.getElementById('cart-body');
+    cartBody.innerHTML = '';
+    totalAmount = 0;
+
+    cart.forEach(item => {
+        totalAmount += item.totalPrice;
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${item.name}</td>
+            <td>${item.quantity}</td>
+            <td>P${item.totalPrice.toFixed(2)}</td>
+            <td><button class="btn-removeCart" onclick="removeFromCart('${item.name}')"><img src="icons/delete-svgrepo-com.svg" alt="" class="icons"></button></td>
+        `;
+        cartBody.appendChild(row);
+    });
+
+    document.getElementById('total-amount').innerText = totalAmount.toFixed(2);
+    document.getElementById('final-total').innerText = totalAmount.toFixed(2); // Update final total in modal
+    document.getElementById('cart_data').value = JSON.stringify(cart);
+}
+
+function removeFromCart(productName) {
+    cart = cart.filter(item => item.name !== productName);
+    updateCart();
+}
+
+document.getElementById('checkoutForm').addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    if (isSubmitting) return;
+    isSubmitting = true;
+
+    const formData = new FormData(this);
+    const cartData = JSON.stringify(cart);
+    formData.append('cart_data', cartData);
+
+    document.getElementById('downloadOrderButton').disabled = true;
+
+    fetch('submit_order.php', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
             }
-            updateCart();
-        }
-
-        function updateCart() {
-            const cartBody = document.getElementById('cart-body');
-            cartBody.innerHTML = '';
-            totalAmount = 0;
-
-            cart.forEach(item => {
-                totalAmount += item.totalPrice;
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                        <td>${item.name}</td>
-                        <td>${item.quantity}</td>
-                        <td>P${item.totalPrice.toFixed(2)}</td>
-                        <td><button class="btn-removeCart" onclick="removeFromCart('${item.name}')"><img src="icons/delete-svgrepo-com.svg" alt="" class="icons"></button></td>
-                    `;
-                cartBody.appendChild(row);
-            });
-
-            document.getElementById('total-amount').innerText = totalAmount.toFixed(2);
-            document.getElementById('cart_data').value = JSON.stringify(cart);
-        }
-
-        function removeFromCart(productName) {
-            cart = cart.filter(item => item.name !== productName);
-            updateCart();
-        }
-
-        document.getElementById('checkoutForm').addEventListener('submit', function (event) {
-            event.preventDefault();
-
-            if (isSubmitting) return;
-            isSubmitting = true;
-
-            const formData = new FormData(this);
-            const cartData = JSON.stringify(cart);
-            formData.append('cart_data', cartData);
-
-            document.getElementById('confirmOrderButton').disabled = true;
-
-            fetch('submit_order.php', {
-                method: 'POST',
-                body: formData
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok ' + response.statusText);
-                    }
-                    return response.text();
-                })
-                .then(data => {
-                    alert(data);
-
-                })
-                .catch(error => {
-                    alert('There was a problem with your order: ' + error.message);
-                })
-                .finally(() => {
-                    isSubmitting = false;
-                    document.getElementById('confirmOrderButton').disabled = false;
-                });
+            return response.text();
+        })
+        .then(data => {
+            alert(data);
+        })
+        .catch(error => {
+            alert('There was a problem with your order: ' + error.message);
+        })
+        .finally(() => {
+            isSubmitting = false;
+            document.getElementById('downloadOrderButton').disabled = false;
         });
+});
+
+
+document.getElementById('checkoutButton').addEventListener('click', function() {
+    document.getElementById('final-total').innerText = totalAmount.toFixed(2); // Set the final total in the modal
+});
+        document.getElementById('paymentMethod').addEventListener('change', function() {
+    const cashInputContainer = document.getElementById('cashInputContainer');
+    if (this.value === 'Cash') {
+        cashInputContainer.style.display = 'block';
+    } else {
+        cashInputContainer.style.display = 'none';
+        document.getElementById('cashInput').value = ''; // Clear cash input
+        document.getElementById('change-amount').innerText = '0.00'; // Reset change display
+    }
+});
+function calculateChange() {
+    const cashInput = parseFloat(document.getElementById('cashInput').value) || 0;
+    const totalAmount = parseFloat(document.getElementById('total-amount').innerText) || 0;
+    const change = cashInput - totalAmount;
+
+    document.getElementById('change-amount').innerText = change >= 0 ? change.toFixed(2) : '0.00';
+    document.getElementById('change-amount').style.display = change >= 0 ? 'block' : 'none';
+}
+document.getElementById('confirmOrder').addEventListener('click', function () {
+    const receiptItems = document.getElementById('receiptItems');
+    const receiptTotal = document.getElementById('receiptTotal');
+    
+    
+    receiptItems.innerHTML = '';
+    
+    
+    cart.forEach(item => {
+        const itemRow = document.createElement('div');
+        itemRow.innerHTML = `${item.name} - Qty: ${item.quantity} - Price: P${item.totalPrice.toFixed(2)}`;
+        receiptItems.appendChild(itemRow);
+    });
+    
+    
+    receiptTotal.innerText = totalAmount.toFixed(2);
+});
+
     </script>
     </div>
 </body>
